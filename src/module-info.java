@@ -12,7 +12,8 @@ module Assignment_MayaFOP {
     requires javafx.media;
     requires javafx.swing;
     requires javafx.web;
-    requires mysql.connector.java;
+    requires java.sql;
+    
     
     opens assignment_mayafop;
 }
