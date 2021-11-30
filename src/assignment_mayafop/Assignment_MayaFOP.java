@@ -4,17 +4,35 @@
  */
 package assignment_mayafop;
 
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 /**
  *
  * @author kwany
  */
-public class Assignment_MayaFOP {
+public class Assignment_MayaFOP extends Application{
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        launch(args);
+    }
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        //Start login page
+        Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/login.fxml"));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setTitle("Login");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
     }
     
 }
