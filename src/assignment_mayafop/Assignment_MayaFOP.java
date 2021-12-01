@@ -27,12 +27,12 @@ public class Assignment_MayaFOP extends Application{
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Start login page
+        //Start login page      
         Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/login.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
-    
+
 }

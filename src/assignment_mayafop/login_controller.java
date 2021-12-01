@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.fxml.Initializable;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.StageStyle;
@@ -45,7 +47,11 @@ public class login_controller implements Initializable{
     @FXML
     private PasswordField password_field;
     @FXML
-    private Button signup_button;
+    private Button signup_button;   
+    
+    Stage home_stage;
+    Scene home_scene;
+    Parent home_root;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,13 +59,22 @@ public class login_controller implements Initializable{
 //        Image logoImage =new Image(logoFile.toURI().toString());
 //        logoImageView.setImage(logoImage);
     }
-    
-    public void login_button_on_action(ActionEvent event) {
+    int validated = 0;
+    public void login_button_on_action(ActionEvent event) throws IOException {
         //Click on login button
         if(username_text_field.getText().isBlank() == false && password_field.getText().isBlank() == false) {
             validate_login();
         } else {
             login_message_label.setText("Please enter username and password.");
+        }
+        //Create home page
+        home_root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+        home_stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        home_scene = new Scene(home_root);
+        home_stage.setScene(home_scene);
+        home_stage.centerOnScreen();
+        if(validated == 1){
+            home_stage.show();
         }
     }
     
@@ -67,14 +82,15 @@ public class login_controller implements Initializable{
         //Click on exit button to exit
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
-        Platform.exit();
+        
     }
     
     public void signup_button(ActionEvent event) {
         //Click on signup button 
-        Stage stage = (Stage) signup_button.getScene().getWindow();
+        //Stage stage = (Stage) signup_button.getScene().getWindow();
         create_account_stage();
     }
+    
     
     public void validate_login(){
         //Verify the information match with database ot not
@@ -89,11 +105,13 @@ public class login_controller implements Initializable{
             
             while(query_result.next()) {
                 if(query_result.getInt(1) == 1) {
-                    login_message_label.setText("Congratulations!");
-                    //create_account_stage();
+                    //login_message_label.setText("Congratulations!");
+                    validated = 1;
                 }else {
                     login_message_label.setText("Invalid login. Please try again.");
                 }
+                
+                
             }
             
         } catch(Exception e) {
@@ -104,19 +122,44 @@ public class login_controller implements Initializable{
     
     public void create_account_stage() {
         //Codes to open signup page
-        try {
-            
-            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signup.fxml"));
+        try {          
+            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signup_student.fxml"));
             Stage register_stage = new Stage();
             register_stage.initStyle(StageStyle.UNDECORATED);
             register_stage.setTitle("Signup");
             register_stage.setScene(new Scene(root));
             register_stage.show();
+           
             
         } catch(Exception e) {
             e.printStackTrace();
             e.getCause();
         }
     }
+    
+    public void create_home_page(int closex) {
+        //Codes to open home page
+        try {   
+            Assignment_MayaFOP maya = new Assignment_MayaFOP();
+            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/homepage.fxml"));
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Home Page");
+            stage.setScene(new Scene(root));
+            
+            if(closex == 0) {
+                stage.show();
+            }else if(closex == 1){
+                stage.close();
+            }
+            
+            
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+    
     
 }

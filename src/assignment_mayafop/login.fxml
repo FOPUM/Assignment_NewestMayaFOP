@@ -62,38 +62,38 @@
                </image>
             </ImageView>
             <TextField fx:id="username_text_field" layoutX="166.0" layoutY="42.0" prefHeight="25.0" prefWidth="169.0" promptText="Siswamail" style="-fx-background-color: transparent;" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@loginImage/WhiteRectangle.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="password_field" layoutX="166.0" layoutY="105.0" prefHeight="25.0" prefWidth="169.0" promptText="Passwords" style="-fx-background-color: transparent;" />
-            <ImageView fitHeight="38.0" fitWidth="96.0" layoutX="255.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+            <PasswordField fx:id="password_field" layoutX="166.0" layoutY="97.0" prefHeight="25.0" prefWidth="169.0" promptText="Passwords" style="-fx-background-color: transparent;" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@loginImage/signupbluerect.png" />
+                  <Image url="@loginImage/login_1.png" />
                </image>
             </ImageView>
-            <Button fx:id="login_button" layoutX="255.0" layoutY="169.0" mnemonicParsing="false" onAction="#login_button_on_action" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: transparent;" text="Log In" textFill="WHITE">
+            <Button fx:id="login_button" layoutX="150.0" layoutY="154.0" mnemonicParsing="false" onAction="#login_button_on_action" prefHeight="32.0" prefWidth="201.0" style="-fx-background-color: transparent;" text="Log In" textFill="WHITE">
                <font>
-                  <Font name="Futura Heavy BT" size="16.0" />
+                  <Font name="Futura Heavy BT" size="14.0" />
                </font>
             </Button>
-            <ImageView fitHeight="38.0" fitWidth="96.0" layoutX="150.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@loginImage/signupbluerect.png" />
+                  <Image url="@loginImage/login_1.png" />
                </image>
             </ImageView>
-            <Button fx:id="signup_button" layoutX="150.0" layoutY="169.0" mnemonicParsing="false" onAction="#signup_button" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: transparent;" text="Sign Up" textFill="WHITE">
+            <Button fx:id="signup_button" layoutX="150.0" layoutY="196.0" mnemonicParsing="false" onAction="#signup_button" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Sign up" textFill="WHITE">
                <font>
-                  <Font name="Futura Heavy BT" size="16.0" />
+                  <Font name="Futura Heavy BT" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="forgot_password_button" layoutX="195.0" layoutY="143.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="110.0" style="-fx-background-color: transparent;" text="Forgot Password?" textAlignment="CENTER">
+            <Button fx:id="forgot_password_button" layoutX="195.0" layoutY="127.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="110.0" style="-fx-background-color: transparent;" text="Forgot Password?" textAlignment="CENTER">
                <font>
-                  <Font name="Futura Book BT" size="12.0" />
+                  <Font name="Futura Book BT" size="10.0" />
                </font>
             </Button>
-            <Label fx:id="login_message_label" layoutX="149.0" layoutY="219.0" textAlignment="CENTER" textFill="#da4242">
+            <Label fx:id="login_message_label" layoutX="153.0" layoutY="18.0" textAlignment="CENTER" textFill="#da4242">
                <font>
                   <Font name="Futura Light BT" size="12.0" />
                </font>
