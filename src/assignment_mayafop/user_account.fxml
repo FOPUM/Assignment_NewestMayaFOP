@@ -4,11 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -74,56 +74,105 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="720.0" prefWidth="838.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="725.0" prefWidth="922.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField layoutX="183.0" layoutY="26.0" prefHeight="35.0" prefWidth="547.0" style="-fx-background-color: #E8EAEF; -fx-background-radius: 30;">
+            <Text layoutX="53.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Account">
                <font>
-                  <Font name="Futura Heavy BT" size="18.0" />
-               </font>
-            </TextField>
-            <TableView layoutX="35.0" layoutY="98.0" prefHeight="530.0" prefWidth="900.0" style="-fx-background-color: white; -fx-background-radius: 10;">
-              <columns>
-                <TableColumn fx:id="module_code_table_column" prefWidth="133.0" style="-fx-background-color: B4BACA; -fx-background-radius: 5 0 0 0; -fx-font-family: Futura Hv Bk;" text="Module Code" />
-                <TableColumn fx:id="module_name_table_column" prefWidth="298.0" style="-fx-background-color: #E8EAEF;" text="Module Name" />
-                  <TableColumn fx:id="credits_table_column" prefWidth="81.0" style="-fx-background-color: B4BACA;" text="Credits" />
-                  <TableColumn fx:id="occurence_table_column" prefWidth="79.0" style="-fx-background-color: #E8EAEF;" text="Occurence" />
-                  <TableColumn fx:id="lecture_time_table_column" prefWidth="147.0" style="-fx-background-color: #B4BACA; -fx-base: #FFFFFF; -fx-background-radius: 0 5 0 0;" text="Lecturer" />
-                  <TableColumn fx:id="tutorial_time_table_column" prefWidth="133.0" style="-fx-background-color: #E8EAEF;" text="Tutorial Time" />
-              </columns>
-            </TableView>
-            <Text fill="#08194f" layoutX="35.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Modules">
-               <font>
-                  <Font name="Futura Heavy BT" size="18.0" />
+                  <Font name="Futura Heavy BT" size="44.0" />
                </font>
             </Text>
+            <TableView layoutX="53.0" layoutY="124.0" prefHeight="450.0" prefWidth="786.0">
+              <columns>
+                <TableColumn prefWidth="117.0" style="-fx-background-color: E8EAEF;" text="Academic Year" />
+                <TableColumn prefWidth="90.0" style="-fx-background-color: D2D4D8;" text="Period Slot" />
+                  <TableColumn prefWidth="72.0" style="-fx-background-color: E8EAEF;" text="Module" />
+                  <TableColumn prefWidth="149.0" style="-fx-background-color: D2D4D8;" text="Module Name" />
+                  <TableColumn prefWidth="105.0" style="-fx-background-color: E8EAEF;" text="Credit" />
+                  <TableColumn prefWidth="104.0" style="-fx-background-color: D2D4D8;" text="Occurence" />
+                  <TableColumn prefWidth="148.0" style="-fx-background-color: E8EAEF;" text="Registration Status" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </center>
    <right>
-      <AnchorPane prefHeight="720.0" prefWidth="265.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4baca" height="726.0" layoutY="-5.0" stroke="TRANSPARENT" strokeType="INSIDE" width="265.0" />
-            <ImageView fitHeight="20.0" fitWidth="26.0" layoutX="230.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4baca" height="720.0" stroke="TRANSPARENT" strokeType="INSIDE" width="360.0" />
+            <Button fx:id="exit_button" layoutX="324.0" layoutY="12.0" mnemonicParsing="false" onAction="#exit_button" prefHeight="21.0" prefWidth="22.0" style="-fx-background-color: transparent;" />
+            <ImageView fitHeight="20.0" fitWidth="26.0" layoutX="325.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@homePageImage/Exit.png" />
                </image>
             </ImageView>
-            <Button fx:id="exit_button" layoutX="229.0" layoutY="11.0" mnemonicParsing="false" onAction="#exit_button" prefHeight="21.0" prefWidth="22.0" style="-fx-background-color: transparent;" />
-            <TableView layoutX="29.0" layoutY="95.0" prefHeight="530.0" prefWidth="208.0" style="-fx-background-color: white; -fx-background-radius: 10;">
-              <columns>
-                <TableColumn minWidth="0.0" prefWidth="175.0" style="-fx-background-color: #B4BACA; -fx-background-radius: 10 0 0 0;" text="Selected Module Code" />
-              </columns>
-            </TableView>
-            <Label layoutX="29.0" layoutY="36.0" text="Credit Hours: " textFill="#08194f">
-               <font>
-                  <Font name="Futura Light BT" size="16.0" />
-               </font>
-            </Label>
-            <Button layoutX="43.0" layoutY="647.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="197.0" style="-fx-background-color: #08194F; -fx-background-radius: 20;" text="Next" textFill="WHITE">
-               <font>
-                  <Font name="Futura Heavy BT" size="14.0" />
-               </font>
-            </Button>
+            <VBox layoutX="42.0" layoutY="121.0" prefHeight="200.0" prefWidth="100.0" spacing="40.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+                     <font>
+                        <Font name="Futura Medium BT" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matric ID:">
+                     <font>
+                        <Font name="Futura Medium BT" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Programme:">
+                     <font>
+                        <Font name="Futura Medium BT" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialisation:">
+                     <font>
+                        <Font name="Futura Medium BT" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Academic Year:">
+                     <font>
+                        <Font name="Futura Medium BT" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enrollment Status: ">
+                     <font>
+                        <Font name="Futura Medium BT" size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+            <VBox layoutX="42.0" layoutY="142.0" prefHeight="200.0" prefWidth="100.0" spacing="39.0">
+               <children>
+                  <Label text="Label">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" text="Label">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="63.0" text="Label">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="116.0" text="Label">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="169.0" text="Label">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="222.0" text="Label">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </right>

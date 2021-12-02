@@ -83,7 +83,7 @@
                   <Image url="@loginImage/login_1.png" />
                </image>
             </ImageView>
-            <Button fx:id="signup_button" layoutX="150.0" layoutY="196.0" mnemonicParsing="false" onAction="#signup_button" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Sign up" textFill="WHITE">
+            <Button fx:id="signup_button" layoutX="150.0" layoutY="196.0" mnemonicParsing="false" onAction="#sign_up_button_on_action" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Sign up" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="14.0" />
                </font>

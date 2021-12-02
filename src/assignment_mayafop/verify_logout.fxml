@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.home_page">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.verify_logout">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4baca" height="150.0" stroke="#99999900" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="200.0" />
       <Label layoutX="22.0" layoutY="38.0" text="Zhende want log out ar?">

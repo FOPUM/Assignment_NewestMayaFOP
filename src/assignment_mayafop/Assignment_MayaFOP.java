@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -30,6 +31,9 @@ public class Assignment_MayaFOP extends Application{
         //Start login page      
         Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/login.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        
+        Image icon = new Image("C:/Users/Ming/Documents/NetBeansProjects/Assignment1FOP/src/assignment_mayafop/icon.png");
+        primaryStage.getIcons().add(icon);
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

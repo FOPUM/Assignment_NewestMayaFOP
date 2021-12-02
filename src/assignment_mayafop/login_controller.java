@@ -68,12 +68,13 @@ public class login_controller implements Initializable{
             login_message_label.setText("Please enter username and password.");
         }
         //Create home page
-        home_root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
-        home_stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-        home_scene = new Scene(home_root);
-        home_stage.setScene(home_scene);
-        home_stage.centerOnScreen();
+        
         if(validated == 1){
+            home_root = FXMLLoader.load(getClass().getResource("home_page.fxml"));
+            home_stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+            home_scene = new Scene(home_root);
+            home_stage.setScene(home_scene);
+            home_stage.centerOnScreen();
             home_stage.show();
         }
     }
@@ -83,12 +84,6 @@ public class login_controller implements Initializable{
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
         
-    }
-    
-    public void signup_button(ActionEvent event) {
-        //Click on signup button 
-        //Stage stage = (Stage) signup_button.getScene().getWindow();
-        create_account_stage();
     }
     
     
@@ -120,7 +115,7 @@ public class login_controller implements Initializable{
         }
     }
     
-    public void create_account_stage() {
+    public void sign_up_button_on_action(ActionEvent event) {
         //Codes to open signup page
         try {          
             Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signup_student.fxml"));
@@ -137,29 +132,29 @@ public class login_controller implements Initializable{
         }
     }
     
-    public void create_home_page(int closex) {
-        //Codes to open home page
-        try {   
-            Assignment_MayaFOP maya = new Assignment_MayaFOP();
-            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/homepage.fxml"));
-            Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Home Page");
-            stage.setScene(new Scene(root));
-            
-            if(closex == 0) {
-                stage.show();
-            }else if(closex == 1){
-                stage.close();
-            }
-            
-            
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-    }
+//    public void create_home_page(int closex) {
+//        //Codes to open home page
+//        try {   
+//            Assignment_MayaFOP maya = new Assignment_MayaFOP();
+//            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/homepage.fxml"));
+//            Stage stage = new Stage();
+//            stage.initStyle(StageStyle.UNDECORATED);
+//            stage.setTitle("Home Page");
+//            stage.setScene(new Scene(root));
+//            
+//            if(closex == 0) {
+//                stage.show();
+//            }else if(closex == 1){
+//                stage.close();
+//            }
+//            
+//            
+//            
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//            e.getCause();
+//        }
+//    }
     
     
 }
