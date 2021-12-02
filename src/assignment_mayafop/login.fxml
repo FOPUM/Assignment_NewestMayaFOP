@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.login_controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.login_controller">
    <top>
       <AnchorPane prefHeight="219.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
@@ -19,22 +19,24 @@
                   <Image url="@loginImage/Logo.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="461.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@loginImage/Exit.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="239.0" fitWidth="296.0" layoutX="204.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@loginImage/Big%20circle.png" />
                </image>
             </ImageView>
-            <Button fx:id="exit_button" layoutX="460.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit_button" prefHeight="20.0" prefWidth="26.0" style="-fx-background-color: transparent;" text=" " />
+            <Button fx:id="exit_button" contentDisplay="TOP" layoutX="452.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit_button" prefHeight="32.0" prefWidth="29.0" style="-fx-background-color: transparent;" styleClass="nav_button" text=" ">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@loginImage/Exit.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </AnchorPane>
    </top>
    <bottom>
-      <AnchorPane prefHeight="303.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="bottom_pane" prefHeight="303.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -61,34 +63,24 @@
                   <Image url="@loginImage/WhiteRectangle.png" />
                </image>
             </ImageView>
-            <TextField fx:id="username_text_field" layoutX="166.0" layoutY="42.0" prefHeight="25.0" prefWidth="169.0" promptText="Siswamail" style="-fx-background-color: transparent;" />
+            <TextField fx:id="username_text_field" layoutX="166.0" layoutY="42.0" prefHeight="25.0" prefWidth="169.0" promptText="Siswamail" style="-fx-background-color: transparent;" styleClass="textfield" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@loginImage/WhiteRectangle.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="password_field" layoutX="166.0" layoutY="97.0" prefHeight="25.0" prefWidth="169.0" promptText="Passwords" style="-fx-background-color: transparent;" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@loginImage/login_1.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="login_button" layoutX="150.0" layoutY="154.0" mnemonicParsing="false" onAction="#login_button_on_action" prefHeight="32.0" prefWidth="201.0" style="-fx-background-color: transparent;" text="Log In" textFill="WHITE">
+            <PasswordField fx:id="password_field" layoutX="166.0" layoutY="97.0" prefHeight="25.0" prefWidth="169.0" promptText="Passwords" style="-fx-background-color: transparent;" styleClass="textfield" />
+            <Button fx:id="login_button" layoutX="150.0" layoutY="154.0" mnemonicParsing="false" onAction="#login_button_on_action" prefHeight="32.0" prefWidth="201.0" styleClass="login_button" text="Log In" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="14.0" />
                </font>
             </Button>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@loginImage/login_1.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="signup_button" layoutX="150.0" layoutY="196.0" mnemonicParsing="false" onAction="#sign_up_button_on_action" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Sign up" textFill="WHITE">
+            <Button fx:id="signup_button" layoutX="150.0" layoutY="196.0" mnemonicParsing="false" onAction="#sign_up_button_on_action" prefHeight="34.0" prefWidth="200.0" styleClass="login_button" text="Sign up" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="forgot_password_button" layoutX="195.0" layoutY="127.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="110.0" style="-fx-background-color: transparent;" text="Forgot Password?" textAlignment="CENTER">
+            <Button fx:id="forgot_password_button" layoutX="195.0" layoutY="127.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="110.0" style="-fx-background-color: transparent;" styleClass="login_button" text="Forgot Password?" textAlignment="CENTER">
                <font>
                   <Font name="Futura Book BT" size="10.0" />
                </font>

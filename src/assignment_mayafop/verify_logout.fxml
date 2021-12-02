@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.verify_logout">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.verify_logout">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4baca" height="150.0" stroke="#99999900" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="200.0" />
       <Label layoutX="22.0" layoutY="38.0" text="Zhende want log out ar?">
@@ -14,12 +14,12 @@
             <Font name="Futura Book BT" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="114.0" layoutY="76.0" mnemonicParsing="false" onAction="#yes_on_verify_logout_button" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: #08194F; -fx-background-radius: 10;" text="Yes" textFill="WHITE">
+      <Button layoutX="114.0" layoutY="76.0" mnemonicParsing="false" onAction="#yes_on_verify_logout_button" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: #08194F; -fx-background-radius: 10;" styleClass="login_button" text="Yes" textFill="WHITE">
          <font>
             <Font name="Futura Light BT" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="back_button" layoutX="42.0" layoutY="76.0" mnemonicParsing="false" onAction="#no_on_verify_logout_button" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: #08194F; -fx-background-radius: 10;" text="No" textFill="WHITE">
+      <Button fx:id="back_button" layoutX="42.0" layoutY="76.0" mnemonicParsing="false" onAction="#no_on_verify_logout_button" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: #08194F; -fx-background-radius: 10;" styleClass="login_button" text="No" textFill="WHITE">
          <font>
             <Font name="Futura Light BT" size="12.0" />
          </font>

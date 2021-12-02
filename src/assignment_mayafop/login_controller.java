@@ -29,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 /**
  *
@@ -131,30 +132,5 @@ public class login_controller implements Initializable{
             e.getCause();
         }
     }
-    
-//    public void create_home_page(int closex) {
-//        //Codes to open home page
-//        try {   
-//            Assignment_MayaFOP maya = new Assignment_MayaFOP();
-//            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/homepage.fxml"));
-//            Stage stage = new Stage();
-//            stage.initStyle(StageStyle.UNDECORATED);
-//            stage.setTitle("Home Page");
-//            stage.setScene(new Scene(root));
-//            
-//            if(closex == 0) {
-//                stage.show();
-//            }else if(closex == 1){
-//                stage.close();
-//            }
-//            
-//            
-//            
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-//    }
-    
     
 }

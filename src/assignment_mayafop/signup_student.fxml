@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.register_control">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.register_control">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="50.0" BorderPane.alignment="CENTER">
          <children>
@@ -29,13 +29,15 @@
                   <Image url="@signupImageNew/stud%20reg.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="33.0" fitWidth="11.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@signupImageNew/back.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="back_button" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutX="-10.0" layoutY="5.0" minHeight="12.0" minWidth="41.0" mnemonicParsing="false" onAction="#cancel_button_on_action" prefHeight="38.0" prefWidth="41.0" style="-fx-background-color: transparent;" wrapText="true" />
-            <Button layoutX="13.0" layoutY="462.0" minWidth="39.0" mnemonicParsing="false" onAction="#switch_to_staff" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: B4BACA; -fx-background-radius: 30;" text="Staff">
+            <Button fx:id="back_button" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutY="7.0" minHeight="12.0" minWidth="41.0" mnemonicParsing="false" onAction="#cancel_button_on_action" prefHeight="38.0" prefWidth="41.0" style="-fx-background-color: transparent;" styleClass="nav_button" wrapText="true">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@signupImageNew/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="13.0" layoutY="462.0" minWidth="39.0" mnemonicParsing="false" onAction="#switch_to_staff" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: B4BACA; -fx-background-radius: 30;" styleClass="login_button" text="Staff">
                <font>
                   <Font name="Futura Light BT" size="12.0" />
                </font>
@@ -112,7 +114,7 @@
                   </StackPane>
                </children>
             </HBox>
-            <Button fx:id="register_button" layoutX="97.0" layoutY="411.0" mnemonicParsing="false" onAction="#register_button_on_action" prefHeight="30.0" prefWidth="293.0" style="-fx-background-radius: 30; -fx-background-color: #08194F;" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="register_button" layoutX="97.0" layoutY="411.0" mnemonicParsing="false" onAction="#register_button_on_action" prefHeight="30.0" prefWidth="293.0" style="-fx-background-radius: 30; -fx-background-color: #08194F;" styleClass="login_button" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>

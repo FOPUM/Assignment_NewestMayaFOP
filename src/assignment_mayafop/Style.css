@@ -1,0 +1,27 @@
+.login_button{
+    -fx-background-color: #08194F;
+    -fx-background-radius: 30px;
+}
+
+.login_button:hover{
+    -fx-opacity: 0.8;
+}
+
+.login_button:pressed{
+    -fx-opacity: 1.0;
+    -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
+    -fx-padding: 5 10 3 10;
+}
+
+
+
+.nav_button:hover{
+    -fx-background-color: #FFFFFF;
+    -fx-opacity: 0.8;
+}
+
+.nav_button:pressed{
+    -fx-opacity: 1;
+    -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
+    -fx-padding: 5 10 3 8;
+}

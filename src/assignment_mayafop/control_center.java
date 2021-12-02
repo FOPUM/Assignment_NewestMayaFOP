@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import java.awt.event.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -24,13 +25,17 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 /**
  *
@@ -38,6 +43,8 @@ import javafx.stage.StageStyle;
  */
 public class control_center implements Initializable{
     
+    @FXML
+    private Button exit_button;
     @FXML
     private Button back_button;
     @FXML
@@ -50,124 +57,103 @@ public class control_center implements Initializable{
     private Button timetable_button;
     @FXML
     private Button dashboard_button;
-//    @FXML
-//    private Button register_module_button;
+    
     @FXML
-    private Button exit_button;
+    private Pane pane1;
+    @FXML
+    private Pane pane2;
+    @FXML
+    private Pane pane3;
+    @FXML
+    private Pane pane4;
+    
     
     Parent root;
     Stage stage;
     Scene scene;
+   
+            
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        home_page home = new home_page();
+        home.slider_animation(pane2, pane3, pane4);
         
     }
     
+   
+    
+    public void back_button(ActionEvent event) {
+        
+    }
+    
+    
     public void exit_button(ActionEvent event) {
         //Click on exit button to exit       
-        
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
         Platform.exit();
     }
     
-    public void home_button_on_action(ActionEvent event) {
-        try {          
-            root = FXMLLoader.load(getClass().getResource("home_page.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-           
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+    public void create_page(String page) throws IOException{
+        
     }
     
-    public void search_button_on_action(ActionEvent event) {
-        try {          
-            root = FXMLLoader.load(getClass().getResource("search_module.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-           
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+   
+    
+    public void home_button_on_action(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("home_page.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();  
+        
     }
     
-    public void timetable_button_on_action(ActionEvent event) {
-        try {          
-            root = FXMLLoader.load(getClass().getResource("timetable.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-           
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+    public void search_button_on_action(ActionEvent event) throws IOException {        
+        root = FXMLLoader.load(getClass().getResource("search_module.fxml"));
+//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
     }
     
-    public void dashboard_button_on_action(ActionEvent event) {
-        try {          
-            root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-           
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+    public void timetable_button_on_action(ActionEvent event) throws IOException{        
+        root = FXMLLoader.load(getClass().getResource("timetable.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
-    public void user_account_button_on_action(ActionEvent event) {
-        try {          
-            root = FXMLLoader.load(getClass().getResource("user_account.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-           
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+    public void dashboard_button_on_action(ActionEvent event) throws IOException{         
+        root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
-    public void logout_button_on_action(ActionEvent event) {
-        //Codes to open home page
-        try {
-            root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/verify_logout.fxml"));
-            stage = new Stage();
-            scene = new Scene(root);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setScene(scene);
-            stage.show();
-            
-            
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-    }    
+    public void user_account_button_on_action(ActionEvent event) throws IOException{        
+        root = FXMLLoader.load(getClass().getResource("user_account.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void logout_button_on_action(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("verify_logout.fxml"));
+        stage = new Stage();
+        scene = new Scene(root);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.show();
+    }   
+    
+    
+    
 }
+
