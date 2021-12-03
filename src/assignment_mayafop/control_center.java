@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -58,6 +59,8 @@ public class control_center implements Initializable{
     @FXML
     private Button dashboard_button;
     
+    @FXML Rectangle rectmaya;
+    
     @FXML
     private Pane pane1;
     @FXML
@@ -71,6 +74,7 @@ public class control_center implements Initializable{
     Parent root;
     Stage stage;
     Scene scene;
+    
    
             
     
@@ -81,9 +85,16 @@ public class control_center implements Initializable{
         
     }
     
-   
+    private static String page = "";
+    public void back_button(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource(page));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
-    public void back_button(ActionEvent event) {
+    public void forward_button(ActionEvent event) throws IOException {
         
     }
     
@@ -93,12 +104,7 @@ public class control_center implements Initializable{
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
         Platform.exit();
-    }
-    
-    public void create_page(String page) throws IOException{
-        
-    }
-    
+    } 
    
     
     public void home_button_on_action(ActionEvent event) throws IOException{
@@ -107,15 +113,17 @@ public class control_center implements Initializable{
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();  
+        page= "home_page.fxml";
         
     }
     
     public void search_button_on_action(ActionEvent event) throws IOException {        
         root = FXMLLoader.load(getClass().getResource("search_module.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        page= "search_module.fxml";
         
     }
     
@@ -125,6 +133,7 @@ public class control_center implements Initializable{
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        page= "timetable.fxml";
     }
     
     public void dashboard_button_on_action(ActionEvent event) throws IOException{         
@@ -133,6 +142,7 @@ public class control_center implements Initializable{
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        page= "dashboard.fxml";
     }
     
     public void user_account_button_on_action(ActionEvent event) throws IOException{        
@@ -141,6 +151,7 @@ public class control_center implements Initializable{
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        page= "user_account.fxml";
     }
     
     public void logout_button_on_action(ActionEvent event) throws IOException{
