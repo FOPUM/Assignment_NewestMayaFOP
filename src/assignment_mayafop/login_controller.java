@@ -56,11 +56,9 @@ public class login_controller implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        File logoFile = new File("loginImage/Logo.png");
-//        Image logoImage =new Image(logoFile.toURI().toString());
-//        logoImageView.setImage(logoImage);
+        
     }
-    int validated = 0;
+    int validated = 0; 
     public void login_button_on_action(ActionEvent event) throws IOException {
         //Click on login button
         if(username_text_field.getText().isBlank() == false && password_field.getText().isBlank() == false) {
@@ -87,7 +85,7 @@ public class login_controller implements Initializable{
         
     }
     
-    
+
     public void validate_login(){
         //Verify the information match with database ot not
         database_connection connectNow = new database_connection();
@@ -132,5 +130,5 @@ public class login_controller implements Initializable{
             e.getCause();
         }
     }
-    
+   
 }

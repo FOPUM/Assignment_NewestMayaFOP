@@ -127,7 +127,7 @@
                   <Image url="@homePageImage/Taskbar.png" />
                </image>
             </ImageView>
-            <Button fx:id="back_button1" layoutX="7.0" layoutY="13.0" mnemonicParsing="false" prefHeight="9.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="back_button" layoutX="7.0" layoutY="13.0" mnemonicParsing="false" onAction="#back_button" prefHeight="9.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -136,7 +136,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="forward_button1" layoutX="26.0" layoutY="13.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="2.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="forward_button" layoutX="26.0" layoutY="13.0" mnemonicParsing="false" onAction="#forward_button" prefHeight="14.0" prefWidth="2.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -199,6 +199,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="43.0" layoutX="-1.0" layoutY="606.0" stroke="#8f8f8f00" strokeType="INSIDE" styleClass="rect_fill" width="58.0" />
          </children>
       </AnchorPane>
    </left>

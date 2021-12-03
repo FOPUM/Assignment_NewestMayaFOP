@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import java.lang.ModuleLayer.Controller;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,13 +34,13 @@ public class Assignment_MayaFOP extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Start login page      
-        Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/assignment_MayaFOP/login.fxml"));
+        Parent root = loader.load();
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        
-//        Image icon = new Image("/icon.png");
-//        primaryStage.getIcons().add(icon);
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        Image icon = new Image("/Assignment_MayaFOP/icon.png");
+        primaryStage.getIcons().add(icon);
+        primaryStage.setScene(scene);
         primaryStage.show();
 
     }
