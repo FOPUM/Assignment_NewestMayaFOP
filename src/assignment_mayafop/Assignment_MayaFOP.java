@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,7 +27,16 @@ import javafx.stage.StageStyle;
  * @author kwany
  */
 public class Assignment_MayaFOP extends Application{
-
+    public static String loginScreen = "login";
+    public static String loginScreenFile = "login.fxml";
+    public static String homepageScreen = "home_page";
+    public static String homepageScreenFile = "home_page.fxml";
+    public static String searchScreen = "search_module";
+    public static String searchScreenFile = "search_module.fxml";
+    public static String timetableScreen = "timetable";
+    public static String timetableScreenFile = "timetable.fxml";
+    
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -34,14 +44,27 @@ public class Assignment_MayaFOP extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Start login page      
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/assignment_MayaFOP/login.fxml"));
-        Parent root = loader.load();
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        
+        ScreenController mainContainer = new ScreenController();
+        mainContainer.loadScreen(Assignment_MayaFOP.loginScreen, Assignment_MayaFOP.loginScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.homepageScreen, Assignment_MayaFOP.homepageScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
+        
+        mainContainer.setScreen(Assignment_MayaFOP.loginScreen);
+        
+        Group root = new Group();
+        root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);
         Image icon = new Image("/Assignment_MayaFOP/icon.png");
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.getIcons().add(icon);
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+
+
+        
 
     }
 

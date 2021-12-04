@@ -32,8 +32,8 @@ import javafx.stage.StageStyle;
  *
  * @author Ming
  */
-public class register_control implements Initializable {
-    
+public class register_control implements Initializable,ControlledScreen {
+    ScreenController myController;
     @FXML
     private Button back_button;
     @FXML
@@ -148,6 +148,24 @@ public class register_control implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void setScreenParent(ScreenController screenParent) {
+        myController = screenParent; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @FXML
+    private void goToHomepage(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
+    }
+    @FXML
+    private void goToSearch(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.searchScreen); 
+    }
+    @FXML
+    private void goToTimetable(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
     }
     
     

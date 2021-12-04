@@ -74,6 +74,8 @@ public class control_center implements Initializable{
     Parent root;
     Stage stage;
     Scene scene;
+    static Parent previousroot = null;
+    static Stage previousstage = null;
     
    
             
@@ -85,24 +87,15 @@ public class control_center implements Initializable{
         
     }
     
+
+
+    
     private static int previous_page = 0;
-    public void back_button(ActionEvent event) throws IOException {
-        if(previous_page == 1){
-            root = FXMLLoader.load(getClass().getResource("home_page.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }else if(previous_page == 2){
-            root = FXMLLoader.load(getClass().getResource("search_module.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-        
+    public void back_buttononAction(ActionEvent event) throws IOException {
+       
     }
     
+
     public void forward_button(ActionEvent event) throws IOException {
         
     }

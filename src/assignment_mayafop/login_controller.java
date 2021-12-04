@@ -35,8 +35,8 @@ import javafx.stage.StageStyle;
  *
  * @author Ming
  */
-public class login_controller implements Initializable{
-    
+public class login_controller implements Initializable,ControlledScreen{
+    ScreenController myController;
     @FXML
     private Button exit_button;
     @FXML
@@ -61,7 +61,7 @@ public class login_controller implements Initializable{
     int validated = 0; 
     public void login_button_on_action(ActionEvent event) throws IOException {
         //Click on login button
-        if(username_text_field.getText().isBlank() == false && password_field.getText().isBlank() == false) {
+        if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
             validate_login();
         } else {
             login_message_label.setText("Please enter username and password.");
@@ -69,12 +69,7 @@ public class login_controller implements Initializable{
         //Create home page
         
         if(validated == 1){
-            home_root = FXMLLoader.load(getClass().getResource("home_page.fxml"));
-            home_stage = (Stage)((Node)event.getSource()).getScene().getWindow();       
-            home_scene = new Scene(home_root);
-            home_stage.setScene(home_scene);
-            home_stage.centerOnScreen();
-            home_stage.show();
+            myController.setScreen(Assignment_MayaFOP.homepageScreen); 
         }
     }
     
@@ -129,6 +124,24 @@ public class login_controller implements Initializable{
             e.printStackTrace();
             e.getCause();
         }
+    }
+
+    @Override
+    public void setScreenParent(ScreenController screenParent) {
+        myController = screenParent; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @FXML
+    public void goToHomepage(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
+    }
+    @FXML
+    public void goToSearch(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.searchScreen); 
+    }
+    @FXML
+    public void goToTimetable(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
     }
    
 }

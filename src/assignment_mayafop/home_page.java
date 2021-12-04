@@ -43,10 +43,10 @@ import javafx.stage.StageStyle;
  *
  * @author Ming
  */
-public class home_page implements Initializable{
+public class home_page implements Initializable, ControlledScreen{
     
-    
-    
+    private Button exit_button;
+    ScreenController myController;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -124,6 +124,35 @@ public class home_page implements Initializable{
             });
         });
     }
+
+    @Override
+    public void setScreenParent(ScreenController screenParent) {
+        myController = screenParent; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+
+    public void goToLogin(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.loginScreen); 
+    }
+    
+    public void goToHomepage(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
+    }
+
+    public void goToSearch(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.searchScreen); 
+    }
+
+    public void goToTimetable(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
+    }
+    
+    public void exit_button(ActionEvent event) {
+        //Click on exit button to exit       
+        Stage stage = (Stage) exit_button.getScene().getWindow();
+        stage.close();
+        Platform.exit();
+    } 
 
     
     

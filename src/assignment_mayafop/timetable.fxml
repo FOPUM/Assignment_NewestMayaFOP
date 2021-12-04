@@ -8,9 +8,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.control_center">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.timetable_control">
    <right>
       <AnchorPane prefHeight="720.0" prefWidth="1238.0" BorderPane.alignment="CENTER">
          <children>
@@ -61,7 +60,7 @@
                   <Image url="@homePageImage/Taskbar.png" />
                </image>
             </ImageView>
-            <Button fx:id="back_button" layoutX="7.0" layoutY="13.0" mnemonicParsing="false" onAction="#back_button" prefHeight="9.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="back_button" layoutX="7.0" layoutY="13.0" mnemonicParsing="false" prefHeight="9.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,7 +69,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="forward_button" layoutX="26.0" layoutY="13.0" mnemonicParsing="false" onAction="#forward_button" prefHeight="14.0" prefWidth="2.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="forward_button" layoutX="26.0" layoutY="13.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="2.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -79,7 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="home_button1" layoutX="9.0" layoutY="75.0" mnemonicParsing="false" onAction="#home_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="login_button">
+            <Button fx:id="home_button1" layoutX="9.0" layoutY="75.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="login_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="login_button">
                      <image>
@@ -88,7 +87,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="search_button1" layoutX="10.0" layoutY="134.0" mnemonicParsing="false" onAction="#search_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="search_button1" layoutX="10.0" layoutY="134.0" mnemonicParsing="false" onAction="#goToSearch" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -97,7 +96,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="timetable_button1" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#timetable_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="timetable_button1" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#goToTimetable" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -106,7 +105,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="dashboard_button1" layoutX="10.0" layoutY="259.0" mnemonicParsing="false" onAction="#dashboard_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="dashboard_button1" layoutX="10.0" layoutY="259.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -115,7 +114,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="user_button1" layoutX="10.0" layoutY="613.0" mnemonicParsing="false" onAction="#user_account_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="user_button1" layoutX="10.0" layoutY="613.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -124,7 +123,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="logout_button1" layoutX="11.0" layoutY="673.0" mnemonicParsing="false" onAction="#logout_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="logout_button1" layoutX="11.0" layoutY="673.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -133,7 +132,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="43.0" layoutX="-1.0" layoutY="189.0" stroke="#8f8f8f00" strokeType="INSIDE" styleClass="rect_fill" width="58.0" />
          </children>
       </AnchorPane>
    </left>
