@@ -24,8 +24,8 @@ import javafx.stage.Stage;
  *
  * @author Ming
  */
-public class search_module implements Initializable{
-    
+public class search_module implements Initializable,ControlledScreen{
+    ScreenController myController;
     @FXML
     private Button exit_button;
     
@@ -41,4 +41,22 @@ public class search_module implements Initializable{
         stage.close();
         Platform.exit();
     }
+
+    @Override
+    public void setScreenParent(ScreenController screenParent) {
+        myController = screenParent; //To change body of generated methods, choose Tools | Templates.
+    }
+    @FXML
+    private void goToHomepage(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
+    }
+    @FXML
+    private void goToSearch(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.searchScreen); 
+    }
+    @FXML
+    private void goToTimetable(ActionEvent event){
+        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
+    }
+    
 }
