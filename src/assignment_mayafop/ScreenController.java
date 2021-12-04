@@ -59,28 +59,10 @@ public class ScreenController extends StackPane{
                 final DoubleProperty opacity = opacityProperty();
                 
                 if(!getChildren().isEmpty()){
-                    Timeline fade = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(opacity,1.0)),
-                        new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>(){
-                        @Override
-                        public void handle(ActionEvent t){
                             getChildren().remove(0);
                             getChildren().add(0, screens.get(name));
-                            Timeline fadeIn = new Timeline(
-                                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                                    new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
-                           fadeIn.play();
-                        }
-                        }, new KeyValue(opacity, 0.0)));
-                            fade.play();
                 }else{
-                    setOpacity(0.0);
                     getChildren().add(screens.get(name));
-                    Timeline fadeIn = new Timeline(
-                            new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                            new KeyFrame(new Duration(2500), new KeyValue(opacity, 1.0))
-                    );
-                    fadeIn.play();
                 }
                 return true;
             }else{
@@ -94,35 +76,17 @@ public class ScreenController extends StackPane{
                 final DoubleProperty opacity = opacityProperty();
                 
                 if(!getChildren().isEmpty()){
-                    Timeline fade = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(opacity,1.0)),
-                        new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>(){
-                        @Override
-                        public void handle(ActionEvent t){
                             getChildren().remove(0);
                             getChildren().add(0, screens.get(name));
-                            Timeline fadeIn = new Timeline(
-                                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                                    new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
-                           fadeIn.play();
-                        }
-                        }, new KeyValue(opacity, 0.0)));
-                            fade.play();
                 }else{
-                    setOpacity(0.0);
                     getChildren().add(screens.get(name));
-                    Timeline fadeIn = new Timeline(
-                            new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                            new KeyFrame(new Duration(2500), new KeyValue(opacity, 1.0))
-                    );
-                    fadeIn.play();
                 }
                 return true;
             }else{
                     System.out.println("Screen hasn't been loaded");
                     return false;
-                    
                 }
+//           
             }
         
         public boolean unloadScreen(String name){
