@@ -28,13 +28,21 @@ import javafx.stage.StageStyle;
  */
 public class Assignment_MayaFOP extends Application{
     public static String loginScreen = "login";
-    public static String loginScreenFile = "login.fxml";
     public static String homepageScreen = "home_page";
-    public static String homepageScreenFile = "home_page.fxml";
     public static String searchScreen = "search_module";
-    public static String searchScreenFile = "search_module.fxml";
     public static String timetableScreen = "timetable";
+    public static String dashboardScreen = "dashboard";
+    public static String userStudentScreen = "user_account";
+    public static String userStaffScreen = "user_account_staff";
+    public static String controlCenter = "control_center";
+    
+    public static String loginScreenFile = "login.fxml";
+    public static String homepageScreenFile = "home_page.fxml";
+    public static String searchScreenFile = "search_module.fxml";
     public static String timetableScreenFile = "timetable.fxml";
+    public static String dashboardScreenFile = "dashboard.fxml";
+    public static String userStudentScreenFile = "user_account.fxml";
+    public static String userStaffScreenFile = "user_account_staff.fxml";
     
     
     public static void main(String[] args) {
@@ -50,6 +58,9 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.homepageScreen, Assignment_MayaFOP.homepageScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.userStudentScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.userStaffScreenFile);
         
         mainContainer.setScreen(Assignment_MayaFOP.loginScreen);
         
@@ -60,11 +71,7 @@ public class Assignment_MayaFOP extends Application{
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.getIcons().add(icon);
         primaryStage.setScene(scene);
-        primaryStage.show();
-        
-
-
-        
+        primaryStage.show(); 
 
     }
 

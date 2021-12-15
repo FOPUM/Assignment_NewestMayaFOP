@@ -54,22 +54,22 @@ public class ScreenController extends StackPane{
         
     }
         
-        public boolean setStage (final String name){
-         if (screens.get(name)!= null){
-                final DoubleProperty opacity = opacityProperty();
-                
-                if(!getChildren().isEmpty()){
-                            getChildren().remove(0);
-                            getChildren().add(0, screens.get(name));
-                }else{
-                    getChildren().add(screens.get(name));
-                }
-                return true;
-            }else{
-                    System.out.println("Screen hasn't been loaded");
-                    return false;
-                }
-            }
+//        public boolean setStage (final String name){
+//         if (screens.get(name)!= null){
+//                final DoubleProperty opacity = opacityProperty();
+//                
+//                if(!getChildren().isEmpty()){
+//                            getChildren().remove(0);
+//                            getChildren().add(0, screens.get(name));
+//                }else{
+//                    getChildren().add(screens.get(name));
+//                }
+//                return true;
+//            }else{
+//                    System.out.println("Screen hasn't been loaded");
+//                    return false;
+//                }
+//            }
     
         public boolean setScreen (final String name){
             if (screens.get(name)!= null){

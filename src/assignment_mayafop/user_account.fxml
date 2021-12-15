@@ -145,7 +145,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="home_button1" layoutX="9.0" layoutY="75.0" mnemonicParsing="false" onAction="#home_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="login_button">
+            <Button fx:id="home_button1" layoutX="9.0" layoutY="75.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="login_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="login_button">
                      <image>
@@ -154,7 +154,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="search_button1" layoutX="10.0" layoutY="134.0" mnemonicParsing="false" onAction="#search_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="search_button1" layoutX="10.0" layoutY="134.0" mnemonicParsing="false" onAction="#goToSearch" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -163,7 +163,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="timetable_button1" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#timetable_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="timetable_button1" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#goToTimetable" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -172,7 +172,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="dashboard_button1" layoutX="10.0" layoutY="259.0" mnemonicParsing="false" onAction="#dashboard_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="dashboard_button1" layoutX="10.0" layoutY="259.0" mnemonicParsing="false" onAction="#goToDashboard" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -181,7 +181,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="user_button1" layoutX="10.0" layoutY="613.0" mnemonicParsing="false" onAction="#user_account_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="user_button1" layoutX="10.0" layoutY="613.0" mnemonicParsing="false" onAction="#goToUserAccount" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -190,7 +190,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="logout_button1" layoutX="11.0" layoutY="673.0" mnemonicParsing="false" onAction="#logout_button_on_action" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="logout_button1" layoutX="11.0" layoutY="673.0" mnemonicParsing="false" onAction="#logOut" prefHeight="20.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
