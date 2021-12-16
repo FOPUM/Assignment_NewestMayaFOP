@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.control_center">
    <center>
-      <AnchorPane prefHeight="725.0" prefWidth="922.0" BorderPane.alignment="CENTER">
+      <AnchorPane preHeight="725.0" prefWidth="922.0" BorderPane.alignment="CENTER">
          <children>
             <Text layoutX="53.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Account">
                <font>
@@ -127,7 +127,7 @@
                   <Image url="@homePageImage/Taskbar.png" />
                </image>
             </ImageView>
-            <Button fx:id="back_button" layoutX="7.0" layoutY="13.0" mnemonicParsing="false" onAction="#back_button" prefHeight="9.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
+            <Button fx:id="back_button" layoutX="7.0" layoutY="13.0" mnemonicParsing="false" prefHeight="9.0" prefWidth="25.0" style="-fx-background-color: transparent;" styleClass="nav_button">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
