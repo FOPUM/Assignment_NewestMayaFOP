@@ -29,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 /**
@@ -112,11 +113,17 @@ public class login_controller implements Initializable,ControlledScreen{
     public void sign_up_button_on_action(ActionEvent event) {
         //Codes to open signup page
         try {          
-            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signup_student.fxml"));
+            Stage stage = (Stage) signup_button.getScene().getWindow();
+            BoxBlur boxBlur = new BoxBlur();
+            boxBlur.setWidth(5);
+            boxBlur.setHeight(5);
+            boxBlur.setIterations(5);
+            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signupStudent.fxml"));
             Stage register_stage = new Stage();
             register_stage.initStyle(StageStyle.UNDECORATED);
             register_stage.setTitle("Signup");
             register_stage.setScene(new Scene(root));
+//            stage.setEffect(boxBlur);
             register_stage.show();
            
             

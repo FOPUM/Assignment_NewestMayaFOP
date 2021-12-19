@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -36,14 +37,21 @@ public class Assignment_MayaFOP extends Application{
     public static String userStaffScreen = "user_account_staff";
     public static String controlCenter = "control_center";
     
-    public static String loginScreenFile = "login.fxml";
-    public static String homepageScreenFile = "home_page.fxml";
-    public static String searchScreenFile = "search_module.fxml";
-    public static String timetableScreenFile = "timetable.fxml";
-    public static String dashboardScreenFile = "dashboard.fxml";
-    public static String userStudentScreenFile = "user_account.fxml";
-    public static String userStaffScreenFile = "user_account_staff.fxml";
+//    public static String loginScreenFile = "login.fxml";
+//    public static String homepageScreenFile = "home_page.fxml";
+//    public static String searchScreenFile = "search_module.fxml";
+//    public static String timetableScreenFile = "timetable.fxml";
+//    public static String dashboardScreenFile = "dashboard.fxml";
+//    public static String userStudentScreenFile = "user_account.fxml";
+//    public static String userStaffScreenFile = "user_account_staff.fxml";
+   
     
+    public static String loginScreenFile = "/Assignment_MayaFOP/newlogin.fxml";
+    public static String homepageScreenFile = "homePage.fxml";
+    public static String searchScreenFile = "/Assignment_MayaFOP/searchModule.fxml";
+    public static String timetableScreenFile = "/Assignment_MayaFOP/timetable.fxml";
+    public static String userStudentScreenFile = "/Assignment_MayaFOP/userAccount.fxml";
+//    public static String userAccountScreenFile = "/Assignment_MayaFOP/fxml_file/u.fxml";
     
     public static void main(String[] args) {
         launch(args);
@@ -53,26 +61,28 @@ public class Assignment_MayaFOP extends Application{
     public void start(Stage primaryStage) throws Exception {
         //Start login page      
         
+        
         ScreenController mainContainer = new ScreenController();
         mainContainer.loadScreen(Assignment_MayaFOP.loginScreen, Assignment_MayaFOP.loginScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.homepageScreen, Assignment_MayaFOP.homepageScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
-        mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
+//        mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.userStudentScreenFile);
-        mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.userStaffScreenFile);
+//        mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.userStaffScreenFile);
         
         mainContainer.setScreen(Assignment_MayaFOP.loginScreen);
         
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);
-        Image icon = new Image("/Assignment_MayaFOP/icon.png");
+        Image icon = new Image("/Assignment_MayaFOP/Images/icon.png");
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.getIcons().add(icon);
         primaryStage.setScene(scene);
         primaryStage.show(); 
 
     }
-
+    
+    
 }

@@ -24,7 +24,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -135,7 +137,7 @@ public class register_control implements Initializable,ControlledScreen {
     private Scene scene;
     private Parent root;
     public void switch_to_staff(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("signup_staff.fxml"));
+        root = FXMLLoader.load(getClass().getResource("signupStaff.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -143,7 +145,7 @@ public class register_control implements Initializable,ControlledScreen {
     }
     
     public void switch_to_student(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("signup_student.fxml"));
+        root = FXMLLoader.load(getClass().getResource("signupStudent.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

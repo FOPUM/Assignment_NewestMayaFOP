@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="278.0" layoutX="67.0" layoutY="161.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="366.0">
+         <effect>
+            <DropShadow offsetX="10.0" offsetY="10.0">
+               <color>
+                  <Color red="0.7019608020782471" green="0.7019608020782471" blue="0.7019608020782471" opacity="0.30000001192092896" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Label layoutX="148.0" layoutY="91.0" text="Course taken">
+         <font>
+            <Font name="Futura Heavy BT" size="32.0" />
+         </font>
+      </Label>
+      <Button layoutX="72.0" layoutY="487.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="356.0" text="Confirm" textFill="WHITE">
+         <font>
+            <Font name="Futura Medium BT" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="99.0" layoutY="198.0" text="GLT2014&#9;Advanced English Writing&#9;&#9;&#9;&#9;2&#10;&#10;GIG1023&#9;Philoshopies and current issuesv&#9;&#9;&#9;11&#10;&#10;WIX1002&#9;Fundamental of Programming&#9;&#9;&#9;12&#10;&#10;WIX1001&#9;Computing Mathematics&#9;&#9;&#9;&#9;23&#10;&#10;WIX1003&#9;Computer System and Organization&#9;&#9;1&#10;&#10;WIA2001&#9;Human Computer Interaction &#9;&#9;&#9;2&#10;">
+         <font>
+            <Font name="Futura Light BT" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

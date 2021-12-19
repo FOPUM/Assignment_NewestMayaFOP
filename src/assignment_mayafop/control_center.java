@@ -76,8 +76,8 @@ public class control_center implements Initializable, ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        home_page home = new home_page();
-        home.slider_animation(pane2, pane3, pane4);
+//        home_page home = new home_page();
+//        home.slider_animation(pane2, pane3, pane4);
         
     }
     
