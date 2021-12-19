@@ -71,6 +71,7 @@ public class login_controller implements Initializable,ControlledScreen{
         
         if(validated == 1){
             myController.setScreen(Assignment_MayaFOP.homepageScreen); 
+            System.out.println("Hello");
         }
     }
     
@@ -87,7 +88,7 @@ public class login_controller implements Initializable,ControlledScreen{
         database_connection connectNow = new database_connection();
         Connection connectDB = connectNow.getConnection();
         
-        String verify_login = "SELECT COUNT(1) FROM user_account WHERE matric_id='" + username_text_field.getText() + "' AND password='" + password_field.getText() + "';";
+        String verify_login = "SELECT COUNT(1) FROM student WHERE matric_num='" + username_text_field.getText() + "' AND password='" + password_field.getText() + "';";
         
         try {
             Statement statement = connectDB.createStatement();
