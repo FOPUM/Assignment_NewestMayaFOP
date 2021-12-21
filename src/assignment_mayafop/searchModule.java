@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author Ming
  */
-public class search_module implements Initializable,ControlledScreen{
+public class searchModule implements Initializable,ControlledScreen{
     ScreenController myController;
     @FXML
     private Button exit_button;

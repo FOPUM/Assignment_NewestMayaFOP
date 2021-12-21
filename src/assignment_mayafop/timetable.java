@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  *
  * @author kwany
  */
-public class timetable_control implements Initializable, ControlledScreen {
+public class timetable implements Initializable, ControlledScreen {
     ScreenController myController;
     private Button exit_button;
     @Override

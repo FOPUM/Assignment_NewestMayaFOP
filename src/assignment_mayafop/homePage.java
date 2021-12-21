@@ -43,7 +43,7 @@ import javafx.stage.StageStyle;
  *
  * @author Ming
  */
-public class home_page implements Initializable, ControlledScreen{
+public class homePage implements Initializable, ControlledScreen{
     
     private Button exit_button;
     ScreenController myController;
@@ -69,9 +69,7 @@ public class home_page implements Initializable, ControlledScreen{
 //        timeline.setCycleCount(timeline.INDEFINITE);
 //        timeline.play();
 //    }
-    
-    
-    
+  
     public void slider_animation(Pane pane2, Pane pane3, Pane pane4) {
         FadeTransition fade_transition = new FadeTransition(Duration.seconds(1),pane4);
         fade_transition.setFromValue(1);
@@ -130,29 +128,14 @@ public class home_page implements Initializable, ControlledScreen{
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
-
-    public void goToLogin(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.loginScreen); 
-    }
-    
-    public void goToHomepage(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
-    }
-
-    public void goToSearch(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.searchScreen); 
+    public void goToAnnouncement(ActionEvent event)throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("announcement.fxml"));
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-    public void goToTimetable(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
-    }
-    
-    public void exit_button(ActionEvent event) {
-        //Click on exit button to exit       
-        Stage stage = (Stage) exit_button.getScene().getWindow();
-        stage.close();
-        Platform.exit();
-    } 
 
     
     

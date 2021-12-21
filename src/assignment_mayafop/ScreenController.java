@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import java.io.IOException;
 import java.util.HashMap;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
@@ -12,18 +13,25 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 import javafx.beans.property.DoubleProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author kwany
  */
 public class ScreenController extends StackPane{
+    
+    
+    
+    
     private HashMap<String, Node> screens = new HashMap<>();
     
     
@@ -54,30 +62,12 @@ public class ScreenController extends StackPane{
         
     }
         
-//        public boolean setStage (final String name){
-//         if (screens.get(name)!= null){
-//                final DoubleProperty opacity = opacityProperty();
-//                
-//                if(!getChildren().isEmpty()){
-//                            getChildren().remove(0);
-//                            getChildren().add(0, screens.get(name));
-//                }else{
-//                    getChildren().add(screens.get(name));
-//                }
-//                return true;
-//            }else{
-//                    System.out.println("Screen hasn't been loaded");
-//                    return false;
-//                }
-//            }
-    
-        public boolean setScreen (final String name){
-            if (screens.get(name)!= null){
+        public boolean setStage (final String name) throws IOException{
+         if (screens.get(name)!= null){
                 final DoubleProperty opacity = opacityProperty();
                 
                 if(!getChildren().isEmpty()){
-                            getChildren().remove(0);
-                            getChildren().add(0, screens.get(name));
+                    
                 }else{
                     getChildren().add(screens.get(name));
                 }
@@ -86,18 +76,39 @@ public class ScreenController extends StackPane{
                     System.out.println("Screen hasn't been loaded");
                     return false;
                 }
-//           
             }
-        
-        public boolean unloadScreen(String name){
-            if(screens.remove(name) == null){
-                System.out.println("Screen didn't exist");
-                return false;
+    
+    public boolean setScreen (final String name){
+        if (screens.get(name)!= null){
+            final DoubleProperty opacity = opacityProperty();
+
+            if(!getChildren().isEmpty()){
+                        getChildren().remove(0);
+                        getChildren().add(0, screens.get(name));
             }else{
-                return true;
+                getChildren().add(screens.get(name));
             }
+            return true;
+        }else{
+                System.out.println("Screen hasn't been loaded");
+                return false;
+            }
+//           
         }
 
+    public boolean unloadScreen(String name){
+        if(screens.remove(name) == null){
+            System.out.println("Screen didn't exist");
+            return false;
+        }else{
+            return true;
         }
+    }
     
+    public void closeStage(){
+        
+    }
+
+    }
+
 

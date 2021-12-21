@@ -21,20 +21,10 @@
                   <Image url="@Images/wave.png" />
                </image>
             </ImageView>
-            <Button layoutX="615.0" layoutY="439.0" mnemonicParsing="false" onAction="#goToAnnouncement" prefHeight="281.0" prefWidth="443.0" styleClass="buttonpane" />
-            <ImageView fitHeight="454.0" fitWidth="466.0" layoutX="281.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Images/maya%20logo.png" />
-               </image>
-            </ImageView>
+            <Button layoutX="615.0" layoutY="439.0" mnemonicParsing="false" prefHeight="281.0" prefWidth="443.0" styleClass="buttonpane" />
             <Label layoutX="137.0" layoutY="153.0" text="Maya 2.0">
                <font>
                   <Font name="Futura Heavy BT" size="30.0" />
-               </font>
-            </Label>
-            <Label layoutX="137.0" layoutY="199.0" text="The brand new Maya Timetable system&#10;give u total refreshing way of registering&#10;your courses and modules while adding&#10;some extra features to help the users&#10;in using the system better.">
-               <font>
-                  <Font name="Futura Light BT" size="14.0" />
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="305.0" layoutX="531.0" layoutY="37.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="471.0">
@@ -61,7 +51,6 @@
                   <Font name="Futura Light BT" size="14.0" />
                </font>
             </Text>
-            <Button layoutX="615.0" layoutY="439.0" mnemonicParsing="false" onAction="#goToAnnouncement" prefHeight="281.0" prefWidth="443.0" style="-fx-background-color: transparent;" styleClass="buttonpane" />
          </children>
       </AnchorPane>
    </center>

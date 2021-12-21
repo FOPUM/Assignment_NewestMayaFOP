@@ -59,7 +59,7 @@ public class login_controller implements Initializable,ControlledScreen{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
     }
-    int validated = 0; 
+    int validated = 1; 
     public void login_button_on_action(ActionEvent event) throws IOException {
         //Click on login button
         if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
@@ -70,8 +70,7 @@ public class login_controller implements Initializable,ControlledScreen{
         //Create home page
         
         if(validated == 1){
-            myController.setScreen(Assignment_MayaFOP.homepageScreen); 
-            System.out.println("Hello");
+            myController.setScreen(Assignment_MayaFOP.controlCenter); 
         }
     }
     
@@ -114,17 +113,11 @@ public class login_controller implements Initializable,ControlledScreen{
     public void sign_up_button_on_action(ActionEvent event) {
         //Codes to open signup page
         try {          
-            Stage stage = (Stage) signup_button.getScene().getWindow();
-            BoxBlur boxBlur = new BoxBlur();
-            boxBlur.setWidth(5);
-            boxBlur.setHeight(5);
-            boxBlur.setIterations(5);
             Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signupStudent.fxml"));
             Stage register_stage = new Stage();
             register_stage.initStyle(StageStyle.UNDECORATED);
             register_stage.setTitle("Signup");
             register_stage.setScene(new Scene(root));
-//            stage.setEffect(boxBlur);
             register_stage.show();
            
             
@@ -137,19 +130,6 @@ public class login_controller implements Initializable,ControlledScreen{
     @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @FXML
-    public void goToHomepage(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
-    }
-    @FXML
-    public void goToSearch(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.searchScreen); 
-    }
-    @FXML
-    public void goToTimetable(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
     }
    
 }

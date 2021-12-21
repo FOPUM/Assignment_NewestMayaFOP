@@ -26,6 +26,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -34,6 +36,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -42,7 +45,7 @@ import javafx.util.Duration;
  *
  * @author Ming
  */
-public class control_center implements Initializable, ControlledScreen{
+public class controlCenter implements Initializable, ControlledScreen{
     
     @FXML
     private Button exit_button;
@@ -71,6 +74,9 @@ public class control_center implements Initializable, ControlledScreen{
     private Pane pane4;
     
     ScreenController myController;
+    
+    @FXML
+    private StackPane contentArea;
    
             
     
@@ -78,6 +84,15 @@ public class control_center implements Initializable, ControlledScreen{
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        home_page home = new home_page();
 //        home.slider_animation(pane2, pane3, pane4);
+
+        Parent fxml = null;
+        try {
+            fxml = FXMLLoader.load(getClass().getResource("homePage.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(controlCenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        contentArea.getChildren().removeAll();
+        contentArea.getChildren().setAll(fxml);
         
     }
     
@@ -86,42 +101,51 @@ public class control_center implements Initializable, ControlledScreen{
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
-
-    public void goToLogin(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.loginScreen); 
-    }
-    
-    public void goToHomepage(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
-    }
-
-    public void goToSearch(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.searchScreen); 
-    }
-
-    public void goToTimetable(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
-    }
-    
-    public void goToDashboard(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.dashboardScreen); 
-    }
-    
-    public void goToUserAccount(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.userStudentScreen); 
-    }
     
     public void logOut(ActionEvent event){
         myController.setScreen(Assignment_MayaFOP.dashboardScreen); 
     }
     
-    public void exit_button(ActionEvent event) {
+    public void exitButton(ActionEvent event) {
         //Click on exit button to exit       
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
         Platform.exit();
     } 
-
+    
+    public void goToHomepage(ActionEvent event) throws IOException{
+        swapScreen("homePage.fxml");
+    }
+    
+    public void goToSearch(ActionEvent event) throws IOException{
+        swapScreen("searchModule.fxml");
+    }
+    
+    public void goToTimetable(ActionEvent event)throws IOException{
+        swapScreen("timetable.fxml");
+    }
+    
+    public void goToDashboard(ActionEvent event)throws IOException{
+        swapScreen("dashboard.fxml");
+    }
+    
+    public void goToUserAccount(ActionEvent event)throws IOException{
+        swapScreen("userAccount.fxml");
+    }
+    
+    public void goToLogout(ActionEvent event)throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/Assignment_MayaFOP/logoutConfirmation.fxml"));
+        Stage register_stage = new Stage();
+        register_stage.initStyle(StageStyle.UNDECORATED);
+        register_stage.setScene(new Scene(root));
+        register_stage.show();
+    }
+    
+    public void swapScreen(String fxmlfile)throws IOException{
+        Parent fxml = FXMLLoader.load(getClass().getResource(fxmlfile));
+        contentArea.getChildren().removeAll();
+        contentArea.getChildren().setAll(fxml);
+    }
 
     
     

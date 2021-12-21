@@ -1,0 +1,101 @@
+.button
+{
+    -fx-background-color:linear-gradient(to left, #08194F, #193270);
+    -fx-background-radius: 30px;
+}
+
+.button:hover
+{
+    -fx-opacity: 0.8;
+}
+
+.button:pressed
+{
+    -fx-opacity: 1.0;
+    -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
+    -fx-padding: 5 10 3 10;
+}
+
+.declinebutton
+{
+    -fx-background-color:transparent;
+    -fx-background-radius: 30px;
+    -fx-border-color:#08194F;
+    -fx-border-width: 3px;
+}
+
+.navbutton
+{
+    -fx-background-color: transparent;
+    -fx-background-radius: 30px;
+}
+
+.navbutton:hover
+{
+    -fx-opacity: 0.8;
+}
+
+.navbutton:pressed
+{
+    -fx-opacity: 1.0;
+    -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
+    -fx-padding: 5 10 3 10;
+}
+
+.textbutton
+{
+    -fx-background-color: transparent;
+    -fx-background-radius: 30px;
+}
+
+.textbutton:hover
+{
+    -fx-opacity: 0.8;
+}
+
+.textbutton:pressed
+{
+    -fx-opacity: 1.0;
+    -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
+    -fx-padding: 5 10 3 10;
+}
+
+.textfield
+{
+    -fx-background-color: #DDE1E8;
+    -fx-background-radius: 30px;
+    -fx-letter-spacing: 10px;
+}
+
+.whitetextfield
+{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 30px;
+    -fx-letter-spacing: 10px;
+    -fx-opacity: 0.8;
+}
+
+.paneBackground
+{
+    -fx-background-color:linear-gradient(to left, #B4BACA, transparent);
+}
+.rect
+{
+    -fx-background-color:#FFFFFF;
+    -fx-arc-height: 60px;
+    -fx-arc-width: 60px;
+}
+
+.image
+{
+    -fx-background-radius: 60px;
+}
+
+.buttonpane
+{
+    -fx-background-color:#FFFFFF;
+    -fx-arc-height: 0px;
+    -fx-arc-width: 0px;
+    -fx-background-radius: 0px;
+    -fx-opacity:0.8;
+}
