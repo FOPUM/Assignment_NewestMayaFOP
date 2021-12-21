@@ -26,7 +26,6 @@ import javafx.stage.StageStyle;
  * @author Ming
  */
 public class verifyLogout implements Initializable, ControlledScreen{
-    
     @FXML
     private Button no_button;
     
@@ -35,35 +34,65 @@ public class verifyLogout implements Initializable, ControlledScreen{
     
     ScreenController myController;
     Stage primaryStage;
-    
+    boolean pp = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
     }
     
+    public void setBoolean(boolean boo){
+        pp = boo;
+    }
+    
+    public  boolean getBoolean(boolean boo){
+        return pp;
+    }
     @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void no_on_verify_logout_button(ActionEvent event) {
+    public void button_handler(ActionEvent event) {
+        if (event.getSource()== no_button) {
+            Stage stage = (Stage) no_button.getScene().getWindow();
+            stage.close();
+        }
+        if (event.getSource()== yes_button) {
+            Stage stage = (Stage) yes_button.getScene().getWindow();
+            stage.close();
+            setBoolean(true);
+//            myController.setScreen(Assignment_MayaFOP.loginScreen);
+        }
         //Click on back button to exit 
-        Stage stage = (Stage) no_button.getScene().getWindow();
-        stage.close();
+        
     }
     
-    public void yes_on_verify_logout_button(ActionEvent event) throws IOException {
+//    public void yes_on_verify_logout_button(ActionEvent event) throws IOException {
         
-        Stage stage = (Stage) yes_button.getScene().getWindow();
-        stage.close();
-        myController.setScreen(Assignment_MayaFOP.loginScreen);
-        
-        Group root = new Group();
-        root.getChildren().addAll(myController);
-        Scene scene = new Scene(root);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setScene(scene);
-        primaryStage.show(); 
+//            Stage stage = (Stage) yes_button.getScene().getWindow();
+//            stage.close();
+//            myController.setScreen(Assignment_MayaFOP.loginScreen);
+//            setBoolean(true);
+//            try {
+//                myController.setScreen(Assignment_MayaFOP.loginScreen);
+//
+//                } catch (Exception e) {
+//                    System.out.println(e);
+//                System.out.println("Underlying exception: " + e.getMessage());  
+//                }
+//            try {
+//                fdsa.goToLogin(event);
+//            
+//        } catch (Exception e) {
+//                System.out.println(e);
+//        }
+//        return true;
+//        Group root = new Group();
+//        root.getChildren().addAll(myController);
+//        Scene scene = new Scene(root);
+//        primaryStage.initStyle(StageStyle.UNDECORATED);
+//        primaryStage.setScene(scene);
+//        primaryStage.show(); 
         
     }
-}
+

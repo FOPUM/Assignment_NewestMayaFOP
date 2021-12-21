@@ -38,6 +38,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
@@ -46,7 +47,8 @@ import javafx.util.Duration;
  * @author Ming
  */
 public class controlCenter implements Initializable, ControlledScreen{
-    
+    Assignment_MayaFOP op;
+    ;
     @FXML
     private Button exit_button;
     @FXML
@@ -61,6 +63,8 @@ public class controlCenter implements Initializable, ControlledScreen{
     private Button timetable_button;
     @FXML
     private Button dashboard_button;
+    @FXML
+    private Button logout_button;
     
     @FXML Rectangle rectmaya;
     
@@ -113,6 +117,10 @@ public class controlCenter implements Initializable, ControlledScreen{
         Platform.exit();
     } 
     
+    public void goToLogin(ActionEvent event)throws IOException{
+        swapScreen("login.fxml");
+    }
+    
     public void goToHomepage(ActionEvent event) throws IOException{
         swapScreen("homePage.fxml");
     }
@@ -133,12 +141,22 @@ public class controlCenter implements Initializable, ControlledScreen{
         swapScreen("userAccount.fxml");
     }
     
-    public void goToLogout(ActionEvent event)throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/Assignment_MayaFOP/logoutConfirmation.fxml"));
+    public void goToLogout(ActionEvent event)throws IOException{   
+         FXMLLoader loader = new FXMLLoader();
+          loader.setLocation(getClass().getResource("/Assignment_MayaFOP/logoutConfirmation.fxml"));
+        Parent root = loader.load();
+        verifyLogout vLcontroller = loader.getController();
         Stage register_stage = new Stage();
+        register_stage.initModality(Modality.APPLICATION_MODAL);
         register_stage.initStyle(StageStyle.UNDECORATED);
         register_stage.setScene(new Scene(root));
-        register_stage.show();
+        register_stage.showAndWait();
+        
+        if (vLcontroller.pp) {
+            myController.setScreen(Assignment_MayaFOP.loginScreen);
+            vLcontroller.setBoolean(false);
+        }
+        
     }
     
     public void swapScreen(String fxmlfile)throws IOException{

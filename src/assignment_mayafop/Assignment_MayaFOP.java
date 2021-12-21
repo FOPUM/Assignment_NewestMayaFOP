@@ -28,6 +28,8 @@ import javafx.stage.StageStyle;
  * @author kwany
  */
 public class Assignment_MayaFOP extends Application{
+    boolean pp = true;
+    
     public static String loginScreen = "login";
     public static String homepageScreen = "homePage";
     public static String searchScreen = "searchModule";
@@ -35,6 +37,7 @@ public class Assignment_MayaFOP extends Application{
     public static String dashboardScreen = "dashboard";
     public static String userScreen = "userAccount";
     public static String controlCenter = "controlCenter";
+    public static String  validateLogout = "validateLogout";
     
     public static String loginScreenFile = "/Assignment_MayaFOP/login.fxml";
     public static String homepageScreenFile = "/Assignment_MayaFOP/homePage.fxml";
@@ -46,6 +49,7 @@ public class Assignment_MayaFOP extends Application{
     public static String navigationFile = "/Assignment_MayaFOP/navigationBar.fxml";
     public static String signupStudentFile = "/Assignment_MayaFOP/signupStudent.fxml";
     public static String signupStaffFile = "/Assignment_MayaFOP/signupStaff.fxml";
+    public static String validateLogoutFile = "/Assignment_MayaFOP/logoutConfirmation.fxml";
     
 //    public static String announcementScreenFile = "/Assignment_MayaFOP/announcement.fxml";
 //    public static String moduleConfirmationScreenFile = "/Assignment_MayaFOP/moduleConfirmationMessage.fxml";
@@ -67,9 +71,10 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
-//        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStudentScreenFile);
-//        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStaffScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStudentScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStaffScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.validateLogout, Assignment_MayaFOP.validateLogoutFile);
         
         
         mainContainer.setScreen(Assignment_MayaFOP.loginScreen);

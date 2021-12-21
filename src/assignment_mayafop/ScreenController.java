@@ -80,7 +80,7 @@ public class ScreenController extends StackPane{
     
     public boolean setScreen (final String name){
         if (screens.get(name)!= null){
-            final DoubleProperty opacity = opacityProperty();
+            
 
             if(!getChildren().isEmpty()){
                         getChildren().remove(0);
@@ -105,9 +105,12 @@ public class ScreenController extends StackPane{
         }
     }
     
-    public void closeStage(){
-        
+    
+    public void removeScreen(String name){
+        getChildren().remove(screens.get(name));
+        System.out.println(name + " has been removed");
     }
+    
 
     }
 
