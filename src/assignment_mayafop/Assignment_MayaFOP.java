@@ -67,8 +67,8 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
-        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStudentScreenFile);
-        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStaffScreenFile);
+//        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStudentScreenFile);
+//        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStaffScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
         
         

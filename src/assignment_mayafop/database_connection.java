@@ -17,7 +17,7 @@ public class database_connection {
         // Connect to mayadb
         String database_name = "mayadb";
         String database_user = "root";
-        String database_password = "password";
+        String database_password = "";
         String url = "jdbc:mysql://localhost:3306/mayadb";
         
         try{
