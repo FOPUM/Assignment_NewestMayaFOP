@@ -35,7 +35,8 @@ public class Assignment_MayaFOP extends Application{
     public static String searchScreen = "searchModule";
     public static String timetableScreen = "timetable";
     public static String dashboardScreen = "dashboard";
-    public static String userScreen = "userAccount";
+    public static String userStudentScreen = "userAccount";
+    public static String userStaffScreen = "userAccount";
     public static String controlCenter = "controlCenter";
     public static String  validateLogout = "validateLogout";
     
@@ -71,8 +72,8 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
-        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStudentScreenFile);
-        mainContainer.loadScreen(Assignment_MayaFOP.userScreen, Assignment_MayaFOP.userStaffScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.userStudentScreen, Assignment_MayaFOP.userStudentScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.userStaffScreen, Assignment_MayaFOP.userStaffScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
         mainContainer.loadScreen(Assignment_MayaFOP.validateLogout, Assignment_MayaFOP.validateLogoutFile);
         

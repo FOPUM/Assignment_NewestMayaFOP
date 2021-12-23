@@ -16,6 +16,8 @@
     -fx-padding: 5 10 3 10;
 }
 
+
+
 .declinebutton
 {
     -fx-background-color:transparent;
@@ -41,7 +43,29 @@
     -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
     -fx-padding: 5 10 3 10;
 }
+.navbutton:focused
+{
+    -fx-background-color:linear-gradient(to left, #E4EAF9, #B4BACA);
+    -fx-background-radius: 30px;
+    -fx-border-color:transparent;
+}
+.logoutbutton
+{
+    -fx-background-color: transparent;
+    -fx-background-radius: 30px;
+}
 
+.logoutbutton:hover
+{
+    -fx-opacity: 0.8;
+}
+
+.logoutbutton:pressed
+{
+    -fx-opacity: 1.0;
+    -fx-background-insets: 2 0 -2 0,2 0 3 0,2 0 4 0,2 0 2 0;
+    -fx-padding: 5 10 3 10;
+}
 .textbutton
 {
     -fx-background-color: transparent;

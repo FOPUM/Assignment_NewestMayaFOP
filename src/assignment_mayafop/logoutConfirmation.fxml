@@ -17,7 +17,7 @@
             <Font name="Futura Medium BT" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="no_button" layoutX="40.0" layoutY="133.0" mnemonicParsing="false" onAction="#button_handler" prefHeight="28.0" prefWidth="220.0" style="-fx-background-color: B4BACA;" styleClass="declinebutton" text="No" textFill="#08194f">
+      <Button fx:id="no_button" layoutX="40.0" layoutY="133.0" mnemonicParsing="false" onAction="#button_handler" prefHeight="28.0" prefWidth="220.0" style="-fx-background-color: B4BACA; -fx-border-color: transparent;" styleClass="declinebutton" text="No" textFill="#08194f">
          <font>
             <Font name="Futura Medium BT" size="14.0" />
          </font>

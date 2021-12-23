@@ -22,14 +22,14 @@
          <children>
             <ImageView fitHeight="720.0" fitWidth="960.0" layoutX="320.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/.gif" />
+                  <Image url="@Images/small%20animated.gif" />
                </image>
             </ImageView>
             <Button fx:id="exit_button" contentDisplay="TOP" layoutX="1234.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit_button" prefHeight="32.0" prefWidth="29.0" style="-fx-background-color: transparent;" styleClass="nav_button" text=" ">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/white%20exit.png" />
+                        <Image url="@Images/white%20exit.png" />
                      </image>
                   </ImageView>
                </graphic></Button>

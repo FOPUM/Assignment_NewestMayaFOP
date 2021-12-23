@@ -55,9 +55,16 @@ public class homePage implements Initializable, ControlledScreen{
     private BorderPane homeScreen;
     boolean showing;
     
+    @FXML
+    private Pane image2;
+    @FXML
+    private Pane image3;
+    @FXML
+    private Pane image4;
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+        slider_animation(image2, image3, image4);
         
     }
     
@@ -78,42 +85,43 @@ public class homePage implements Initializable, ControlledScreen{
 //    }
   
     public void slider_animation(Pane pane2, Pane pane3, Pane pane4) {
-        FadeTransition fade_transition = new FadeTransition(Duration.seconds(1),pane4);
+        int duration = 5;
+        FadeTransition fade_transition = new FadeTransition(Duration.seconds(duration),pane4);
         fade_transition.setFromValue(1);
         fade_transition.setToValue(0);
         fade_transition.play();
         
         fade_transition.setOnFinished(event -> {
             
-            FadeTransition fade_transition1 = new FadeTransition(Duration.seconds(1),pane3);
+            FadeTransition fade_transition1 = new FadeTransition(Duration.seconds(duration),pane3);
             fade_transition1.setFromValue(1);
             fade_transition1.setToValue(0);
             fade_transition1.play();
             
                 fade_transition1.setOnFinished(event1 -> {
 
-                FadeTransition fade_transition2 = new FadeTransition(Duration.seconds(1),pane2);
+                FadeTransition fade_transition2 = new FadeTransition(Duration.seconds(duration),pane2);
                 fade_transition2.setFromValue(1);
                 fade_transition2.setToValue(0);
                 fade_transition2.play();
                 
                 fade_transition2.setOnFinished(event2 -> {
 
-                    FadeTransition fade_transition3 = new FadeTransition(Duration.seconds(1),pane2);
+                    FadeTransition fade_transition3 = new FadeTransition(Duration.seconds(duration),pane2);
                     fade_transition3.setToValue(1);
                     fade_transition3.setFromValue(0);
                     fade_transition3.play();
                     
                     fade_transition3.setOnFinished(event3 -> {
                         
-                        FadeTransition fade_transition4 = new FadeTransition(Duration.seconds(1),pane3);
+                        FadeTransition fade_transition4 = new FadeTransition(Duration.seconds(duration),pane3);
                         fade_transition4.setToValue(1);
                         fade_transition4.setFromValue(0);
                         fade_transition4.play();
 
                         fade_transition4.setOnFinished(event4 -> {
 
-                            FadeTransition fade_transition5 = new FadeTransition(Duration.seconds(1),pane4);
+                            FadeTransition fade_transition5 = new FadeTransition(Duration.seconds(duration),pane4);
                             fade_transition5.setToValue(1);
                             fade_transition5.setFromValue(0);
                             fade_transition5.play();
@@ -136,52 +144,7 @@ public class homePage implements Initializable, ControlledScreen{
     }
     
     public void goToAnnouncement(ActionEvent event){
-    if (showing) {
-            
-        }
-        else if (!showing){
-    
-            try {
-                BoxBlur boxBlur = new BoxBlur();
-            boxBlur.setWidth(10);
-            boxBlur.setHeight(10);
-            boxBlur.setIterations(3);
-            homeScreen.setEffect(boxBlur);
-                setShowing(true);
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/assignment_MayaFOP/announcement.fxml"));
-                Parent root = loader.load();
-                Stage stage = new Stage();
-                stage.initStyle(StageStyle.UNDECORATED);
-                
-                stage.setScene(new Scene(root));
-                stage.setAlwaysOnTop(true);
-                stage.showAndWait();
-                setShowing(false);
-                if (!showing) {
-                homeScreen.setEffect(null);
-            }
-                
-            } catch (Exception e) {
-            }
-        }
+        myController = new ScreenController();
+        myController.showPopupStage(homeScreen, "/assignment_MayaFOP/announcement.fxml");
     } 
-    public void setShowing(boolean showingset){
-        showing = showingset;
-    }
-
-    public void showAnnouncement(){
-//        Parent root = FXMLLoader.load(getClass().getResource("announcement.fxml"));
-//        Stage stage = new Stage();
-//        stage.initStyle(StageStyle.UNDECORATED);
-//        stage.setScene(new Scene(root));
-//        stage.show();
-    }
-
-
-    
-    
-    
-    
-   
 }

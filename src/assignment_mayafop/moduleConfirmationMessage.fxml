@@ -8,8 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="moduleConfirmationScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.moduleConfirmationMessageController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="278.0" layoutX="67.0" layoutY="161.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="366.0">
          <effect>
@@ -25,7 +24,7 @@
             <Font name="Futura Heavy BT" size="32.0" />
          </font>
       </Label>
-      <Button layoutX="72.0" layoutY="487.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="356.0" text="Confirm" textFill="WHITE">
+      <Button fx:id="confirmButton" layoutX="72.0" layoutY="487.0" mnemonicParsing="false" onAction="#confirmModule" prefHeight="28.0" prefWidth="356.0" text="Confirm" textFill="WHITE">
          <font>
             <Font name="Futura Medium BT" size="14.0" />
          </font>

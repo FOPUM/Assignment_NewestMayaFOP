@@ -79,27 +79,16 @@ public class register_control implements Initializable,ControlledScreen {
     
     
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Animation = new animation();
         if(!upScreenStatus){
-            fading(signupScreen);
-            fading(signupScreenStaff);
+            Animation.fading(signupScreen);
+            Animation.fading(signupScreenStaff);
         }
         
-    }
-    
-    public void fading(BorderPane pane){
-        FadeTransition fading = new FadeTransition();
-        fading.setNode(pane);
-        fading.setDuration(Duration.millis(100));
-        fading.setInterpolator(Interpolator.EASE_OUT);
-        fading.setFromValue(0);
-        fading.setToValue(1);
-        fading.play();
-    }
-    
+    }    
     
     public void cancel_button_on_action(ActionEvent event) {
         //Cancel button to back to login page
-
         Stage stage = (Stage) back_button.getScene().getWindow();
         stage.close();
     }
@@ -167,6 +156,7 @@ public class register_control implements Initializable,ControlledScreen {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+//        myController.setScreen(Assignment_MayaFOP.userStudentScreen);
     }
     
     public void switch_to_student(ActionEvent event) throws IOException {
@@ -175,6 +165,7 @@ public class register_control implements Initializable,ControlledScreen {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+//        myController.setScreen(Assignment_MayaFOP.userStaffScreen);
     }
 
     @Override

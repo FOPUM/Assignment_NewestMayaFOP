@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1060.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="searchScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1060.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.searchModule">
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="489.0" styleClass="paneBackground" BorderPane.alignment="CENTER">
          <children>
@@ -70,7 +70,7 @@
                   <Font name="Futura Light BT" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="883.0" layoutY="434.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Add" textFill="WHITE">
+            <Button layoutX="883.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Add" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
@@ -82,21 +82,33 @@
             </Label>
             <Label layoutX="869.0" layoutY="183.0" text="GLT1024&#10;WIX1002&#10;WIX1001&#10;WIX1003&#10;GIG1012&#10;WIA1005&#10;" AnchorPane.bottomAnchor="435.0" />
             <Button layoutX="817.0" layoutY="56.0" mnemonicParsing="false" styleClass="navbutton" />
-            <ImageView fitHeight="23.0" fitWidth="31.0" layoutX="839.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Asset%20151.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="23.0" fitWidth="31.0" layoutX="882.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Asset%20150.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="727.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Asset%20154.png" />
-               </image>
-            </ImageView>
+            <Button layoutX="837.0" layoutY="53.0" mnemonicParsing="false" styleClass="logoutbutton">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Asset%20151.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="883.0" layoutY="53.0" mnemonicParsing="false" styleClass="logoutbutton">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Asset%20150.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="725.0" layoutY="163.0" mnemonicParsing="false" styleClass="logoutbutton">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Asset%20154.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Line endX="-11.0" endY="344.0" layoutX="193.0" layoutY="284.0" startX="-11.0" startY="-156.0">
                <fill>
                   <LinearGradient endX="1.0" endY="1.0" startX="1.0">

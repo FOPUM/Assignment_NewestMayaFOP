@@ -97,7 +97,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="226.0" layoutY="147.0" text="Advanced Englsh Communication&#10;Fundamental of Programming&#10;Computing MAthematics&#10;Computer System and Organisation&#10;PHoloshophies and current issues&#10;Network technology foundation">
+            <Label layoutX="226.0" layoutY="147.0" text="Advanced Englsh Communication&#10;Fundamental of Programming&#10;Computing Mathematics&#10;Computer System and Organisation&#10;PHoloshophies and current issues&#10;Network technology foundation">
                <font>
                   <Font size="16.0" />
                </font>
