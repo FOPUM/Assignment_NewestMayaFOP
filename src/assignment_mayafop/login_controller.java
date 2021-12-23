@@ -57,7 +57,7 @@ public class login_controller implements Initializable,ControlledScreen{
     Stage home_stage;
     Scene home_scene;
     Parent home_root;
-    
+    boolean showing;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
@@ -123,13 +123,11 @@ public class login_controller implements Initializable,ControlledScreen{
             boxBlur.setHeight(10);
             boxBlur.setIterations(3);
             loginScreen.setEffect(boxBlur);
-            Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signupStudent.fxml"));
-            Stage register_stage = new Stage();
-            register_stage.initStyle(StageStyle.UNDECORATED);
-            register_stage.setTitle("Signup");
-            register_stage.setScene(new Scene(root));
-            register_stage.show();
-           
+            
+            showRegisterStage();
+            if (!showing) {
+                loginScreen.setEffect(null);
+            }
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -142,6 +140,31 @@ public class login_controller implements Initializable,ControlledScreen{
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
+    public void showRegisterStage(){
+        if (showing) {
+            
+        }
+        else if (!showing){
+            try {
+                System.out.println(showing);
+                setShowing(true);
+                Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signupStudent.fxml"));
+                Stage register_stage = new Stage();
+                register_stage.initStyle(StageStyle.UNDECORATED);
+                register_stage.setTitle("Signup");
+                register_stage.setScene(new Scene(root));
+                register_stage.setAlwaysOnTop(true);
+                register_stage.showAndWait();
+                setShowing(false);
+                
+            } catch (Exception e) {
+            }
+        }
+    }
+    
+    public void setShowing(boolean showingset){
+        showing = showingset;
+    }
     public void blur(BoxBlur b){   
         b = new BoxBlur();
         b.setWidth(10);
