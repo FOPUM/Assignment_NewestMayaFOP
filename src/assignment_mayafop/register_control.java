@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Statement;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,10 +29,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 /**
  *
@@ -37,6 +42,7 @@ import javafx.stage.StageStyle;
  */
 public class register_control implements Initializable,ControlledScreen {
     ScreenController myController;
+    animation Animation;
     @FXML
     private Button back_button;
     @FXML
@@ -61,16 +67,33 @@ public class register_control implements Initializable,ControlledScreen {
     private PasswordField confirm_password_field;
     @FXML
     private Label message_label;
-    
+    @FXML
+    private BorderPane signupScreen;
+    @FXML
+    private BorderPane signupScreenStaff;
     
     @FXML
     private TextField username_text_field;
     
-    
+    boolean upScreenStatus = false;
     
     
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//      
+        if(!upScreenStatus){
+            fading(signupScreen);
+            fading(signupScreenStaff);
+        }
+        
+    }
+    
+    public void fading(BorderPane pane){
+        FadeTransition fading = new FadeTransition();
+        fading.setNode(pane);
+        fading.setDuration(Duration.millis(100));
+        fading.setInterpolator(Interpolator.EASE_OUT);
+        fading.setFromValue(0);
+        fading.setToValue(1);
+        fading.play();
     }
     
     

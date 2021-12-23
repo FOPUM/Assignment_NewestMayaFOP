@@ -15,34 +15,34 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.register_control">
+<BorderPane fx:id="signupScreenStaff" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: transparent;" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.register_control">
+   <effect>
+      <DropShadow height="20.0" offsetX="10.0" offsetY="10.0" radius="9.5" width="20.0">
+         <color>
+            <Color opacity="0.30000001192092896" />
+         </color></DropShadow>
+   </effect>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="50.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="480.0" prefWidth="192.0" styleClass="leftpaneBackground" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="500.0" fitWidth="355.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Images/signupimage.png" />
-               </image>
-               <effect>
-                  <DropShadow height="20.0" offsetX="10.0" offsetY="10.0" radius="9.5" width="20.0">
-                     <color>
-                        <Color red="0.75" green="0.6909722089767456" blue="0.6909722089767456" opacity="0.4000000059604645" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </ImageView>
-            <Button fx:id="back_button" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutY="7.0" minHeight="12.0" minWidth="41.0" mnemonicParsing="false" onAction="#cancel_button_on_action" prefHeight="38.0" prefWidth="41.0" style="-fx-background-color: transparent;" styleClass="nav_button" wrapText="true">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="469.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="179.0" />
+            <Button fx:id="back_button" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutY="15.0" minHeight="12.0" minWidth="41.0" mnemonicParsing="false" onAction="#cancel_button_on_action" prefHeight="38.0" prefWidth="41.0" style="-fx-background-color: transparent;" styleClass="nav_button" wrapText="true">
                <graphic>
                   <ImageView fitHeight="33.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/back.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
-            <Button layoutX="13.0" layoutY="462.0" minWidth="39.0" mnemonicParsing="false" onAction="#switch_to_student" prefHeight="25.0" prefWidth="75.0" text="Student" textFill="WHITE">
+               </graphic>
+            </Button>
+            <Button layoutX="62.0" layoutY="412.0" minWidth="39.0" mnemonicParsing="false" onAction="#switch_to_student" prefHeight="25.0" prefWidth="75.0" text="Student" textFill="WHITE">
                <font>
                   <Font name="Futura Light BT" size="12.0" />
                </font>
@@ -56,19 +56,9 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="500.0" prefWidth="462.0" styleClass="paneBackground" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="paneBackground" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="message_label" layoutX="104.0" layoutY="452.0" textAlignment="CENTER" />
-            <Button fx:id="register_button" layoutX="97.0" layoutY="411.0" mnemonicParsing="false" onAction="#register_button_on_action" prefHeight="30.0" prefWidth="293.0" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Futura Heavy BT" size="12.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="\\" />
-                  <String fx:value="button" />
-               </styleClass>
-            </Button>
-            <HBox layoutX="-17.0" prefHeight="346.0" prefWidth="504.0">
+            <HBox layoutX="-74.0" prefHeight="346.0" prefWidth="505.0">
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
@@ -122,10 +112,17 @@
                   </StackPane>
                </children>
             </HBox>
+            <Button fx:id="register_button" layoutX="97.0" layoutY="411.0" mnemonicParsing="false" onAction="#register_button_on_action" prefHeight="30.0" prefWidth="293.0" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Futura Heavy BT" size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="\\" />
+                  <String fx:value="button" />
+               </styleClass>
+            </Button>
+            <Label fx:id="message_label" layoutX="104.0" layoutY="452.0" textAlignment="CENTER" />
          </children>
       </AnchorPane>
    </right>
-   <effect>
-      <DropShadow />
-   </effect>
 </BorderPane>

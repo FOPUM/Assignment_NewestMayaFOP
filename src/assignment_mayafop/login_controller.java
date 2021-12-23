@@ -26,12 +26,15 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 /**
  *
@@ -141,6 +144,7 @@ public class login_controller implements Initializable,ControlledScreen{
     }
     
     public void showRegisterStage(){
+
         if (showing) {
             
         }
@@ -164,12 +168,6 @@ public class login_controller implements Initializable,ControlledScreen{
     
     public void setShowing(boolean showingset){
         showing = showingset;
-    }
-    public void blur(BoxBlur b){   
-        b = new BoxBlur();
-        b.setWidth(10);
-        b.setHeight(3);
-        b.setIterations(3);
     }
    
 }

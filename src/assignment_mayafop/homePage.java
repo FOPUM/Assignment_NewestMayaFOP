@@ -34,7 +34,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
@@ -47,6 +49,9 @@ public class homePage implements Initializable, ControlledScreen{
     
     private Button exit_button;
     ScreenController myController;
+    
+    @FXML
+    private BorderPane homeScreen;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,6 +134,27 @@ public class homePage implements Initializable, ControlledScreen{
     }
     
     public void goToAnnouncement(ActionEvent event)throws IOException{
+        
+        
+        try {
+            BoxBlur boxBlur = new BoxBlur();
+            boxBlur.setWidth(10);
+            boxBlur.setHeight(10);
+            boxBlur.setIterations(3);
+            homeScreen.setEffect(boxBlur);
+            
+            showAnnouncement();
+            if (!showing) {
+                homeScreen.setEffect(null);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+    
+    public void showAnnouncement(){
         Parent root = FXMLLoader.load(getClass().getResource("announcement.fxml"));
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);

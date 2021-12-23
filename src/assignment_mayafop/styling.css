@@ -77,7 +77,12 @@
 
 .paneBackground
 {
-    -fx-background-color:linear-gradient(to left, #B4BACA, transparent);
+    -fx-background-color:linear-gradient(to left, #B4BACA, #FFFFFF);
+}
+
+.leftpaneBackground
+{
+    -fx-background-color:#FFFFFF;
 }
 .rect
 {
