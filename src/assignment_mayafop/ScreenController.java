@@ -28,7 +28,7 @@ import javafx.stage.StageStyle;
  * @author kwany
  */
 public class ScreenController extends StackPane{
-    
+    boolean showing;
     
     
     
@@ -109,6 +109,35 @@ public class ScreenController extends StackPane{
     public void removeScreen(String name){
         getChildren().remove(screens.get(name));
         System.out.println(name + " has been removed");
+    }
+    
+    public void showPopupStage(String resource){
+
+        if (showing) {
+            
+        }
+        else if (!showing){
+            try {
+                System.out.println(showing);
+                setShowing(true);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(resource));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                
+                stage.setScene(new Scene(root));
+                stage.setAlwaysOnTop(true);
+                stage.showAndWait();
+                setShowing(false);
+                
+            } catch (Exception e) {
+            }
+        }
+    }
+    
+    public void setShowing(boolean showingset){
+        showing = showingset;
     }
     
 

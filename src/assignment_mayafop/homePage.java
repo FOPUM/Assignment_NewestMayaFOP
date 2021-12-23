@@ -50,8 +50,10 @@ public class homePage implements Initializable, ControlledScreen{
     private Button exit_button;
     ScreenController myController;
     
+    
     @FXML
     private BorderPane homeScreen;
+    boolean showing;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -133,33 +135,47 @@ public class homePage implements Initializable, ControlledScreen{
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void goToAnnouncement(ActionEvent event)throws IOException{
-        
-        
-        try {
-            BoxBlur boxBlur = new BoxBlur();
+    public void goToAnnouncement(ActionEvent event){
+    if (showing) {
+            
+        }
+        else if (!showing){
+    
+            try {
+                BoxBlur boxBlur = new BoxBlur();
             boxBlur.setWidth(10);
             boxBlur.setHeight(10);
             boxBlur.setIterations(3);
             homeScreen.setEffect(boxBlur);
-            
-            showAnnouncement();
-            if (!showing) {
+                setShowing(true);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/assignment_MayaFOP/announcement.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                
+                stage.setScene(new Scene(root));
+                stage.setAlwaysOnTop(true);
+                stage.showAndWait();
+                setShowing(false);
+                if (!showing) {
                 homeScreen.setEffect(null);
             }
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
+                
+            } catch (Exception e) {
+            }
         }
+    } 
+    public void setShowing(boolean showingset){
+        showing = showingset;
     }
-    
+
     public void showAnnouncement(){
-        Parent root = FXMLLoader.load(getClass().getResource("announcement.fxml"));
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(new Scene(root));
-        stage.show();
+//        Parent root = FXMLLoader.load(getClass().getResource("announcement.fxml"));
+//        Stage stage = new Stage();
+//        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.setScene(new Scene(root));
+//        stage.show();
     }
 
 
