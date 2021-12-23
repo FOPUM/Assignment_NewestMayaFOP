@@ -48,7 +48,7 @@ import javafx.util.Duration;
  */
 public class controlCenter implements Initializable, ControlledScreen{
     Assignment_MayaFOP op;
-    ;
+    
     @FXML
     private Button exit_button;
     @FXML
@@ -142,8 +142,8 @@ public class controlCenter implements Initializable, ControlledScreen{
     }
     
     public void goToLogout(ActionEvent event)throws IOException{   
-         FXMLLoader loader = new FXMLLoader();
-          loader.setLocation(getClass().getResource("/Assignment_MayaFOP/logoutConfirmation.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Assignment_MayaFOP/logoutConfirmation.fxml"));
         Parent root = loader.load();
         verifyLogout vLcontroller = loader.getController();
         Stage register_stage = new Stage();

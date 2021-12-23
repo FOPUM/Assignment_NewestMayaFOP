@@ -31,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.StageStyle;
 /**
  *
@@ -49,7 +50,9 @@ public class login_controller implements Initializable,ControlledScreen{
     @FXML
     private PasswordField password_field;
     @FXML
-    private Button signup_button;   
+    private Button signup_button; 
+    @FXML
+    private BorderPane loginScreen;
     
     Stage home_stage;
     Scene home_scene;
@@ -114,7 +117,12 @@ public class login_controller implements Initializable,ControlledScreen{
     
     public void sign_up_button_on_action(ActionEvent event) {
         //Codes to open signup page
-        try {          
+        try {
+            BoxBlur boxBlur = new BoxBlur();
+            boxBlur.setWidth(10);
+            boxBlur.setHeight(10);
+            boxBlur.setIterations(3);
+            loginScreen.setEffect(boxBlur);
             Parent root = FXMLLoader.load(getClass().getResource("/assignment_MayaFOP/signupStudent.fxml"));
             Stage register_stage = new Stage();
             register_stage.initStyle(StageStyle.UNDECORATED);
@@ -132,6 +140,13 @@ public class login_controller implements Initializable,ControlledScreen{
     @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void blur(BoxBlur b){   
+        b = new BoxBlur();
+        b.setWidth(10);
+        b.setHeight(3);
+        b.setIterations(3);
     }
    
 }
