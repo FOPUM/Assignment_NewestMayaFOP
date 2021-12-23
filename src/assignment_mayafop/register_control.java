@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -75,6 +76,7 @@ public class register_control implements Initializable,ControlledScreen {
     
     public void cancel_button_on_action(ActionEvent event) {
         //Cancel button to back to login page
+
         Stage stage = (Stage) back_button.getScene().getWindow();
         stage.close();
     }
@@ -157,18 +159,6 @@ public class register_control implements Initializable,ControlledScreen {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
-    @FXML
-    private void goToHomepage(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.homepageScreen); 
-    }
-    @FXML
-    private void goToSearch(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.searchScreen); 
-    }
-    @FXML
-    private void goToTimetable(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.timetableScreen); 
-    }
     
     
     
