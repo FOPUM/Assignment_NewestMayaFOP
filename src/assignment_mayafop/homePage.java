@@ -65,6 +65,9 @@ public class homePage implements Initializable, ControlledScreen{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slider_animation(image2, image3, image4);
+        myController = new ScreenController();
+        showing = myController.getShowing();
+       
         
     }
     
@@ -144,7 +147,9 @@ public class homePage implements Initializable, ControlledScreen{
     }
     
     public void goToAnnouncement(ActionEvent event){
-        myController = new ScreenController();
-        myController.showPopupStage(homeScreen, "/assignment_MayaFOP/announcement.fxml");
+        if (!showing) {
+            myController.showPopupStage(homeScreen, "/assignment_MayaFOP/announcement.fxml");
+            showing = myController.getShowing();
+        }
     } 
 }

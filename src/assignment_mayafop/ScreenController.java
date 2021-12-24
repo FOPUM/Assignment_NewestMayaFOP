@@ -115,16 +115,19 @@ public class ScreenController extends StackPane{
     
     public void showPopupStage(BorderPane screen, String resource){
         if (showing) {
-            
+            System.out.println("Already showing");
+            return;
         }
         else if (!showing){
             try {
+                System.out.println("not showing");
                 BoxBlur boxBlur = new BoxBlur();
                 boxBlur.setWidth(10);
                 boxBlur.setHeight(10);
                 boxBlur.setIterations(3);
                 screen.setEffect(boxBlur);
                 setShowing(true);
+                System.out.println(showing);
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(resource));
                 Parent root = loader.load();
@@ -140,12 +143,17 @@ public class ScreenController extends StackPane{
                 }
                 
             }catch (Exception e) {
+                System.out.println(e);
             }
         }
     }
     
     public void setShowing(boolean showingset){
         showing = showingset;
+    }
+    
+    public boolean getShowing(){
+        return showing;
     }
     
 }

@@ -121,12 +121,7 @@ public class login_controller implements Initializable,ControlledScreen{
     public void sign_up_button_on_action(ActionEvent event) {
         //Codes to open signup page
         try {
-            Stage signup = new Stage();
             myController.showPopupStage(loginScreen, "/assignment_MayaFOP/signupStudent.fxml" );
-            if (!myController.showing) {
-                loginScreen.setEffect(null);
-            }
-            
         } catch(Exception e) {
             e.printStackTrace();
             e.getCause();
