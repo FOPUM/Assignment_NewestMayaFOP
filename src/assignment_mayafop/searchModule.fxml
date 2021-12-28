@@ -2,16 +2,17 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -19,15 +20,6 @@
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="489.0" styleClass="paneBackground" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="76.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="331.0">
-               <effect>
-                  <DropShadow offsetX="10.0" offsetY="10.0">
-                     <color>
-                        <Color red="0.7019608020782471" green="0.7019608020782471" blue="0.7019608020782471" opacity="0.30000001192092896" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Rectangle>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="453.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="334.0">
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">
@@ -46,7 +38,7 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-            <TextField layoutX="76.0" layoutY="48.0" prefHeight="40.0" prefWidth="711.0" promptText="    Search" style="-fx-background-color: white;" styleClass="textfield">
+            <TextField fx:id="searchTextField" layoutX="76.0" layoutY="48.0" prefHeight="40.0" prefWidth="711.0" promptText="    Search" style="-fx-background-color: white;" styleClass="textfield">
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">
                      <color>
@@ -55,22 +47,17 @@
                   </DropShadow>
                </effect>
             </TextField>
-            <Label alignment="TOP_LEFT" layoutX="486.0" layoutY="155.0" prefHeight="55.0" prefWidth="252.0" text="GLT1027">
+            <Label fx:id="courseCodeLabel" alignment="TOP_LEFT" layoutX="486.0" layoutY="155.0" prefHeight="55.0" prefWidth="252.0" text="GLT1027">
                <font>
                   <Font name="Futura Heavy BT" size="34.0" />
                </font>
             </Label>
-            <Label alignment="TOP_LEFT" layoutX="488.0" layoutY="210.0" prefHeight="94.0" prefWidth="265.0" text="Advanced Oral&#10;Communication&#10;">
+            <Label fx:id="courseNameLabel" alignment="TOP_LEFT" layoutX="488.0" layoutY="210.0" prefHeight="94.0" prefWidth="265.0" text="Advanced Oral&#10;Communication&#10;">
                <font>
                   <Font name="Futura Heavy BT" size="28.0" />
                </font>
             </Label>
-            <Label alignment="TOP_LEFT" layoutX="488.0" layoutY="313.0" prefHeight="267.0" prefWidth="269.0" text="Peter Ng Khoon Hong&#10;&#10;Credits: 4&#10;&#10;Occ: 3&#10;&#10;Lecture time: Monday 3pm-5pm&#10;Tutorial time: Tuesday 6pm-10pm">
-               <font>
-                  <Font name="Futura Light BT" size="18.0" />
-               </font>
-            </Label>
-            <Button layoutX="883.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Add" textFill="WHITE">
+            <Button layoutX="883.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Next" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
@@ -80,7 +67,6 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="869.0" layoutY="183.0" text="GLT1024&#10;WIX1002&#10;WIX1001&#10;WIX1003&#10;GIG1012&#10;WIA1005&#10;" AnchorPane.bottomAnchor="435.0" />
             <Button layoutX="817.0" layoutY="56.0" mnemonicParsing="false" styleClass="navbutton" />
             <Button layoutX="837.0" layoutY="53.0" mnemonicParsing="false" styleClass="logoutbutton">
                <graphic>
@@ -109,70 +95,83 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Line endX="-11.0" endY="344.0" layoutX="193.0" layoutY="284.0" startX="-11.0" startY="-156.0">
-               <fill>
-                  <LinearGradient endX="1.0" endY="1.0" startX="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.2920962199312715">
-                           <color>
-                              <Color red="0.0313725508749485" green="0.09803921729326248" blue="0.30980393290519714" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.6907216494845361">
-                           <color>
-                              <Color red="0.0313725508749485" green="0.09803921729326248" blue="0.30980393290519714" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </fill>
-               <stroke>
-                  <LinearGradient endX="1.0" endY="1.0" startX="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.2920962199312715">
-                           <color>
-                              <Color red="0.0313725508749485" green="0.09803921729326248" blue="0.30980393290519714" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.6907216494845361">
-                           <color>
-                              <Color red="0.0313725508749485" green="0.09803921729326248" blue="0.30980393290519714" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </stroke>
-            </Line>
-            <Label layoutX="100.0" layoutY="148.0" text="Code">
+            <TableView fx:id="courseTableView" layoutX="76.0" layoutY="127.0" prefHeight="502.0" prefWidth="331.0" styleClass="table">
+              <columns>
+                <TableColumn fx:id="courseCodeColumn" prefWidth="71.0" style="-fx-background-radius: 20 0 0 0;" text="Code" />
+                <TableColumn fx:id="courseNameColumn" prefWidth="212.0" text="Name" />
+                  <TableColumn fx:id="courseOccurenceColumn" prefWidth="46.0" text="Occ" />
+              </columns>
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.6842105388641357" green="0.6842105388641357" blue="0.6842105388641357" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </TableView>
+            <Button layoutX="482.0" layoutY="580.0" mnemonicParsing="false" onAction="#addModule" prefHeight="25.0" prefWidth="276.0" text="Add" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
-            </Label>
-            <Label layoutX="211.0" layoutY="148.0" text="Name">
-               <font>
-                  <Font name="Futura Heavy BT" size="12.0" />
-               </font>
-            </Label>
+            </Button>
+            <HBox layoutX="869.0" layoutY="186.0" prefHeight="237.0" prefWidth="120.0">
+               <children>
+                  <VBox prefHeight="219.0" prefWidth="62.0" spacing="14.0">
+                     <children>
+                        <Label text="GLT!024" />
+                        <Label text="WIX1002" />
+                        <Label text="WIX1001" />
+                        <Label text="WIX1003" />
+                        <Label text="GIG1012" />
+                        <Label text="WIA1005" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="24.0" spacing="5.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Button" />
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                        <Button layoutX="10.0" layoutY="35.0" mnemonicParsing="false" text="Button" />
+                        <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false" text="Button" />
+                        <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false" text="Button" />
+                        <Button layoutX="10.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox layoutX="486.0" layoutY="294.0" prefHeight="272.0" prefWidth="269.0" spacing="20.0">
+               <children>
+                  <Label fx:id="creditsLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Credits: 4">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="occurenceLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Occurence: ">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lectureTimeLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Lecture Day: Mon">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lectureLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="96.0" prefHeight="8.0" prefWidth="269.0" text="Ang Tang Fong">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="tutorialTimeLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="96.0" prefHeight="8.0" prefWidth="269.0" text="Tutorial Day: Mon">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="tutorialLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="182.0" prefHeight="8.0" prefWidth="269.0" text="Tutorial Day: Mon">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </center>

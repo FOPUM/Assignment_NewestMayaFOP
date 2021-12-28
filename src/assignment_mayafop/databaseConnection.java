@@ -10,14 +10,14 @@ import java.sql.DriverManager;
  *
  * @author Ming
  */
-public class database_connection {
+public class databaseConnection {
     public Connection databaseLink;
     
     public Connection getConnection(){
         // Connect to mayadb
         String database_name = "mayadb";
         String database_user = "root";
-        String database_password = "";
+        String database_password = "password";
         String url = "jdbc:mysql://localhost:3306/mayadb";
         
         try{

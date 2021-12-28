@@ -92,7 +92,7 @@ public class login_controller implements Initializable,ControlledScreen{
 
     public void validate_login(){
         //Verify the information match with database ot not
-        database_connection connectNow = new database_connection();
+        databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
         
         String verify_login = "SELECT COUNT(1) FROM student WHERE matric_num='" + username_text_field.getText() + "' AND password='" + password_field.getText() + "';";

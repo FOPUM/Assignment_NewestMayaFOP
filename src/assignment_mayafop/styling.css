@@ -16,8 +16,6 @@
     -fx-padding: 5 10 3 10;
 }
 
-
-
 .declinebutton
 {
     -fx-background-color:transparent;
@@ -127,4 +125,19 @@
     -fx-arc-width: 0px;
     -fx-background-radius: 0px;
     -fx-opacity:0.8;
+}
+
+.transparentpane
+{
+    -fx-background-color:transparent;
+    -fx-arc-height: 0px;
+    -fx-arc-width: 0px;
+    -fx-background-radius: 0px;
+    -fx-opacity:1;
+}
+
+.table
+{
+    -fx-background-color:#FFFFFF;
+    -fx-background-radius: 30px;
 }
