@@ -60,6 +60,7 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @FXML
     private BorderPane searchScreen;
+    boolean showing;
 
     @FXML
     private TableColumn<modelCourse, String> courseCodeColumn;
@@ -139,6 +140,7 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        showing = myController.getShowing();
         try {
             Statement statementCourse = connectDB.createStatement();
             ResultSet courseQueryOutput = statementCourse.executeQuery(course);
@@ -239,7 +241,10 @@ public class searchModule implements Initializable, ControlledScreen {
 
     public void goToModuleConfirmation(ActionEvent event) {
         myController = new ScreenController();
-        myController.showPopupStage(searchScreen, "/assignment_MayaFOP/moduleConfirmationMessage.fxml");
+        if (!showing) {
+            myController.showPopupStage(searchScreen, "/assignment_MayaFOP/moduleConfirmationMessage.fxml");
+            showing = myController.getShowing();
+        }
     }
 
     public void addModule(ActionEvent event) { 
@@ -297,7 +302,7 @@ public class searchModule implements Initializable, ControlledScreen {
             filteredData.setPredicate(courseSearchModel -> {
 
                 // If no values input, no change to the list
-                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                if (newValue.isEmpty() || newValue.isEmpty() || newValue == null) {
                     return true;
                 }
 
