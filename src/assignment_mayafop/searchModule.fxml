@@ -10,7 +10,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
@@ -114,30 +113,7 @@
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
             </Button>
-            <HBox layoutX="869.0" layoutY="186.0" prefHeight="237.0" prefWidth="120.0">
-               <children>
-                  <VBox prefHeight="219.0" prefWidth="62.0" spacing="14.0">
-                     <children>
-                        <Label text="GLT!024" />
-                        <Label text="WIX1002" />
-                        <Label text="WIX1001" />
-                        <Label text="WIX1003" />
-                        <Label text="GIG1012" />
-                        <Label text="WIA1005" />
-                     </children>
-                  </VBox>
-                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="24.0" spacing="5.0">
-                     <children>
-                        <Button mnemonicParsing="false" text="Button" />
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="10.0" layoutY="35.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="10.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
+            <VBox fx:id="vCourseNames" layoutX="862.0" layoutY="184.0" prefHeight="240.0" prefWidth="150.0" />
             <VBox layoutX="486.0" layoutY="294.0" prefHeight="272.0" prefWidth="269.0" spacing="20.0">
                <children>
                   <Label fx:id="creditsLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Credits: 4">
@@ -172,6 +148,11 @@
                   </Label>
                </children>
             </VBox>
+            <Label fx:id="warningLabel" layoutX="861.0" layoutY="413.0" textFill="RED">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
