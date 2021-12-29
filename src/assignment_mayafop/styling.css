@@ -95,6 +95,7 @@
     -fx-background-radius: 30px;
     -fx-letter-spacing: 10px;
     -fx-opacity: 0.8;
+    -fx-font: 12px Futura;
 }
 
 .paneBackground
@@ -140,4 +141,10 @@
 {
     -fx-background-color:#FFFFFF;
     -fx-background-radius: 30px;
+}
+
+.lighttext
+{
+    -fx-font: 12px Futura;
+    
 }

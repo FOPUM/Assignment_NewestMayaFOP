@@ -15,10 +15,17 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +33,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
@@ -35,6 +44,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 
 /**
  *
@@ -51,20 +61,8 @@ public class register_control implements Initializable,ControlledScreen {
     private Label state_label;
     
     //for student
-    @FXML
-    private TextField fullname_textfield;
-    @FXML
-    private TextField matric_id_text_field;
-    @FXML
-    private TextField siswamail_text_field;
-    @FXML
-    private TextField programme_text_field;  
-    @FXML
-    private TextField muet_band_text_field;
-    @FXML
-    private PasswordField password_field;
-    @FXML
-    private PasswordField confirm_password_field;
+    
+    
     @FXML
     private Label message_label;
     @FXML
@@ -73,9 +71,38 @@ public class register_control implements Initializable,ControlledScreen {
     private BorderPane signupScreenStaff;
     
     @FXML
-    private TextField username_text_field;
+    private TextField siswamailTextField;
+    @FXML
+    private TextField matricNumberTextField;
+    @FXML
+    private TextField fullNameTextField;
+    @FXML
+    private PasswordField passwordTextField;
+    @FXML
+    private PasswordField confirmPasswordTextField;
     
+    @FXML
+    private TextField ICTextField;
+    @FXML
+    private ComboBox<String> genderComboBox;
+    @FXML
+    private ComboBox<String> facultyComboBox;
+    @FXML
+    private DatePicker dateOfBirthPicker;
+    @FXML
+    private ComboBox<String> batchComboBox;
+    @FXML
+    private ComboBox<String> programmeComboBox;
+    @FXML
+    private ComboBox<String> raceComboBox;
+    @FXML
+    private ComboBox<String> nationalityComboBox;
+
     boolean upScreenStatus = false;
+    private final String pattern = "yyyy-MM-dd";
+    
+    Date date = new Date();
+    StringConverter converter;  
     
     
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,6 +111,42 @@ public class register_control implements Initializable,ControlledScreen {
             Animation.fading(signupScreen);
             Animation.fading(signupScreenStaff);
         }
+        
+        //Populate the combo box with information
+        ObservableList<String> gender = FXCollections.observableArrayList("Male", "Female");
+        ObservableList<String> faculty = FXCollections.observableArrayList("Faculty of Computer Science and Information System");
+        ObservableList<String> batch = FXCollections.observableArrayList("2020/2021", "2021/2022");
+        ObservableList<String> programme = FXCollections.observableArrayList("SE", "Data", "AI");
+        ObservableList<String> race = FXCollections.observableArrayList("Chinese", "Asian", "Black");
+        ObservableList<String> nationality = FXCollections.observableArrayList("Malaysian", "Others");
+        
+        genderComboBox.setItems(gender);
+        facultyComboBox.setItems(faculty);
+        batchComboBox.setItems(batch);
+        programmeComboBox.setItems(programme);
+        raceComboBox.setItems(race);
+        nationalityComboBox.setItems(nationality);
+        
+//        converter = new StringConverter<LocalDate>() {
+//        DateTimeFormatter dateFormatter = 
+//            DateTimeFormatter.ofPattern(pattern);
+//        @Override
+//        public String toString(LocalDate date) {
+//            if (date != null) {
+//                return dateFormatter.format(date);
+//            } else {
+//                return "";
+//            }
+//        }
+//        @Override
+//        public LocalDate fromString(String string) {
+//            if (string != null && !string.isEmpty()) {
+//                return LocalDate.parse(string, dateFormatter);
+//            } else {
+//                return null;
+//            }
+//        }
+//    };
         
     }    
     
@@ -95,9 +158,9 @@ public class register_control implements Initializable,ControlledScreen {
     
     public void register_button_on_action(ActionEvent event) {
         //Check the validity of information
-        if (fullname_textfield.getText() != null && is_numeric(muet_band_text_field.getText())) {
+        if (fullNameTextField.getText() != null && siswamailTextField.getText() != null && matricNumberTextField.getText() != null && matricNumberTextField.getText().length() >= 8) {
             
-            if(password_field.getText().equals(confirm_password_field.getText())) {
+            if(passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
             register_user();
             //message_label.setText("");
             message_label.setText("User register successfully. Please go back and sign in.");
@@ -106,34 +169,84 @@ public class register_control implements Initializable,ControlledScreen {
             }
             
         } else {
-            message_label.setText("Please enter information!");
+            message_label.setText("Please enter correct information!");
         }
     }
     
     public void register_user() {
         //Collect the information at signup 
-//        database_connection connectNow = new database_connection();
-//        Connection connectDB = connectNow.getConnection();
-//        
-//        String fullname = username_text_field.getText();
-//        String matric_id = matric_id_text_field.getText();
-//        String siswamail = siswamail_text_field.getText();
-//        String phone_no = phone_no_text_field.getText();
-//        String password = password_field.getText();
-//        
-//        String insert_fields = "INSERT INTO user_account (fullname, matric_id, siswamail, phone_number, password) VALUES ('";
-//        String insert_values = fullname + "','" + matric_id + "','" + siswamail + "','" + phone_no + "','" + password + "');";
+        databaseConnection connectNow = new databaseConnection();
+        Connection connectDB = connectNow.getConnection();
+    
+        
+
+        
+        String fullname = fullNameTextField.getText();
+        String matric_id = matricNumberTextField.getText();
+        String siswamail = siswamailTextField.getText();
+        String password = passwordTextField.getText();
+        String ic = ICTextField.getText();
+        String sex = genderComboBox.getValue();
+        String faculty = facultyComboBox.getValue();
+        String batch = batchComboBox.getValue();
+        String programme = programmeComboBox.getValue();
+        String race = raceComboBox.getValue();
+        String nationality = nationalityComboBox.getValue();
+        
+        java.util.Date date = java.util.Date.from(dateOfBirthPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+//        String dateOfBirth = dateOfBirthPicker.toString();
+//        Date dateOfBirth= dateOfBirthPicker;
+        int number = 1;
+        String gender = null;
+        if(sex.equals("Male")){
+            gender = "M";
+        }else if(sex.equals("female")){
+            gender = "F";
+        }
+        
+        
+        
+        
+        
+//        String insert_fields = "INSERT INTO user_account (matric_num, siswamail, password, student_name, student_batch, student_faculty, student_programme, "
+//                + "student_gender, student_race, student_date_of_birth, student_studyyear, student_studysem, student_nationality, student_ic_passport, "
+//                + "credit_hour) VALUES ('";
+//        String insert_values = matric_id + "','" + siswamail + "','" + password + "','" + fullname + "','" + batch + "','" + faculty + "','" + programme 
+//                + "','" + gender + "','" + race + "','" + dateOfBirth + "','" + number + "','" + number + "','" + nationality + "','" + ic + "','" + 0 + "');";
 //        String insert_to_register = insert_fields + insert_values;
-//        
-//        try {
+        
+        try {
 //            Statement statement = connectDB.createStatement();
 //            statement.executeUpdate(insert_to_register);
-//            registration_successful_label.setText("User Register Successfully! Please go back and sign in.");
-//            
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//            e.getCause();
-//        }
+
+            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO student (matric_num, siswamail, password, student_name, student_batch, student_faculty, student_programme, "
+                + "student_gender, student_race, student_date_of_birth, student_studyyear, student_studysem, student_nationality, student_ic_passport, "
+                + "credit_hour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        
+            statement.setString(1,matric_id);
+            statement.setString(2,siswamail);
+            statement.setString(3,password);
+            statement.setString(4,fullname);
+            statement.setString(5,batch);
+            statement.setString(6,faculty);
+            statement.setString(7,programme);
+            statement.setString(8,gender);
+            statement.setString(9,race);
+            statement.setDate(10,sqlDate);
+            statement.setInt(11,number);
+            statement.setInt(12,number);
+            statement.setString(13,nationality);
+            statement.setString(14,ic);
+            statement.setInt(15,0);
+
+            statement.executeUpdate();
+            message_label.setText("User Register Successfully! Please go back and sign in.");
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
         
     }
     public static boolean is_numeric(String str) { 

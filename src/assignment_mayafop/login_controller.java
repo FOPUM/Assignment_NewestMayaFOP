@@ -69,7 +69,7 @@ public class login_controller implements Initializable,ControlledScreen{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
     }
-    int validated = 0; 
+    int validated = 1; 
     public void login_button_on_action(ActionEvent event) throws IOException {
         //Click on login button
         if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
