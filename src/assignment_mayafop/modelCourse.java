@@ -141,50 +141,6 @@ public class modelCourse {
 
     public void setLectStaff(String lectStaff) {
         this.lectStaff = lectStaff;
-    }
-//    private String course_id;
-//    private String course_name;
-//    private String occ_name;
-//    private String credit_hour;
-//
-//    public modelCourse(String course_id, String course_name, String occ_name, String credit_hour) {
-//        this.course_id = course_id;
-//        this.course_name = course_name;        
-//        this.occ_name = occ_name;
-//        this.credit_hour = credit_hour;
-//    }
-//
-//    public String getCourse_id() {
-//        return course_id;
-//    }
-//
-//    public void setCourse_id(String course_id) {
-//        this.course_id = course_id;
-//    }
-//
-//    public String getCourse_name() {
-//        return course_name;
-//    }
-//
-//    public void setCourse_name(String course_name) {
-//        this.course_name = course_name;
-//    }
-//
-//    public String getOcc_name() {
-//        return occ_name;
-//    }
-//
-//    public void setOcc_name(String occ_name) {
-//        this.occ_name = occ_name;
-//    }
-//
-//    public String getCredit_hour() {
-//        return credit_hour;
-//    }
-//
-//    public void setCredit_hour(String credit_hour) {
-//        this.credit_hour = credit_hour;
-//    }
-    
+    }    
     
 }

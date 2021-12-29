@@ -35,6 +35,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
@@ -116,52 +117,53 @@ public class searchModule implements Initializable, ControlledScreen {
     public int totalCreditHours;
     private int i = 0;
     private static boolean confirmedtake;
-
     
-
-   
-
-    private String course = "SELECT \n"
-            + "courseID, courseName, creditHour,\n"
-            + "occID, occName,\n"
-            + "tutoDay, tutoStartTime, tutoEndTime,\n"
-            + "tutoStaff,\n"
-            + "lectureDay, lectureStartTime,lectureEndTime,\n"
-            + "lectStaff\n"
-            + "FROM\n"
-            + "(SELECT * FROM\n"
-            + "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n"
-            + "occ.occ_name AS occName,occ.occ_id AS occID,\n"
-            + "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n"
-            + "staff.staff_name AS tutoStaff\n"
-            + "FROM occ \n"
-            + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
-            + "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n"
-            + "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n"
-            + "INNER JOIN staff on staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n"
-            + "\n"
-            + "INNER JOIN \n"
-            + "\n"
-            + "(SELECT occ.occ_id AS occ2,\n"
-            + "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n"
-            + "staff.staff_name AS lectStaff\n"
-            + "FROM occ \n"
-            + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
-            + "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n"
-            + "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n"
-            + "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n"
-            + "\n"
-            + "ON tuto.occID=lec.occ2) AS total";
+    String matric_num = loginControl.getUsername();
     
+//    private String course = "SELECT \n"
+//            + "courseID, courseName, creditHour,\n"
+//            + "occID, occName,\n"
+//            + "tutoDay, tutoStartTime, tutoEndTime,\n"
+//            + "tutoStaff,\n"
+//            + "lectureDay, lectureStartTime,lectureEndTime,\n"
+//            + "lectStaff\n"
+//            + "FROM\n"
+//            + "(SELECT * FROM\n"
+//            + "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n"
+//            + "occ.occ_name AS occName,occ.occ_id AS occID,\n"
+//            + "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n"
+//            + "staff.staff_name AS tutoStaff\n"
+//            + "FROM occ \n"
+//            + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
+//            + "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n"
+//            + "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n"
+//            + "INNER JOIN staff on staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n"
+//            + "\n"
+//            + "INNER JOIN \n"
+//            + "\n"
+//            + "(SELECT occ.occ_id AS occ2,\n"
+//            + "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n"
+//            + "staff.staff_name AS lectStaff\n"
+//            + "FROM occ \n"
+//            + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
+//            + "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n"
+//            + "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n"
+//            + "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n"
+//            + "\n"
+//            + "ON tuto.occID=lec.occ2) AS total";
     
+    private String confirmedcourses = "SELECT matric_num, occ_id\n" +
+                                        "FROM student_take_course\n" +
+                                        "WHERE matric_num='" + matric_num + "'";
+    
+    private String studentQualifications = "SELECT student_muet_band,student_nationality,\n" +
+                                        "student_studysem,student_studyyear,student_programme\n" +
+                                        "FROM student\n" +
+                                        "WHERE matric_num='"+matric_num+"'";
     
 
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
-
-    
-
-    
 
     ObservableList<modelCourse> courseSearchModelObservableList = FXCollections.observableArrayList();
 
@@ -171,21 +173,77 @@ public class searchModule implements Initializable, ControlledScreen {
         showing = myController.getShowing();
         try {
             //Query for current registed course in an array
-            String matric_num = loginControl.getUsername();
-            String confirmedcourses = "SELECT matric_num, occ_id\n" +
-                                        "FROM student_take_course\n" +
-                                        "WHERE matric_num='" + matric_num + "'";
-
-
             ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
-
             while(queryResultForCheck.next()) {
                 String occIDcheck = queryResultForCheck.getString("occ_id");
                 occurenceIDcheck.add(occIDcheck);
             }
-
-            Statement statementCourse = connectDB.createStatement();
-            ResultSet courseQueryOutput = statementCourse.executeQuery(course);
+            
+            int studentBand = 0;
+            String studentNationality = null; 
+            int studentSem = 0;
+            int studentYear = 0;
+            String studentProgramme = null;
+            
+            //Query for qualification of the student
+            ResultSet queryForStudentQualification = connectDB.createStatement().executeQuery(studentQualifications);
+            while(queryForStudentQualification.next()) {
+                studentBand = queryForStudentQualification.getInt("student_muet_band");
+                studentNationality = queryForStudentQualification.getString("student_nationality");
+                studentSem = queryForStudentQualification.getInt("student_studysem");
+                studentYear = queryForStudentQualification.getInt("student_studyyear");
+                studentProgramme = queryForStudentQualification.getString("student_programme");
+            }
+            
+            //Query for items in search table
+            //<editor-fold defaultstate="collapsed" desc="String for query">
+            String course = "SELECT\n" +
+                            "courseID, courseName, creditHour,\n" +
+                            "occID, occName,\n" +
+                            "tutoDay, tutoStartTime, tutoEndTime,\n" +
+                            "tutoStaff,\n" +
+                            "lectureDay, lectureStartTime,lectureEndTime,\n" +
+                            "lectStaff,\n" +
+                            "courseCategory,courseYear,courseSem,\n" +
+                            "muetBand,courseNationality,courseProgramme\n" +
+                            "FROM\n" +
+                            "(SELECT * FROM\n" +
+                            "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
+                            "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
+                            "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
+                            "occ.occ_name AS occName,occ.occ_id AS occID,\n" +
+                            "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
+                            "staff.staff_name AS tutoStaff\n" +
+                            "\n" +
+                            "FROM occ \n" +
+                            "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                            "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                            "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                            "INNER JOIN staff on staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                            "\n" +
+                            "INNER JOIN \n" +
+                            "\n" +
+                            "(SELECT occ.occ_id AS occ2,\n" +
+                            "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
+                            "staff.staff_name AS lectStaff\n" +
+                            "FROM occ \n" +
+                            "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                            "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                            "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                            "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                            "\n" +
+                            "ON tuto.occID=lec.occ2) AS total\n" +
+                            "\n" +
+                            "WHERE \n" +
+                            "(courseCategory='FC') AND\n" +
+                            "(courseYear=999 OR courseYear="+studentYear+") AND\n" +
+                            "(courseSem=999 OR courseSem="+studentSem+") AND\n" +
+                            "(muetBand=10 OR muetBand="+studentBand+") AND \n" +
+                            "(courseNationality='ALL' OR courseNationality='"+studentNationality+"') AND\n" +
+                            "(courseProgramme='ALL' OR courseProgramme='"+studentProgramme+"') ";
+            //</editor-fold>
+   
+            ResultSet courseQueryOutput = connectDB.createStatement().executeQuery(course);
             while (courseQueryOutput.next()) {
                 String courseID = courseQueryOutput.getString("courseID");
                 String courseName = courseQueryOutput.getString("courseName");
@@ -206,6 +264,10 @@ public class searchModule implements Initializable, ControlledScreen {
                     courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, lectureDay, lectureStartTime, lectureEndTime, lectStaff));
                 }        
             }
+            
+            
+            
+            
             
             
             //PropertyValueFactory corresponds to the new ProductSearchModel fields
@@ -399,13 +461,15 @@ public class searchModule implements Initializable, ControlledScreen {
                 Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            String matric_num = loginControl.getUsername();
+            
             for (int j = 0; j < courseIDcheck.size(); j++) {
                 String course_id = courseIDcheck.get(j);
                 String occ_id = occurenceID.get(j);
-                String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id)\n" +
+                char status = 'Y';
+                String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id, status)\n" +
+                                    "VALUES ('" + matric_num + "', '" + course_id + "', '" + occ_id + "', '" + status + "');";
+                String updateUser = "INSERT INTO student (matric_num, course_id, occ_id)\n" +
                                     "VALUES ('" + matric_num + "', '" + course_id + "', '" + occ_id + "');";
-
                 Statement statementUpdate = connectDB.createStatement();
                 statementUpdate.executeUpdate(confirmedCourse);
                 System.out.println("Done adding " + occ_id);
