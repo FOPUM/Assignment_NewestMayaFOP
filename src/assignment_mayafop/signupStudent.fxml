@@ -21,7 +21,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="signupScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.register_control">
+<BorderPane fx:id="signupScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registerControlStudent">
    <left>
       <AnchorPane prefHeight="470.0" prefWidth="114.0" styleClass="leftpaneBackground" BorderPane.alignment="CENTER">
          <children>
@@ -79,11 +79,30 @@
                      <children>
                         <VBox prefHeight="51.0" prefWidth="160.0" spacing="14.0">
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="148.0" styleClass="lighttext" text="Siswamail:" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="148.0" styleClass="lighttext" text="Full name:" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="50.0" prefHeight="26.0" prefWidth="148.0" styleClass="lighttext" text="Matric Number" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="50.0" prefHeight="26.0" prefWidth="148.0" styleClass="lighttext" text="Password:" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="72.0" prefHeight="26.0" prefWidth="148.0" styleClass="lighttext" text="Confirm Password:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="148.0" text="Siswamail" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font></Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="148.0" text="Full Name" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="50.0" prefHeight="26.0" prefWidth="148.0" text="Matric ID" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="148.0" text="Password" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="130.0" prefHeight="26.0" prefWidth="148.0" text="Confirm Password" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                         <Pane prefHeight="166.0" prefWidth="40.0" />
@@ -103,10 +122,26 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0">
                            <children>
-                              <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="IC / Passport" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="85.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Gender" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="62.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Faculty" />
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="146.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Date of Birth" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="148.0" text="IC/Passport" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="148.0" text="Gender" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="50.0" prefHeight="26.0" prefWidth="148.0" text="Faculty" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="148.0" text="Date of Birth" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                         <Pane prefHeight="100.0" prefWidth="38.0" />
@@ -120,10 +155,26 @@
                         </VBox>
                         <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="14.0">
                            <children>
-                              <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Batch" />
-                              <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="62.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Programme" />
-                              <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="88.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Race" />
-                              <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="114.0" prefHeight="26.0" prefWidth="106.0" styleClass="lighttext" text="Nationality" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="148.0" text="Batch" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="148.0" text="Programme" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="50.0" prefHeight="26.0" prefWidth="148.0" text="Race" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="148.0" text="Nationality" textFill="#08194f">
+                                 <font>
+                                    <Font name="Futura Book BT" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                         <Pane layoutX="86.0" layoutY="10.0" prefHeight="100.0" prefWidth="38.0" />

@@ -38,7 +38,9 @@ public class Assignment_MayaFOP extends Application{
     public static String userStudentScreen = "userAccount";
     public static String userStaffScreen = "userAccount";
     public static String controlCenter = "controlCenter";
-    public static String  validateLogout = "validateLogout";
+    public static String validateLogout = "validateLogout";
+    public static String registerStudent = "registerControlStudent";
+    public static String registerStaff = "registerControlStaff";
     
     public static String loginScreenFile = "/Assignment_MayaFOP/login.fxml";
     public static String homepageScreenFile = "/Assignment_MayaFOP/homePage.fxml";
@@ -68,6 +70,8 @@ public class Assignment_MayaFOP extends Application{
         //load main screen
         ScreenController mainContainer = new ScreenController();
         mainContainer.loadScreen(Assignment_MayaFOP.loginScreen, Assignment_MayaFOP.loginScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.registerStudent, Assignment_MayaFOP.signupStudentFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.registerStaff, Assignment_MayaFOP.signupStaffFile);
         mainContainer.loadScreen(Assignment_MayaFOP.homepageScreen, Assignment_MayaFOP.homepageScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);

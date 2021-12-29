@@ -50,7 +50,7 @@ import javafx.util.StringConverter;
  *
  * @author Ming
  */
-public class register_control implements Initializable,ControlledScreen {
+public class registerControlStudent implements Initializable,ControlledScreen {
     ScreenController myController;
     animation Animation;
     @FXML
@@ -67,8 +67,7 @@ public class register_control implements Initializable,ControlledScreen {
     private Label message_label;
     @FXML
     private BorderPane signupScreen;
-    @FXML
-    private BorderPane signupScreenStaff;
+    
     
     @FXML
     private TextField siswamailTextField;
@@ -109,7 +108,6 @@ public class register_control implements Initializable,ControlledScreen {
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(signupScreen);
-            Animation.fading(signupScreenStaff);
         }
         
         //Populate the combo box with information
@@ -126,27 +124,6 @@ public class register_control implements Initializable,ControlledScreen {
         programmeComboBox.setItems(programme);
         raceComboBox.setItems(race);
         nationalityComboBox.setItems(nationality);
-        
-//        converter = new StringConverter<LocalDate>() {
-//        DateTimeFormatter dateFormatter = 
-//            DateTimeFormatter.ofPattern(pattern);
-//        @Override
-//        public String toString(LocalDate date) {
-//            if (date != null) {
-//                return dateFormatter.format(date);
-//            } else {
-//                return "";
-//            }
-//        }
-//        @Override
-//        public LocalDate fromString(String string) {
-//            if (string != null && !string.isEmpty()) {
-//                return LocalDate.parse(string, dateFormatter);
-//            } else {
-//                return null;
-//            }
-//        }
-//    };
         
     }    
     
@@ -195,8 +172,8 @@ public class register_control implements Initializable,ControlledScreen {
         
         java.util.Date date = java.util.Date.from(dateOfBirthPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-//        String dateOfBirth = dateOfBirthPicker.toString();
-//        Date dateOfBirth= dateOfBirthPicker;
+
+        
         int number = 1;
         String gender = null;
         if(sex.equals("Male")){
@@ -205,21 +182,8 @@ public class register_control implements Initializable,ControlledScreen {
             gender = "F";
         }
         
-        
-        
-        
-        
-//        String insert_fields = "INSERT INTO user_account (matric_num, siswamail, password, student_name, student_batch, student_faculty, student_programme, "
-//                + "student_gender, student_race, student_date_of_birth, student_studyyear, student_studysem, student_nationality, student_ic_passport, "
-//                + "credit_hour) VALUES ('";
-//        String insert_values = matric_id + "','" + siswamail + "','" + password + "','" + fullname + "','" + batch + "','" + faculty + "','" + programme 
-//                + "','" + gender + "','" + race + "','" + dateOfBirth + "','" + number + "','" + number + "','" + nationality + "','" + ic + "','" + 0 + "');";
-//        String insert_to_register = insert_fields + insert_values;
-        
-        try {
-//            Statement statement = connectDB.createStatement();
-//            statement.executeUpdate(insert_to_register);
 
+        try {
             PreparedStatement statement = connectDB.prepareStatement("INSERT INTO student (matric_num, siswamail, password, student_name, student_batch, student_faculty, student_programme, "
                 + "student_gender, student_race, student_date_of_birth, student_studyyear, student_studysem, student_nationality, student_ic_passport, "
                 + "credit_hour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -249,31 +213,23 @@ public class register_control implements Initializable,ControlledScreen {
         }
         
     }
-    public static boolean is_numeric(String str) { 
-        try {  
-            Double.parseDouble(str);  
-            return true;
-        } catch(NumberFormatException e){  
-            return false;  
-        }  
-    }
+//    public static boolean is_numeric(String str) { 
+//        try {  
+//            Double.parseDouble(str);  
+//            return true;
+//        } catch(NumberFormatException e){  
+//            return false;  
+//        }  
+//    }
 
     
     //Below handles the switching between staff and student signup page
     private Stage stage;
     private Scene scene;
     private Parent root;
+    
     public void switch_to_staff(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("signupStaff.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-//        myController.setScreen(Assignment_MayaFOP.userStudentScreen);
-    }
-    
-    public void switch_to_student(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("signupStudent.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
