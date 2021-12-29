@@ -23,6 +23,7 @@ public class announcementController implements Initializable, ControlledScreen{
     ScreenController myController;
     animation Animation;
     
+    
     @FXML
     private Button exit_button;
     @FXML

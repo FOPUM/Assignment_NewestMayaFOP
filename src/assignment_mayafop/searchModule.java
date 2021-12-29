@@ -54,7 +54,8 @@ import javafx.scene.layout.VBox;
  */
 public class searchModule implements Initializable, ControlledScreen {
 
-    ScreenController myController;
+    ScreenController myController = new ScreenController();
+    login_controller loginControl = new login_controller();
     
     
 
@@ -95,13 +96,32 @@ public class searchModule implements Initializable, ControlledScreen {
     private VBox vCourseNames;
     @FXML
     private Label warningLabel;
+
+
+    @FXML 
+    private Label creditHourLabel;
     
-    ArrayList<pickedModuleModel> courses = new ArrayList<>();
+    ArrayList<pickedModuleModel> courses = new ArrayList<>();    
+    
+    ArrayList<Integer> creditHour = new ArrayList<Integer>();
+    
+    private static ArrayList<String> courseIDcheck = new ArrayList<String>();
+    private static ArrayList<String> occurenceID = new ArrayList<String>();
+    private static ArrayList<String> courseNames = new ArrayList<String>();
+    private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
+        
+    Node[] nodes = new Node[10];
+    public int totalCreditHours;
     private int i = 0;
+    private static boolean confirmedtake;
+
+    
+
+   
 
     private String course = "SELECT \n"
             + "courseID, courseName, creditHour,\n"
-            + "occName,\n"
+            + "occID, occName,\n"
             + "tutoDay, tutoStartTime, tutoEndTime,\n"
             + "tutoStaff,\n"
             + "lectureDay, lectureStartTime,lectureEndTime,\n"
@@ -109,7 +129,7 @@ public class searchModule implements Initializable, ControlledScreen {
             + "FROM\n"
             + "(SELECT * FROM\n"
             + "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n"
-            + "occ.occ_name AS occName,occ.occ_id AS occ1,\n"
+            + "occ.occ_name AS occName,occ.occ_id AS occID,\n"
             + "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n"
             + "staff.staff_name AS tutoStaff\n"
             + "FROM occ \n"
@@ -129,25 +149,46 @@ public class searchModule implements Initializable, ControlledScreen {
             + "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n"
             + "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n"
             + "\n"
-            + "ON tuto.occ1=lec.occ2) AS total";
+            + "ON tuto.occID=lec.occ2) AS total";
+    
+    
+    
 
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
 
-    private int totalCreditHours = 0;
+    
+
+    
 
     ObservableList<modelCourse> courseSearchModelObservableList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        
         showing = myController.getShowing();
         try {
+            //Query for current registed course in an array
+            String matric_num = loginControl.getUsername();
+            String confirmedcourses = "SELECT matric_num, occ_id\n" +
+                                        "FROM student_take_course\n" +
+                                        "WHERE matric_num='" + matric_num + "'";
+
+
+            ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
+
+            while(queryResultForCheck.next()) {
+                String occIDcheck = queryResultForCheck.getString("occ_id");
+                occurenceIDcheck.add(occIDcheck);
+            }
+
             Statement statementCourse = connectDB.createStatement();
             ResultSet courseQueryOutput = statementCourse.executeQuery(course);
             while (courseQueryOutput.next()) {
                 String courseID = courseQueryOutput.getString("courseID");
                 String courseName = courseQueryOutput.getString("courseName");
                 String creditHour = courseQueryOutput.getString("creditHour");
+                String occID = courseQueryOutput.getString("occID");
                 String occName = courseQueryOutput.getString("occName");
                 String tutoDay = courseQueryOutput.getString("tutoDay");
                 String tutoStartTime = courseQueryOutput.getString("tutoStartTime");
@@ -159,9 +200,12 @@ public class searchModule implements Initializable, ControlledScreen {
                 String lectStaff = courseQueryOutput.getString("lectStaff");
 
                 // Populate the ObservableList
-                courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, lectureDay, lectureStartTime, lectureEndTime, lectStaff));
+                if (!courseIDcheck.contains(courseID)) {
+                    courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, lectureDay, lectureStartTime, lectureEndTime, lectStaff));
+                }        
             }
-
+            
+            
             //PropertyValueFactory corresponds to the new ProductSearchModel fields
             courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("courseID"));
             courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("courseName"));
@@ -197,41 +241,7 @@ public class searchModule implements Initializable, ControlledScreen {
         }
         
         
-//        try{
-//            String courseID = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseID();
-//            List<pickedModuleModel> courses = new ArrayList<>();
-//            
-//            courses.add(new pickedModuleModel(courseID));
-//            
-//            Node[] nodes = new Node[5];
-//            
-////            for (int i = 0; i < nodes.length; i++) {
-//                FXMLLoader loader = new FXMLLoader();
-//                nodes[i] = FXMLLoader.load(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
-//                final int h = i;
-//                
-//                pickedModuleController controller = loader.getController();
-//                controller.setCourseName(courses.get(i).getCourseIDLabel());
-//                
-//                nodes[i].setOnMouseEntered(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: #084654");
-//                });
-//                nodes[i].setOnMouseExited(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: #FFFFFF");
-//                });
-//                nodes[i].setOnMousePressed(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: #000000");
-//                });
-//                vCourseNames.getChildren().add(nodes[i]);
-//                i++;
-//                
-////            }
-//        }catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
 
     @Override
@@ -240,58 +250,105 @@ public class searchModule implements Initializable, ControlledScreen {
     }
 
     public void goToModuleConfirmation(ActionEvent event) {
-        myController = new ScreenController();
+        
         if (!showing) {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/moduleConfirmationMessage.fxml");
-            showing = myController.getShowing();
+            showing = myController.getShowing();   
+        }
+        if(confirmedtake){
+            confirmedtaken();
         }
     }
 
-    public void addModule(ActionEvent event) { 
+    public void addModule(ActionEvent event) throws Exception { 
+        totalCreditHours = 0;
         int credithours = Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
-        if (totalCreditHours + Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour()) < 22) {
+        String courseID = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseID();
+        String occID = "" + courseTableView.getSelectionModel().getSelectedItem().getOccID();
+        String courseName = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseName();
+        
+        if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID)){
+            warningLabel.setText("Already picked!");
+        }else{
+            warningLabel.setText("");
+            if (totalCreditHours + Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour()) <= 22 ) {
+                boolean check = true;
+                try{
 
-            try{
-            String courseID = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseID();
-            
-            
-            courses.add(new pickedModuleModel(courseID));
-            
-            
-            Node[] nodes = new Node[10];
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
-                nodes[i] = loader.load();
-                final int h = i;
-                
-                pickedModuleController controller = loader.getController();
-                controller.setCourseName(courses.get(i).getCourseIDLabel());
-                
-                nodes[i].setOnMouseEntered(evt -> {
-                    //add effect
-                    nodes[h].setStyle("-fx-background-color: #084654");
-                });
-                nodes[i].setOnMouseExited(evt -> {
-                    //add effect
-                    nodes[h].setStyle("-fx-background-color: #FFFFFF");
-                });
-                nodes[i].setOnMousePressed(evt -> {
-                    //add effect
-                    nodes[h].setStyle("-fx-background-color: #000000");
-                });
-                vCourseNames.getChildren().add(nodes[i]);
-                i++;
+                pickedModuleModel addingCourse = new pickedModuleModel(courseID);
 
-                }catch (IOException e) {
-                    e.printStackTrace();
-                }
 
-            
-            totalCreditHours += credithours;
-            
-        } else {
-            warningLabel.setText("Total credit hours exceed 22 hours!");
+                    if (courseIDcheck.contains(courseID)) {
+                        check=false;
+                    }else{
+                        courseIDcheck.add(courseID);
+                    }
+                    if (check) {
+                        courses.add(addingCourse);
+                        occurenceID.add(occID);
+                        courseNames.add(courseName);
+                        System.out.println(addingCourse + " Has been add");
+                    }
+                    else{
+                        System.out.println("The coursed already picked");
+
+                    }
+
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
+                    nodes[i] = loader.load();
+                    final int h = i;
+
+                    pickedModuleController controller = loader.getController();
+                    controller.setCourseName(courses.get(i).getCourseIDLabel());
+
+
+                    vCourseNames.getChildren().add(nodes[i]);
+                    i++;
+
+                    nodes[h].setOnMouseEntered(evt -> {
+                        //add effect
+                        nodes[h].setStyle("-fx-background-color: #084654");
+                    });
+                    nodes[h].setOnMouseExited(evt -> {
+                        //add effect
+                        nodes[h].setStyle("-fx-background-color: #FFFFFF");
+                    });
+                    nodes[h].setOnMousePressed(evt -> {
+                        //add effect
+                        nodes[h].setStyle("-fx-background-color: #000000");
+                        deleteModule(h);
+                        i--;
+                        creditHour.remove(h);
+                        totalCreditHours =0;
+                        creditHour.forEach((hour)-> totalCreditHours+=hour);
+                        creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+                    });
+
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                creditHour.add(credithours);
+                creditHour.forEach((hour)-> totalCreditHours+=hour);
+                creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+
+
+            } else {
+                warningLabel.setText("Total credit hours exceed 22 hours!");
+            }
         }
+        
+        
+        
+    }
+    
+    public void deleteModule(int i) {
+        courseIDcheck.remove(i);
+        courses.remove(i);
+        occurenceID.remove(i);
+        courseNames.remove(i);
+        vCourseNames.getChildren().remove(nodes[i]);
     }
 
     public void search() {
@@ -326,4 +383,85 @@ public class searchModule implements Initializable, ControlledScreen {
         sortedData.comparatorProperty().bind(courseTableView.comparatorProperty());
         courseTableView.setItems(sortedData);
     }
+    
+    public void confirmedtaken(){
+        ResultSet addModuleQuery;
+        
+        try {    
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/login.fxml"));
+                loader.load();
+                loginControl = loader.getController();
+            } catch (IOException ex) {
+                Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String matric_num = loginControl.getUsername();
+            for (int j = 0; j < courseIDcheck.size(); j++) {
+                String course_id = courseIDcheck.get(j);
+                String occ_id = occurenceID.get(j);
+                String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id)\n" +
+                                    "VALUES ('" + matric_num + "', '" + course_id + "', '" + occ_id + "');";
+
+                Statement statementUpdate = connectDB.createStatement();
+                statementUpdate.executeUpdate(confirmedCourse);
+                System.out.println("Done adding " + occ_id);
+            }
+
+            confirmedtake = false;
+        } catch (SQLException ex) {
+            Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+        
+        
+        
+    }
+    
+    public String getCourseIDcheck(int i) {
+        return courseIDcheck.get(i);
+    }
+
+    public String getOccurenceID(int i) {
+        return occurenceID.get(i);
+    }
+
+    public String getCourseNames(int i) {
+        return courseNames.get(i);
+    }
+    
+    public boolean getisConfirmedtake() {
+        return confirmedtake;
+    }
+    
+    public void setConfirmedtake(boolean confirmedtake) {
+        this.confirmedtake = confirmedtake;
+    }
+    
+    public static ArrayList<String> getCourseIDcheck() {
+        return courseIDcheck;
+    }
+
+    public static void setCourseIDcheck(ArrayList<String> courseIDcheck) {
+        searchModule.courseIDcheck = courseIDcheck;
+    }
+
+    public static ArrayList<String> getOccurenceID() {
+        return occurenceID;
+    }
+
+    public static void setOccurenceID(ArrayList<String> occurenceID) {
+        searchModule.occurenceID = occurenceID;
+    }
+
+    public static ArrayList<String> getCourseNames() {
+        return courseNames;
+    }
+
+    public static void setCourseNames(ArrayList<String> courseNames) {
+        searchModule.courseNames = courseNames;
+    }
+    
 }

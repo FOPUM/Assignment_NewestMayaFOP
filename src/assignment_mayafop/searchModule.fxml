@@ -61,7 +61,7 @@
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
             </Button>
-            <Label layoutX="869.0" layoutY="155.0" text="Credit hours : 18">
+            <Label fx:id="creditHourLabel" layoutX="869.0" layoutY="155.0" text="Credit hours : 0">
                <font>
                   <Font size="14.0" />
                </font>

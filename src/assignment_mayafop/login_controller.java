@@ -61,11 +61,15 @@ public class login_controller implements Initializable,ControlledScreen{
     Scene home_scene;
     Parent home_root;
     
+    private static String username;
+
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
     }
-    int validated = 1; 
+    int validated = 0; 
     public void login_button_on_action(ActionEvent event) throws IOException {
         //Click on login button
         if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
@@ -105,11 +109,10 @@ public class login_controller implements Initializable,ControlledScreen{
                 if(query_result.getInt(1) == 1) {
                     //login_message_label.setText("Congratulations!");
                     validated = 1;
+                    username = username_text_field.getText().toLowerCase();
                 }else {
                     login_message_label.setText("Invalid login. Please try again.");
-                }
-                
-                
+                }  
             }
             
         } catch(Exception e) {
@@ -133,6 +136,13 @@ public class login_controller implements Initializable,ControlledScreen{
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     
    
 }

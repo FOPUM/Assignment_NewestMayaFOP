@@ -12,6 +12,7 @@ public class modelCourse {
     private String courseID;
     private String courseName;
     private String creditHour;
+    private String occID;
     private String occName;
     private String tutoDay;
     private String tutoStartTime;
@@ -22,10 +23,11 @@ public class modelCourse {
     private String lectureEndTime;
     private String lectStaff;
 
-    public modelCourse(String courseID, String courseName, String creditHour, String occName, String tutoDay, String tutoStartTime, String tutoEndTime, String tutoStaff, String lectureDay, String lectureStartTime, String lectureEndTime, String lectStaff) {
+    public modelCourse(String courseID, String courseName, String creditHour, String occID, String occName, String tutoDay, String tutoStartTime, String tutoEndTime, String tutoStaff, String lectureDay, String lectureStartTime, String lectureEndTime, String lectStaff) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.creditHour = creditHour;
+        this.occID = occID;
         this.occName = occName;
         this.tutoDay = tutoDay;
         this.tutoStartTime = tutoStartTime;
@@ -59,6 +61,14 @@ public class modelCourse {
 
     public void setCreditHour(String creditHour) {
         this.creditHour = creditHour;
+    }
+
+    public String getOccID() {
+        return occID;
+    }
+
+    public void setOccID(String occID) {
+        this.occID = occID;
     }
 
     public String getOccName() {

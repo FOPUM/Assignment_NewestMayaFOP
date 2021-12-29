@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.confirmedPickedModuleController">
+   <children>
+      <HBox layoutX="-4.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Pane prefHeight="25.0" prefWidth="63.0">
+               <children>
+                  <Label fx:id="courseIDLabel" alignment="CENTER" prefHeight="25.0" prefWidth="63.0" text="WIX1002">
+                     <font>
+                        <Font name="Futura Light BT" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="25.0" prefWidth="201.0">
+               <children>
+                  <Label fx:id="courseNameLabel" prefHeight="25.0" prefWidth="201.0" text="Laji" />
+               </children>
+            </Pane>
+            <Pane prefHeight="25.0" prefWidth="32.0">
+               <children>
+                  <Label fx:id="OccLabel" alignment="CENTER" prefHeight="25.0" prefWidth="32.0" text="Bitch" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
