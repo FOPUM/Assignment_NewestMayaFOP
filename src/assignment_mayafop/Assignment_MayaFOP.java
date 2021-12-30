@@ -54,6 +54,12 @@ public class Assignment_MayaFOP extends Application{
     public static String signupStaffFile = "/Assignment_MayaFOP/signupStaff.fxml";
     public static String validateLogoutFile = "/Assignment_MayaFOP/logoutConfirmation.fxml";
     
+    public static String Module = "ModuleController";
+    public static String ModuleNext = "ModuleNextController";
+    
+    public static String moduleScreenFile = "/Assignment_MayaFOP/Module.fxml";
+    public static String moduleNextScreenFile = "/Assignment_MayaFOP/ModuleNext.fxml";
+    
 //    public static String announcementScreenFile = "/Assignment_MayaFOP/announcement.fxml";
 //    public static String moduleConfirmationScreenFile = "/Assignment_MayaFOP/moduleConfirmationMessage.fxml";
 //    public static String logoutConfirmationScreenFile = "/Assignment_MayaFOP/logoutConfirmation.fxml";
@@ -80,6 +86,9 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.userStaffScreen, Assignment_MayaFOP.userStaffScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
         mainContainer.loadScreen(Assignment_MayaFOP.validateLogout, Assignment_MayaFOP.validateLogoutFile);
+        
+        mainContainer.loadScreen(Assignment_MayaFOP.Module, Assignment_MayaFOP.moduleScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.ModuleNext, Assignment_MayaFOP.moduleNextScreenFile);
         
         
         mainContainer.setScreen(Assignment_MayaFOP.loginScreen);

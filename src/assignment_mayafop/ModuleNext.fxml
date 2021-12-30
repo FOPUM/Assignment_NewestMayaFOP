@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="moduleNextPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" styleClass="paneBackground" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.ModuleNextController">
+   <children>
+      <Label alignment="CENTER" layoutY="30.0" prefHeight="40.0" prefWidth="500.0" text="Module">
+         <font>
+            <Font name="Futura Heavy BT" size="26.0" />
+         </font>
+      </Label>
+      <ScrollPane hbarPolicy="NEVER" layoutX="28.0" layoutY="77.0" prefHeight="446.0" prefWidth="445.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2393.0" prefWidth="454.0" style="-fx-background-color: transparent;">
+               <children>
+                  <VBox fx:id="vModuleContainer" prefHeight="2425.0" prefWidth="460.0" spacing="30.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Button fx:id="confirmButton" layoutX="161.0" layoutY="558.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="181.0" text="Confirm" textFill="WHITE">
+         <font>
+            <Font name="Futura Medium BT" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="exit_button" layoutX="457.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButton" style="-fx-background-color: transparent;" textFill="TRANSPARENT">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Exit.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="back_button" layoutX="13.0" layoutY="13.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: transparent;" textFill="TRANSPARENT">
+         <graphic>
+            <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="addCourseButton" layoutX="425.0" layoutY="38.0" mnemonicParsing="false" onAction="#addNewOcc" styleClass="logoutbutton">
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Asset%20151.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

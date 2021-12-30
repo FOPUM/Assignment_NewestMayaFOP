@@ -67,28 +67,28 @@ public class moduleConfirmationMessageController implements Initializable, Contr
         }
         
         
-            try {
-                
-                
-                FXMLLoader pickedModuleLoader = new FXMLLoader();
-                pickedModuleLoader.setLocation(getClass().getResource("/Assignment_MayaFOP/confirmPickedModule.fxml"));
+        try {
 
-                nodes[i] = pickedModuleLoader.load();
 
-                confirmedPickedModuleController controller = pickedModuleLoader.getController();
-                controller.setCourseIDLabel(confirmCourses.get(i).getCourseIDLabel());
-                controller.setCourseNameLabel(confirmCourses.get(i).getCourseNameLabel());
-                controller.setOccLabel(confirmCourses.get(i).getOccLabel());
+            FXMLLoader pickedModuleLoader = new FXMLLoader();
+            pickedModuleLoader.setLocation(getClass().getResource("/Assignment_MayaFOP/confirmPickedModule.fxml"));
 
-                final int h = i;
-                    
-                
-                vCourseConfirmed.getChildren().add(nodes[i]);
-                i++;
-                
-                
-                
-            } catch (Exception e) {
+            nodes[i] = pickedModuleLoader.load();
+
+            confirmedPickedModuleController controller = pickedModuleLoader.getController();
+            controller.setCourseIDLabel(confirmCourses.get(i).getCourseIDLabel());
+            controller.setCourseNameLabel(confirmCourses.get(i).getCourseNameLabel());
+            controller.setOccLabel(confirmCourses.get(i).getOccLabel());
+
+            final int h = i;
+
+
+            vCourseConfirmed.getChildren().add(nodes[i]);
+            i++;
+
+
+
+        } catch (Exception e) {
             try {
                 throw e;
             } catch (Exception ex) {

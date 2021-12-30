@@ -99,6 +99,12 @@ public class searchModule implements Initializable, ControlledScreen {
     private VBox vCourseNames;
     @FXML
     private Label warningLabel;
+    @FXML
+    private Button editCourseButton;
+    @FXML
+    private Button addCourseButton;
+    @FXML
+    private Button removeCourseButton;
 
 
     @FXML 
@@ -119,6 +125,7 @@ public class searchModule implements Initializable, ControlledScreen {
     private static boolean confirmedtake;
     
     String matric_num = loginControl.getUsername();
+    char accStatus = loginControl.getAccStatus();
     
 //    private String course = "SELECT \n"
 //            + "courseID, courseName, creditHour,\n"
@@ -169,8 +176,20 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(accStatus == 'S'){
+            editCourseButton.setVisible(false);
+            addCourseButton.setVisible(false);
+            removeCourseButton.setVisible(false);
+        }else if (accStatus == 'T'){
+            
+        }else if (accStatus == 'A'){
+            
+        }
+        
+
         
         showing = myController.getShowing();
+        //Code below query all the things needed
         try {
             //Query for current registed course in an array
             ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
@@ -264,12 +283,7 @@ public class searchModule implements Initializable, ControlledScreen {
                     courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, lectureDay, lectureStartTime, lectureEndTime, lectStaff));
                 }        
             }
-            
-            
-            
-            
-            
-            
+
             //PropertyValueFactory corresponds to the new ProductSearchModel fields
             courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("courseID"));
             courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("courseName"));
@@ -303,9 +317,7 @@ public class searchModule implements Initializable, ControlledScreen {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
-        
-        
-
+ 
     }
 
     @Override
@@ -401,10 +413,7 @@ public class searchModule implements Initializable, ControlledScreen {
             } else {
                 warningLabel.setText("Total credit hours exceed 22 hours!");
             }
-        }
-        
-        
-        
+        }    
     }
     
     public void deleteModule(int i) {
@@ -479,11 +488,14 @@ public class searchModule implements Initializable, ControlledScreen {
         } catch (SQLException ex) {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
-        
-        
-        
+     
+    }
+    
+    public void addNewModule(ActionEvent event){
+        if (!showing) {
+            myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
+            showing = myController.getShowing();   
+        }
     }
     
     public String getCourseIDcheck(int i) {

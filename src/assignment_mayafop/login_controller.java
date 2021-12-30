@@ -32,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -62,15 +63,24 @@ public class login_controller implements Initializable,ControlledScreen{
     Parent home_root;
     
     private static String username;
+    private static char accStatus;
 
     
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+        password_field.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+              checkConditionForLogin();
+            }
+        });
     }
     int validated = 1; 
     public void login_button_on_action(ActionEvent event) throws IOException {
+        checkConditionForLogin();
+    }
+    
+    public void checkConditionForLogin(){
         //Click on login button
         if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
             validate_login();
@@ -99,22 +109,38 @@ public class login_controller implements Initializable,ControlledScreen{
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
         
-        String verify_login = "SELECT COUNT(1) FROM student WHERE matric_num='" + username_text_field.getText() + "' AND password='" + password_field.getText() + "';";
+        String verify_login_student = "SELECT COUNT(1) FROM student WHERE matric_num='" + username_text_field.getText() + "' AND student_password='" + password_field.getText() + "';";
+        
+        String verify_login_staff = "SELECT COUNT(1) FROM staff WHERE staff_id='" + username_text_field.getText() + "' AND staff_password='" + password_field.getText() + "';";
         
         try {
             Statement statement = connectDB.createStatement();
-            ResultSet query_result = statement.executeQuery(verify_login);
-            
-            while(query_result.next()) {
-                if(query_result.getInt(1) == 1) {
-                    //login_message_label.setText("Congratulations!");
-                    validated = 1;
-                    username = username_text_field.getText().toLowerCase();
-                }else {
-                    login_message_label.setText("Invalid login. Please try again.");
-                }  
-            }
-            
+            if(username_text_field.getText().toLowerCase().startsWith("a")){
+                ResultSet query_result_student = statement.executeQuery(verify_login_staff);
+                while(query_result_student.next()) {
+                    if(query_result_student.getInt(1) == 1) {
+                        //login_message_label.setText("Congratulations!");
+                        validated = 1;
+                        username = username_text_field.getText().toLowerCase();
+                        accStatus = 'T';
+                    }else {
+                        login_message_label.setText("Invalid login. Please try again.");
+                    }  
+                }
+            }else{  
+                ResultSet query_result_student = statement.executeQuery(verify_login_student);
+                while(query_result_student.next()) {
+                    
+                    if(query_result_student.getInt(1) == 1) {
+                        //login_message_label.setText("Congratulations!");
+                        validated = 1;
+                        username = username_text_field.getText().toLowerCase();
+                        accStatus = 'S';
+                    }else {
+                        login_message_label.setText("Invalid login. Please try again.");
+                    }  
+                }
+            }   
         } catch(Exception e) {
             e.printStackTrace();
             e.getCause();
@@ -142,6 +168,14 @@ public class login_controller implements Initializable,ControlledScreen{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public static char getAccStatus() {
+        return accStatus;
+    }
+
+    public static void setAccStatus(char accStatus) {
+        login_controller.accStatus = accStatus;
     }
     
    

@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -115,6 +116,41 @@ public class ScreenController extends StackPane{
     }
     
     public void showPopupStage(BorderPane screen, String resource){
+        if (showing) {
+            System.out.println("Already showing");
+            return;
+        }
+        else if (!showing){
+            try {
+                System.out.println("not showing");
+                BoxBlur boxBlur = new BoxBlur();
+                boxBlur.setWidth(10);
+                boxBlur.setHeight(10);
+                boxBlur.setIterations(3);
+                screen.setEffect(boxBlur);
+                setShowing(true);
+                System.out.println(showing);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(resource));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                
+                stage.setScene(new Scene(root));
+                stage.setAlwaysOnTop(true);
+                stage.showAndWait();
+                setShowing(false);
+                if (!showing) {
+                    screen.setEffect(null);
+                }
+                
+            }catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+    
+    public void showPopupStage(AnchorPane screen, String resource){
         if (showing) {
             System.out.println("Already showing");
             return;

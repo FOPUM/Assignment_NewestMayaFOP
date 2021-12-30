@@ -98,6 +98,28 @@
     -fx-font: 12px Futura;
 }
 
+.whitetext
+{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 30px;
+    -fx-letter-spacing: 10px;
+}
+
+.subwhitetext
+{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 30px;
+    -fx-letter-spacing: 10px;
+/*    -fx-font: 12px;*/
+}
+
+.bluetext
+{
+    -fx-background-color: #08194F;
+    -fx-background-radius: 30px;
+    -fx-letter-spacing: 10px;
+}
+
 .paneBackground
 {
     -fx-background-color:linear-gradient(to left, #B4BACA, #FFFFFF);
@@ -147,4 +169,11 @@
 {
     -fx-font: 12px Futura;
     
+}
+
+.scroll-pane{
+   -fx-background-color:transparent;
+}
+.scroll-pane > .viewport {  
+   -fx-background-color: transparent;
 }
