@@ -16,6 +16,10 @@
     -fx-padding: 5 10 3 10;
 }
 
+.transparentbutton{
+    -fx-background-color:transparent;
+}
+
 .declinebutton
 {
     -fx-background-color:transparent;

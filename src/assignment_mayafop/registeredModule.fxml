@@ -6,20 +6,16 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="registeredModuleScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredModuleController">
+<ScrollPane fx:id="registeredModuleScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredModuleController">
    <content>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="813.0" prefWidth="978.0" style="-fx-background-color: #FFFFFF;">
          <children>
             <Label layoutX="319.0" layoutY="28.0" prefHeight="65.0" prefWidth="341.0" text="Registered Module" textAlignment="CENTER">
                <font>
                   <Font name="Futura Heavy BT" size="38.0" />
-               </font>
-            </Label>
-            <Label layoutX="40.0" layoutY="152.0" lineSpacing="10.0" text="2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;2021&#9;&#9;&#9;S1&#9;&#9;&#9;&#9;GIG1021&#9;&#9;&#9;Philoshopies and current issues&#9;&#9;&#9;&#9;&#9;&#9;2&#9;&#9;&#9;23&#9;&#9;&#9;Enrolled&#10;">
-               <font>
-                  <Font name="Futura Light BT" size="12.0" />
                </font>
             </Label>
             <Label layoutX="40.0" layoutY="121.0" text="Academic Year">
@@ -66,6 +62,8 @@
                   </ImageView>
                </graphic>
             </Button>
+            <VBox fx:id="vContainerRegisteredModule" layoutX="40.0" layoutY="357.0" prefHeight="200.0" prefWidth="930.0" />
+            <VBox fx:id="vContainersPopUpRegisteredModule" layoutX="40.0" layoutY="157.0" prefHeight="626.0" prefWidth="925.0" />
          </children>
       </AnchorPane>
    </content>

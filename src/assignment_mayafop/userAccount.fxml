@@ -5,6 +5,8 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -93,22 +95,80 @@
                   <Font name="Futura Heavy BT" size="34.0" />
                </font>
             </Label>
-            <Label layoutX="93.0" layoutY="147.0" text="GLT1024&#10;WIX1002&#10;WIX1001&#10;WIX1003&#10;GIG1012&#10;WIA1005&#10;">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="226.0" layoutY="147.0" text="Advanced Englsh Communication&#10;Fundamental of Programming&#10;Computing Mathematics&#10;Computer System and Organisation&#10;PHoloshophies and current issues&#10;Network technology foundation">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="697.0" layoutY="38.0" prefHeight="289.0" prefWidth="268.0" text="Name: Peter Ng&#10;&#10;Matric ID: U2102856&#10;&#10;Programme: Software Engineering&#10;&#10;Specialisation: -&#10;&#10;Academic Year: 21/22&#10;&#10;Enrollment Status: Active">
-               <font>
-                  <Font name="Futura Heavy BT" size="14.0" />
-               </font>
-            </Label>
-            <Button layoutX="41.0" layoutY="39.0" mnemonicParsing="false" onAction="#goToRegisteredModule" prefHeight="287.0" prefWidth="563.0" style="-fx-background-color: tansparent;" textFill="WHITE" />
+            <Button layoutX="41.0" layoutY="40.0" mnemonicParsing="false" onAction="#goToRegisteredModule" prefHeight="287.0" prefWidth="563.0" styleClass="transparentbutton" textFill="WHITE" />
+            <HBox layoutX="664.0" layoutY="78.0" prefHeight="222.0" prefWidth="336.0" spacing="10.0">
+               <children>
+                  <VBox prefHeight="205.0" prefWidth="150.0" spacing="20.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="293.0" text="Name: ">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="293.0" text="Matric ID:">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="28.0" prefHeight="18.0" prefWidth="293.0" text="Programme:">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="46.0" prefHeight="18.0" prefWidth="293.0" text="Specialisation">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="64.0" prefHeight="18.0" prefWidth="293.0" text="Academic Year:">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="82.0" prefHeight="18.0" prefWidth="293.0" text="Enrollment Status: ">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="205.0" prefWidth="168.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="nameLabel" text="dsfg">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="matricIDLabel" layoutX="10.0" layoutY="10.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="programmeLabel" layoutX="10.0" layoutY="28.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="specialisationLabel" layoutX="10.0" layoutY="46.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="academicYearLabel" layoutX="10.0" layoutY="64.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="enrollmentStatusLabel" layoutX="10.0" layoutY="82.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox fx:id="vContainerRegisteredModule" layoutX="80.0" layoutY="131.0" prefHeight="174.0" prefWidth="493.0" />
          </children>
       </AnchorPane>
    </center>

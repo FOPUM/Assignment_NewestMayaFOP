@@ -114,7 +114,7 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         ObservableList<String> gender = FXCollections.observableArrayList("Male", "Female");
         ObservableList<String> faculty = FXCollections.observableArrayList("Faculty of Computer Science and Information System");
         ObservableList<String> batch = FXCollections.observableArrayList("2020/2021", "2021/2022");
-        ObservableList<String> programme = FXCollections.observableArrayList("SE", "Data", "AI");
+        ObservableList<String> programme = FXCollections.observableArrayList("Software Engineer", "Artificial Intelligence", "Data Science", "Computer System and Networking", "Information System", "Multimedia");
         ObservableList<String> race = FXCollections.observableArrayList("Chinese", "Asian", "Black");
         ObservableList<String> nationality = FXCollections.observableArrayList("Malaysian", "Others");
         

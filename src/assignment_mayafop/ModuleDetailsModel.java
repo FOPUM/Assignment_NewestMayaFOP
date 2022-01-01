@@ -26,8 +26,12 @@ public class ModuleDetailsModel {
     private SimpleStringProperty tutoEndTimeLabel;
     private SimpleStringProperty tutoIDLabel;
     private SimpleStringProperty tutoStartTimeLabel;
+    private SimpleStringProperty labDayLabel;
+    private SimpleStringProperty labEndTimeLabel;
+    private SimpleStringProperty labIDLabel;
+    private SimpleStringProperty labStartTimeLabel;
 
-    public ModuleDetailsModel(String lectDayLabel, String lectEndTimeLabel, String lectIDLabel, String lectStartTimeLabel, String occLabel, String staffIDLabel, String staffNameLabel, String tutoDayLabel, String tutoEndTimeLabel, String tutoIDLabel, String tutoStartTimeLabel) {
+    public ModuleDetailsModel(String lectDayLabel, String lectEndTimeLabel, String lectIDLabel, String lectStartTimeLabel, String occLabel, String staffIDLabel, String staffNameLabel, String tutoDayLabel, String tutoEndTimeLabel, String tutoIDLabel, String tutoStartTimeLabel, String labDayLabel, String labEndTimeLabel, String labIDLabel, String labStartTimeLabel) {
         this.lectDayLabel = new SimpleStringProperty(lectDayLabel);
         this.lectEndTimeLabel = new SimpleStringProperty(lectEndTimeLabel);
         this.lectIDLabel = new SimpleStringProperty(lectIDLabel);
@@ -39,6 +43,10 @@ public class ModuleDetailsModel {
         this.tutoEndTimeLabel = new SimpleStringProperty(tutoEndTimeLabel);
         this.tutoIDLabel = new SimpleStringProperty(tutoIDLabel);
         this.tutoStartTimeLabel = new SimpleStringProperty(tutoStartTimeLabel);
+        this.labDayLabel = new SimpleStringProperty(tutoDayLabel);
+        this.labEndTimeLabel = new SimpleStringProperty(tutoEndTimeLabel);
+        this.labIDLabel = new SimpleStringProperty(tutoIDLabel);
+        this.labStartTimeLabel = new SimpleStringProperty(tutoStartTimeLabel);
         
     }
 
@@ -84,6 +92,22 @@ public class ModuleDetailsModel {
 
     public String getTutoStartTimeLabel() {
         return tutoStartTimeLabel.get();
+    }
+
+    public String getLabDayLabel() {
+        return labDayLabel.get();
+    }
+
+    public String getLabEndTimeLabel() {
+        return labEndTimeLabel.get();
+    }
+
+    public String getLabIDLabel() {
+        return labIDLabel.get();
+    }
+
+    public String getLabStartTimeLabel() {
+        return labStartTimeLabel.get();
     }
     
     

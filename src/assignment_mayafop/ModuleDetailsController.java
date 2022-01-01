@@ -38,6 +38,15 @@ public class ModuleDetailsController implements Initializable{
     Label tutoIDLabel;
     @FXML
     Label tutoStartTimeLabel;
+    @FXML
+    Label labDayLabel;
+    @FXML
+    Label labEndTimeLabel;
+    @FXML
+    Label labIDLabel;
+    @FXML
+    Label labStartTimeLabel;
+    
     
     
     @Override
@@ -45,6 +54,22 @@ public class ModuleDetailsController implements Initializable{
         
     }
 
+    public void setLabDayLabel(String a) {
+        labDayLabel.setText(a);
+    }
+
+    public void setLabEndTimeLabel(String a) {
+        labEndTimeLabel.setText(a);
+    }
+
+    public void setLabIDLabel(String a) {
+        labIDLabel.setText(a);
+    }
+
+    public void setLabStartTimeLabel(String a) {
+        labStartTimeLabel.setText(a);
+    }
+   
     public void setLectDayLabel(String lectDay) {
         lectDayLabel.setText(lectDay);
     }

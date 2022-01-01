@@ -48,6 +48,13 @@ public class addOccController implements Initializable, ControlledScreen{
     @FXML
     private ComboBox<String> tutoStartTimeComboBox;    
     @FXML
+    private ComboBox<String> labDayComboBox;
+    @FXML
+    private ComboBox<String> labEndTimeComboBox;
+    @FXML
+    private ComboBox<String> labStartTimeComboBox; 
+    
+    @FXML
     private AnchorPane occPane;
     
     ScreenController myController;
@@ -69,6 +76,9 @@ public class addOccController implements Initializable, ControlledScreen{
         ObservableList<String> tutoDay = FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
         ObservableList<String> tutoStart = FXCollections.observableArrayList("8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm");
         ObservableList<String> tutoEnd = FXCollections.observableArrayList("8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm");
+        ObservableList<String> labDay = FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+        ObservableList<String> labStart = FXCollections.observableArrayList("8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm");
+        ObservableList<String> labEnd = FXCollections.observableArrayList("8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm");
         
         lectureDayComboBox.setItems(lectDay);
         lectStartTimeComboBox.setItems(lectStart);
@@ -76,6 +86,9 @@ public class addOccController implements Initializable, ControlledScreen{
         tutoDayComboBox.setItems(tutoDay);
         tutoStartTimeComboBox.setItems(tutoStart);
         tutoEndTimeComboBox.setItems(tutoEnd);
+        labDayComboBox.setItems(labDay);
+        labStartTimeComboBox.setItems(labStart);
+        labEndTimeComboBox.setItems(labEnd);
     }
 
     @Override
@@ -104,6 +117,9 @@ public class addOccController implements Initializable, ControlledScreen{
     private static String tutoday;
     private static String tutostart;
     private static String tutoend;
+    private static String labday;
+    private static String labstart;
+    private static String labend;
     
     public void getValues(){
         occ = occTextField.getText();
@@ -114,6 +130,9 @@ public class addOccController implements Initializable, ControlledScreen{
         tutoday = tutoDayComboBox.getValue();
         tutostart = tutoStartTimeComboBox.getValue();
         tutoend = tutoEndTimeComboBox.getValue();
+        labday = labDayComboBox.getValue();
+        labstart = labStartTimeComboBox.getValue();
+        labend = labEndTimeComboBox.getValue();
     }
 
     public String getOcc() {
@@ -148,6 +167,16 @@ public class addOccController implements Initializable, ControlledScreen{
         return tutoend;
     }
     
-    
+    public String getLabday() {
+        return labday;
+    }
+
+    public String getLabstart() {
+        return labstart;
+    }
+
+    public String getLabend() {
+        return labend;
+    }
 
 }

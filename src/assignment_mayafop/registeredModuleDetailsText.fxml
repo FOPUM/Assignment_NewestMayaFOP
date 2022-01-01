@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredModuleDetailsTextController">
+   <children>
+      <Label fx:id="courseCodeDetailsLabel" layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="61.0" text="Label" />
+      <Label fx:id="courseNameDetailsLabel" layoutX="154.0" layoutY="8.0" prefHeight="17.0" prefWidth="344.0" text="Label" />
+   </children>
+</Pane>

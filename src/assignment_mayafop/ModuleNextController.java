@@ -6,6 +6,8 @@ package assignment_mayafop;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -50,6 +52,16 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     @FXML
     private VBox vModuleContainer;
     
+    private String courseID;
+    private String coursename;
+    private int credithour;
+    private int muetband;
+    private String programme;
+    private String coursecategory;
+    private int coursesem;
+    private int courseyear;
+    private String nationality;
+    
     private String occ;
     private String staffID;
     private String lectday;
@@ -58,17 +70,20 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private String tutoday;
     private String tutostart;
     private String tutoend;
+    private String labstart;
+    private String labday;
+    private String labend;
     
     
     ScreenController myController = new ScreenController();
     animation Animation;
     
     addOccController occController = new addOccController();
-    
+    databaseConnection connectNow = new databaseConnection();
+    Connection connectDB = connectNow.getConnection();
     
     Node[] nodes = new Node[20];
     private int i =0;
-    ArrayList<confirmPickedModuleModel> confirmCourses = new ArrayList<>();
     
     boolean upScreenStatus = false;
     
@@ -78,9 +93,6 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         if(!upScreenStatus){
             Animation.fading(moduleNextPane);
         }
-        
-         
-
     }
     
     @Override
@@ -111,12 +123,33 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         if (!showing) {
             myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
             showing = myController.getShowing();   
-        }  
-        
+        }         
         getValues();
         insertHbox();
-        
-        
+    }
+    
+    //Not finish yet
+    public void confirmAddCourse(ActionEvent event){
+        getPreviousPageValues();
+        try {
+            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
+            
+            statement.setString(1,courseID);
+            statement.setString(2,coursename);
+            statement.setInt(3,credithour);
+            statement.setString(4,coursecategory);
+            statement.setInt(5,courseyear);
+            statement.setInt(6,coursesem);
+            statement.setInt(7,muetband);
+            statement.setString(8,nationality);
+            statement.setString(9,programme);
+            statement.executeUpdate();
+//            message_label.setText("User Register Successfully! Please go back and sign in.");
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
     
     
@@ -130,6 +163,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             tutoday = occController.getTutoday();
             tutostart = occController.getTutostart();
             tutoend = occController.getTutoend(); 
+            labday = occController.getLabday();
+            labstart = occController.getLabstart();
+            labend = occController.getLabend(); 
 
     }
     
@@ -150,6 +186,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             moduleController.tutoDayLabel.setText(tutoday);
             moduleController.tutoStartTimeLabel.setText(tutostart);
             moduleController.tutoEndTimeLabel.setText(tutoend);
+            moduleController.tutoDayLabel.setText(labday);
+            moduleController.tutoStartTimeLabel.setText(labstart);
+            moduleController.tutoEndTimeLabel.setText(labend);
             
             final int h = i;
 
@@ -166,7 +205,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             });
             nodes[h].setOnMousePressed(evt -> {
                 //add effect
-                nodes[h].setStyle("-fx-background-color: #000000");
+                
                 
             });
 
@@ -181,6 +220,64 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     }
     
     
+    
+    public void getPreviousPageValues(){
+        ModuleController previousController = new ModuleController();
+        courseID = previousController.getCourseID().toUpperCase();
+        coursename = previousController.getCoursename().toUpperCase();
+        credithour = Integer.parseInt(previousController.getCredithour());
+        
+        if(previousController.getMuetband().equals("ALL")){
+            muetband = 999;
+        }else{
+            muetband = Integer.parseInt(previousController.getMuetband());
+        }
+        
+   
+        if(previousController.getProgramme().equals("Software Engineer")){
+            programme = "SE";
+        }else if(previousController.getProgramme().equals("Data Science")){
+            programme = "DS";
+        }else if(previousController.getProgramme().equals("Artificial Intelligence")){
+            programme = "AI";
+        }else if(previousController.getProgramme().equals("Computer System and Networking")){
+            programme = "CSN";
+        }else if(previousController.getProgramme().equals("Information System")){
+            programme = "IS";
+        }else if(previousController.getProgramme().equals("Multimedia")){
+            programme = "MM";
+        }else if(previousController.getProgramme().equals("ALL")){
+            programme = "ALL";
+        }
+
+        if(previousController.getCoursecategory().equals("University Course")){
+            coursecategory = "UC";
+        }else if(previousController.getCoursecategory().equals("KELF")){
+            coursecategory = "KELF";
+        }else if(previousController.getCoursecategory().equals("Programme Core Course")){
+            coursecategory = "PCC";
+        }else if(previousController.getCoursecategory().equals("Faculty Core Course")){
+            coursecategory = "FCC";
+        }else if(previousController.getCoursecategory().equals("Faculty Elective Course")){
+            coursecategory = "FEC";
+        }else if(previousController.getCoursecategory().equals("Specialisation Elective Course")){
+            coursecategory = "SEC";
+        }
+        
+        if(previousController.getCoursesem().equals("ALL")){
+            coursesem = 999;
+        }else{
+            coursesem = Integer.parseInt(previousController.getCoursesem());
+        }
+        
+        if(previousController.getCourseyear().equals("ALL")){
+            courseyear = 999;
+        }else{
+            courseyear = Integer.parseInt(previousController.getCourseyear());
+        }
+        
+        nationality = previousController.getNationality().toUpperCase();
+    }
     
     
 }

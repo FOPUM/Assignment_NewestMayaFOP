@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredModuleDetailsPopupController">
+   <children>
+      <HBox prefHeight="25.0" prefWidth="928.0">
+         <children>
+            <Label fx:id="academicYearLabel" prefHeight="25.0" prefWidth="109.0" text="2021">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="periodSlotLabel" layoutX="10.0" layoutY="10.0" prefHeight="62.0" prefWidth="113.0" text="S1">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseCodeLabel" layoutX="36.0" layoutY="10.0" prefHeight="64.0" prefWidth="112.0" text="GIG1021">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseNameLabel" layoutX="62.0" layoutY="10.0" prefHeight="65.0" prefWidth="304.0" text="Philoshoppies">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="creditHourLabel" layoutX="88.0" layoutY="10.0" prefHeight="56.0" prefWidth="81.0" text="2">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="occLabel" layoutX="114.0" layoutY="10.0" prefHeight="52.0" prefWidth="82.0" text="23">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="statusLabel" layoutX="140.0" layoutY="10.0" prefHeight="58.0" prefWidth="140.0" text="Enrolled">
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</Pane>

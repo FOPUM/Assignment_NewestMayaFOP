@@ -65,6 +65,8 @@ public class controlCenter implements Initializable, ControlledScreen{
     private Button dashboard_button;
     @FXML
     private Button logout_button;
+    @FXML
+    private Button userAccountButton;
     
     @FXML Rectangle rectmaya;
     

@@ -75,7 +75,7 @@ public class login_controller implements Initializable,ControlledScreen{
             }
         });
     }
-    int validated = 1; 
+    int validated = 0; 
     public void login_button_on_action(ActionEvent event) throws IOException {
         checkConditionForLogin();
     }

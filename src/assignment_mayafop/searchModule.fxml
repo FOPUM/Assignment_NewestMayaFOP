@@ -28,7 +28,7 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="355.0" layoutX="837.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="199.0">
+            <Rectangle fx:id="rightRect" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="355.0" layoutX="837.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="199.0">
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">
                      <color>
@@ -46,17 +46,17 @@
                   </DropShadow>
                </effect>
             </TextField>
-            <Label fx:id="courseCodeLabel" alignment="TOP_LEFT" layoutX="486.0" layoutY="155.0" prefHeight="55.0" prefWidth="252.0" text="GLT1027">
+            <Label fx:id="courseCodeLabel" alignment="TOP_LEFT" layoutX="486.0" layoutY="155.0" prefHeight="55.0" prefWidth="252.0">
                <font>
                   <Font name="Futura Heavy BT" size="34.0" />
                </font>
             </Label>
-            <Label fx:id="courseNameLabel" alignment="TOP_LEFT" layoutX="488.0" layoutY="210.0" prefHeight="94.0" prefWidth="265.0" text="Advanced Oral&#10;Communication&#10;">
+            <Label fx:id="courseNameLabel" alignment="TOP_LEFT" layoutX="488.0" layoutY="210.0" prefHeight="94.0" prefWidth="265.0">
                <font>
                   <Font name="Futura Heavy BT" size="28.0" />
                </font>
             </Label>
-            <Button layoutX="883.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Next" textFill="WHITE">
+            <Button fx:id="nextButton" layoutX="883.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Next" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
@@ -108,7 +108,7 @@
                   </DropShadow>
                </effect>
             </TableView>
-            <Button layoutX="482.0" layoutY="580.0" mnemonicParsing="false" onAction="#addModule" prefHeight="25.0" prefWidth="276.0" text="Add" textFill="WHITE">
+            <Button fx:id="addButton" layoutX="482.0" layoutY="580.0" mnemonicParsing="false" onAction="#addModule" prefHeight="25.0" prefWidth="276.0" text="Add" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>

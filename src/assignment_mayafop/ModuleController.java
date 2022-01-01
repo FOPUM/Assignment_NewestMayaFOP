@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -66,7 +67,22 @@ public class ModuleController implements Initializable, ControlledScreen{
     @FXML
     private Button exit_button;
     
+    @FXML
+    private Label errorLabel;
+    
     boolean upScreenStatus = false;
+    
+    private String courseID;
+    private String coursename;
+    private String credithour;
+    private String muetband;
+    private String programme;
+    private String coursecategory;
+    private String coursesem;
+    private String courseyear;
+    private String nationality;
+
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -76,7 +92,7 @@ public class ModuleController implements Initializable, ControlledScreen{
         }
         
         //Populate the combo box with information
-        ObservableList<String> category = FXCollections.observableArrayList("Programme Core", "Faculty Core", "Elective");
+        ObservableList<String> category = FXCollections.observableArrayList("University Course", "KELF", "Programme Core Course", "Faculty Core Course", "Faculty Elective Course", "Specialisation Elective Course");
         ObservableList<String> year = FXCollections.observableArrayList("ALL", "1","2");
         ObservableList<String> sem = FXCollections.observableArrayList("ALL", "1", "2");
         ObservableList<String> muet = FXCollections.observableArrayList("ALL", "1", "2", "3", "4", "5", "6");
@@ -109,15 +125,71 @@ public class ModuleController implements Initializable, ControlledScreen{
         stage.close();
     } 
     
+    public void getValues(){
+        courseID = courseIDTextField.getText();
+        coursename = courseNameTextField.getText();
+        credithour = creditHourTextField.getText();
+        muetband = MuetBandComboBox.getValue();
+        programme = ProgrammeComboBox.getValue();
+        coursecategory = courseCategoryComboBox.getValue();
+        coursesem = courseSemComboBox.getValue();
+        courseyear = courseYearComboBox.getValue();
+        nationality = nationalityComboBox.getValue();
+    }
+    
     private Stage stage;
     private Scene scene;
     private Parent root;
     public void goToNextModule(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("ModuleNext.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        getValues();
+        if(courseID != null && coursename != null && credithour != null){
+            root = FXMLLoader.load(getClass().getResource("ModuleNext.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }else{
+            errorLabel.setText("Please fill in all the information");
+        }
+        
     }
+    
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public String getCoursename() {
+        return coursename;
+    }
+
+    public String getCredithour() {
+        return credithour;
+    }
+
+    public String getMuetband() {
+        return muetband;
+    }
+
+    public String getProgramme() {
+        return programme;
+    }
+
+    public String getCoursecategory() {
+        return coursecategory;
+    }
+
+    public String getCoursesem() {
+        return coursesem;
+    }
+
+    public String getCourseyear() {
+        return courseyear;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+    
+    
     
 }
