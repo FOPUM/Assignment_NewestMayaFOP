@@ -26,6 +26,9 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
@@ -48,6 +51,7 @@ import javafx.util.Duration;
  */
 public class controlCenter implements Initializable, ControlledScreen{
     Assignment_MayaFOP op;
+
     
     @FXML
     private Button exit_button;
@@ -66,7 +70,7 @@ public class controlCenter implements Initializable, ControlledScreen{
     @FXML
     private Button logout_button;
     @FXML
-    private Button userAccountButton;
+    Button userAccountButton;
     
     @FXML Rectangle rectmaya;
     
@@ -83,13 +87,16 @@ public class controlCenter implements Initializable, ControlledScreen{
     
     @FXML
     private StackPane contentArea;
-   
-            
+
+    login_controller loginControl = new login_controller();
+    databaseConnection connectNow = new databaseConnection();
+    Connection connectDB = connectNow.getConnection();
     
+    String matric_num = loginControl.getUsername();
+    char accStatus = loginControl.getAccStatus();  
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        home_page home = new home_page();
-//        home.slider_animation(pane2, pane3, pane4);
 
         Parent fxml = null;
         try {
@@ -100,6 +107,32 @@ public class controlCenter implements Initializable, ControlledScreen{
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
         
+        //Change the name in navigation bar
+
+        if(accStatus == 'S'){
+            String name="SELECT student_name FROM student WHERE matric_num='"+matric_num+"'";
+            try {
+                ResultSet queryCourseDetail = connectDB.createStatement().executeQuery(name);
+                while(queryCourseDetail.next()) {
+
+                    userAccountButton.setText(upperLetter(queryCourseDetail.getString("student_name")));
+                }            
+            } catch (SQLException e) {
+                Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+                e.printStackTrace();
+            }
+        } else{
+            try {
+                String name = "SELECT staff_name FROM staff WHERE staff_id='"+matric_num+"'";
+                ResultSet queryCourseDetail = connectDB.createStatement().executeQuery(name);
+                while(queryCourseDetail.next()) {
+                    userAccountButton.setText(upperLetter(queryCourseDetail.getString("staff_name")));
+                }  
+            } catch (SQLException e) {
+                Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+                e.printStackTrace();
+            }
+        }    
     }
     
     @Override
@@ -167,6 +200,26 @@ public class controlCenter implements Initializable, ControlledScreen{
         contentArea.getChildren().setAll(fxml);
     }
 
+    public String upperLetter(String name){
+        String[] stringTemp = name.split(" ");
+        String modifiedString=" ";
+        for (int i = 0; i < stringTemp.length; i++) {
+            
+            String firstLetStr = stringTemp[i].substring(0, 1);
+            String remLetStr = stringTemp[i].substring(1);
+            if(!stringTemp[i].equals("and")){
+                firstLetStr = firstLetStr.toUpperCase();
+            }
+            remLetStr = remLetStr.toLowerCase();
+            if(modifiedString.equals(" ")){
+                modifiedString = firstLetStr + remLetStr + " ";
+            }else{
+                modifiedString += firstLetStr + remLetStr + " ";
+            }
+        }
+
+        return modifiedString;
+    }
     
     
     

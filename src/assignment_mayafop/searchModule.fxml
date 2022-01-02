@@ -114,7 +114,7 @@
                </font>
             </Button>
             <VBox fx:id="vCourseNames" layoutX="862.0" layoutY="184.0" prefHeight="240.0" prefWidth="150.0" />
-            <VBox layoutX="486.0" layoutY="294.0" prefHeight="272.0" prefWidth="269.0" spacing="20.0">
+            <VBox layoutX="486.0" layoutY="294.0" prefHeight="272.0" prefWidth="269.0" spacing="13.0">
                <children>
                   <Label fx:id="creditsLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Credits: 4">
                      <font>
@@ -141,7 +141,17 @@
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="tutorialLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="182.0" prefHeight="8.0" prefWidth="269.0" text="Tutorial Day: Mon">
+                  <Label fx:id="tutorialLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="182.0" prefHeight="8.0" prefWidth="269.0" text="NAZEAN">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labTimeLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="225.0" prefHeight="8.0" prefWidth="269.0" text="Lab Day: Mon">
+                     <font>
+                        <Font name="Futura Light BT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="268.0" prefHeight="8.0" prefWidth="269.0" text="HAHa">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>

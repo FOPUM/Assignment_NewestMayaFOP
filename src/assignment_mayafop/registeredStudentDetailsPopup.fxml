@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="925.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredStudentDetailsPopupController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="362.0" layoutX="26.0" layoutY="19.0" stroke="#1a1a1a00" strokeType="INSIDE" styleClass="rect" width="873.0">
+         <effect>
+            <DropShadow offsetX="10.0" offsetY="10.0">
+               <color>
+                  <Color red="0.4736842215061188" green="0.46271929144859314" blue="0.46271929144859314" opacity="0.30000001192092896" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="247.0" layoutX="49.0" layoutY="106.0" stroke="#1a1a1a00" strokeType="INSIDE" styleClass="rect" width="141.0">
+         <effect>
+            <DropShadow offsetX="10.0" offsetY="10.0">
+               <color>
+                  <Color red="0.4736842215061188" green="0.46271929144859314" blue="0.46271929144859314" opacity="0.30000001192092896" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Label fx:id="courseCodeLabel" alignment="CENTER" layoutX="49.0" layoutY="42.0" prefHeight="45.0" prefWidth="141.0" styleClass="bluetext" text="WIX1003" textFill="WHITE">
+         <font>
+            <Font name="Futura Heavy BT" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="courseNameLabel" alignment="CENTER" layoutX="219.0" layoutY="42.0" prefHeight="45.0" prefWidth="514.0" text="Computer System and Organisation" textFill="WHITE">
+         <font>
+            <Font name="Futura Heavy BT" size="18.0" />
+         </font>
+         <styleClass>
+            <String fx:value="bluetext" />
+            <String fx:value="whitetext" />
+         </styleClass>
+      </Label>
+      <VBox layoutX="70.0" layoutY="130.0" prefHeight="200.0" prefWidth="100.0" spacing="15.0">
+         <children>
+            <Label fx:id="courseOccLabel" prefHeight="22.0" prefWidth="92.0" styleClass="whitetext" text="OCC3">
+               <font>
+                  <Font name="Futura Heavy BT" size="12.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="22.0" prefWidth="115.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="59.0" styleClass="whitetext" text="Capacity:">
+                     <font>
+                        <Font name="Futura Heavy BT" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="courseCapacityLabel" prefHeight="22.0" prefWidth="41.0" styleClass="whitetext" text="7/33">
+                     <font>
+                        <Font name="Futura Heavy BT" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label fx:id="courseDayLabel" layoutX="10.0" layoutY="121.0" prefHeight="22.0" prefWidth="92.0" styleClass="whitetext" text="Wednesday">
+               <font>
+                  <Font name="Futura Heavy BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseTimeLabel" layoutX="10.0" layoutY="54.0" prefHeight="22.0" prefWidth="92.0" styleClass="whitetext" text="8am - 9pm">
+               <font>
+                  <Font name="Futura Heavy BT" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseLocationLabel" layoutX="10.0" layoutY="76.0" prefHeight="22.0" prefWidth="92.0" styleClass="whitetext" text="CCNA Lab">
+               <font>
+                  <Font name="Futura Heavy BT" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <ScrollPane layoutX="219.0" layoutY="106.0" prefHeight="247.0" prefWidth="654.0">
+         <content>
+            <VBox fx:id="vContainerRegisteredStudent" prefHeight="242.0" prefWidth="640.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="courseModeLabel" alignment="CENTER" layoutX="757.0" layoutY="42.0" prefHeight="45.0" prefWidth="116.0" styleClass="bluetext" text="Tutorial" textFill="WHITE">
+         <font>
+            <Font name="Futura Heavy BT" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

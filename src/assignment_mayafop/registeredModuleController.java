@@ -52,12 +52,10 @@ public class registeredModuleController implements Initializable, ControlledScre
     String matric_num = loginControl.getUsername();
     char accStatus = loginControl.getAccStatus();
 
-    
-    boolean upScreenStatus = false;
-    
     @FXML
     private ScrollPane registeredModuleScreen;
     
+    boolean upScreenStatus = false;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Animation = new animation();

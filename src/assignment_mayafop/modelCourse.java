@@ -18,12 +18,19 @@ public class modelCourse {
     private String tutoStartTime;
     private String tutoEndTime;
     private String tutoStaff;
-    private String lectureDay;
-    private String lectureStartTime;
-    private String lectureEndTime;
+    private String tutoLocation;
+    private String lectDay;
+    private String lectStartTime;
+    private String lectEndTime;
     private String lectStaff;
+    private String lectLocation;
+    private String labDay;
+    private String labStartTime;
+    private String labEndTime;
+    private String labStaff;
+    private String labLocation;
 
-    public modelCourse(String courseID, String courseName, String creditHour, String occID, String occName, String tutoDay, String tutoStartTime, String tutoEndTime, String tutoStaff, String lectureDay, String lectureStartTime, String lectureEndTime, String lectStaff) {
+    public modelCourse(String courseID, String courseName, String creditHour, String occID, String occName, String tutoDay, String tutoStartTime, String tutoEndTime, String tutoStaff, String tutoLocation, String lectDay, String lectStartTime, String lectEndTime, String lectStaff, String lectLocation, String labDay, String labStartTime, String labEndTime, String labStaff, String labLocation) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.creditHour = creditHour;
@@ -33,10 +40,17 @@ public class modelCourse {
         this.tutoStartTime = tutoStartTime;
         this.tutoEndTime = tutoEndTime;
         this.tutoStaff = tutoStaff;
-        this.lectureDay = lectureDay;
-        this.lectureStartTime = lectureStartTime;
-        this.lectureEndTime = lectureEndTime;
+        this.tutoLocation = tutoLocation;
+        this.lectDay = lectDay;
+        this.lectStartTime = lectStartTime;
+        this.lectEndTime = lectEndTime;
         this.lectStaff = lectStaff;
+        this.lectLocation = lectLocation;
+        this.labDay = labDay;
+        this.labStartTime = labStartTime;
+        this.labEndTime = labEndTime;
+        this.labStaff = labStaff;
+        this.labLocation = labLocation;
     }
 
     public String getCourseID() {
@@ -111,28 +125,28 @@ public class modelCourse {
         this.tutoStaff = tutoStaff;
     }
 
-    public String getLectureDay() {
-        return lectureDay;
+    public String getLectDay() {
+        return lectDay;
     }
 
-    public void setLectureDay(String lectureDay) {
-        this.lectureDay = lectureDay;
+    public void setLectDay(String lectDay) {
+        this.lectDay = lectDay;
     }
 
-    public String getLectureStartTime() {
-        return lectureStartTime;
+    public String getLectStartTime() {
+        return lectStartTime;
     }
 
-    public void setLectureStartTime(String lectureStartTime) {
-        this.lectureStartTime = lectureStartTime;
+    public void setLectStartTime(String lectStartTime) {
+        this.lectStartTime = lectStartTime;
     }
 
-    public String getLectureEndTime() {
-        return lectureEndTime;
+    public String getLectEndTime() {
+        return lectEndTime;
     }
 
-    public void setLectureEndTime(String lectureEndTime) {
-        this.lectureEndTime = lectureEndTime;
+    public void setLectEndTime(String lectEndTime) {
+        this.lectEndTime = lectEndTime;
     }
 
     public String getLectStaff() {
@@ -142,5 +156,63 @@ public class modelCourse {
     public void setLectStaff(String lectStaff) {
         this.lectStaff = lectStaff;
     }    
+
+    public String getTutoLocation() {
+        return tutoLocation;
+    }
+
+    public void setTutoLocation(String tutoLocation) {
+        this.tutoLocation = tutoLocation;
+    }
+
+    public String getLectLocation() {
+        return lectLocation;
+    }
+
+    public void setLectLocation(String lectLocation) {
+        this.lectLocation = lectLocation;
+    }
+
+    public String getLabDay() {
+        return labDay;
+    }
+
+    public void setLabDay(String labDay) {
+        this.labDay = labDay;
+    }
+
+    public String getLabStartTime() {
+        return labStartTime;
+    }
+
+    public void setLabStartTime(String labStartTime) {
+        this.labStartTime = labStartTime;
+    }
+
+    public String getLabEndTime() {
+        return labEndTime;
+    }
+
+    public void setLabEndTime(String labEndTime) {
+        this.labEndTime = labEndTime;
+    }
+
+    public String getLabStaff() {
+        return labStaff;
+    }
+
+    public void setLabStaff(String labStaff) {
+        this.labStaff = labStaff;
+    }
+
+    public String getLabLocation() {
+        return labLocation;
+    }
+
+    public void setLabLocation(String labLocation) {
+        this.labLocation = labLocation;
+    }
+    
+    
     
 }

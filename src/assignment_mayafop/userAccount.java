@@ -26,7 +26,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -57,6 +60,26 @@ public class userAccount implements Initializable, ControlledScreen{
     private Label programmeLabel;
     @FXML
     private Label specialisationLabel;
+    @FXML
+    private Label registeredCourseLabel;
+    @FXML
+    private Label staffIDLabel;
+    @FXML
+    private Label staffNameLabel;
+    @FXML
+    private Label UMMailLabel;
+    @FXML
+    private Line line;
+    @FXML
+    private Rectangle staffRect;
+    @FXML
+    private HBox studentHBox;
+    @FXML
+    private HBox staffHBox;
+    @FXML
+    private Rectangle studentRect;
+    
+   
     
     boolean showing;
     
@@ -70,16 +93,35 @@ public class userAccount implements Initializable, ControlledScreen{
     private static ArrayList<String> courseName = new ArrayList<String>();
     List<registeredModuleDetailsTextModel> moduleDetails = new ArrayList<>();
     
+    private static ArrayList<String> courseIDStaff = new ArrayList<String>();
+    private static ArrayList<String> courseNameStaff = new ArrayList<String>();
+    private static ArrayList<String> courseOccStaff = new ArrayList<String>();
+    private static ArrayList<String> courseCapacity = new ArrayList<String>();
+    List<registeredStudentDetailsTextModel> registeredStudentDetails = new ArrayList<>();
+    
     String matric_num = loginControl.getUsername();
     char accStatus = loginControl.getAccStatus();
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
-        getUserDetails();
-        getCourseDetails();
-        insertModuleDetails();
-        
+        if(accStatus == 'S'){
+            getUserDetailsStudent();
+            getCourseDetailsStudent();
+            insertModuleDetailsStudent();
+            registeredCourseLabel.setText("Registered Courses");
+            staffHBox.setVisible(false);
+            staffRect.setVisible(false);
+        }else{
+            getUserDetailsStaff();
+            getRegisteredStudentDetailsStaff();
+            insertCourseDetailsStaff();
+            registeredCourseLabel.setText("Registered Students");
+            studentHBox.setVisible(false);
+            studentRect.setVisible(false);
+            line.setVisible(false);
+            
+        }
+
     }
 
     @Override
@@ -97,7 +139,13 @@ public class userAccount implements Initializable, ControlledScreen{
     
     public void goToRegisteredModule(ActionEvent event){
         myController = new ScreenController();
-        myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredModule.fxml");
+        
+        if(accStatus == 'S'){
+            myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredModule.fxml");
+        }else{
+            myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredStudent.fxml");
+        }
+        
     } 
 
     
@@ -106,56 +154,8 @@ public class userAccount implements Initializable, ControlledScreen{
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
     } 
-    
-    public void insertModuleDetails(){
-        try {
-            
-            for (int j = 0; j < courseID.size(); j++) {
-                moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),upperLetter(courseName.get(j))));
-            }
-//            moduleDetails.add(new registeredModuleDetailsTextModel("WIX1002","MAth"));
-//            moduleDetails.add(new registeredModuleDetailsTextModel("WIX1003","Mothhh"));
-            
-            Node[] nodes = new Node[moduleDetails.size()];
-            
-            for (int j = 0; j < nodes.length; j++) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredModuleDetailsText.fxml"));
-                nodes[j] = loader.load();
-                
-                final int h = j;
-                
-                registeredModuleDetailsTextController detailsController = loader.getController();
-                //customise content
-                detailsController.setContentInfo(moduleDetails.get(j).getCourseCodeDetailsLabel(),moduleDetails.get(j).getCourseNameDetailsLabel());               
-                
-//                nodes[h].setOnMouseEntered(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: #b4baca");
-//                });
-//                nodes[h].setOnMouseExited(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: transparent");
-//                });
-//                nodes[h].setOnMousePressed(evt -> {
-//                    //add effect
-//                });
 
-                vContainerRegisteredModule.getChildren().add(nodes[j]);
-            }
-          
-
-
-        } catch (Exception e) {
-            try {
-                throw e;
-            } catch (Exception ex) {
-                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    public void getUserDetails(){
+    public void getUserDetailsStudent(){
         try {
             String UserDetails="SELECT student_name, matric_num, student_programme, student_specialisation, student_studyyear, enrolled_status\n" +
                             "FROM student\n" +
@@ -168,7 +168,7 @@ public class userAccount implements Initializable, ControlledScreen{
                 matricIDLabel.setText(queryResultForCheck.getString("matric_num").toUpperCase());              
                 
                 String studentProgrammeTemp = queryResultForCheck.getString("student_programme");
-                System.out.println(studentProgrammeTemp);
+
                 if (studentProgrammeTemp.equals("SE")) {
                     programmeLabel.setText("Software Engineering");
                 } else if (studentProgrammeTemp.equals("AI")) {
@@ -202,8 +202,28 @@ public class userAccount implements Initializable, ControlledScreen{
             e.printStackTrace();
         }
     }
+
+    void getUserDetailsStaff(){
+        try {
+            String UserDetails="SELECT staff_id, staff_email, staff_name\n" +
+                            "FROM staff\n" +
+                            "WHERE staff_id='"+matric_num+"'";
+            ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(UserDetails);
+            while(queryResultForCheck.next()) {
+
+                staffNameLabel.setText(upperLetter(queryResultForCheck.getString("staff_name")));
+                staffIDLabel.setText(queryResultForCheck.getString("staff_id").toUpperCase());              
+                UMMailLabel.setText(queryResultForCheck.getString("staff_email"));
+            }    
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+    }
     
-    public void getCourseDetails(){
+    public void getCourseDetailsStudent(){
+        courseID.clear();
+        courseName.clear();
         try {
             String registeredModuleCourseIDQuery="SELECT course_id FROM\n" +
                                 "student_take_course WHERE matric_num='"+matric_num+"' AND course_status='Y'";
@@ -230,8 +250,114 @@ public class userAccount implements Initializable, ControlledScreen{
             e.printStackTrace();
         }
     }
+
+    public void getRegisteredStudentDetailsStaff(){
+        courseIDStaff.clear();
+        courseNameStaff.clear();
+        courseOccStaff.clear();
+        courseCapacity.clear();
+
+        String currentCapacity="SELECT occ.occ_id, course.course_id,course.course_name,occ.occ_name,\n" +
+                                "currentCapacity, \n" +
+                                "occ.occ_capacity\n" +
+                                "\n" +
+                                "FROM staff\n" +
+                                "INNER JOIN staff_teach_lecture ON staff_teach_lecture.staff_id=staff.staff_id\n" +
+                                "INNER JOIN occ ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "INNER JOIN course ON course_occ.course_id=course.course_id\n" +
+                                "LEFT JOIN \n" +
+                                "(SELECT occ_id, count(occ_id) AS currentCapacity\n" +
+                                "FROM student_take_course\n" +
+                                "WHERE course_status='Y'\n" +
+                                "GROUP BY occ_id\n" +
+                                ") AS currentCa ON currentCa.occ_id=occ.occ_id\n" +
+                                "WHERE staff.staff_id='"+matric_num+"'";
+        try {
+            ResultSet courseIDQuery = connectDB.createStatement().executeQuery(currentCapacity);
+            while(courseIDQuery.next()) {
+                courseIDStaff.add(courseIDQuery.getString("course_id"));
+                courseNameStaff.add(courseIDQuery.getString("course_name"));
+                courseOccStaff.add(courseIDQuery.getString("occ_name"));
+                String currentcapacity = courseIDQuery.getString("currentCapacity");
+                if(courseIDQuery.getString("currentCapacity") == null){
+                    currentcapacity = "0";
+                }
+                String capacity = currentcapacity + "/" +courseIDQuery.getString("occ_capacity");
+                courseCapacity.add(capacity);
+            }
+            
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+    }
     
-    public String upperLetter(String name){
+    public void insertModuleDetailsStudent(){
+        try {
+            moduleDetails.clear();
+            for (int j = 0; j < courseID.size(); j++) {
+                moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),upperLetter(courseName.get(j))));
+            }
+            Node[] nodes = new Node[moduleDetails.size()];
+            
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredModuleDetailsText.fxml"));
+                nodes[j] = loader.load();
+                
+                final int h = j;
+                
+                registeredModuleDetailsTextController detailsController = loader.getController();
+                //customise content
+                detailsController.setContentInfo(moduleDetails.get(j).getCourseCodeDetailsLabel(),moduleDetails.get(j).getCourseNameDetailsLabel());               
+                
+                vContainerRegisteredModule.getChildren().add(nodes[j]);
+            }
+
+
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void insertCourseDetailsStaff(){
+        try {
+            registeredStudentDetails.clear();
+            for (int j = 0; j < courseCapacity.size(); j++) {
+                registeredStudentDetails.add(new registeredStudentDetailsTextModel(courseIDStaff.get(j),upperLetter(courseNameStaff.get(j)), courseOccStaff.get(j), courseCapacity.get(j)));
+            }
+            Node[] nodes = new Node[registeredStudentDetails.size()];
+            
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredStudentDetailsText.fxml"));
+                nodes[j] = loader.load();
+                
+                final int h = j;
+                
+                registeredStudentDetailsTextController studentDetailsController = loader.getController();
+                //customise content
+                studentDetailsController.setContentInfo(registeredStudentDetails.get(j).getCourseCodeLabel(),registeredStudentDetails.get(j).getCourseNameLabel(),registeredStudentDetails.get(j).getCourseOccLabel(),registeredStudentDetails.get(j).getCourseCapacityLabel());               
+                
+                vContainerRegisteredModule.getChildren().add(nodes[j]);
+            }
+
+
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+        public String upperLetter(String name){
         String[] stringTemp = name.split(" ");
         String modifiedString=" ";
         for (int i = 0; i < stringTemp.length; i++) {
@@ -251,5 +377,4 @@ public class userAccount implements Initializable, ControlledScreen{
 
         return modifiedString;
     }
-    
 }

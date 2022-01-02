@@ -24,6 +24,9 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
@@ -49,6 +52,7 @@ public class homePage implements Initializable, ControlledScreen{
     
     private Button exit_button;
     ScreenController myController;
+
     
     
     @FXML
@@ -62,11 +66,16 @@ public class homePage implements Initializable, ControlledScreen{
     @FXML
     private Pane image4;
     
+      
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slider_animation(image2, image3, image4);
         myController = new ScreenController();
         showing = myController.getShowing();
+        
+        
        
         
     }

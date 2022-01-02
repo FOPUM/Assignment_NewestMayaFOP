@@ -90,6 +90,7 @@ public class login_controller implements Initializable,ControlledScreen{
         //Create home page
         
         if(validated == 1){
+            myController.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
             myController.setScreen(Assignment_MayaFOP.controlCenter);
             validated =0;
 //            myController.unloadScreen(Assignment_MayaFOP.loginScreen);

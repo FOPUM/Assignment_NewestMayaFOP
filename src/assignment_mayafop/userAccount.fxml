@@ -27,7 +27,7 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="653.0" layoutY="38.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="355.0">
+            <Rectangle fx:id="studentRect" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="653.0" layoutY="38.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="355.0">
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0" spread="0.32">
                      <color>
@@ -36,7 +36,7 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-            <Line endX="-11.0" endY="-79.84429931640625" layoutX="200.0" layoutY="379.0" startX="-11.0" startY="-247.84429931640625">
+            <Line fx:id="line" endX="-11.0" endY="-79.84429931640625" layoutX="200.0" layoutY="379.0" startX="-11.0" startY="-247.84429931640625">
                <fill>
                   <LinearGradient endX="1.0" endY="1.0" startX="1.0">
                      <stops>
@@ -90,13 +90,12 @@
                   </LinearGradient>
                </stroke>
             </Line>
-            <Label alignment="TOP_LEFT" layoutX="80.0" layoutY="74.0" prefHeight="39.0" prefWidth="407.0" text="Registered Course">
+            <Label fx:id="registeredCourseLabel" alignment="TOP_LEFT" layoutX="80.0" layoutY="74.0" prefHeight="39.0" prefWidth="407.0" text="Registered Course">
                <font>
                   <Font name="Futura Heavy BT" size="34.0" />
                </font>
             </Label>
-            <Button layoutX="41.0" layoutY="40.0" mnemonicParsing="false" onAction="#goToRegisteredModule" prefHeight="287.0" prefWidth="563.0" styleClass="transparentbutton" textFill="WHITE" />
-            <HBox layoutX="664.0" layoutY="78.0" prefHeight="222.0" prefWidth="336.0" spacing="10.0">
+            <HBox fx:id="studentHBox" layoutX="664.0" layoutY="78.0" prefHeight="222.0" prefWidth="336.0" spacing="10.0">
                <children>
                   <VBox prefHeight="205.0" prefWidth="150.0" spacing="20.0">
                      <children>
@@ -168,7 +167,59 @@
                   </VBox>
                </children>
             </HBox>
-            <VBox fx:id="vContainerRegisteredModule" layoutX="80.0" layoutY="131.0" prefHeight="174.0" prefWidth="493.0" />
+            <VBox fx:id="vContainerRegisteredModule" layoutX="80.0" layoutY="131.0" prefHeight="175.0" prefWidth="495.0" />
+            <Rectangle fx:id="staffRect" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="146.0" layoutX="653.0" layoutY="38.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="355.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0" spread="0.32">
+                     <color>
+                        <Color red="0.46052631735801697" green="0.46052631735801697" blue="0.46052631735801697" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <HBox fx:id="staffHBox" layoutX="664.0" layoutY="62.0" prefHeight="109.0" prefWidth="336.0" spacing="10.0">
+               <children>
+                  <VBox prefHeight="109.0" prefWidth="122.0" spacing="20.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="293.0" text="Name: ">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="293.0" text="Staff ID:">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="28.0" prefHeight="18.0" prefWidth="293.0" text="UMMail">
+                           <font>
+                              <Font name="Futura Heavy BT" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="86.0" prefWidth="168.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="staffNameLabel" text="dsfg">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="staffIDLabel" layoutX="10.0" layoutY="10.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="UMMailLabel" layoutX="10.0" layoutY="28.0" text="Label">
+                           <font>
+                              <Font name="Futura Light BT" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Button layoutX="32.0" layoutY="377.0" mnemonicParsing="false" onAction="#goToRegisteredModule" prefHeight="287.0" prefWidth="563.0" styleClass="transparentbutton" textFill="WHITE" />
          </children>
       </AnchorPane>
    </center>

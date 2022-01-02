@@ -97,6 +97,10 @@ public class searchModule implements Initializable, ControlledScreen {
     @FXML
     private Label tutorialTimeLabel;
     @FXML
+    private Label labLecturerLabel;
+    @FXML
+    private Label labTimeLabel;
+    @FXML
     private VBox vCourseNames;
     @FXML
     private Label warningLabel;
@@ -199,122 +203,146 @@ public class searchModule implements Initializable, ControlledScreen {
             
             //Query for items in search table
             //<editor-fold defaultstate="collapsed" desc="String for staff and admin">
-                String course = "SELECT \n"
-                        + "courseID, courseName, creditHour,\n"
-                        + "occID, occName,\n"
-                        + "tutoDay, tutoStartTime, tutoEndTime,\n"
-                        + "tutoStaff,\n"
-                        + "lectureDay, lectureStartTime,lectureEndTime,\n"
-                        + "lectStaff\n"
-                        + "FROM\n"
-                        + "(SELECT * FROM\n"
-                        + "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n"
-                        + "occ.occ_name AS occName,occ.occ_id AS occID,\n"
-                        + "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n"
-                        + "staff.staff_name AS tutoStaff\n"
-                        + "FROM occ \n"
-                        + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
-                        + "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n"
-                        + "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n"
-                        + "INNER JOIN staff on staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n"
-                        + "\n"
-                        + "INNER JOIN \n"
-                        + "\n"
-                        + "(SELECT occ.occ_id AS occ2,\n"
-                        + "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n"
-                        + "staff.staff_name AS lectStaff\n"
-                        + "FROM occ \n"
-                        + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
-                        + "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n"
-                        + "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n"
-                        + "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n"
-                        + "\n"
-                        + "ON tuto.occID=lec.occ2) AS total";
+                String course = "SELECT\n" +
+                        "courseID, courseName, creditHour,\n" +
+                        "occID, occName,\n" +
+                        "tutoDay, tutoStartTime, tutoEndTime,\n" +
+                        "tutoStaff, tutoLocation,\n" +
+                        "lectureDay, lectureStartTime,lectureEndTime,\n" +
+                        "lectStaff, lectLocation,\n" +
+                        "lab.lab_day AS labDay, lab.lab_start_time AS labStartTime, lab.lab_end_time AS labEndTime,\n" +
+                        "staff.staff_name AS labStaff, lab.lab_location AS labLocation\n" +
+                        "\n" +
+                        "FROM\n" +
+                        "(SELECT * FROM\n" +
+                        "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
+                        "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
+                        "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
+                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID,\n" +
+                        "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
+                        "tutorial.tutorial_location AS tutoLocation, staff.staff_name AS tutoStaff\n" +
+                        "\n" +
+                        "FROM occ \n" +
+                        "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                        "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                        "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                        "INNER JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                        "\n" +
+                        "INNER JOIN \n" +
+                        "\n" +
+                        "(SELECT occ.occ_id AS occ2,\n" +
+                        "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
+                        "lecture.lecture_location AS lectLocation, staff.staff_name AS lectStaff\n" +
+                        "FROM occ \n" +
+                        "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                        "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                        "\n" +
+                        "ON tuto.occID=lec.occ2) AS lectuto\n" +
+                        "\n" +
+                        "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
+                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
+                        "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id";
                 //</editor-fold>
             if(accStatus == 'S'){
                 //<editor-fold defaultstate="collapsed" desc="String for student">
                 course = "SELECT\n" +
-                "courseID, courseName, creditHour,\n" +
-                "occID, occName,\n" +
-                "tutoDay, tutoStartTime, tutoEndTime,\n" +
-                "tutoStaff,\n" +
-                "lectureDay, lectureStartTime,lectureEndTime,\n" +
-                "lectStaff,\n" +
-                "courseCategory,courseYear,courseSem,\n" +
-                "muetBand,courseNationality,courseProgramme\n" +
-                "FROM\n" +
-                "(SELECT * FROM\n" +
-                "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
-                "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
-                "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
-                "occ.occ_name AS occName,occ.occ_id AS occID,\n" +
-                "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
-                "staff.staff_name AS tutoStaff\n" +
-                "\n" +
-                "FROM occ \n" +
-                "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
-                "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
-                "INNER JOIN staff on staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
-                "\n" +
-                "INNER JOIN \n" +
-                "\n" +
-                "(SELECT occ.occ_id AS occ2,\n" +
-                "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
-                "staff.staff_name AS lectStaff\n" +
-                "FROM occ \n" +
-                "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
-                "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
-                "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
-                "\n" +
-                "ON tuto.occID=lec.occ2) AS total\n" +
-                "\n" +
-                "WHERE \n" +
-                "(courseCategory='FCC' OR courseCategory ='PCC') AND\n" +
-                "(courseYear=999 OR courseYear=1) AND\n" +
-                "(courseSem=999 OR courseSem=1) AND\n" +
-                "(muetBand=999 OR muetBand=5) AND \n" +
-                "(courseNationality='ALL' OR courseNationality='MALAYSIAN') AND\n" +
-                "(courseProgramme='ALL') ";
+                        "courseID, courseName, creditHour,\n" +
+                        "occID, occName,\n" +
+                        "tutoDay, tutoStartTime, tutoEndTime,\n" +
+                        "tutoStaff, tutoLocation,\n" +
+                        "lectureDay, lectureStartTime,lectureEndTime,\n" +
+                        "lectStaff, lectLocation,\n" +
+                        "lab.lab_day AS labDay, lab.lab_start_time AS labStartTime, lab.lab_end_time AS labEndTime,\n" +
+                        "staff.staff_name AS labStaff, lab.lab_location AS labLocation,\n" +
+                        "courseCategory,courseYear,courseSem,\n" +
+                        "muetBand,courseNationality,courseProgramme\n" +
+                        "FROM\n" +
+                        "(SELECT * FROM\n" +
+                        "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
+                        "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
+                        "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
+                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID,\n" +
+                        "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
+                        "tutorial.tutorial_location AS tutoLocation, staff.staff_name AS tutoStaff\n" +
+                        "\n" +
+                        "FROM occ \n" +
+                        "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                        "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                        "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                        "INNER JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                        "\n" +
+                        "INNER JOIN \n" +
+                        "\n" +
+                        "(SELECT occ.occ_id AS occ2,\n" +
+                        "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
+                        "lecture.lecture_location AS lectLocation, staff.staff_name AS lectStaff\n" +
+                        "FROM occ \n" +
+                        "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                        "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                        "\n" +
+                        "ON tuto.occID=lec.occ2) AS lectuto\n" +
+                        "\n" +
+                        "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
+                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
+                        "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
+                        "\n" +
+                        "WHERE \n" +
+                        "(courseCategory='FCC' OR courseCategory ='"+studentProgramme.toUpperCase()+"') AND\n" +
+                        "(courseYear='ALL' OR courseYear='"+studentYear+"') AND\n" +
+                        "(courseSem='ALL' OR courseSem='"+studentSem+"') AND\n" +
+                        "(muetBand='ALL' OR muetBand='"+studentBand+"') AND \n" +
+                        "(courseNationality='ALL' OR courseNationality='"+studentNationality.toUpperCase()+"') AND\n" +
+                        "(courseProgramme='ALL') ";
                 //</editor-fold>
             }else if(accStatus == 'T' || accStatus == 'A'){
                 //<editor-fold defaultstate="collapsed" desc="String for staff and admin">
-                course = "SELECT \n"
-                        + "courseID, courseName, creditHour,\n"
-                        + "occID, occName,\n"
-                        + "tutoDay, tutoStartTime, tutoEndTime,\n"
-                        + "tutoStaff,\n"
-                        + "lectureDay, lectureStartTime,lectureEndTime,\n"
-                        + "lectStaff\n"
-                        + "FROM\n"
-                        + "(SELECT * FROM\n"
-                        + "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n"
-                        + "occ.occ_name AS occName,occ.occ_id AS occID,\n"
-                        + "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n"
-                        + "staff.staff_name AS tutoStaff\n"
-                        + "FROM occ \n"
-                        + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
-                        + "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n"
-                        + "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n"
-                        + "INNER JOIN staff on staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n"
-                        + "\n"
-                        + "INNER JOIN \n"
-                        + "\n"
-                        + "(SELECT occ.occ_id AS occ2,\n"
-                        + "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n"
-                        + "staff.staff_name AS lectStaff\n"
-                        + "FROM occ \n"
-                        + "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n"
-                        + "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n"
-                        + "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n"
-                        + "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n"
-                        + "\n"
-                        + "ON tuto.occID=lec.occ2) AS total";
+                course = "SELECT\n" +
+                        "courseID, courseName, creditHour,\n" +
+                        "occID, occName,\n" +
+                        "tutoDay, tutoStartTime, tutoEndTime,\n" +
+                        "tutoStaff, tutoLocation,\n" +
+                        "lectureDay, lectureStartTime,lectureEndTime,\n" +
+                        "lectStaff, lectLocation,\n" +
+                        "lab.lab_day AS labDay, lab.lab_start_time AS labStartTime, lab.lab_end_time AS labEndTime,\n" +
+                        "staff.staff_name AS labStaff, lab.lab_location AS labLocation\n" +
+                        "\n" +
+                        "FROM\n" +
+                        "(SELECT * FROM\n" +
+                        "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
+                        "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
+                        "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
+                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID,\n" +
+                        "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
+                        "tutorial.tutorial_location AS tutoLocation, staff.staff_name AS tutoStaff\n" +
+                        "\n" +
+                        "FROM occ \n" +
+                        "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                        "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                        "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                        "INNER JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                        "\n" +
+                        "INNER JOIN \n" +
+                        "\n" +
+                        "(SELECT occ.occ_id AS occ2,\n" +
+                        "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
+                        "lecture.lecture_location AS lectLocation, staff.staff_name AS lectStaff\n" +
+                        "FROM occ \n" +
+                        "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
+                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                        "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                        "\n" +
+                        "ON tuto.occID=lec.occ2) AS lectuto\n" +
+                        "\n" +
+                        "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
+                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
+                        "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id";
                 //</editor-fold>
             }
-            
-            
             ResultSet courseQueryOutput = connectDB.createStatement().executeQuery(course);
             while (courseQueryOutput.next()) {
                 String courseID = courseQueryOutput.getString("courseID");
@@ -326,14 +354,20 @@ public class searchModule implements Initializable, ControlledScreen {
                 String tutoStartTime = courseQueryOutput.getString("tutoStartTime");
                 String tutoEndTime = courseQueryOutput.getString("tutoEndTime");
                 String tutoStaff = courseQueryOutput.getString("tutoStaff");
-                String lectureDay = courseQueryOutput.getString("lectureDay");
-                String lectureStartTime = courseQueryOutput.getString("lectureStartTime");
-                String lectureEndTime = courseQueryOutput.getString("lectureEndTime");
+                String tutoLocation = courseQueryOutput.getString("tutoLocation");
+                String lectDay = courseQueryOutput.getString("lectureDay");
+                String lectStartTime = courseQueryOutput.getString("lectureStartTime");
+                String lectEndTime = courseQueryOutput.getString("lectureEndTime");
                 String lectStaff = courseQueryOutput.getString("lectStaff");
-
+                String lectLocation = courseQueryOutput.getString("lectLocation");
+                String labDay = courseQueryOutput.getString("labDay");
+                String labStartTime = courseQueryOutput.getString("labStartTime");
+                String labEndTime = courseQueryOutput.getString("labEndTime");
+                String labStaff = courseQueryOutput.getString("labStaff");
+                String labLocation = courseQueryOutput.getString("labLocation");
                 // Populate the ObservableList
                 if (!courseIDcheck.contains(courseID)) {
-                    courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, lectureDay, lectureStartTime, lectureEndTime, lectStaff));
+                    courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, tutoLocation, lectDay, lectStartTime, lectEndTime, lectStaff, lectLocation, labDay, labStartTime, labEndTime, labStaff, labLocation));
                 }        
             }
 
@@ -352,9 +386,9 @@ public class searchModule implements Initializable, ControlledScreen {
                     courseNameLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getCourseName());
                     creditsLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
                     occurenceLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getOccName());
-                    String lectureTime = courseTableView.getSelectionModel().getSelectedItem().getLectureDay()
-                            + courseTableView.getSelectionModel().getSelectedItem().getLectureStartTime()
-                            + courseTableView.getSelectionModel().getSelectedItem().getLectureEndTime();
+                    String lectureTime = courseTableView.getSelectionModel().getSelectedItem().getLectDay()
+                            + courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()
+                            + courseTableView.getSelectionModel().getSelectedItem().getLectEndTime();
                     lectureTimeLabel.setText(lectureTime);
                     lectureLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLectStaff());
                     String tutorialTime = courseTableView.getSelectionModel().getSelectedItem().getTutoDay()
@@ -362,6 +396,11 @@ public class searchModule implements Initializable, ControlledScreen {
                             + courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime();
                     tutorialTimeLabel.setText(tutorialTime);
                     tutorialLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getTutoStaff());
+                    String labTime = courseTableView.getSelectionModel().getSelectedItem().getLabDay()
+                            + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()
+                            + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
+                    labTimeLabel.setText(labTime);
+                    labLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLabStaff());
 
                 }
             });
@@ -389,6 +428,7 @@ public class searchModule implements Initializable, ControlledScreen {
         }
     }
 
+    //add course to the right panel
     public void addModule(ActionEvent event) throws Exception { 
         totalCreditHours = 0;
         int credithours = Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
@@ -528,10 +568,8 @@ public class searchModule implements Initializable, ControlledScreen {
                 String course_id = courseIDcheck.get(j);
                 String occ_id = occurenceID.get(j);
                 char status = 'Y';
-                String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id, status)\n" +
+                String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id, course_status)\n" +
                                     "VALUES ('" + matric_num + "', '" + course_id + "', '" + occ_id + "', '" + status + "');";
-                String updateUser = "INSERT INTO student (matric_num, course_id, occ_id)\n" +
-                                    "VALUES ('" + matric_num + "', '" + course_id + "', '" + occ_id + "');";
                 Statement statementUpdate = connectDB.createStatement();
                 statementUpdate.executeUpdate(confirmedCourse);
                 System.out.println("Done adding " + occ_id);

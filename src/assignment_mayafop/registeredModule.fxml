@@ -62,7 +62,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <VBox fx:id="vContainerRegisteredModule" layoutX="40.0" layoutY="357.0" prefHeight="200.0" prefWidth="930.0" />
             <VBox fx:id="vContainersPopUpRegisteredModule" layoutX="40.0" layoutY="157.0" prefHeight="626.0" prefWidth="925.0" />
          </children>
       </AnchorPane>
