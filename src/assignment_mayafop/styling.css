@@ -181,3 +181,26 @@
 .scroll-pane > .viewport {  
    -fx-background-color: transparent;
 }
+
+.default-color0.chart-bar{
+    -fx-bar-fill:#08194F;
+}
+
+.default-color0.chart-series-line{-fx-stroke:#08194F;}
+.default-color1.chart-series-line{-fx-stroke:#193270;}
+.default-color2.chart-series-line{-fx-stroke:#B4BACA;}
+.default-color3.chart-series-line{-fx-stroke:#DDE1E8;}
+.default-color4.chart-series-line{-fx-stroke:#E4EAF9;}
+
+.default-color0.chart-line-symbol{-fx-background-color:#08194F, #FFFFFF;}
+.default-color1.chart-line-symbol{-fx-background-color:#193270, #FFFFFF;}
+.default-color2.chart-line-symbol{-fx-background-color:#B4BACA, #FFFFFF;}
+.default-color3.chart-line-symbol{-fx-background-color:#DDE1E8, #FFFFFF;}
+.default-color4.chart-line-symbol{-fx-background-color:#E4EAF9, #FFFFFF;}
+
+
+.default-color0.chart-pie { -fx-pie-color: #08194F; }
+.default-color1.chart-pie { -fx-pie-color: #193270; }
+.default-color2.chart-pie { -fx-pie-color: #B4BACA; }
+.default-color3.chart-pie { -fx-pie-color: #DDE1E8; }
+.default-color4.chart-pie { -fx-pie-color: #E4EAF9; }

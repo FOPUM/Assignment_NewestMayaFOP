@@ -1,19 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1060.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.dashboard">
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="489.0" styleClass="paneBackground" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="235.0" fitWidth="407.0" layoutX="350.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Images/wave.png" />
-               </image>
-            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="450.0" layoutX="55.0" layoutY="49.0" stroke="#ffffff00" strokeType="INSIDE" styleClass="rect" width="500.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.4868420958518982" green="0.48233431577682495" blue="0.48233431577682495" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="420.0" layoutX="605.0" layoutY="267.0" stroke="#ffffff00" strokeType="INSIDE" styleClass="rect" width="425.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.4868420958518982" green="0.48233431577682495" blue="0.48233431577682495" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="143.0" layoutX="55.0" layoutY="544.0" stroke="#ffffff00" strokeType="INSIDE" styleClass="rect" width="500.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.4868420958518982" green="0.48233431577682495" blue="0.48233431577682495" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="180.0" layoutX="605.0" layoutY="49.0" stroke="#ffffff00" strokeType="INSIDE" styleClass="rect" width="190.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.4868420958518982" green="0.48233431577682495" blue="0.48233431577682495" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="180.0" layoutX="840.0" layoutY="49.0" stroke="#ffffff00" strokeType="INSIDE" styleClass="rect" width="190.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.4868420958518982" green="0.48233431577682495" blue="0.48233431577682495" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <LineChart fx:id="OccurenceLineChart" layoutX="57.0" layoutY="93.0" prefHeight="357.0" prefWidth="497.0" style="-fx-fill: #08194F; -fx-line: #08194F; -fx-horizontal-grid-lines-visible: false; -fx-horizontal-zero-line-visible: false;">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT">
+                     <tickLabelFont>
+                        <Font name="Futura Light BT" size="8.0" />
+                     </tickLabelFont>
+                  </NumberAxis>
+              </yAxis>
+            </LineChart>
+            <Label fx:id="noOfStudentLabel" alignment="CENTER" layoutX="111.0" layoutY="579.0" prefHeight="37.0" prefWidth="367.0" styleClass="bluetext" text="10000" textFill="WHITE">
+               <font>
+                  <Font name="Bauhaus 93" size="40.0" />
+               </font>
+            </Label>
+            <PieChart fx:id="creditHourPieChart" layoutX="835.0" layoutY="81.0" prefHeight="125.0" prefWidth="56.0" />
+            <Label layoutX="228.0" layoutY="634.0" text="student under you">
+               <font>
+                  <Font name="Futura Light BT" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="180.0" layoutY="64.0" text="Most Occurence Taken" textAlignment="CENTER">
+               <font>
+                  <Font name="Futura Medium BT" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="courseCodeTextField" layoutX="77.0" layoutY="450.0" prefHeight="25.0" prefWidth="412.0" promptText="Enter Course Code" style="-fx-opacity: 1;" styleClass="whitetextfield">
+               <effect>
+                  <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
+                     <color>
+                        <Color red="0.5789473652839661" green="0.5789473652839661" blue="0.5789473652839661" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Futura Light BT" size="12.0" />
+               </font>
+            </TextField>
+            <Button layoutX="506.0" layoutY="450.0" mnemonicParsing="false" onAction="#searchButton" prefHeight="25.0" prefWidth="34.0" text="Button" />
+            <Label fx:id="mostFamousTutoLabel" alignment="CENTER" layoutX="643.0" layoutY="79.0" prefHeight="99.0" prefWidth="115.0" text="EM" wrapText="true">
+               <font>
+                  <Font name="Bauhaus 93" size="21.0" />
+               </font>
+            </Label>
+            <HBox layoutX="643.0" layoutY="192.0" prefHeight="26.0" prefWidth="121.0">
+               <children>
+                  <Label text="No of Student: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mostFamousTutoNumber" layoutX="10.0" layoutY="10.0" text="18">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label layoutX="866.0" layoutY="64.0" text="Credit Hours Ranking">
+               <font>
+                  <Font name="Futura Medium BT" size="14.0" />
+               </font>
+            </Label>
+            <BarChart fx:id="famousModuleBarChart" layoutX="605.0" layoutY="325.0" prefHeight="363.0" prefWidth="428.0" style="-fx-horizontal-grid-lines-visible: false; -fx-bar-fill: #08194F; -fx-horizontal-zero-line-visible: false; -fx-bar-radius: 20;" styleClass="bar-chart">
+              <xAxis>
+                <CategoryAxis side="BOTTOM">
+                     <tickLabelFont>
+                        <Font name="Futura Light BT" size="8.0" />
+                     </tickLabelFont>
+                  </CategoryAxis>
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT">
+                     <tickLabelFont>
+                        <Font name="Futura Light BT" size="8.0" />
+                     </tickLabelFont>
+                  </NumberAxis>
+              </yAxis>
+            </BarChart>
+            <Label layoutX="701.0" layoutY="286.0" text="Most Famous Module" textAlignment="CENTER">
+               <font>
+                  <Font name="Futura Medium BT" size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>

@@ -582,6 +582,10 @@ public class searchModule implements Initializable, ControlledScreen {
      
     }
     
+    public void editCourse(){
+        
+    }
+    
     public void addNewModule(ActionEvent event){
         if (!showing) {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");

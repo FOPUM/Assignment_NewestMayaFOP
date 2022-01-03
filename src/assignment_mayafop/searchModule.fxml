@@ -85,7 +85,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="editCourseButton" layoutX="725.0" layoutY="163.0" mnemonicParsing="false" styleClass="logoutbutton">
+            <Button fx:id="editCourseButton" layoutX="725.0" layoutY="163.0" mnemonicParsing="false" onAction="#editCourse" styleClass="logoutbutton">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>

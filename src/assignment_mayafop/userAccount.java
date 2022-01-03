@@ -143,7 +143,17 @@ public class userAccount implements Initializable, ControlledScreen{
         if(accStatus == 'S'){
             myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredModule.fxml");
         }else{
-            myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredStudent.fxml");
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredStudentDetailsPopup.fxml"));
+                loader.load();
+                registeredStudentDetailsPopupController SDPController = loader.getController();
+                myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredStudent.fxml");
+                SDPController.resetMemory();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            
         }
         
     } 

@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
  */
 public class registeredStudentDetailsPopupController implements Initializable{
     
+    
     @FXML
     private Label courseCapacityLabel;
 
@@ -56,10 +57,10 @@ public class registeredStudentDetailsPopupController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        
         getCourseDetailsStudent();
         insertCourseDetails();
         
-
     }
     
     public void setContentInfo(String coursecode, String coursename, String courseocc, String coursecapacity, String coursemode, String courseday, String coursetime, String courselocation){
@@ -90,10 +91,16 @@ public class registeredStudentDetailsPopupController implements Initializable{
     private ArrayList<String> occID = previousController.getOccIDStaff();
     
     public void getCourseDetailsStudent(){
-        matricID.clear();
-        studentName.clear();
+        
 //        System.out.println(occID.size());
         try {
+            for (int i = 0; i < occID.size(); i++) {
+                for (int j = 0; j < occID.size(); j++) {
+                    if (occID.get(i).equals(occID.get(j))) {
+                        occID.remove(j);
+                    }
+                }
+            }
             for (int i = 0; i < occID.size(); i++) {
                 System.out.println(i);
                 System.out.println(occID.get(i));
@@ -161,6 +168,11 @@ public class registeredStudentDetailsPopupController implements Initializable{
                 Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public void resetMemory(){
+        matricID.clear();
+        studentName.clear();
     }
 
 }

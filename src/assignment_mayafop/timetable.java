@@ -29,13 +29,14 @@ import javafx.stage.Stage;
  */
 public class timetable implements Initializable, ControlledScreen {
     ScreenController myController;
-    login_controller loginControl = new login_controller();
+    
     
     private Button exit_button;
     
     @FXML
     private GridPane timeTableGridPane;
     
+    login_controller loginControl = new login_controller();
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
     
