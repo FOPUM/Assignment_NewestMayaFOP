@@ -29,99 +29,94 @@
                   </DropShadow>
                </effect>
             </ImageView>
-            <VBox alignment="CENTER" layoutX="-2.0" layoutY="110.0" prefHeight="604.0" prefWidth="224.0" spacing="10.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+            <HBox layoutX="14.0" layoutY="277.0" prefHeight="199.0" prefWidth="224.0">
                <children>
-                  <HBox prefHeight="77.0" prefWidth="224.0">
+                  <Pane prefHeight="122.0" prefWidth="36.0" />
+                  <VBox prefHeight="241.0" prefWidth="145.0" spacing="20.0">
                      <children>
-                        <Pane prefHeight="51.0" prefWidth="13.0" />
-                        <Button fx:id="userAccountButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#goToUserAccount" prefHeight="57.0" prefWidth="201.0" styleClass="navbutton" text="Mike Tomson&#10;">
+                        <Button fx:id="home_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="35.0" prefWidth="145.0" styleClass="navbutton" text="Home">
                            <font>
-                              <Font name="Futura Heavy BT" size="14.0" />
+                              <Font name="Futura Medium BT" size="12.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Images/Home_blue.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="search_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToSearch" prefHeight="35.0" prefWidth="147.0" styleClass="navbutton" text="Search">
+                           <font>
+                              <Font name="Futura Medium BT" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Images/Search_blue.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="timetable_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToTimetable" prefHeight="35.0" prefWidth="163.0" styleClass="navbutton" text="Timetable">
+                           <font>
+                              <Font name="Futura Medium BT" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Images/timetable_blue.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="dashboard_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToDashboard" prefHeight="35.0" prefWidth="168.0" styleClass="navbutton" text="Dashboard">
+                           <font>
+                              <Font name="Futura Medium BT" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Images/Dashboard_blue.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="199.0" prefWidth="224.0">
-                     <children>
-                        <Pane prefHeight="122.0" prefWidth="36.0" />
-                        <VBox prefHeight="241.0" prefWidth="145.0" spacing="20.0">
-                           <children>
-                              <Button fx:id="home_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="35.0" prefWidth="145.0" styleClass="navbutton" text="Home">
-                                 <font>
-                                    <Font name="Futura Medium BT" size="12.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@Images/Home_blue.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="search_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToSearch" prefHeight="35.0" prefWidth="147.0" styleClass="navbutton" text="Search">
-                                 <font>
-                                    <Font name="Futura Medium BT" size="12.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@Images/Search_blue.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="timetable_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToTimetable" prefHeight="35.0" prefWidth="163.0" styleClass="navbutton" text="Timetable">
-                                 <font>
-                                    <Font name="Futura Medium BT" size="12.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@Images/timetable_blue.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="dashboard_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToDashboard" prefHeight="35.0" prefWidth="168.0" styleClass="navbutton" text="Dashboard">
-                                 <font>
-                                    <Font name="Futura Medium BT" size="12.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@Images/Dashboard_blue.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Pane prefHeight="211.0" prefWidth="224.0" />
-                  <HBox prefHeight="29.0" prefWidth="224.0">
-                     <children>
-                        <Pane prefHeight="21.0" prefWidth="75.0" />
-                        <VBox prefHeight="32.0" prefWidth="118.0">
-                           <children>
-                              <Button fx:id="logout_button" mnemonicParsing="false" onAction="#goToLogout" styleClass="logoutbutton" text="Log Out" textFill="#b4baca">
-                                 <font>
-                                    <Font name="Futura Medium BT" size="10.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fitHeight="9.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@Images/logout.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
-            </VBox>
+            </HBox>
+            <HBox layoutX="13.0" layoutY="174.0" prefHeight="77.0" prefWidth="224.0">
+               <children>
+                  <Pane prefHeight="51.0" prefWidth="13.0" />
+                  <Button fx:id="userAccountButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#goToUserAccount" prefHeight="57.0" prefWidth="201.0" styleClass="navbutton" text="Mike Tomson&#10;">
+                     <font>
+                        <Font name="Futura Heavy BT" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox layoutX="14.0" layoutY="719.0" prefHeight="29.0" prefWidth="224.0">
+               <children>
+                  <Pane prefHeight="21.0" prefWidth="75.0" />
+                  <VBox prefHeight="32.0" prefWidth="118.0">
+                     <children>
+                        <Button fx:id="logout_button" mnemonicParsing="false" onAction="#goToLogout" styleClass="logoutbutton" text="Log Out" textFill="#b4baca">
+                           <font>
+                              <Font name="Futura Medium BT" size="10.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="9.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Images/logout.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
             <Button fx:id="exit_button" layoutX="8.0" layoutY="53.0" mnemonicParsing="false" onAction="#exitButton" style="-fx-background-color: transparent;" textFill="TRANSPARENT">
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
