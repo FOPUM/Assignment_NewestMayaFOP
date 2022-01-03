@@ -50,7 +50,6 @@ import javafx.util.Duration;
  * @author Ming
  */
 public class controlCenter implements Initializable, ControlledScreen{
-    Assignment_MayaFOP op;
 
     
     @FXML
