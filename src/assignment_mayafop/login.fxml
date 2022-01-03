@@ -15,7 +15,6 @@
 
 <BorderPane fx:id="loginScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.login_controller">
    <stylesheets>
-      <URL value="@fxml_file/styling.css" />
       <URL value="@styling.css" />
    </stylesheets>
    <left>
@@ -34,7 +33,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <TextField fx:id="username_text_field" layoutX="60.0" layoutY="200.0" prefHeight="32.0" prefWidth="201.0" promptText="   Siswamail" stylesheets="@fxml_file/styling.css">
+            <TextField fx:id="username_text_field" layoutX="60.0" layoutY="200.0" prefHeight="32.0" prefWidth="201.0" promptText="   Siswamail" stylesheets="@styling.css">
                <styleClass>
                   <String fx:value="textfield" />
                   <String fx:value="textfield" />
@@ -46,12 +45,12 @@
                <padding>
                   <Insets left="5.0" />
                </padding></PasswordField>
-            <Button fx:id="login_button" layoutX="60.0" layoutY="315.0" mnemonicParsing="false" onAction="#login_button_on_action" prefHeight="32.0" prefWidth="201.0" styleClass="login_button" stylesheets="@fxml_file/styling.css" text="Log In" textFill="WHITE">
+            <Button fx:id="login_button" layoutX="60.0" layoutY="315.0" mnemonicParsing="false" onAction="#login_button_on_action" prefHeight="32.0" prefWidth="201.0" styleClass="login_button" stylesheets="@styling.css" text="Log In" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="signup_button" layoutX="122.0" layoutY="659.0" mnemonicParsing="false" onAction="#sign_up_button_on_action" prefHeight="0.0" prefWidth="77.0" styleClass="textbutton" stylesheets="@fxml_file/styling.css" text="Sign up" textFill="#08194f">
+            <Button fx:id="signup_button" layoutX="122.0" layoutY="659.0" mnemonicParsing="false" onAction="#sign_up_button_on_action" prefHeight="0.0" prefWidth="77.0" styleClass="textbutton" stylesheets="@styling.css" text="Sign up" textFill="#08194f">
                <font>
                   <Font name="Futura Heavy BT" size="14.0" />
                </font>

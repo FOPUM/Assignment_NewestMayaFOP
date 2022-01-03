@@ -54,7 +54,6 @@
          </color></DropShadow>
    </effect>
    <stylesheets>
-      <URL value="@fxml_file/styling.css" />
       <URL value="@styling.css" />
    </stylesheets>
    <padding>
