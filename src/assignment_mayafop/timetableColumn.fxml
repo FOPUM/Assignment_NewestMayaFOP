@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="260.0" styleClass="transparentpane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.timetableColumnController">
+   <children>
+      <Rectangle fx:id="rect" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="240.0">
+         <effect>
+            <DropShadow offsetX="10.0" offsetY="10.0">
+               <color>
+                  <Color red="0.5657894611358643" green="0.5657894611358643" blue="0.5657894611358643" opacity="0.30000001192092896" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <VBox fx:id="labelVBox" layoutX="15.0" layoutY="18.0" prefHeight="53.0" prefWidth="233.0">
+         <children>
+            <Label fx:id="courseCodeLabel" text="WIX1002">
+               <font>
+                  <Font name="Futura Medium BT" size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseNameLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="220.0" text="Fundamental of Programming" wrapText="true">
+               <font>
+                  <Font name="Futura Light BT" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</Pane>

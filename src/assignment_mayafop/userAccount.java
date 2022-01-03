@@ -306,7 +306,7 @@ public class userAccount implements Initializable, ControlledScreen{
                 loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredModuleDetailsText.fxml"));
                 nodes[j] = loader.load();
                 
-                final int h = j;
+//                final int h = j;
                 
                 registeredModuleDetailsTextController detailsController = loader.getController();
                 //customise content
