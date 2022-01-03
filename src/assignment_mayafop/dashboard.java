@@ -63,10 +63,12 @@ public class dashboard implements Initializable, ControlledScreen{
     @FXML
     private Label noOfStudentLabel;
     
+    @FXML private Label studentLabel;
+    
     @FXML private Label mostFamousTutoLabel;
     @FXML private Label mostFamousTutoNumber;
     
-    String courseCode = null;
+    String courseCode = "WIX1001";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        courseCodeTextField.setOnKeyPressed( event -> {
@@ -77,12 +79,19 @@ public class dashboard implements Initializable, ControlledScreen{
 //                famousOccBarChart();  
 //            }
 //        });
+        courseCodeTextField.setText("WIX1001");
+        getFamousOcc();
+        displayFamousOccLineChart(); 
+        
         getFamousModule();
         displayFamousModuleBarChart();
         
-        getNoOfStudentUnderStaff();
-        noOfStudentLabel.setText(noOfStudentUnderLecturer);
-         
+        if(accStatus == 'S'){
+            getNumberOfStudentInUm();
+        }else{
+            getNoOfStudentUnderStaff();
+        }
+ 
         getFamousTutor();
         mostFamousTutoLabel.setText(famousTutorName);
         mostFamousTutoNumber.setText(famousTutorStudentNo);
@@ -159,16 +168,35 @@ public class dashboard implements Initializable, ControlledScreen{
     String noOfStudentUnderLecturer = null;
     public void getNoOfStudentUnderStaff(){
         try {
-            String NoOfStudentUnderYou = "SELECT COUNT(student_take_course.matric_num) AS noOfStudentUnderYou\n" +
+            String totalNumberOfStudent = "SELECT COUNT(student_take_course.matric_num) AS noOfStudentUnderYou\n" +
                                         "FROM student_take_course\n" +
                                         "INNER JOIN staff_teach_course ON staff_teach_course.course_id=student_take_course.course_id\n" +
                                         "INNER JOIN staff ON staff.staff_id=staff_teach_course.staff_id\n" +
                                         "WHERE staff.staff_id='"+staffID+"'";
+            
+            ResultSet queryForTotalNoOfStudent = connectDB.createStatement().executeQuery(totalNumberOfStudent);
+            while(queryForTotalNoOfStudent.next()) {
+//                noOfStudentUnderLecturer.add(queryForNoOfStudentUnderYou.getString("noOfStudentUnderYou"));
+                noOfStudentUnderLecturer = queryForTotalNoOfStudent.getString("noOfStudentUnderYou");
+            }    
+            noOfStudentLabel.setText(noOfStudentUnderLecturer);
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+    }
+    
+    String NumberOfStudentInUm = null;
+    public void getNumberOfStudentInUm(){
+        try {
+            String NoOfStudentUnderYou = "SELECT COUNT(matric_num) FROM student";
             ResultSet queryForNoOfStudentUnderYou = connectDB.createStatement().executeQuery(NoOfStudentUnderYou);
             while(queryForNoOfStudentUnderYou.next()) {
 //                noOfStudentUnderLecturer.add(queryForNoOfStudentUnderYou.getString("noOfStudentUnderYou"));
-                noOfStudentUnderLecturer = queryForNoOfStudentUnderYou.getString("noOfStudentUnderYou");
-            }    
+                NumberOfStudentInUm = queryForNoOfStudentUnderYou.getString("COUNT(matric_num)");
+            }
+            noOfStudentLabel.setText(NumberOfStudentInUm);
+            studentLabel.setText("students in UM");
         } catch (SQLException e) {
             Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();

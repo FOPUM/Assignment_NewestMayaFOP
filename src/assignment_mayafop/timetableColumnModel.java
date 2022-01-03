@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Ming
  */
 public class timetableColumnModel {
+    
     private SimpleStringProperty courseCodeLabel;
     private SimpleStringProperty courseNameLabel;    
     

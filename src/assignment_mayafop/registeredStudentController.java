@@ -21,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -32,6 +33,7 @@ public class registeredStudentController implements Initializable, ControlledScr
     ScreenController myController;
     animation Animation;
     login_controller loginControl = new login_controller();
+    MiscFunc misc = new MiscFunc();
     
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
@@ -43,7 +45,7 @@ public class registeredStudentController implements Initializable, ControlledScr
     private Button exit_button;
 
     @FXML
-    private ScrollPane registeredStudentScreen;
+    private AnchorPane registeredStudentScreen;
 
     @FXML
     private VBox vContainersPopUpRegisteredStudent;
@@ -177,7 +179,7 @@ public class registeredStudentController implements Initializable, ControlledScr
                 courseModeStaff.add(courseIDQuery.getString("courseMode"));
                 courseDayStaff.add(courseIDQuery.getString("courseDay"));
                 
-                String time = courseIDQuery.getString("startingTime") + "-" + courseIDQuery.getString("endingTime");
+                String time = misc.formatTime(courseIDQuery.getString("startingTime")) + "-" + misc.formatTime(courseIDQuery.getString("endingTime"));
                 courseTimeStaff.add(time);
                 courseLocation.add(courseIDQuery.getString("location"));
             }    

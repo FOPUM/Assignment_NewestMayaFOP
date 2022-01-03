@@ -41,6 +41,7 @@ public class userAccount implements Initializable, ControlledScreen{
     
     ScreenController myController;
     login_controller loginControl = new login_controller();
+    MiscFunc misc = new MiscFunc();
     
     @FXML
     private Button exit_button;
@@ -173,7 +174,7 @@ public class userAccount implements Initializable, ControlledScreen{
             ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(UserDetails);
             while(queryResultForCheck.next()) {
 
-                nameLabel.setText(upperLetter(queryResultForCheck.getString("student_name")));
+                nameLabel.setText(misc.upperLetter(queryResultForCheck.getString("student_name")));
                 
                 matricIDLabel.setText(queryResultForCheck.getString("matric_num").toUpperCase());              
                 
@@ -221,7 +222,7 @@ public class userAccount implements Initializable, ControlledScreen{
             ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(UserDetails);
             while(queryResultForCheck.next()) {
 
-                staffNameLabel.setText(upperLetter(queryResultForCheck.getString("staff_name")));
+                staffNameLabel.setText(misc.upperLetter(queryResultForCheck.getString("staff_name")));
                 staffIDLabel.setText(queryResultForCheck.getString("staff_id").toUpperCase());              
                 UMMailLabel.setText(queryResultForCheck.getString("staff_email"));
             }    
@@ -307,7 +308,7 @@ public class userAccount implements Initializable, ControlledScreen{
         try {
             moduleDetails.clear();
             for (int j = 0; j < courseID.size(); j++) {
-                moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),upperLetter(courseName.get(j))));
+                moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),misc.upperLetter(courseName.get(j))));
             }
             Node[] nodes = new Node[moduleDetails.size()];
             
@@ -339,7 +340,7 @@ public class userAccount implements Initializable, ControlledScreen{
         try {
             registeredStudentDetails.clear();
             for (int j = 0; j < courseCapacity.size(); j++) {
-                registeredStudentDetails.add(new registeredStudentDetailsTextModel(courseIDStaff.get(j),upperLetter(courseNameStaff.get(j)), courseOccStaff.get(j), courseCapacity.get(j)));
+                registeredStudentDetails.add(new registeredStudentDetailsTextModel(courseIDStaff.get(j),misc.upperLetter(courseNameStaff.get(j)), courseOccStaff.get(j), courseCapacity.get(j)));
             }
             Node[] nodes = new Node[registeredStudentDetails.size()];
             
@@ -367,24 +368,5 @@ public class userAccount implements Initializable, ControlledScreen{
         }
     }
     
-        public String upperLetter(String name){
-        String[] stringTemp = name.split(" ");
-        String modifiedString=" ";
-        for (int i = 0; i < stringTemp.length; i++) {
-            
-            String firstLetStr = stringTemp[i].substring(0, 1);
-            String remLetStr = stringTemp[i].substring(1);
-            if(!stringTemp[i].equals("and")){
-                firstLetStr = firstLetStr.toUpperCase();
-            }
-            remLetStr = remLetStr.toLowerCase();
-            if(modifiedString.equals(" ")){
-                modifiedString = firstLetStr + remLetStr + " ";
-            }else{
-                modifiedString += firstLetStr + remLetStr + " ";
-            }
-        }
 
-        return modifiedString;
-    }
 }

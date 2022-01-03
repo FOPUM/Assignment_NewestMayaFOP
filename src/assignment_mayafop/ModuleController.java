@@ -56,10 +56,10 @@ public class ModuleController implements Initializable, ControlledScreen{
     private TextField creditHourTextField;
 
     @FXML
-    private AnchorPane modulePane;
-
-    @FXML
     private ComboBox<String> nationalityComboBox;
+    
+    @FXML
+    private AnchorPane modulePane;
     
     @FXML
     private Button nextButton;
@@ -191,5 +191,40 @@ public class ModuleController implements Initializable, ControlledScreen{
     }
     
     
+    public void setMuetBandComboBox(String a) {
+        MuetBandComboBox.setId(a);
+    }
+
+    public void setProgrammeComboBox(String a) {
+        ProgrammeComboBox.setId(a);
+    }
+
+    public void setCourseCategoryComboBox(String a) {
+        courseCategoryComboBox.setId(a);
+    }
+
+    public void setCourseIDTextField(String a) {
+        courseIDTextField.setText(a);
+    }
+
+    public void setCourseNameTextField(String a) {
+        courseNameTextField.setText(a);
+    }
+
+    public void setCourseSemComboBox(String a) {
+        courseSemComboBox.setId(a);
+    }
+
+    public void setCourseYearComboBox(String a) {
+        courseYearComboBox.setId(a);
+    }
+
+    public void setCreditHourTextField(String a) {
+        creditHourTextField.setText(a);
+    }
+
+    public void setNationalityComboBox(String a) {
+        nationalityComboBox.setId(a);
+    }
     
 }

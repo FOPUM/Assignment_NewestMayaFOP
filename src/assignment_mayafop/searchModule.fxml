@@ -19,7 +19,7 @@
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="489.0" styleClass="paneBackground" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="453.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="334.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="449.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="334.0">
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">
                      <color>
@@ -28,7 +28,7 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-            <Rectangle fx:id="rightRect" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="355.0" layoutX="837.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="199.0">
+            <Rectangle fx:id="rightRect" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="355.0" layoutX="822.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="199.0">
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">
                      <color>
@@ -46,22 +46,22 @@
                   </DropShadow>
                </effect>
             </TextField>
-            <Label fx:id="courseCodeLabel" alignment="TOP_LEFT" layoutX="486.0" layoutY="155.0" prefHeight="55.0" prefWidth="252.0">
+            <Label fx:id="courseCodeLabel" alignment="TOP_LEFT" layoutX="482.0" layoutY="155.0" prefHeight="55.0" prefWidth="252.0">
                <font>
                   <Font name="Futura Heavy BT" size="34.0" />
                </font>
             </Label>
-            <Label fx:id="courseNameLabel" alignment="TOP_LEFT" layoutX="488.0" layoutY="210.0" prefHeight="94.0" prefWidth="265.0">
+            <Label fx:id="courseNameLabel" alignment="TOP_LEFT" layoutX="484.0" layoutY="199.0" prefHeight="95.0" prefWidth="265.0" wrapText="true">
                <font>
                   <Font name="Futura Heavy BT" size="28.0" />
                </font>
             </Label>
-            <Button fx:id="nextButton" layoutX="883.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Next" textFill="WHITE">
+            <Button fx:id="nextButton" layoutX="868.0" layoutY="434.0" mnemonicParsing="false" onAction="#goToModuleConfirmation" prefHeight="25.0" prefWidth="107.0" text="Next" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
             </Button>
-            <Label fx:id="creditHourLabel" layoutX="869.0" layoutY="155.0" text="Credit hours : 0">
+            <Label fx:id="creditHourLabel" layoutX="854.0" layoutY="155.0" text="Credit hours : 0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -85,7 +85,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="editCourseButton" layoutX="725.0" layoutY="163.0" mnemonicParsing="false" onAction="#editCourse" styleClass="logoutbutton">
+            <Button fx:id="editCourseButton" layoutX="721.0" layoutY="163.0" mnemonicParsing="false" onAction="#editCourse" styleClass="logoutbutton">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -108,50 +108,50 @@
                   </DropShadow>
                </effect>
             </TableView>
-            <Button fx:id="addButton" layoutX="482.0" layoutY="580.0" mnemonicParsing="false" onAction="#addModule" prefHeight="25.0" prefWidth="276.0" text="Add" textFill="WHITE">
+            <Button fx:id="addButton" layoutX="478.0" layoutY="580.0" mnemonicParsing="false" onAction="#addModule" prefHeight="25.0" prefWidth="276.0" text="Add" textFill="WHITE">
                <font>
                   <Font name="Futura Heavy BT" size="12.0" />
                </font>
             </Button>
-            <VBox fx:id="vCourseNames" layoutX="862.0" layoutY="184.0" prefHeight="240.0" prefWidth="150.0" />
-            <VBox layoutX="486.0" layoutY="294.0" prefHeight="272.0" prefWidth="269.0" spacing="13.0">
+            <VBox fx:id="vCourseNames" layoutX="847.0" layoutY="184.0" prefHeight="240.0" prefWidth="150.0" />
+            <VBox layoutX="482.0" layoutY="294.0" prefHeight="272.0" prefWidth="269.0" spacing="13.0">
                <children>
-                  <Label fx:id="creditsLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Credits: 4">
+                  <Label fx:id="creditsLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="occurenceLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Occurence: ">
+                  <Label fx:id="occurenceLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lectureTimeLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0" text="Lecture Day: Mon">
+                  <Label fx:id="lectureTimeLabel" alignment="TOP_LEFT" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lectureLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="96.0" prefHeight="8.0" prefWidth="269.0" text="Ang Tang Fong">
+                  <Label fx:id="lectureLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="96.0" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="tutorialTimeLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="96.0" prefHeight="8.0" prefWidth="269.0" text="Tutorial Day: Mon">
+                  <Label fx:id="tutorialTimeLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="96.0" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="tutorialLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="182.0" prefHeight="8.0" prefWidth="269.0" text="NAZEAN">
+                  <Label fx:id="tutorialLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="182.0" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labTimeLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="225.0" prefHeight="8.0" prefWidth="269.0" text="Lab Day: Mon">
+                  <Label fx:id="labTimeLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="225.0" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="268.0" prefHeight="8.0" prefWidth="269.0" text="HAHa">
+                  <Label fx:id="labLecturerLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="268.0" prefHeight="8.0" prefWidth="269.0">
                      <font>
                         <Font name="Futura Light BT" size="18.0" />
                      </font>

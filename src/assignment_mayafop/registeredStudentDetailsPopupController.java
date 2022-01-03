@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
  */
 public class registeredStudentDetailsPopupController implements Initializable{
     
+    MiscFunc misc = new MiscFunc();
     
     @FXML
     private Label courseCapacityLabel;
@@ -64,14 +65,15 @@ public class registeredStudentDetailsPopupController implements Initializable{
     }
     
     public void setContentInfo(String coursecode, String coursename, String courseocc, String coursecapacity, String coursemode, String courseday, String coursetime, String courselocation){
-        courseCapacityLabel.setText(coursecapacity);
         courseCodeLabel.setText(coursecode);
-        courseLocationLabel.setText(courselocation);
-        courseModeLabel.setText(coursemode);
-        courseOccLabel.setText(courseocc);
+        courseNameLabel.setText(misc.upperLetter(coursename));
+        courseOccLabel.setText("Occurence: " + courseocc.substring(3));
+        courseCapacityLabel.setText(coursecapacity);
+        courseDayLabel.setText(misc.formatDay(courseday));
         courseTimeLabel.setText(coursetime);
-        courseDayLabel.setText(courseday);
-        courseNameLabel.setText(coursename);
+        courseLocationLabel.setText(misc.upperLetter(courselocation));
+        courseModeLabel.setText(coursemode.toUpperCase());  
+        
     }
 
     

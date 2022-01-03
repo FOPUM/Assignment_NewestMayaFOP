@@ -81,6 +81,13 @@ public class registeredModuleController implements Initializable, ControlledScre
     } 
     public void getCourseDetails(){
         try {
+            academicYear.clear();
+            periodSlot.clear();
+            courseCode.clear();
+            courseName.clear();
+            creditHour.clear();
+            occurence.clear();
+            enrollmentStatus.clear();
             String courseDetailss="SELECT student.student_studyyear, student.student_studysem, course.course_id, course.course_name, \n" +
                                 "course.credit_hour, occ.occ_name, student_take_course.course_status FROM occ\n" +
                                 "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
@@ -127,7 +134,7 @@ public class registeredModuleController implements Initializable, ControlledScre
     
     public void insertModuleDetails(){
         try {
-            
+            moduleDetails.clear();
             for (int j = 0; j < courseCode.size(); j++) {
                 moduleDetails.add(new registeredModuleDetailsPopupModel(academicYear.get(j),periodSlot.get(j), courseCode.get(j), courseName.get(j), creditHour.get(j), occurence.get(j), enrollmentStatus.get(j)));
             }

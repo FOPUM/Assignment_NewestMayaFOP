@@ -126,9 +126,10 @@ public class searchModule implements Initializable, ControlledScreen {
     ArrayList<Integer> creditHour = new ArrayList<Integer>();
     
     private static ArrayList<String> courseIDcheck = new ArrayList<String>();
+    private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
     private static ArrayList<String> occurenceID = new ArrayList<String>();
     private static ArrayList<String> courseNames = new ArrayList<String>();
-    private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
+
         
     Node[] nodes = new Node[10];
     public int totalCreditHours;
@@ -138,6 +139,8 @@ public class searchModule implements Initializable, ControlledScreen {
     String matric_num = loginControl.getUsername();
     char accStatus = loginControl.getAccStatus();
     
+    String occIDCheck = new String();
+
     
     
     private String confirmedcourses = "SELECT matric_num, occ_id\n" +
@@ -157,6 +160,9 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        
+        
+        
         if(accStatus == 'S'){
             editCourseButton.setVisible(false);
             addCourseButton.setVisible(false);
@@ -381,26 +387,38 @@ public class searchModule implements Initializable, ControlledScreen {
             courseTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-
-                    courseCodeLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getCourseID());
-                    courseNameLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getCourseName());
-                    creditsLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
-                    occurenceLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getOccName());
-                    String lectureTime = courseTableView.getSelectionModel().getSelectedItem().getLectDay()
-                            + courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()
-                            + courseTableView.getSelectionModel().getSelectedItem().getLectEndTime();
+                    MiscFunc misc = new MiscFunc();
+                    
+                    occIDCheck =courseTableView.getSelectionModel().getSelectedItem().getOccID();
+                    
+                    courseCodeLabel.setText(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+                    courseNameLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getCourseName()));
+                    creditsLabel.setText("Credits: " + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
+                    occurenceLabel.setText("Occurence: " + courseTableView.getSelectionModel().getSelectedItem().getOccName().substring(3));
+                    
+                    String lectureTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLectDay()) + "  "
+                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()) + "-" 
+                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectEndTime());
                     lectureTimeLabel.setText(lectureTime);
-                    lectureLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLectStaff());
-                    String tutorialTime = courseTableView.getSelectionModel().getSelectedItem().getTutoDay()
-                            + courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()
-                            + courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime();
+                    lectureLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLectStaff()));
+                    
+                    String tutorialTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getTutoDay()) + "  "
+                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()) + "-" 
+                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime());
                     tutorialTimeLabel.setText(tutorialTime);
-                    tutorialLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getTutoStaff());
-                    String labTime = courseTableView.getSelectionModel().getSelectedItem().getLabDay()
-                            + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()
-                            + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
+                    tutorialLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getTutoStaff()));
+                    
+                    if(courseTableView.getSelectionModel().getSelectedItem().getLabDay() != null){
+                        String labTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLabDay()) + "  "
+                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()) + "-" 
+                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabEndTime());
                     labTimeLabel.setText(labTime);
-                    labLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLabStaff());
+                    labLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLabStaff()));
+                    }else{
+                        labTimeLabel.setText("");
+                        labLecturerLabel.setText("");
+                    }
+                    
 
                 }
             });
@@ -582,8 +600,54 @@ public class searchModule implements Initializable, ControlledScreen {
      
     }
     
-    public void editCourse(){
-        
+    
+    //lazy do le
+    public void editCourse(ActionEvent event){
+        if (!showing) {
+            myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
+            showing = myController.getShowing(); 
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleController.fxml"));
+                loader.load();
+                ModuleController module = loader.getController();
+                
+                module.setCourseIDTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+                module.setCourseNameTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCourseName());
+                module.setCreditHourTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
+//                module.setProgrammeComboBox(courseCategoryComboBox);
+//                module.setCourseSemComboBox(courseCategoryComboBox);
+//                module.setMuetBandComboBox(courseCategoryComboBox);
+//                module.setCourseYearComboBox(courseCategoryComboBox);
+//                module.setCourseCategoryComboBox(courseCategoryComboBox);
+//                module.setNationalityComboBox(courseCategoryComboBox);
+            } catch (IOException e) {
+            }
+
+//            occurenceLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getOccName());
+//            String lectureTime = courseTableView.getSelectionModel().getSelectedItem().getLectDay()
+//                    + courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()
+//                    + courseTableView.getSelectionModel().getSelectedItem().getLectEndTime();
+//            lectureTimeLabel.setText(lectureTime);
+//            lectureLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLectStaff());
+//            String tutorialTime = courseTableView.getSelectionModel().getSelectedItem().getTutoDay()
+//                    + courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()
+//                    + courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime();
+//            tutorialTimeLabel.setText(tutorialTime);
+//            tutorialLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getTutoStaff());
+//            String labTime = courseTableView.getSelectionModel().getSelectedItem().getLabDay()
+//                    + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()
+//                    + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
+//            labTimeLabel.setText(labTime);
+//            labLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLabStaff());
+        }
+    }
+    
+    public void removeModule(ActionEvent event){
+        if (!showing) {
+            myController.showPopupStage(searchScreen, "/assignment_MayaFOP/removeModule.fxml");
+            showing = myController.getShowing();   
+        }
     }
     
     public void addNewModule(ActionEvent event){
@@ -636,5 +700,10 @@ public class searchModule implements Initializable, ControlledScreen {
     public static void setCourseNames(ArrayList<String> courseNames) {
         searchModule.courseNames = courseNames;
     }
+    
+    public String getOccIDCheck() {
+        return occIDCheck;
+    }
+    
     
 }

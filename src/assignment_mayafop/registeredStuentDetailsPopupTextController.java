@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
  * @author Ming
  */
 public class registeredStuentDetailsPopupTextController implements Initializable{
+    MiscFunc misc = new MiscFunc();
     @FXML
     private Label matricIDLabel;
 
@@ -28,7 +29,7 @@ public class registeredStuentDetailsPopupTextController implements Initializable
     
     public void setContentInfo(String matricid, String studname){
         matricIDLabel.setText(matricid);
-        studentNameLabel.setText(studname);
+        studentNameLabel.setText(misc.upperLetter(studname));
     }
 
     public void setMatricIDLabel(String a) {

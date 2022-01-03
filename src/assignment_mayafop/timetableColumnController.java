@@ -25,21 +25,23 @@ public class timetableColumnController implements Initializable{
     @FXML
     private Label courseNameLabel;
     
+    MiscFunc misc = new MiscFunc();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }
     
     public void setBoxSize(String a, String b, String courseMode, int courseDuration){
-        courseCodeLabel.setText(a);
-        courseNameLabel.setText(b);
+        courseCodeLabel.setText(misc.upperLetter(a));
+        courseNameLabel.setText(misc.upperLetter(b));
         
         if(courseMode.equals("Lecture")){
-            rect.setStyle("-fx-background-color:#FFFFFF;");
+            rect.setStyle("-fx-fill:#FFFFFF;");
         } else if(courseMode.equals("Tutorial")){
-            rect.setStyle("-fx-background-color:#c8d7ed;");
+            rect.setStyle("-fx-fill:#c8d7ed;");
         } else if(courseMode.equals("Lab")){
-            rect.setStyle("-fx-background-color:#dce1ea;");
+            rect.setStyle("-fx-fill:#dce1ea;");
         }
         rect.setWidth(80.0 * courseDuration);
         

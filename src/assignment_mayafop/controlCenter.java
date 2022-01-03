@@ -97,7 +97,9 @@ public class controlCenter implements Initializable, ControlledScreen{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        home_button.setFocusTraversable(true);
+        home_button.requestFocus();
+        
         Parent fxml = null;
         try {
             fxml = FXMLLoader.load(getClass().getResource("homePage.fxml"));

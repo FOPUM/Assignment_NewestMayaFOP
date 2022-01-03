@@ -23,14 +23,14 @@
                </image>
             </ImageView>
             <Button layoutX="615.0" layoutY="439.0" mnemonicParsing="false" onAction="#goToAnnouncement" prefHeight="281.0" prefWidth="443.0" styleClass="buttonpane" />
-            <ImageView fitHeight="454.0" fitWidth="466.0" layoutX="281.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="373.0" fitWidth="365.0" layoutX="349.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Images/maya%20logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="137.0" layoutY="153.0" text="Maya 2.0">
+            <Label layoutX="137.0" layoutY="153.0" prefHeight="35.0" prefWidth="199.0" text="Maya 2.0">
                <font>
-                  <Font name="Futura Heavy BT" size="30.0" />
+                  <Font name="Bauhaus 93" size="36.0" />
                </font>
             </Label>
             <Label layoutX="137.0" layoutY="199.0" text="The brand new Maya Timetable system&#10;give u total refreshing way of registering&#10;your courses and modules while adding&#10;some extra features to help the users&#10;in using the system better.">

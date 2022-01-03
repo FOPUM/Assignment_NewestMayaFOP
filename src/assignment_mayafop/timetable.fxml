@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1060.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.timetable">
    <center>
@@ -40,6 +45,36 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
+            <HBox layoutX="907.0" layoutY="619.0" prefHeight="76.0" prefWidth="104.0">
+               <children>
+                  <VBox prefHeight="76.0" prefWidth="27.0" spacing="8.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="20.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c8d7ed" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="20.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dce1ea" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="20.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="76.0" prefWidth="46.0" spacing="14.0">
+                     <children>
+                        <Label text="Lecture">
+                           <font>
+                              <Font name="Futura Light BT" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="10.0" text="Tutorial">
+                           <font>
+                              <Font name="Futura Light BT" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="35.0" text="Lab">
+                           <font>
+                              <Font name="Futura Light BT" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </center>

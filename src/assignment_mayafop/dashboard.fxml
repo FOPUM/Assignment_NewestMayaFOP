@@ -83,7 +83,7 @@
                </font>
             </Label>
             <PieChart fx:id="creditHourPieChart" layoutX="835.0" layoutY="81.0" prefHeight="125.0" prefWidth="56.0" />
-            <Label layoutX="228.0" layoutY="634.0" text="student under you">
+            <Label fx:id="studentLabel" layoutX="228.0" layoutY="634.0" text="student under you">
                <font>
                   <Font name="Futura Light BT" size="18.0" />
                </font>
