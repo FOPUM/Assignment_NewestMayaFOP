@@ -111,7 +111,7 @@
                   <Font name="Bauhaus 93" size="21.0" />
                </font>
             </Label>
-            <HBox layoutX="643.0" layoutY="192.0" prefHeight="26.0" prefWidth="121.0">
+            <HBox layoutX="642.0" layoutY="192.0" prefHeight="26.0" prefWidth="121.0">
                <children>
                   <Label text="No of Student: ">
                      <font>

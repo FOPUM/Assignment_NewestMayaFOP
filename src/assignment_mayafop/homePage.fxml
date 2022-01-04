@@ -51,7 +51,7 @@
                <children>
                   <ImageView fitHeight="255.0" fitWidth="422.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                      <image>
-                        <Image url="@Images/Sample%20pic.png" />
+                        <Image url="@Images/Exit.png" />
                      </image>
                   </ImageView>
                </children>
@@ -60,7 +60,7 @@
                <children>
                   <ImageView fitHeight="255.0" fitWidth="422.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                      <image>
-                        <Image url="@Images/image2.jpg" />
+                        <Image url="@Images/Home_blue.png" />
                      </image>
                   </ImageView>
                </children>
@@ -69,7 +69,7 @@
                <children>
                   <ImageView fitHeight="255.0" fitWidth="422.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                      <image>
-                        <Image url="@Images/image3.jpg" />
+                        <Image url="@Images/Dashboard_grey.png" />
                      </image>
                   </ImageView>
                </children>
@@ -78,7 +78,7 @@
                <children>
                   <ImageView fitHeight="255.0" fitWidth="422.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                      <image>
-                        <Image url="@Images/image4.jpg" />
+                        <Image url="@Images/back.png" />
                      </image>
                   </ImageView>
                </children>
