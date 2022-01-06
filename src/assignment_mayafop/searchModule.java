@@ -255,7 +255,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 //<editor-fold defaultstate="collapsed" desc="String for student">
                 course = "SELECT\n" +
                         "courseID, courseName, creditHour,\n" +
-                        "occID, occName,\n" +
+                        "occID, occName, occCapacity, \n" +
                         "tutoDay, tutoStartTime, tutoEndTime,\n" +
                         "tutoStaff, tutoLocation,\n" +
                         "lectureDay, lectureStartTime,lectureEndTime,\n" +
@@ -269,7 +269,7 @@ public class searchModule implements Initializable, ControlledScreen {
                         "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
                         "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
                         "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
-                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID,\n" +
+                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID, occ.occ_capacity AS occCapacity,\n" +
                         "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
                         "tutorial.tutorial_location AS tutoLocation, staff.staff_name AS tutoStaff\n" +
                         "\n" +
@@ -295,7 +295,6 @@ public class searchModule implements Initializable, ControlledScreen {
                         "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
                         "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
                         "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
-                        "\n" +
                         "WHERE \n" +
                         "(courseCategory='FCC' OR courseCategory ='"+studentProgramme.toUpperCase()+"') AND\n" +
                         "(courseYear='ALL' OR courseYear='"+studentYear+"') AND\n" +
@@ -371,8 +370,10 @@ public class searchModule implements Initializable, ControlledScreen {
                 String labEndTime = courseQueryOutput.getString("labEndTime");
                 String labStaff = courseQueryOutput.getString("labStaff");
                 String labLocation = courseQueryOutput.getString("labLocation");
+                //cant populate new course, still not add current capacity
                 // Populate the ObservableList
                 if (!courseIDcheck.contains(courseID)) {
+                    
                     courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, tutoLocation, lectDay, lectStartTime, lectEndTime, lectStaff, lectLocation, labDay, labStartTime, labEndTime, labStaff, labLocation));
                 }        
             }
