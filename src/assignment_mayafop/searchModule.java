@@ -124,15 +124,17 @@ public class searchModule implements Initializable, ControlledScreen {
     ArrayList<pickedModuleModel> courses = new ArrayList<>();    
     
     ArrayList<Integer> creditHour = new ArrayList<Integer>();
-    
-    private static ArrayList<String> courseIDcheck = new ArrayList<String>();
-    private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
+      
+    private static ArrayList<String> courseIDarray = new ArrayList<String>();
     private static ArrayList<String> occurenceID = new ArrayList<String>();
     private static ArrayList<String> courseNames = new ArrayList<String>();
 
+    private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
+    private static ArrayList<String> courseIDcheck = new ArrayList<String>();
         
     Node[] nodes = new Node[10];
     public int totalCreditHours;
+    public int credithourcheck;
     private int i = 0;
     private static boolean confirmedtake;
     
@@ -143,12 +145,12 @@ public class searchModule implements Initializable, ControlledScreen {
 
     
     
-    private String confirmedcourses = "SELECT matric_num, occ_id\n" +
+    private String confirmedcourses = "SELECT occ_id, course_id\n" +
                                         "FROM student_take_course\n" +
                                         "WHERE matric_num='" + matric_num + "'";
     
     private String studentQualifications = "SELECT student_muet_band,student_nationality,\n" +
-                                        "student_studysem,student_studyyear,student_programme\n" +
+                                        "student_studysem,student_studyyear,student_programme, credit_hour\n" +
                                         "FROM student\n" +
                                         "WHERE matric_num='"+matric_num+"'";
     
@@ -160,8 +162,9 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
-        
+        occurenceIDcheck.clear();
+        courseIDcheck.clear();
+        courseIDarray.clear();
         
         if(accStatus == 'S'){
             editCourseButton.setVisible(false);
@@ -187,8 +190,8 @@ public class searchModule implements Initializable, ControlledScreen {
             //Query for current registed course in an array
             ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
             while(queryResultForCheck.next()) {
-                String occIDcheck = queryResultForCheck.getString("occ_id");
-                occurenceIDcheck.add(occIDcheck);
+                occurenceIDcheck.add(queryResultForCheck.getString("occ_id"));
+                courseIDcheck.add(queryResultForCheck.getString("course_id"));
             }
             
             int studentBand = 0;
@@ -205,7 +208,11 @@ public class searchModule implements Initializable, ControlledScreen {
                 studentSem = queryForStudentQualification.getInt("student_studysem");
                 studentYear = queryForStudentQualification.getInt("student_studyyear");
                 studentProgramme = queryForStudentQualification.getString("student_programme");
+                credithourcheck = queryForStudentQualification.getInt("credit_hour");
             }
+            
+            totalCreditHours = credithourcheck;
+            creditHourLabel.setText("Credits Hours: " + totalCreditHours);
             
             //Query for items in search table
             //<editor-fold defaultstate="collapsed" desc="String for staff and admin">
@@ -373,7 +380,6 @@ public class searchModule implements Initializable, ControlledScreen {
                 //cant populate new course, still not add current capacity
                 // Populate the ObservableList
                 if (!courseIDcheck.contains(courseID)) {
-                    
                     courseSearchModelObservableList.add(new modelCourse(courseID, courseName, creditHour, occID, occName, tutoDay, tutoStartTime, tutoEndTime, tutoStaff, tutoLocation, lectDay, lectStartTime, lectEndTime, lectStaff, lectLocation, labDay, labStartTime, labEndTime, labStaff, labLocation));
                 }        
             }
@@ -449,13 +455,13 @@ public class searchModule implements Initializable, ControlledScreen {
 
     //add course to the right panel
     public void addModule(ActionEvent event) throws Exception { 
-        totalCreditHours = 0;
+        
         int credithours = Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
         String courseID = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseID();
         String occID = "" + courseTableView.getSelectionModel().getSelectedItem().getOccID();
         String courseName = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseName();
         
-        if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID)){
+        if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID) || courseIDarray.contains(courseID)){
             warningLabel.setText("Already picked!");
         }else{
             warningLabel.setText("");
@@ -469,7 +475,7 @@ public class searchModule implements Initializable, ControlledScreen {
                     if (courseIDcheck.contains(courseID)) {
                         check=false;
                     }else{
-                        courseIDcheck.add(courseID);
+                        courseIDarray.add(courseID);
                     }
                     if (check) {
                         courses.add(addingCourse);
@@ -508,7 +514,7 @@ public class searchModule implements Initializable, ControlledScreen {
                         deleteModule(h);
                         i--;
                         creditHour.remove(h);
-                        totalCreditHours =0;
+                        totalCreditHours = credithourcheck;
                         creditHour.forEach((hour)-> totalCreditHours+=hour);
                         creditHourLabel.setText("Credits Hours: " + totalCreditHours);
                     });
@@ -529,7 +535,7 @@ public class searchModule implements Initializable, ControlledScreen {
     }
     
     public void deleteModule(int i) {
-        courseIDcheck.remove(i);
+        courseIDarray.remove(i);
         courses.remove(i);
         occurenceID.remove(i);
         courseNames.remove(i);
@@ -583,8 +589,8 @@ public class searchModule implements Initializable, ControlledScreen {
             }
             
             
-            for (int j = 0; j < courseIDcheck.size(); j++) {
-                String course_id = courseIDcheck.get(j);
+            for (int j = 0; j < courseIDarray.size(); j++) {
+                String course_id = courseIDarray.get(j);
                 String occ_id = occurenceID.get(j);
                 char status = 'Y';
                 String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id, course_status)\n" +
@@ -661,7 +667,7 @@ public class searchModule implements Initializable, ControlledScreen {
     }
     
     public String getCourseIDcheck(int i) {
-        return courseIDcheck.get(i);
+        return courseIDarray.get(i);
     }
 
     public String getOccurenceID(int i) {
@@ -681,11 +687,11 @@ public class searchModule implements Initializable, ControlledScreen {
     }
     
     public static ArrayList<String> getCourseIDcheck() {
-        return courseIDcheck;
+        return courseIDarray;
     }
 
     public static void setCourseIDcheck(ArrayList<String> courseIDcheck) {
-        searchModule.courseIDcheck = courseIDcheck;
+        searchModule.courseIDarray = courseIDcheck;
     }
 
     public static ArrayList<String> getOccurenceID() {
