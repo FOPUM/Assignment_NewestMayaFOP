@@ -61,7 +61,8 @@ public class moduleConfirmationMessageController implements Initializable, Contr
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/searchModule.fxml"));
-            SMControl= loader.getController();   
+            loader.load();
+            SMControl= loader.getController();
         } catch (Exception e) {
             System.out.println(e);
         }

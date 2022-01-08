@@ -160,7 +160,7 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        courseIDcheck.clear();
+        
         
         
         if(accStatus == 'S'){
@@ -469,7 +469,9 @@ public class searchModule implements Initializable, ControlledScreen {
                     if (courseIDcheck.contains(courseID)) {
                         check=false;
                     }else{
+                        System.out.println("Courseidcheck added");
                         courseIDcheck.add(courseID);
+                        System.out.println(courseIDcheck.get(0));
                     }
                     if (check) {
                         courses.add(addingCourse);
