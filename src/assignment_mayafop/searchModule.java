@@ -589,8 +589,10 @@ public class searchModule implements Initializable, ControlledScreen {
                 char status = 'Y';
                 String confirmedCourse = "INSERT INTO student_take_course(matric_num, course_id, occ_id, course_status)\n" +
                                     "VALUES ('" + matric_num + "', '" + course_id + "', '" + occ_id + "', '" + status + "');";
+                String updateCredit = "UPDATE student SET credit_hour='"+totalCreditHours+"', enrolled_status='Y' WHERE matric_num='"+matric_num+"'";
                 Statement statementUpdate = connectDB.createStatement();
                 statementUpdate.executeUpdate(confirmedCourse);
+                statementUpdate.executeUpdate(updateCredit);
                 System.out.println("Done adding " + occ_id);
             }
 

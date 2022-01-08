@@ -52,41 +52,44 @@ public class moduleConfirmationMessageController implements Initializable, Contr
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Animation = new animation();
+        
+        
+        //SMControl is null
         if(!upScreenStatus){
             Animation.fading(moduleConfirmationScreen);
         }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/searchModule.fxml"));
-            SMControl= new searchModule();
-            confirmPickedModuleModel adder = new confirmPickedModuleModel(SMControl.getCourseIDcheck(i),SMControl.getCourseNames(i),SMControl.getOccurenceID(i));
-            confirmCourses.add(adder);
-            
+            SMControl= loader.getController();   
         } catch (Exception e) {
             System.out.println(e);
         }
         
         
         try {
-
-
-            FXMLLoader pickedModuleLoader = new FXMLLoader();
-            pickedModuleLoader.setLocation(getClass().getResource("/Assignment_MayaFOP/confirmPickedModule.fxml"));
-
-            nodes[i] = pickedModuleLoader.load();
-
-            confirmedPickedModuleController controller = pickedModuleLoader.getController();
-            controller.setCourseIDLabel(confirmCourses.get(i).getCourseIDLabel());
-            controller.setCourseNameLabel(confirmCourses.get(i).getCourseNameLabel());
-            controller.setOccLabel(confirmCourses.get(i).getOccLabel());
-
-            final int h = i;
-
-
-            vCourseConfirmed.getChildren().add(nodes[i]);
-            i++;
-
-
+            
+            confirmCourses.clear();
+            for (int j = 0; j < SMControl.getCourseNames().size(); j++) {
+                confirmPickedModuleModel adder = new confirmPickedModuleModel(SMControl.getCourseIDcheck(j),SMControl.getCourseNames(j),SMControl.getOccurenceID(j));
+                confirmCourses.add(adder);
+            }
+            
+            Node[] nodes = new Node[confirmCourses.size()];
+            
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/confirmPickedModule.fxml"));
+                nodes[j] = loader.load();
+                
+                confirmedPickedModuleController controller = loader.getController();
+                controller.setCourseIDLabel(confirmCourses.get(j).getCourseIDLabel());
+                controller.setCourseNameLabel(confirmCourses.get(j).getCourseNameLabel());
+                controller.setOccLabel(confirmCourses.get(j).getOccLabel());
+                
+                final int h = j;
+                vCourseConfirmed.getChildren().add(nodes[j]);
+            }
 
         } catch (Exception e) {
             try {
