@@ -155,7 +155,12 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occControl.setLabStartTimeComboBox(labstart.get(selectedNode));
                     occControl.setLabEndTimeComboBox(labend.get(selectedNode));
                     occControl.setLabLocationTextField(lablocation.get(selectedNode));
-                }else{
+                    myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
+                    showing = myController.getShowing();   
+                    if (occControl.isShouldAddOcc()) {
+                        editValues(selectedNode);
+                    }
+            }else{
                     occControl.setOccTextField("");
                     occControl.setStaffIDTextField("");
                     occControl.setLectStartTimeComboBox("");
@@ -170,19 +175,128 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occControl.setLabStartTimeComboBox("");
                     occControl.setLabEndTimeComboBox("");
                     occControl.setLabLocationTextField("");
+                    myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
+                    showing = myController.getShowing();   
+                    if (occControl.isShouldAddOcc()) {
+                        getValues();
+                        insertHbox();
+                    }
             }
-                myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
-                showing = myController.getShowing();   
-                if (occControl.isShouldAddOcc()) {
-                    getValues();
-                    insertHbox();
-                }
+                
             
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
             
+    }
+    
+    public void editValues(int selectedNode){
+            occ.set(selectedNode, occController.getOcc());
+            staffID.set(selectedNode, occController.getStaffID());
+            lectday.set(selectedNode,occController.getLectday());
+            lectstart.set(selectedNode,occController.getLectstart());
+            lectend.set(selectedNode,occController.getLectend());
+            lectlocation.set(selectedNode,occController.getLectlocation());
+            
+            tutoday.set(selectedNode,occController.getTutoday());
+            tutostart.set(selectedNode,occController.getTutostart());
+            tutoend.set(selectedNode,occController.getTutoend()); 
+            tutolocation.set(selectedNode,occController.getTutolocation());
+            
+            labday.set(selectedNode,occController.getLabday());
+            labstart.set(selectedNode,occController.getLabstart());
+            labend.set(selectedNode,occController.getLabend()); 
+            lablocation.set(selectedNode,occController.getLablocation());
+            nodes[selectedNode] = null;
+            
+            try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleDetails.fxml"));
+            nodes[selectedNode] = loader.load();
+            ModuleDetailsController moduleController = loader.getController();
+            
+            moduleController.staffNameLabel.setText("No such teacher");
+            moduleController.occLabel.setText(occ.get(selectedNode));
+            moduleController.staffIDLabel.setText(staffID.get(selectedNode));
+            
+            moduleController.lectIDLabel.setText(courseID + "_L" + selectedNode);
+            moduleController.lectDayLabel.setText(lectday.get(selectedNode));
+            moduleController.lectStartTimeLabel.setText(lectstart.get(selectedNode));
+            moduleController.lectEndTimeLabel.setText(lectend.get(selectedNode));
+            moduleController.lectLocationLabel.setText(lectlocation.get(selectedNode));
+            
+            moduleController.tutoIDLabel.setText(courseID + "_T" + selectedNode);
+            moduleController.tutoDayLabel.setText(tutoday.get(selectedNode));
+            moduleController.tutoStartTimeLabel.setText(tutostart.get(selectedNode));
+            moduleController.tutoEndTimeLabel.setText(tutoend.get(selectedNode));
+            moduleController.tutoLocationLabel.setText(tutolocation.get(selectedNode));
+            
+            moduleController.labIDLabel.setText(courseID + "_A" + selectedNode);
+            moduleController.labDayLabel.setText(labday.get(selectedNode));
+            moduleController.labStartTimeLabel.setText(labstart.get(selectedNode));
+            moduleController.labEndTimeLabel.setText(labend.get(selectedNode));
+            moduleController.labLocationLabel.setText(lablocation.get(selectedNode));
+            
+            final int h = selectedNode;
+            
+            vModuleContainer.getChildren().set(selectedNode, nodes[selectedNode]);
+            
+            
+            nodes[h].setOnMouseEntered(evt -> {
+                //add effect
+                nodes[h].setStyle("-fx-background-color: transparent");
+            });
+            nodes[h].setOnMouseExited(evt -> {
+                //add effect
+                nodes[h].setStyle("-fx-background-color: transparent");
+            });
+            nodes[h].setOnMousePressed(evt -> {
+                //add effect
+                try {
+                    FXMLLoader occloader = new FXMLLoader();
+                    occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
+                    occloader.load();
+                    addOccController occControl = occloader.getController();
+
+//                    occControl.setOccTextField(occ.get(h));
+//                    occControl.setStaffIDTextField(staffID.get(h));
+//
+//                    occControl.setLectureDayComboBox(lectday.get(h));
+//                    occControl.setLectStartTimeComboBox(lectstart.get(h));
+//                    occControl.setLectEndTimeComboBox(lectend.get(h));
+//                    occControl.setLectLocationTextField(lectlocation.get(h));
+//
+//                    occControl.setTutoDayComboBox(tutoday.get(h));
+//                    occControl.setTutoStartTimeComboBox(tutostart.get(h));
+//                    occControl.setTutoEndTimeComboBox(tutoend.get(h));
+//                    occControl.setTutoLocationTextField(tutolocation.get(h));
+//
+//                    occControl.setLabDayComboBox(labday.get(h));
+//                    occControl.setLabStartTimeComboBox(labstart.get(h));
+//                    occControl.setLabEndTimeComboBox(labend.get(h));
+//                    occControl.setLabLocationTextField(lablocation.get(h));
+//                    
+                    this.selectedNode = h;
+                    System.out.println("Here clicked = " + this.selectedNode);
+                    openNewOccPage();
+
+                    if(confirmDelete){
+                        deleteOcc(h);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void getValues(){
