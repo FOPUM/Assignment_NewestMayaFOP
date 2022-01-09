@@ -148,6 +148,6 @@ public class ModuleDetailsController implements Initializable{
 //    public void setTutoLocationLabel(String a) {
 //        tutoLocationLabel.setText(a);
 //    }
-    
+
     
 }

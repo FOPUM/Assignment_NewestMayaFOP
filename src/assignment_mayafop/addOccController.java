@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,6 +31,8 @@ public class addOccController implements Initializable, ControlledScreen {
     private Button back_button;
     @FXML
     private Button confirmOccButton;
+    @FXML
+    private Button deleteButton;
     @FXML
     private Button exit_button;    
     @FXML
@@ -72,8 +75,8 @@ public class addOccController implements Initializable, ControlledScreen {
 
     boolean upScreenStatus = false;
     
-    boolean editingMode = false;
-    int currentSelection = 0;
+    private boolean editingMode = false;
+    private int currentSelection = 0;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -92,7 +95,7 @@ public class addOccController implements Initializable, ControlledScreen {
         ObservableList<String> labDay = FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
         ObservableList<String> labStart = FXCollections.observableArrayList("8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm");
         ObservableList<String> labEnd = FXCollections.observableArrayList("8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm");
-        
+
         lectureDayComboBox.setItems(lectDay);
         lectStartTimeComboBox.setItems(lectStart);
         lectEndTimeComboBox.setItems(lectEnd);
@@ -103,41 +106,6 @@ public class addOccController implements Initializable, ControlledScreen {
         labStartTimeComboBox.setItems(labStart);
         labEndTimeComboBox.setItems(labEnd);
         
-        if(editingMode){
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleNext.fxml"));
-                loader.load();
-                ModuleNextController moduleNextController = loader.getController();
-                
-                moduleNextController.
-                
-                setOccTextField(moduleNextController.);
-                setStaffIDTextField(super.staffID);
-
-                setLectureDayComboBox(super.lectday);
-                setLectStartTimeComboBox(super.lectstart);
-                setLectEndTimeComboBox(super.lectend);
-                setLectLocationTextField(super.lectlocation);
-
-                setTutoDayComboBox(super.tutoday);
-                setTutoStartTimeComboBox(super.tutostart);
-                setTutoEndTimeComboBox(super.tutoend);
-                setTutoLocationTextField(super.tutolocation);
-
-                setLabDayComboBox(super.labday);
-                setLabStartTimeComboBox(super.labstart);
-                setLabEndTimeComboBox(super.labend);
-                setLabLocationTextField(super.lablocation);
-
-            } catch (Exception e) {
-                try {
-                    throw e;
-                } catch (Exception ex) {
-                    Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
     }
 
     @Override
@@ -153,8 +121,23 @@ public class addOccController implements Initializable, ControlledScreen {
     
     public void confirmOcc(ActionEvent event) {
         getValues();
-        System.out.println(occ);
         Stage stage = (Stage) confirmOccButton.getScene().getWindow();
+        stage.close();
+    }
+    
+    public void delete(ActionEvent event) {
+        
+        try {
+            FXMLLoader moduleloader = new FXMLLoader();
+            moduleloader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleNextController.fxml"));
+            moduleloader.load();
+            ModuleNextController moduleNextController = moduleloader.getController();
+            moduleNextController.confirmDelete = true;
+        } catch (IOException ex) {
+            Logger.getLogger(addOccController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
     }
     
@@ -306,6 +289,14 @@ public class addOccController implements Initializable, ControlledScreen {
 
     public void setLabLocationTextField(String a) {
         labLocationTextField.setText(a);
+    }
+    
+    public void setCurrentSelection(int currentSelection) {
+        this.currentSelection = currentSelection;
+    }
+
+    public void setEditingMode(boolean editingMode) {
+        this.editingMode = editingMode;
     }
     
     

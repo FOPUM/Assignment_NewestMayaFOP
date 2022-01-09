@@ -30,7 +30,12 @@
             </DropShadow>
          </effect>
       </Rectangle>
-      <Button fx:id="confirmOccButton" layoutX="160.0" layoutY="548.0" mnemonicParsing="false" onAction="#confirmOcc" prefHeight="25.0" prefWidth="181.0" text="Confirm" textFill="WHITE">
+      <Button fx:id="confirmOccButton" layoutX="260.0" layoutY="547.0" mnemonicParsing="false" onAction="#confirmOcc" prefHeight="25.0" prefWidth="181.0" text="Confirm" textFill="WHITE">
+         <font>
+            <Font name="Futura Medium BT" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteButton" layoutX="59.0" layoutY="547.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="181.0" text="Delete" textFill="WHITE">
          <font>
             <Font name="Futura Medium BT" size="14.0" />
          </font>
