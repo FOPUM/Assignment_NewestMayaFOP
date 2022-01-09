@@ -35,6 +35,8 @@ import javafx.stage.Stage;
 
 public class ModuleNextController implements Initializable, ControlledScreen{
     
+    int selectedNode = -1;
+    
     @FXML
     private Button addCourseButton;
 
@@ -126,16 +128,61 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     boolean showing = myController.getShowing();
     
     public void addNewOcc(ActionEvent event){
+        selectedNode = -1;
+        System.out.println("selectedNode has been reset to: " +selectedNode);
         openNewOccPage();
     }
     
     public void openNewOccPage(){
         if (!showing) {
-            myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
-            showing = myController.getShowing();   
-        }         
-        getValues();
-        insertHbox();
+            try {
+                    FXMLLoader occloader = new FXMLLoader();
+                    occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
+                    occloader.load();
+                    addOccController occControl = occloader.getController();
+            if (selectedNode != -1) {
+                    occControl.setOccTextField(occ.get(selectedNode));
+                    occControl.setStaffIDTextField(staffID.get(selectedNode));
+                    occControl.setLectStartTimeComboBox(lectstart.get(selectedNode));
+                    occControl.setLectEndTimeComboBox(lectend.get(selectedNode));
+                    occControl.setLectureDayComboBox(lectday.get(selectedNode));
+                    occControl.setLectLocationTextField(lectlocation.get(selectedNode));
+                    occControl.setTutoDayComboBox(tutoday.get(selectedNode));
+                    occControl.setTutoStartTimeComboBox(tutostart.get(selectedNode));
+                    occControl.setTutoEndTimeComboBox(tutoend.get(selectedNode));
+                    occControl.setTutoLocationTextField(tutolocation.get(selectedNode));
+                    occControl.setLabDayComboBox(labday.get(selectedNode));
+                    occControl.setLabStartTimeComboBox(labstart.get(selectedNode));
+                    occControl.setLabEndTimeComboBox(labend.get(selectedNode));
+                    occControl.setLabLocationTextField(lablocation.get(selectedNode));
+                }else{
+                    occControl.setOccTextField("");
+                    occControl.setStaffIDTextField("");
+                    occControl.setLectStartTimeComboBox("");
+                    occControl.setLectEndTimeComboBox("");
+                    occControl.setLectureDayComboBox("");
+                    occControl.setLectLocationTextField("");
+                    occControl.setTutoDayComboBox("");
+                    occControl.setTutoStartTimeComboBox("");
+                    occControl.setTutoEndTimeComboBox("");
+                    occControl.setTutoLocationTextField("");
+                    occControl.setLabDayComboBox("");
+                    occControl.setLabStartTimeComboBox("");
+                    occControl.setLabEndTimeComboBox("");
+                    occControl.setLabLocationTextField("");
+            }
+                myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
+                showing = myController.getShowing();   
+                if (occControl.isShouldAddOcc()) {
+                    getValues();
+                    insertHbox();
+                }
+            
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+            
     }
     
     public void getValues(){
@@ -227,6 +274,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
 //                    occControl.setLabEndTimeComboBox(labend.get(h));
 //                    occControl.setLabLocationTextField(lablocation.get(h));
 //                    
+                    selectedNode = h;
+                    System.out.println("Here clicked = " + selectedNode);
                     openNewOccPage();
 
                     if(confirmDelete){

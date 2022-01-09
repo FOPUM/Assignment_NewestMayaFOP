@@ -27,6 +27,22 @@ import javafx.stage.Stage;
  * @author Ming
  */
 public class addOccController implements Initializable, ControlledScreen {
+    
+    private static String occSetter;
+    private static String staffIdSetter;
+    private static String LectStartTimeSetter;
+    private static String LectEndTimeSetter;
+    private static String LectDaySetter;
+    private static String TutorDaySetter;
+    private static String TutorStartTimeSetter;
+    private static String TutorEndTimeSetter;
+    private static String LabDaySetter;
+    private static String LabStartTimeSetter;
+    private static String LabEndTimeSetter;
+    private static String LectLocationSetter;
+    private static String tutorLocationSetter;
+    private static String labLocationSetter;
+    
     @FXML
     private Button back_button;
     @FXML
@@ -72,14 +88,45 @@ public class addOccController implements Initializable, ControlledScreen {
     ScreenController myController;
     animation Animation;
 
-
+    private static boolean shouldAddOcc = false;
     boolean upScreenStatus = false;
+
+
+//    addOccController(String occ, String staffID, String lectLocation, String tutoLocation, String labLocation) {
+//         this.occTextField.setText(occ);
+//        this.staffIDTextField.setText(staffID);
+//        this.lectLocationTextField.setText(lectLocation);
+//        this.tutoLocationTextField.setText(tutoLocation);
+//        this.labLocationTextField.setText(labLocation);
+//    }
+//
+//    addOccController() {
+//        
+//    }
+//    
     
-    private boolean editingMode = false;
-    private int currentSelection = 0;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        labDayComboBox.setValue(LabDaySetter);
+        labEndTimeComboBox.setValue(LabEndTimeSetter);
+        labStartTimeComboBox.setValue(LabStartTimeSetter);
+        lectLocationTextField.setText(LectLocationSetter);
+        tutoLocationTextField.setText(tutorLocationSetter);
+        labLocationTextField.setText(labLocationSetter);
+        lectStartTimeComboBox.setValue(LectStartTimeSetter);
+        lectEndTimeComboBox.setValue(LectEndTimeSetter);
+        lectureDayComboBox.setValue(LectDaySetter);
+        occTextField.setText(occSetter);
+        staffIDTextField.setText(staffIdSetter);
+        tutoDayComboBox.setValue(TutorDaySetter);
+        tutoStartTimeComboBox.setValue(TutorStartTimeSetter);
+        tutoEndTimeComboBox.setValue(TutorEndTimeSetter);
+        System.out.println("OccTextfield got: " + occTextField.getText());
+        System.out.println("StaffIDTEXTFIELD got: " + staffIDTextField.getText());
+        
         
         Animation = new animation();
         if(!upScreenStatus){
@@ -106,6 +153,7 @@ public class addOccController implements Initializable, ControlledScreen {
         labStartTimeComboBox.setItems(labStart);
         labEndTimeComboBox.setItems(labEnd);
         
+        
     }
 
     @Override
@@ -115,15 +163,18 @@ public class addOccController implements Initializable, ControlledScreen {
     
     public void exitButton(ActionEvent event) {
         //Click on exit button to exit       
+        shouldAddOcc = false;
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
     } 
     
     public void confirmOcc(ActionEvent event) {
+        shouldAddOcc = true;
         getValues();
         Stage stage = (Stage) confirmOccButton.getScene().getWindow();
         stage.close();
     }
+
     
     public void delete(ActionEvent event) {
         
@@ -233,72 +284,71 @@ public class addOccController implements Initializable, ControlledScreen {
         return lablocation;
     }
     
-    
-
-    public void setLectEndTimeComboBox(String a) {
-        lectEndTimeComboBox.setValue(a);
-    }
-
     public void setLectStartTimeComboBox(String a) {
-        lectStartTimeComboBox.setValue(a);
+        LectStartTimeSetter = a;
     }
+    
+    public void setLectEndTimeComboBox(String a) {
+        LectEndTimeSetter = a;
+    }
+
 
     public void setLectureDayComboBox(String a) {
-        lectureDayComboBox.setValue(a);
+        LectDaySetter = a;
     }
 
     public void setOccTextField(String a) {
-        occTextField.setText(a);
+        occSetter = a;
     }
 
     public void setStaffIDTextField(String a) {
-        staffIDTextField.setText(a);
+        staffIdSetter = a;
     }
 
     public void setTutoDayComboBox(String a) {
-        tutoDayComboBox.setValue(a);
-    }
-
-    public void setTutoEndTimeComboBox(String a) {
-        tutoEndTimeComboBox.setValue(a);
+        TutorDaySetter = a;
     }
 
     public void setTutoStartTimeComboBox(String a) {
-        tutoStartTimeComboBox.setValue(a);
+        TutorStartTimeSetter = a;
+    }
+    
+    public void setTutoEndTimeComboBox(String a) {
+        TutorEndTimeSetter = a;
     }
 
     public void setLabDayComboBox(String a) {
-        labDayComboBox.setValue(a);
+        LabDaySetter = a;
+        
     }
 
     public void setLabEndTimeComboBox(String a) {
-        labEndTimeComboBox.setValue(a);
+        LabEndTimeSetter = a;
+        
     }
 
     public void setLabStartTimeComboBox(String a) {
-        labStartTimeComboBox.setValue(a);
+        LabStartTimeSetter = a;
     }
 
     public void setLectLocationTextField(String a) {
-        lectLocationTextField.setText(a);
+        LectLocationSetter = a;
     }
 
     public void setTutoLocationTextField(String a) {
-        tutoLocationTextField.setText(a);
+        tutorLocationSetter = a;
     }
 
     public void setLabLocationTextField(String a) {
-        labLocationTextField.setText(a);
+        labLocationSetter = a;
     }
     
-    public void setCurrentSelection(int currentSelection) {
-        this.currentSelection = currentSelection;
+    public boolean isShouldAddOcc() {
+        return shouldAddOcc;
     }
 
-    public void setEditingMode(boolean editingMode) {
-        this.editingMode = editingMode;
+    public void setShouldAddOcc(boolean shouldAddOcc) {
+        addOccController.shouldAddOcc = shouldAddOcc;
     }
-    
-    
 
 }
