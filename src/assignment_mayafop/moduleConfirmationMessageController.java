@@ -72,7 +72,7 @@ public class moduleConfirmationMessageController implements Initializable, Contr
             
             confirmCourses.clear();
             for (int j = 0; j < SMControl.getCourseNames().size(); j++) {
-                confirmPickedModuleModel adder = new confirmPickedModuleModel(SMControl.getCourseIDcheck(j),SMControl.getCourseNames(j),SMControl.getOccurenceID(j));
+                confirmPickedModuleModel adder = new confirmPickedModuleModel(SMControl.getCourseIDcheck(j),SMControl.getCourseNames(j),SMControl.getOccurenceID(j).substring(8));
                 confirmCourses.add(adder);
             }
             

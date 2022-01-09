@@ -121,9 +121,9 @@ public class searchModule implements Initializable, ControlledScreen {
     @FXML 
     private Label creditHourLabel;
     
-    ArrayList<pickedModuleModel> courses = new ArrayList<>();    
+    static ArrayList<pickedModuleModel>  coursesModel = new ArrayList<>();    
     
-    ArrayList<Integer> creditHour = new ArrayList<Integer>();
+    static ArrayList<Integer> creditHour = new ArrayList<Integer>();
       
     private static ArrayList<String> courseIDarray = new ArrayList<String>();
     private static ArrayList<String> occurenceID = new ArrayList<String>();
@@ -154,6 +154,8 @@ public class searchModule implements Initializable, ControlledScreen {
                                         "FROM student\n" +
                                         "WHERE matric_num='"+matric_num+"'";
     
+    
+    
 
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
@@ -162,9 +164,7 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        occurenceIDcheck.clear();
-        courseIDcheck.clear();
-        courseIDarray.clear();
+        
         
         if(accStatus == 'S'){
             editCourseButton.setVisible(false);
@@ -183,7 +183,6 @@ public class searchModule implements Initializable, ControlledScreen {
         }
         
 
-        
         showing = myController.getShowing();
         //Code below query all the things needed
         try {
@@ -434,7 +433,52 @@ public class searchModule implements Initializable, ControlledScreen {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
- 
+        
+        try{
+            for (int j = 0; j < courseIDarray.size(); j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
+                nodes[j] = loader.load();
+                pickedModuleController controller = loader.getController();
+                controller.setCourseName(courseIDarray.get(j));
+                vCourseNames.getChildren().add(nodes[j]);
+//                for (int k = 0; k < courseIDarray.size(); k++) {
+//                    try {
+//                        String queryForCreditHour = "SELECT credit_hour FROM course WHERE course_id='"+courseIDarray.get(k)+"'";
+//                        ResultSet creditQueryOutput = connectDB.createStatement().executeQuery(queryForCreditHour);
+//                        while (creditQueryOutput.next()) {
+//                            totalCreditHours +=creditQueryOutput.getInt("credit_hour");
+//                        }
+//                    } catch (SQLException e) {
+//                        Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, e);
+//                        e.printStackTrace();
+//                    }
+//                }
+//                creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+
+                final int h = j;
+                nodes[h].setOnMouseEntered(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #084654");
+                });
+                nodes[h].setOnMouseExited(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #FFFFFF");
+                });
+                nodes[h].setOnMousePressed(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #000000");
+                    deleteModule(h);
+
+                    creditHour.remove(h);
+                    totalCreditHours = credithourcheck;
+                    creditHour.forEach((hour)-> totalCreditHours+=hour);
+                    creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+                });
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -446,10 +490,14 @@ public class searchModule implements Initializable, ControlledScreen {
         
         if (!showing) {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/moduleConfirmationMessage.fxml");
+            
+            myController.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);      
+            myController.setScreen(Assignment_MayaFOP.searchScreen);
             showing = myController.getShowing();   
         }
         if(confirmedtake){
             confirmedtaken();
+            clearMemory();
         }
     }
 
@@ -468,33 +516,29 @@ public class searchModule implements Initializable, ControlledScreen {
             if (totalCreditHours + Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour()) <= 22 ) {
                 boolean check = true;
                 try{
-
-                pickedModuleModel addingCourse = new pickedModuleModel(courseID);
-
-
+                    pickedModuleModel addingCourse = new pickedModuleModel(courseID);
                     if (courseIDcheck.contains(courseID)) {
                         check=false;
                     }else{
                         courseIDarray.add(courseID);
                     }
                     if (check) {
-                        courses.add(addingCourse);
+                        coursesModel.add(addingCourse);
                         occurenceID.add(occID);
                         courseNames.add(courseName);
                         System.out.println(addingCourse + " Has been add");
                     }
                     else{
                         System.out.println("The coursed already picked");
-
                     }
-
+                
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
                     nodes[i] = loader.load();
                     final int h = i;
 
                     pickedModuleController controller = loader.getController();
-                    controller.setCourseName(courses.get(i).getCourseIDLabel());
+                    controller.setCourseName(coursesModel.get(i).getCourseIDLabel());
 
 
                     vCourseNames.getChildren().add(nodes[i]);
@@ -524,7 +568,8 @@ public class searchModule implements Initializable, ControlledScreen {
                     }
 
                 creditHour.add(credithours);
-                creditHour.forEach((hour)-> totalCreditHours+=hour);
+                totalCreditHours += creditHour.get(creditHour.size()-1); 
+//                creditHour.forEach((hour)-> totalCreditHours+=hour);
                 creditHourLabel.setText("Credits Hours: " + totalCreditHours);
 
 
@@ -536,7 +581,7 @@ public class searchModule implements Initializable, ControlledScreen {
     
     public void deleteModule(int i) {
         courseIDarray.remove(i);
-        courses.remove(i);
+        coursesModel.remove(i);
         occurenceID.remove(i);
         courseNames.remove(i);
         vCourseNames.getChildren().remove(nodes[i]);
@@ -579,14 +624,14 @@ public class searchModule implements Initializable, ControlledScreen {
         ResultSet addModuleQuery;
         
         try {    
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/login.fxml"));
-                loader.load();
-                loginControl = loader.getController();
-            } catch (IOException ex) {
-                Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                FXMLLoader loader = new FXMLLoader();
+//                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/login.fxml"));
+//                loader.load();
+//                loginControl = loader.getController();
+//            } catch (IOException ex) {
+//                Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             
             
             for (int j = 0; j < courseIDarray.size(); j++) {
@@ -603,6 +648,7 @@ public class searchModule implements Initializable, ControlledScreen {
             }
 
             confirmedtake = false;
+            
         } catch (SQLException ex) {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -652,6 +698,15 @@ public class searchModule implements Initializable, ControlledScreen {
         }
     }
     
+    public void clearMemory(){
+        occurenceIDcheck.clear();
+        courseIDcheck.clear();
+        courseIDarray.clear();
+        courseNames.clear();
+        vCourseNames.getChildren().clear();
+        creditHour.clear();
+    }
+    
     public void removeModule(ActionEvent event){
         if (!showing) {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/removeModule.fxml");
@@ -668,6 +723,7 @@ public class searchModule implements Initializable, ControlledScreen {
     
     public String getCourseIDcheck(int i) {
         return courseIDarray.get(i);
+        
     }
 
     public String getOccurenceID(int i) {

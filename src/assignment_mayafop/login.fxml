@@ -33,7 +33,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <TextField fx:id="username_text_field" layoutX="60.0" layoutY="200.0" prefHeight="32.0" prefWidth="201.0" promptText="   Siswamail" stylesheets="@styling.css">
+            <TextField fx:id="username_text_field" layoutX="60.0" layoutY="200.0" prefHeight="32.0" prefWidth="201.0" promptText="   Username" stylesheets="@styling.css">
                <styleClass>
                   <String fx:value="textfield" />
                   <String fx:value="textfield" />
