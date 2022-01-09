@@ -6,10 +6,13 @@ package assignment_mayafop;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,7 +25,7 @@ import javafx.stage.Stage;
  *
  * @author Ming
  */
-public class addOccController implements Initializable, ControlledScreen{
+public class addOccController implements Initializable, ControlledScreen {
     @FXML
     private Button back_button;
     @FXML
@@ -53,6 +56,12 @@ public class addOccController implements Initializable, ControlledScreen{
     private ComboBox<String> labEndTimeComboBox;
     @FXML
     private ComboBox<String> labStartTimeComboBox; 
+    @FXML
+    private TextField lectLocationTextField;
+    @FXML
+    private TextField tutoLocationTextField;
+    @FXML
+    private TextField labLocationTextField;
     
     @FXML
     private AnchorPane occPane;
@@ -63,8 +72,12 @@ public class addOccController implements Initializable, ControlledScreen{
 
     boolean upScreenStatus = false;
     
+    boolean editingMode = false;
+    int currentSelection = 0;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(occPane);
@@ -89,6 +102,42 @@ public class addOccController implements Initializable, ControlledScreen{
         labDayComboBox.setItems(labDay);
         labStartTimeComboBox.setItems(labStart);
         labEndTimeComboBox.setItems(labEnd);
+        
+        if(editingMode){
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleNext.fxml"));
+                loader.load();
+                ModuleNextController moduleNextController = loader.getController();
+                
+                moduleNextController.
+                
+                setOccTextField(moduleNextController.);
+                setStaffIDTextField(super.staffID);
+
+                setLectureDayComboBox(super.lectday);
+                setLectStartTimeComboBox(super.lectstart);
+                setLectEndTimeComboBox(super.lectend);
+                setLectLocationTextField(super.lectlocation);
+
+                setTutoDayComboBox(super.tutoday);
+                setTutoStartTimeComboBox(super.tutostart);
+                setTutoEndTimeComboBox(super.tutoend);
+                setTutoLocationTextField(super.tutolocation);
+
+                setLabDayComboBox(super.labday);
+                setLabStartTimeComboBox(super.labstart);
+                setLabEndTimeComboBox(super.labend);
+                setLabLocationTextField(super.lablocation);
+
+            } catch (Exception e) {
+                try {
+                    throw e;
+                } catch (Exception ex) {
+                    Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
     @Override
@@ -114,25 +163,35 @@ public class addOccController implements Initializable, ControlledScreen{
     private static String lectday;
     private static String lectstart;
     private static String lectend;
+    private static String lectlocation;
     private static String tutoday;
     private static String tutostart;
     private static String tutoend;
+    private static String tutolocation;
     private static String labday;
     private static String labstart;
     private static String labend;
+    private static String lablocation;
+    
     
     public void getValues(){
         occ = occTextField.getText();
         staffID = staffIDTextField.getText();
+        
         lectday = lectureDayComboBox.getValue();
         lectstart = lectStartTimeComboBox.getValue();
         lectend = lectEndTimeComboBox.getValue();
+        lectlocation = lectLocationTextField.getText();
+        
         tutoday = tutoDayComboBox.getValue();
         tutostart = tutoStartTimeComboBox.getValue();
         tutoend = tutoEndTimeComboBox.getValue();
+        tutolocation = tutoLocationTextField.getText();
+        
         labday = labDayComboBox.getValue();
         labstart = labStartTimeComboBox.getValue();
         labend = labEndTimeComboBox.getValue();
+        lablocation = labLocationTextField.getText();
     }
 
     public String getOcc() {
@@ -178,5 +237,77 @@ public class addOccController implements Initializable, ControlledScreen{
     public String getLabend() {
         return labend;
     }
+
+    public static String getLectlocation() {
+        return lectlocation;
+    }
+
+    public static String getTutolocation() {
+        return tutolocation;
+    }
+
+    public static String getLablocation() {
+        return lablocation;
+    }
+    
+    
+
+    public void setLectEndTimeComboBox(String a) {
+        lectEndTimeComboBox.setValue(a);
+    }
+
+    public void setLectStartTimeComboBox(String a) {
+        lectStartTimeComboBox.setValue(a);
+    }
+
+    public void setLectureDayComboBox(String a) {
+        lectureDayComboBox.setValue(a);
+    }
+
+    public void setOccTextField(String a) {
+        occTextField.setText(a);
+    }
+
+    public void setStaffIDTextField(String a) {
+        staffIDTextField.setText(a);
+    }
+
+    public void setTutoDayComboBox(String a) {
+        tutoDayComboBox.setValue(a);
+    }
+
+    public void setTutoEndTimeComboBox(String a) {
+        tutoEndTimeComboBox.setValue(a);
+    }
+
+    public void setTutoStartTimeComboBox(String a) {
+        tutoStartTimeComboBox.setValue(a);
+    }
+
+    public void setLabDayComboBox(String a) {
+        labDayComboBox.setValue(a);
+    }
+
+    public void setLabEndTimeComboBox(String a) {
+        labEndTimeComboBox.setValue(a);
+    }
+
+    public void setLabStartTimeComboBox(String a) {
+        labStartTimeComboBox.setValue(a);
+    }
+
+    public void setLectLocationTextField(String a) {
+        lectLocationTextField.setText(a);
+    }
+
+    public void setTutoLocationTextField(String a) {
+        tutoLocationTextField.setText(a);
+    }
+
+    public void setLabLocationTextField(String a) {
+        labLocationTextField.setText(a);
+    }
+    
+    
 
 }

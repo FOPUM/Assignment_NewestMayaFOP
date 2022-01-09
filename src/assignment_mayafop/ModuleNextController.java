@@ -55,25 +55,28 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private String courseID;
     private String coursename;
     private int credithour;
-    private int muetband;
+    private String muetband;
     private String programme;
     private String coursecategory;
-    private int coursesem;
-    private int courseyear;
+    private String coursesem;
+    private String courseyear;
     private String nationality;
     
-    private String occ;
-    private String staffID;
-    private String lectday;
-    private String lectstart;
-    private String lectend;
-    private String tutoday;
-    private String tutostart;
-    private String tutoend;
-    private String labstart;
-    private String labday;
-    private String labend;
-    
+    private static ArrayList<String> occ = new ArrayList<String>();
+    private static ArrayList<String> staffID = new ArrayList<String>();
+    private static ArrayList<String> lectday = new ArrayList<String>();
+    private static ArrayList<String> lectstart = new ArrayList<String>();
+    private static ArrayList<String> lectend = new ArrayList<String>();
+    private static ArrayList<String> lectlocation = new ArrayList<String>();
+    private static ArrayList<String> tutoday = new ArrayList<String>();
+    private static ArrayList<String> tutostart = new ArrayList<String>();
+    private static ArrayList<String> tutoend = new ArrayList<String>();
+    private static ArrayList<String> tutolocation = new ArrayList<String>();
+    private static ArrayList<String> labday = new ArrayList<String>();
+    private static ArrayList<String> labstart = new ArrayList<String>();
+    private static ArrayList<String> labend = new ArrayList<String>();
+    private static ArrayList<String> lablocation = new ArrayList<String>();
+
     
     ScreenController myController = new ScreenController();
     animation Animation;
@@ -82,8 +85,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
     
+    //Max occ is 20?
     Node[] nodes = new Node[20];
-    private int i =0;
+    private int i = 0;
     
     boolean upScreenStatus = false;
     
@@ -120,6 +124,10 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     boolean showing = myController.getShowing();
     
     public void addNewOcc(ActionEvent event){
+        openNewOccPage();
+    }
+    
+    public void openNewOccPage(){
         if (!showing) {
             myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
             showing = myController.getShowing();   
@@ -128,67 +136,55 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         insertHbox();
     }
     
-    //Not finish yet
-    public void confirmAddCourse(ActionEvent event){
-        getPreviousPageValues();
-        try {
-            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
-            
-            statement.setString(1,courseID);
-            statement.setString(2,coursename);
-            statement.setInt(3,credithour);
-            statement.setString(4,coursecategory);
-            statement.setInt(5,courseyear);
-            statement.setInt(6,coursesem);
-            statement.setInt(7,muetband);
-            statement.setString(8,nationality);
-            statement.setString(9,programme);
-            statement.executeUpdate();
-//            message_label.setText("User Register Successfully! Please go back and sign in.");
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-    }
-    
-    
     public void getValues(){
         
-            occ = occController.getOcc();
-            staffID = occController.getStaffID();
-            lectday = occController.getLectday();
-            lectstart = occController.getLectstart();
-            lectend = occController.getLectend();
-            tutoday = occController.getTutoday();
-            tutostart = occController.getTutostart();
-            tutoend = occController.getTutoend(); 
-            labday = occController.getLabday();
-            labstart = occController.getLabstart();
-            labend = occController.getLabend(); 
+            occ.add(occController.getOcc());
+            staffID.add(occController.getStaffID());
+            lectday.add(occController.getLectday());
+            lectstart.add(occController.getLectstart());
+            lectend.add(occController.getLectend());
+            lectlocation.add(occController.getLectlocation());
+            
+            tutoday.add(occController.getTutoday());
+            tutostart.add(occController.getTutostart());
+            tutoend.add(occController.getTutoend()); 
+            tutolocation.add(occController.getTutolocation());
+            
+            labday.add(occController.getLabday());
+            labstart.add(occController.getLabstart());
+            labend.add(occController.getLabend()); 
+            lablocation.add(occController.getLablocation());
 
     }
-    
+
     public void insertHbox(){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleDetails.fxml"));
-
             nodes[i] = loader.load();
-            
             ModuleDetailsController moduleController = loader.getController();
             
-            moduleController.occLabel.setText(occ);
-            moduleController.staffIDLabel.setText(staffID);
-            moduleController.lectDayLabel.setText(lectday);
-            moduleController.lectStartTimeLabel.setText(lectstart);
-            moduleController.lectEndTimeLabel.setText(lectend);
-            moduleController.tutoDayLabel.setText(tutoday);
-            moduleController.tutoStartTimeLabel.setText(tutostart);
-            moduleController.tutoEndTimeLabel.setText(tutoend);
-            moduleController.tutoDayLabel.setText(labday);
-            moduleController.tutoStartTimeLabel.setText(labstart);
-            moduleController.tutoEndTimeLabel.setText(labend);
+            moduleController.staffNameLabel.setText("No such teacher");
+            moduleController.occLabel.setText(occ.get(i));
+            moduleController.staffIDLabel.setText(staffID.get(i));
+            
+            moduleController.lectIDLabel.setText(courseID + "_L" + i);
+            moduleController.lectDayLabel.setText(lectday.get(i));
+            moduleController.lectStartTimeLabel.setText(lectstart.get(i));
+            moduleController.lectEndTimeLabel.setText(lectend.get(i));
+            moduleController.lectLocationLabel.setText(lectlocation.get(i));
+            
+            moduleController.tutoIDLabel.setText(courseID + "_T" + i);
+            moduleController.tutoDayLabel.setText(tutoday.get(i));
+            moduleController.tutoStartTimeLabel.setText(tutostart.get(i));
+            moduleController.tutoEndTimeLabel.setText(tutoend.get(i));
+            moduleController.tutoLocationLabel.setText(tutolocation.get(i));
+            
+            moduleController.labIDLabel.setText(courseID + "_A" + i);
+            moduleController.labDayLabel.setText(labday.get(i));
+            moduleController.labStartTimeLabel.setText(labstart.get(i));
+            moduleController.labEndTimeLabel.setText(labend.get(i));
+            moduleController.labLocationLabel.setText(lablocation.get(i));
             
             final int h = i;
 
@@ -197,7 +193,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             
             nodes[h].setOnMouseEntered(evt -> {
                 //add effect
-                nodes[h].setStyle("-fx-background-color: #b4baca");
+                nodes[h].setStyle("-fx-background-color: transparent");
             });
             nodes[h].setOnMouseExited(evt -> {
                 //add effect
@@ -205,6 +201,38 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             });
             nodes[h].setOnMousePressed(evt -> {
                 //add effect
+                try {
+                    FXMLLoader occloader = new FXMLLoader();
+                    occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
+                    occloader.load();
+                    addOccController o = occloader.getController();
+                    o.editingMode = true;
+                    o.currentSelection = h;
+                } catch (IOException ex) {
+                    Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+                openNewOccPage();
+                
+//                
+//                occController.setOccTextField(occ);
+//                occController.setStaffIDTextField(staffID);
+//                
+//                occController.setLectureDayComboBox(lectday);
+//                occController.setLectStartTimeComboBox(lectstart);
+//                occController.setLectEndTimeComboBox(lectend);
+//                occController.setLectLocationTextField(lectlocation);
+//                
+//                occController.setTutoDayComboBox(tutoday);
+//                occController.setTutoStartTimeComboBox(tutostart);
+//                occController.setTutoEndTimeComboBox(tutoend);
+//                occController.setTutoLocationTextField(tutolocation);
+//                
+//                occController.setLabDayComboBox(labday);
+//                occController.setLabStartTimeComboBox(labstart);
+//                occController.setLabEndTimeComboBox(labend);
+//                occController.setLabLocationTextField(lablocation);
                 
                 
             });
@@ -227,13 +255,25 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         coursename = previousController.getCoursename().toUpperCase();
         credithour = Integer.parseInt(previousController.getCredithour());
         
-        if(previousController.getMuetband().equals("ALL")){
-            muetband = 999;
-        }else{
-            muetband = Integer.parseInt(previousController.getMuetband());
+        if(previousController.getCoursecategory().equals("University Course")){
+            coursecategory = "UC";
+        }else if(previousController.getCoursecategory().equals("KELF")){
+            coursecategory = "KELF";
+        }else if(previousController.getCoursecategory().equals("Programme Core Course")){
+            coursecategory = "PCC";
+        }else if(previousController.getCoursecategory().equals("Faculty Core Course")){
+            coursecategory = "FCC";
+        }else if(previousController.getCoursecategory().equals("Faculty Elective Course")){
+            coursecategory = "FEC";
+        }else if(previousController.getCoursecategory().equals("Specialisation Elective Course")){
+            coursecategory = "SEC";
         }
-        
-   
+
+        courseyear = previousController.getCourseyear();
+        coursesem = previousController.getCoursesem();    
+        muetband = previousController.getMuetband();
+        nationality = previousController.getNationality().toUpperCase();
+
         if(previousController.getProgramme().equals("Software Engineer")){
             programme = "SE";
         }else if(previousController.getProgramme().equals("Data Science")){
@@ -249,35 +289,93 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }else if(previousController.getProgramme().equals("ALL")){
             programme = "ALL";
         }
-
-        if(previousController.getCoursecategory().equals("University Course")){
-            coursecategory = "UC";
-        }else if(previousController.getCoursecategory().equals("KELF")){
-            coursecategory = "KELF";
-        }else if(previousController.getCoursecategory().equals("Programme Core Course")){
-            coursecategory = "PCC";
-        }else if(previousController.getCoursecategory().equals("Faculty Core Course")){
-            coursecategory = "FCC";
-        }else if(previousController.getCoursecategory().equals("Faculty Elective Course")){
-            coursecategory = "FEC";
-        }else if(previousController.getCoursecategory().equals("Specialisation Elective Course")){
-            coursecategory = "SEC";
-        }
-        
-        if(previousController.getCoursesem().equals("ALL")){
-            coursesem = 999;
-        }else{
-            coursesem = Integer.parseInt(previousController.getCoursesem());
-        }
-        
-        if(previousController.getCourseyear().equals("ALL")){
-            courseyear = 999;
-        }else{
-            courseyear = Integer.parseInt(previousController.getCourseyear());
-        }
-        
-        nationality = previousController.getNationality().toUpperCase();
     }
+    
+        
+    //Not finish yet
+    public void confirmAddCourse(ActionEvent event){
+        getPreviousPageValues();
+        try {
+            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
+            
+            statement.setString(1,courseID);
+            statement.setString(2,coursename);
+            statement.setInt(3,credithour);
+            statement.setString(4,coursecategory);
+            statement.setString(5,courseyear);
+            statement.setString(6,coursesem);
+            statement.setString(7,muetband);
+            statement.setString(8,nationality);
+            statement.setString(9,programme);
+            statement.executeUpdate();
+            
+            
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+    
+    public static ArrayList<String> getOcc() {
+        return occ;
+    }
+
+    public static ArrayList<String> getStaffID() {
+        return staffID;
+    }
+
+    public static ArrayList<String> getLectday() {
+        return lectday;
+    }
+
+    public static ArrayList<String> getLectstart() {
+        return lectstart;
+    }
+
+    public static ArrayList<String> getLectend() {
+        return lectend;
+    }
+
+    public static ArrayList<String> getLectlocation() {
+        return lectlocation;
+    }
+
+    public static ArrayList<String> getTutoday() {
+        return tutoday;
+    }
+
+    public static ArrayList<String> getTutostart() {
+        return tutostart;
+    }
+
+    public static ArrayList<String> getTutoend() {
+        return tutoend;
+    }
+
+    public static ArrayList<String> getTutolocation() {
+        return tutolocation;
+    }
+
+    public static ArrayList<String> getLabday() {
+        return labday;
+    }
+
+    public static ArrayList<String> getLabstart() {
+        return labstart;
+    }
+
+    public static ArrayList<String> getLabend() {
+        return labend;
+    }
+
+    public static ArrayList<String> getLablocation() {
+        return lablocation;
+    }
+    
+    
+    
+
     
     
 }

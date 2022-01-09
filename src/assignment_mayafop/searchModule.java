@@ -261,7 +261,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 //<editor-fold defaultstate="collapsed" desc="String for student">
                 course = "SELECT\n" +
                         "courseID, courseName, creditHour,\n" +
-                        "occID, occName, occCapacity, \n" +
+                        "occID, occName,\n" +
                         "tutoDay, tutoStartTime, tutoEndTime,\n" +
                         "tutoStaff, tutoLocation,\n" +
                         "lectureDay, lectureStartTime,lectureEndTime,\n" +
@@ -275,7 +275,7 @@ public class searchModule implements Initializable, ControlledScreen {
                         "(SELECT course.course_id AS courseID, course.course_name AS courseName, course.credit_hour AS creditHour,\n" +
                         "course.course_category AS courseCategory, course.course_year AS courseYear, course.course_sem AS courseSem,\n" +
                         "course.muet_band AS muetBand, course.nationality AS courseNationality, course.programme AS courseProgramme,\n" +
-                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID, occ.occ_capacity AS occCapacity,\n" +
+                        "occ.occ_name AS occName,occ.occ_id AS occID, occ.lab_id AS labID,\n" +
                         "tutorial.tutorial_day AS tutoDay, tutorial.tutorial_start_time AS tutoStartTime, tutorial.tutorial_end_time AS tutoEndTime,\n" +
                         "tutorial.tutorial_location AS tutoLocation, staff.staff_name AS tutoStaff\n" +
                         "\n" +
@@ -301,13 +301,14 @@ public class searchModule implements Initializable, ControlledScreen {
                         "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
                         "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
                         "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
+                        "\n" +
                         "WHERE \n" +
-                        "(courseCategory='FCC' OR courseCategory ='"+studentProgramme.toUpperCase()+"') AND\n" +
+                        "(courseCategory='FCC' OR courseCategory ='UC' OR courseCategory ='PCC' OR courseCategory ='KELF' OR courseCategory ='FEC' OR courseCategory ='SEC') AND\n" +
                         "(courseYear='ALL' OR courseYear='"+studentYear+"') AND\n" +
                         "(courseSem='ALL' OR courseSem='"+studentSem+"') AND\n" +
                         "(muetBand='ALL' OR muetBand='"+studentBand+"') AND \n" +
                         "(courseNationality='ALL' OR courseNationality='"+studentNationality.toUpperCase()+"') AND\n" +
-                        "(courseProgramme='ALL') ";
+                        "(courseProgramme='ALL' OR courseProgramme='"+studentProgramme.toUpperCase()+"') ";
                 //</editor-fold>
             }else if(accStatus == 'T' || accStatus == 'A'){
                 //<editor-fold defaultstate="collapsed" desc="String for staff and admin">
@@ -355,6 +356,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 //</editor-fold>
             }
             ResultSet courseQueryOutput = connectDB.createStatement().executeQuery(course);
+            System.out.println("");
             while (courseQueryOutput.next()) {
                 String courseID = courseQueryOutput.getString("courseID");
                 String courseName = courseQueryOutput.getString("courseName");
