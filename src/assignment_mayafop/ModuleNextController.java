@@ -62,20 +62,20 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private String courseyear;
     private String nationality;
     
-    private static ArrayList<String> occ = new ArrayList<String>();
-    private static ArrayList<String> staffID = new ArrayList<String>();
-    private static ArrayList<String> lectday = new ArrayList<String>();
-    private static ArrayList<String> lectstart = new ArrayList<String>();
-    private static ArrayList<String> lectend = new ArrayList<String>();
-    private static ArrayList<String> lectlocation = new ArrayList<String>();
-    private static ArrayList<String> tutoday = new ArrayList<String>();
-    private static ArrayList<String> tutostart = new ArrayList<String>();
-    private static ArrayList<String> tutoend = new ArrayList<String>();
-    private static ArrayList<String> tutolocation = new ArrayList<String>();
-    private static ArrayList<String> labday = new ArrayList<String>();
-    private static ArrayList<String> labstart = new ArrayList<String>();
-    private static ArrayList<String> labend = new ArrayList<String>();
-    private static ArrayList<String> lablocation = new ArrayList<String>();
+    private ArrayList<String> occ = new ArrayList<String>();
+    private ArrayList<String> staffID = new ArrayList<String>();
+    private ArrayList<String> lectday = new ArrayList<String>();
+    private ArrayList<String> lectstart = new ArrayList<String>();
+    private ArrayList<String> lectend = new ArrayList<String>();
+    private ArrayList<String> lectlocation = new ArrayList<String>();
+    private ArrayList<String> tutoday = new ArrayList<String>();
+    private ArrayList<String> tutostart = new ArrayList<String>();
+    private ArrayList<String> tutoend = new ArrayList<String>();
+    private ArrayList<String> tutolocation = new ArrayList<String>();
+    private ArrayList<String> labday = new ArrayList<String>();
+    private ArrayList<String> labstart = new ArrayList<String>();
+    private ArrayList<String> labend = new ArrayList<String>();
+    private ArrayList<String> lablocation = new ArrayList<String>();
 
     
     ScreenController myController = new ScreenController();
@@ -90,6 +90,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private int i = 0;
     
     boolean upScreenStatus = false;
+    
+    boolean confirmDelete = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -187,7 +189,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             moduleController.labLocationLabel.setText(lablocation.get(i));
             
             final int h = i;
-
+            
             vModuleContainer.getChildren().add(nodes[i]);
             i++;
             
@@ -205,36 +207,34 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     FXMLLoader occloader = new FXMLLoader();
                     occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
                     occloader.load();
-                    addOccController o = occloader.getController();
-                    o.editingMode = true;
-                    o.currentSelection = h;
+                    addOccController occControl = occloader.getController();
+
+//                    occControl.setOccTextField(occ.get(h));
+//                    occControl.setStaffIDTextField(staffID.get(h));
+//
+//                    occControl.setLectureDayComboBox(lectday.get(h));
+//                    occControl.setLectStartTimeComboBox(lectstart.get(h));
+//                    occControl.setLectEndTimeComboBox(lectend.get(h));
+//                    occControl.setLectLocationTextField(lectlocation.get(h));
+//
+//                    occControl.setTutoDayComboBox(tutoday.get(h));
+//                    occControl.setTutoStartTimeComboBox(tutostart.get(h));
+//                    occControl.setTutoEndTimeComboBox(tutoend.get(h));
+//                    occControl.setTutoLocationTextField(tutolocation.get(h));
+//
+//                    occControl.setLabDayComboBox(labday.get(h));
+//                    occControl.setLabStartTimeComboBox(labstart.get(h));
+//                    occControl.setLabEndTimeComboBox(labend.get(h));
+//                    occControl.setLabLocationTextField(lablocation.get(h));
+//                    
+                    openNewOccPage();
+
+                    if(confirmDelete){
+                        deleteOcc(h);
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                
-                openNewOccPage();
-                
-//                
-//                occController.setOccTextField(occ);
-//                occController.setStaffIDTextField(staffID);
-//                
-//                occController.setLectureDayComboBox(lectday);
-//                occController.setLectStartTimeComboBox(lectstart);
-//                occController.setLectEndTimeComboBox(lectend);
-//                occController.setLectLocationTextField(lectlocation);
-//                
-//                occController.setTutoDayComboBox(tutoday);
-//                occController.setTutoStartTimeComboBox(tutostart);
-//                occController.setTutoEndTimeComboBox(tutoend);
-//                occController.setTutoLocationTextField(tutolocation);
-//                
-//                occController.setLabDayComboBox(labday);
-//                occController.setLabStartTimeComboBox(labstart);
-//                occController.setLabEndTimeComboBox(labend);
-//                occController.setLabLocationTextField(lablocation);
-                
-                
             });
 
 
@@ -247,7 +247,27 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
     }
     
-    
+    public void deleteOcc(int k){
+        occ.remove(k);
+        staffID.remove(k);
+        
+        lectday.remove(k);
+        lectstart.remove(k);
+        lectend.remove(k);
+        lectlocation.remove(k);
+        
+        tutoday.remove(k);
+        tutostart.remove(k);
+        tutoend.remove(k);
+        tutolocation.remove(k);
+        
+        labday.remove(k);
+        labstart.remove(k);
+        labend.remove(k);
+        lablocation.remove(k);
+        
+        vModuleContainer.getChildren().add(nodes[k]);
+    }
     
     public void getPreviousPageValues(){
         ModuleController previousController = new ModuleController();
@@ -317,59 +337,59 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
     }
     
-    public static ArrayList<String> getOcc() {
+    public ArrayList<String> getOcc() {
         return occ;
     }
 
-    public static ArrayList<String> getStaffID() {
+    public ArrayList<String> getStaffID() {
         return staffID;
     }
 
-    public static ArrayList<String> getLectday() {
+    public ArrayList<String> getLectday() {
         return lectday;
     }
 
-    public static ArrayList<String> getLectstart() {
+    public ArrayList<String> getLectstart() {
         return lectstart;
     }
 
-    public static ArrayList<String> getLectend() {
+    public ArrayList<String> getLectend() {
         return lectend;
     }
 
-    public static ArrayList<String> getLectlocation() {
+    public ArrayList<String> getLectlocation() {
         return lectlocation;
     }
 
-    public static ArrayList<String> getTutoday() {
+    public ArrayList<String> getTutoday() {
         return tutoday;
     }
 
-    public static ArrayList<String> getTutostart() {
+    public ArrayList<String> getTutostart() {
         return tutostart;
     }
 
-    public static ArrayList<String> getTutoend() {
+    public ArrayList<String> getTutoend() {
         return tutoend;
     }
 
-    public static ArrayList<String> getTutolocation() {
+    public ArrayList<String> getTutolocation() {
         return tutolocation;
     }
 
-    public static ArrayList<String> getLabday() {
+    public ArrayList<String> getLabday() {
         return labday;
     }
 
-    public static ArrayList<String> getLabstart() {
+    public ArrayList<String> getLabstart() {
         return labstart;
     }
 
-    public static ArrayList<String> getLabend() {
+    public ArrayList<String> getLabend() {
         return labend;
     }
 
-    public static ArrayList<String> getLablocation() {
+    public ArrayList<String> getLablocation() {
         return lablocation;
     }
     
