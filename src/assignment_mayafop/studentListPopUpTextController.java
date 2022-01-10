@@ -114,7 +114,12 @@ public class studentListPopUpTextController implements Initializable{
         yearLabel.setText(year);
         semLabel.setText(sem);
         nationalityLabel.setText(misc.upperLetter(nationality));
-        specialisationLabel.setText(misc.upperLetter(specialisation));
+        if(specialisation == null){
+            specialisationLabel.setText("-");
+        }else{
+            specialisationLabel.setText(misc.upperLetter(specialisation));
+        }
+        
         icLabel.setText(ic);
         creditLabel.setText(credit);
         

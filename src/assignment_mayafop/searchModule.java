@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -136,7 +137,9 @@ public class searchModule implements Initializable, ControlledScreen {
     public int totalCreditHours;
     public int credithourcheck;
     private int i = 0;
+    
     private static boolean confirmedtake;
+    private static boolean confirmeddelete;
     
     String matric_num = loginControl.getUsername();
     char accStatus = loginControl.getAccStatus();
@@ -488,6 +491,7 @@ public class searchModule implements Initializable, ControlledScreen {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
 
+    //module confirmation button
     public void goToModuleConfirmation(ActionEvent event) {
         
         if (!showing) {
@@ -622,6 +626,7 @@ public class searchModule implements Initializable, ControlledScreen {
         courseTableView.setItems(sortedData);
     }
     
+    //button at another scene, trigger by true in confirmedtake
     public void confirmedtaken(){
         ResultSet addModuleQuery;
         
@@ -657,6 +662,75 @@ public class searchModule implements Initializable, ControlledScreen {
      
     }
     
+    public void removeWholeCourse(){
+        String occIDToRemove = courseTableView.getSelectionModel().getSelectedItem().getOccID();
+        System.out.println(occIDToRemove);
+        
+        String checkLectID = "SELECT lecture_id FROM occ WHERE occ_id='"+occIDToRemove+"'";
+        String checkTutoID = "SELECT tutorial_id FROM occ WHERE occ_id='"+occIDToRemove+"'";
+        String checkLabID = "SELECT lab_id FROM occ WHERE occ_id='"+occIDToRemove+"'";
+        
+        String lectID = null;
+        String tutoID = null;
+        String labID = null;
+        try {
+            ResultSet lect = connectDB.createStatement().executeQuery(checkLectID);
+            while(lect.next()){
+                lectID = lect.getString("lecture_id");
+            }
+            ResultSet tuto = connectDB.createStatement().executeQuery(checkTutoID);
+            while(tuto.next()){
+                tutoID = tuto.getString("tutorial_id");
+            }
+            ResultSet lab = connectDB.createStatement().executeQuery(checkLabID);
+            while(lab.next()){
+                labID = lab.getString("lab_id");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            String a = "DELETE FROM student_take_course WHERE occ_id='"+occIDToRemove+"'";
+            String b = "DELETE FROM course_occ WHERE occ_id='"+occIDToRemove+"'";
+            
+            String c = "DELETE FROM staff_teach_lecture WHERE lecture_id='"+lectID+"'";
+            String d = "DELETE FROM staff_teach_tutorial WHERE tutorial_id='"+tutoID+"'";
+            String e = "DELETE FROM staff_teach_lab WHERE lab_id='"+labID+"'";
+            
+            String f = "DELETE FROM occ WHERE occ_id='"+occIDToRemove+"'";
+            
+            String g = "DELETE FROM lecture WHERE lecture_id='"+lectID+"'";
+            String h = "DELETE FROM tutorial WHERE tutorial_id='"+tutoID+"'";
+            String i = "DELETE FROM lab WHERE lab_id='"+labID+"'";
+            
+            Statement statementDelete = connectDB.createStatement();
+            statementDelete.executeUpdate(a);
+            statementDelete.executeUpdate(b);
+            
+            statementDelete.executeUpdate(c);
+            statementDelete.executeUpdate(d);
+            if(!labID.equals("NONE")){
+                statementDelete.executeUpdate(e);
+            }
+        
+            statementDelete.executeUpdate(f);
+            
+            statementDelete.executeUpdate(g);
+            statementDelete.executeUpdate(h);
+            if(!labID.equals("NONE")){
+                statementDelete.executeUpdate(i);
+            }
+            
+            System.out.println("Module deleted successfully.");
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        
+    }
     
     //lazy do le
     public void editCourse(ActionEvent event){
@@ -672,31 +746,8 @@ public class searchModule implements Initializable, ControlledScreen {
                 module.setCourseIDTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCourseID());
                 module.setCourseNameTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCourseName());
                 module.setCreditHourTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
-//                module.setProgrammeComboBox(courseCategoryComboBox);
-//                module.setCourseSemComboBox(courseCategoryComboBox);
-//                module.setMuetBandComboBox(courseCategoryComboBox);
-//                module.setCourseYearComboBox(courseCategoryComboBox);
-//                module.setCourseCategoryComboBox(courseCategoryComboBox);
-//                module.setNationalityComboBox(courseCategoryComboBox);
             } catch (IOException e) {
             }
-
-//            occurenceLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getOccName());
-//            String lectureTime = courseTableView.getSelectionModel().getSelectedItem().getLectDay()
-//                    + courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()
-//                    + courseTableView.getSelectionModel().getSelectedItem().getLectEndTime();
-//            lectureTimeLabel.setText(lectureTime);
-//            lectureLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLectStaff());
-//            String tutorialTime = courseTableView.getSelectionModel().getSelectedItem().getTutoDay()
-//                    + courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()
-//                    + courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime();
-//            tutorialTimeLabel.setText(tutorialTime);
-//            tutorialLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getTutoStaff());
-//            String labTime = courseTableView.getSelectionModel().getSelectedItem().getLabDay()
-//                    + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()
-//                    + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
-//            labTimeLabel.setText(labTime);
-//            labLecturerLabel.setText("" + courseTableView.getSelectionModel().getSelectedItem().getLabStaff());
         }
     }
     
@@ -714,6 +765,9 @@ public class searchModule implements Initializable, ControlledScreen {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/removeModule.fxml");
             showing = myController.getShowing();   
         }
+        if(confirmeddelete){
+            removeWholeCourse();
+        }
     }
     
     public void addNewModule(ActionEvent event){
@@ -725,7 +779,6 @@ public class searchModule implements Initializable, ControlledScreen {
     
     public String getCourseIDcheck(int i) {
         return courseIDarray.get(i);
-        
     }
 
     public String getOccurenceID(int i) {
@@ -764,6 +817,10 @@ public class searchModule implements Initializable, ControlledScreen {
         return courseNames;
     }
 
+    public static void setConfirmeddelete(boolean confirmeddelete) {
+        searchModule.confirmeddelete = confirmeddelete;
+    }
+    
     public static void setCourseNames(ArrayList<String> courseNames) {
         searchModule.courseNames = courseNames;
     }

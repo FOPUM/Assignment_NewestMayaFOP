@@ -180,10 +180,10 @@ public class addOccController implements Initializable, ControlledScreen {
         
         try {
             FXMLLoader moduleloader = new FXMLLoader();
-            moduleloader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleNextController.fxml"));
+            moduleloader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleNext.fxml"));
             moduleloader.load();
             ModuleNextController moduleNextController = moduleloader.getController();
-            moduleNextController.confirmDelete = true;
+            moduleNextController.deleteOcc(moduleNextController.getOccIndex());
         } catch (IOException ex) {
             Logger.getLogger(addOccController.class.getName()).log(Level.SEVERE, null, ex);
         }

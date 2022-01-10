@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -27,13 +28,21 @@ public class removeModuleController implements Initializable{
     private Button no_button;
     
     ScreenController myController;
-    searchModule search;
+    searchModule SMControl;
+    
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/searchModule.fxml"));
+            loader.load();
+            SMControl= loader.getController();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     
     public void noButton(ActionEvent event) {
@@ -43,15 +52,10 @@ public class removeModuleController implements Initializable{
     } 
     
     public void yesButton(ActionEvent event){
-        String occIDToRemove = search.getOccIDCheck();
-        
-        try {
-            String removemodule = "";
-            ResultSet queryForStudentQualification = connectDB.createStatement().executeQuery(removemodule);           
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
+        SMControl.setConfirmeddelete(true);
+        System.out.println("After set: " + SMControl.getisConfirmedtake());
+        Stage stage = (Stage) yes_button.getScene().getWindow();
+        stage.close();     
 
         
     }

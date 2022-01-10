@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="300.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.verifyLogout">
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="300.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.removeModuleController">
    <children>
-      <Label layoutX="20.0" layoutY="41.0" text="Do you sure want to remove?">
+      <Label layoutX="35.0" layoutY="41.0" text="Zhende want remove ar?">
          <font>
             <Font name="Futura Medium BT" size="20.0" />
          </font>

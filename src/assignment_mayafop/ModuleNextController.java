@@ -91,9 +91,11 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     Node[] nodes = new Node[20];
     private int i = 0;
     
+    
     boolean upScreenStatus = false;
     
     boolean confirmDelete = false;
+    int occIndex;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -101,6 +103,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         if(!upScreenStatus){
             Animation.fading(moduleNextPane);
         }
+        
     }
     
     @Override
@@ -278,12 +281,15 @@ public class ModuleNextController implements Initializable, ControlledScreen{
 //                    occControl.setLabLocationTextField(lablocation.get(h));
 //                    
                     this.selectedNode = h;
+                    System.out.println("Now occ contains " + occ.size());
                     System.out.println("Here clicked = " + this.selectedNode);
+                    occIndex = this.selectedNode;
                     openNewOccPage();
 
-                    if(confirmDelete){
-                        deleteOcc(h);
-                    }
+//                    if(confirmDelete){
+//                        deleteOcc(h);
+//                        System.out.println("After delete, Now occ contains " + occ.size());
+//                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -350,6 +356,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             moduleController.labLocationLabel.setText(lablocation.get(i));
             
             final int h = i;
+            occIndex  = h;
             
             vModuleContainer.getChildren().add(nodes[i]);
             i++;
@@ -369,32 +376,14 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
                     occloader.load();
                     addOccController occControl = occloader.getController();
-
-//                    occControl.setOccTextField(occ.get(h));
-//                    occControl.setStaffIDTextField(staffID.get(h));
-//
-//                    occControl.setLectureDayComboBox(lectday.get(h));
-//                    occControl.setLectStartTimeComboBox(lectstart.get(h));
-//                    occControl.setLectEndTimeComboBox(lectend.get(h));
-//                    occControl.setLectLocationTextField(lectlocation.get(h));
-//
-//                    occControl.setTutoDayComboBox(tutoday.get(h));
-//                    occControl.setTutoStartTimeComboBox(tutostart.get(h));
-//                    occControl.setTutoEndTimeComboBox(tutoend.get(h));
-//                    occControl.setTutoLocationTextField(tutolocation.get(h));
-//
-//                    occControl.setLabDayComboBox(labday.get(h));
-//                    occControl.setLabStartTimeComboBox(labstart.get(h));
-//                    occControl.setLabEndTimeComboBox(labend.get(h));
-//                    occControl.setLabLocationTextField(lablocation.get(h));
-//                    
+                   
                     selectedNode = h;
+                    System.out.println("Now occ contains " + occ.size());
                     System.out.println("Here clicked = " + selectedNode);
+                    occIndex = this.selectedNode;
                     openNewOccPage();
 
-                    if(confirmDelete){
-                        deleteOcc(h);
-                    }
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -410,26 +399,26 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
     }
     
-    public void deleteOcc(int k){
-        occ.remove(k);
-        staffID.remove(k);
+    public void deleteOcc(int occIndex){
+        occ.remove(occIndex);
+        staffID.remove(occIndex);
         
-        lectday.remove(k);
-        lectstart.remove(k);
-        lectend.remove(k);
-        lectlocation.remove(k);
+        lectday.remove(occIndex);
+        lectstart.remove(occIndex);
+        lectend.remove(occIndex);
+        lectlocation.remove(occIndex);
         
-        tutoday.remove(k);
-        tutostart.remove(k);
-        tutoend.remove(k);
-        tutolocation.remove(k);
+        tutoday.remove(occIndex);
+        tutostart.remove(occIndex);
+        tutoend.remove(occIndex);
+        tutolocation.remove(occIndex);
         
-        labday.remove(k);
-        labstart.remove(k);
-        labend.remove(k);
-        lablocation.remove(k);
+        labday.remove(occIndex);
+        labstart.remove(occIndex);
+        labend.remove(occIndex);
+        lablocation.remove(occIndex);
         
-        vModuleContainer.getChildren().add(nodes[k]);
+        vModuleContainer.getChildren().add(nodes[occIndex]);
     }
     
     public void getPreviousPageValues(){
@@ -555,6 +544,16 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     public ArrayList<String> getLablocation() {
         return lablocation;
     }
+
+    public int getSelectedNode() {
+        return selectedNode;
+    }
+
+    public int getOccIndex() {
+        return occIndex;
+    }
+    
+    
     
     
     
