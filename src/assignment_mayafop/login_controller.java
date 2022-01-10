@@ -69,6 +69,8 @@ public class login_controller implements Initializable,ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        username_text_field.setText("A6666");
+        password_field.setText("PASSWORD");
         password_field.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
               checkConditionForLogin();
