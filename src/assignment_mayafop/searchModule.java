@@ -62,6 +62,7 @@ public class searchModule implements Initializable, ControlledScreen {
     ScreenController myController = new ScreenController();
     login_controller loginControl = new login_controller();
     
+    private static int selectedTableView_index;
     
 
     @FXML
@@ -396,10 +397,11 @@ public class searchModule implements Initializable, ControlledScreen {
             search();
 
             courseTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+                
                 @Override
                 public void handle(MouseEvent event) {
                     MiscFunc misc = new MiscFunc();
-                    
+                    selectedTableView_index = courseTableView.getSelectionModel().getFocusedIndex();
                     occIDCheck =courseTableView.getSelectionModel().getSelectedItem().getOccID();
                     
                     courseCodeLabel.setText(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
@@ -735,6 +737,15 @@ public class searchModule implements Initializable, ControlledScreen {
     //not yet done
     public void editCourse(ActionEvent event){
         if (!showing) {
+            try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
+            loader.load();
+            
+            ModuleController moduleController = loader.getController();
+            moduleController.setCourseIdSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+            } catch (Exception e) {
+            }
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
             showing = myController.getShowing(); 
         }

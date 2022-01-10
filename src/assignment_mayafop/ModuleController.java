@@ -31,6 +31,16 @@ public class ModuleController implements Initializable, ControlledScreen{
     ScreenController myController = new ScreenController();
     animation Animation;
     
+    private static String courseIdSetter;
+
+    public  String getCourseIdSetter() {
+        return courseIdSetter;
+    }
+
+    public void setCourseIdSetter(String courseIdSetter) {
+        ModuleController.courseIdSetter = courseIdSetter;
+    }
+    
     @FXML
     private ComboBox<String> MuetBandComboBox;
 
@@ -86,6 +96,7 @@ public class ModuleController implements Initializable, ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        courseIDTextField.setText(courseIdSetter);
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(modulePane);
