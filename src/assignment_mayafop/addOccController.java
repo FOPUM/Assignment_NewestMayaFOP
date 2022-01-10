@@ -89,6 +89,7 @@ public class addOccController implements Initializable, ControlledScreen {
     animation Animation;
 
     private static boolean shouldAddOcc = false;
+    private static boolean deleteOcc = false;
     boolean upScreenStatus = false;
 
 
@@ -124,8 +125,6 @@ public class addOccController implements Initializable, ControlledScreen {
         tutoDayComboBox.setValue(TutorDaySetter);
         tutoStartTimeComboBox.setValue(TutorStartTimeSetter);
         tutoEndTimeComboBox.setValue(TutorEndTimeSetter);
-        System.out.println("OccTextfield got: " + occTextField.getText());
-        System.out.println("StaffIDTEXTFIELD got: " + staffIDTextField.getText());
         
         
         Animation = new animation();
@@ -177,16 +176,7 @@ public class addOccController implements Initializable, ControlledScreen {
 
     
     public void delete(ActionEvent event) {
-        
-        try {
-            FXMLLoader moduleloader = new FXMLLoader();
-            moduleloader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleNext.fxml"));
-            moduleloader.load();
-            ModuleNextController moduleNextController = moduleloader.getController();
-            moduleNextController.deleteOcc(moduleNextController.getOccIndex());
-        } catch (IOException ex) {
-            Logger.getLogger(addOccController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            setDeleteOcc(true);
         
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
@@ -349,6 +339,14 @@ public class addOccController implements Initializable, ControlledScreen {
 
     public void setShouldAddOcc(boolean shouldAddOcc) {
         addOccController.shouldAddOcc = shouldAddOcc;
+    }
+    
+    public boolean isDeleteOcc() {
+        return deleteOcc;
+    }
+
+    public void setDeleteOcc(boolean deleteOcc) {
+        addOccController.deleteOcc = deleteOcc;
     }
 
 }

@@ -96,8 +96,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     boolean upScreenStatus = false;
     
-    boolean confirmDelete = false;
-    int occIndex;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -145,6 +144,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
                     occloader.load();
                     addOccController occControl = occloader.getController();
+                    System.out.println("This node is selected: " +selectedNode);
             if (selectedNode != -1) {
                     occControl.setOccTextField(occ.get(selectedNode));
                     occControl.setStaffIDTextField(staffID.get(selectedNode));
@@ -164,7 +164,13 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     showing = myController.getShowing();   
                     if (occControl.isShouldAddOcc()) {
                         editValues(selectedNode);
+                        occControl.setShouldAddOcc(false);
                     }
+                    if (occControl.isDeleteOcc()) {
+                        deleteOcc();
+                        occControl.setDeleteOcc(false);
+                }
+                    
             }else{
                     occControl.setOccTextField("");
                     occControl.setStaffIDTextField("");
@@ -296,15 +302,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
 //                    occControl.setLabLocationTextField(lablocation.get(h));
 //                    
                     this.selectedNode = h;
-                    System.out.println("Now occ contains " + occ.size());
-                    System.out.println("Here clicked = " + this.selectedNode);
-                    occIndex = this.selectedNode;
                     openNewOccPage();
 
-//                    if(confirmDelete){
-//                        deleteOcc(h);
-//                        System.out.println("After delete, Now occ contains " + occ.size());
-//                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -371,11 +370,11 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             moduleController.labLocationLabel.setText(lablocation.get(i));
             
             final int h = i;
-            occIndex  = h;
             
             vModuleContainer.getChildren().add(nodes[i]);
             i++;
             
+            System.out.println(i);
             nodes[h].setOnMouseEntered(evt -> {
                 //add effect
                 nodes[h].setStyle("-fx-background-color: transparent");
@@ -392,10 +391,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occloader.load();
                     addOccController occControl = occloader.getController();
                    
-                    selectedNode = h;
+                    this.selectedNode = h;
                     System.out.println("Now occ contains " + occ.size());
                     System.out.println("Here clicked = " + selectedNode);
-                    occIndex = this.selectedNode;
                     openNewOccPage();
 
                     
@@ -414,26 +412,72 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
     }
     
-    public void deleteOcc(int occIndex){
-        occ.remove(occIndex);
-        staffID.remove(occIndex);
+    public void deleteOcc(){
+        occ.remove(selectedNode);
+        staffID.remove(selectedNode);
         
-        lectday.remove(occIndex);
-        lectstart.remove(occIndex);
-        lectend.remove(occIndex);
-        lectlocation.remove(occIndex);
+        lectday.remove(selectedNode);
+        lectstart.remove(selectedNode);
+        lectend.remove(selectedNode);
+        lectlocation.remove(selectedNode);
         
-        tutoday.remove(occIndex);
-        tutostart.remove(occIndex);
-        tutoend.remove(occIndex);
-        tutolocation.remove(occIndex);
+        tutoday.remove(selectedNode);
+        tutostart.remove(selectedNode);
+        tutoend.remove(selectedNode);
+        tutolocation.remove(selectedNode);
         
-        labday.remove(occIndex);
-        labstart.remove(occIndex);
-        labend.remove(occIndex);
-        lablocation.remove(occIndex);
+        labday.remove(selectedNode);
+        labstart.remove(selectedNode);
+        labend.remove(selectedNode);
+        lablocation.remove(selectedNode);
         
-        vModuleContainer.getChildren().add(nodes[occIndex]);
+        vModuleContainer.getChildren().remove(selectedNode);
+        System.out.println("Delete success bruh");
+        
+        
+        for (int j = selectedNode; j <= vModuleContainer.getChildren().size(); j++) {
+        try {
+            this.i = vModuleContainer.getChildren().size();
+            System.out.println("Now i is: " + this.i);
+            final int h = j;
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleDetails.fxml"));
+            
+            ModuleDetailsController moduleController = loader.getController();
+            nodes[h] = loader.load();
+            nodes[j] = nodes[j+1];
+            nodes[j].setOnMouseEntered(evt -> {
+                //add effect
+                nodes[h].setStyle("-fx-background-color: transparent");
+            });
+            nodes[h].setOnMouseExited(evt -> {
+                //add effect
+                nodes[h].setStyle("-fx-background-color: transparent");
+            });
+            nodes[h].setOnMousePressed(evt -> {
+                //add effect
+                    FXMLLoader occloader = new FXMLLoader();
+                    occloader.setLocation(getClass().getResource("/Assignment_MayaFOP/addOcc.fxml"));
+                try {
+                    occloader.load();
+                } catch (IOException ex) {
+                    Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    addOccController occControl = occloader.getController();
+                    occControl.setDeleteOcc(false);
+                   
+                    this.selectedNode = h;
+                    System.out.println("Now occ contains " + occ.size());
+                    System.out.println("Here clicked = " + selectedNode);
+                    openNewOccPage();
+            });
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        
+                    }
+        
     }
     
     public void getPreviousPageValues(){
@@ -564,9 +608,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         return selectedNode;
     }
 
-    public int getOccIndex() {
-        return occIndex;
-    }
+
     
     
     
