@@ -124,7 +124,12 @@ public class login_controller implements Initializable,ControlledScreen{
                         //login_message_label.setText("Congratulations!");
                         validated = 1;
                         username = username_text_field.getText().toLowerCase();
-                        accStatus = 'T';
+                        if(username.toUpperCase().equals("A3333")){
+                            accStatus = 'A';
+                        }else{
+                            accStatus = 'T';
+                        }
+                        System.out.println(accStatus);
                     }else {
                         login_message_label.setText("Invalid login. Please try again.");
                     }  
