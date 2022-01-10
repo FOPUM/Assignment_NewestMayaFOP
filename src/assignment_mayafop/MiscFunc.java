@@ -83,4 +83,46 @@ public class MiscFunc {
         
         return b;
     }
+    
+    public String formatToFullProgramme(String name){
+        String programme = null;
+        if(name.equals("Software Engineer")){
+            programme = "SE";
+        }else if(name.equals("Data Science")){
+            programme = "DS";
+        }else if(name.equals("Artificial Intelligence")){
+            programme = "AI";
+        }else if(name.equals("Computer System and Networking")){
+            programme = "CSN";
+        }else if(name.equals("Information System")){
+            programme = "IS";
+        }else if(name.equals("Multimedia")){
+            programme = "MM";
+        }else if(name.equals("ALL")){
+            programme = "ALL";
+        }
+        
+        return programme;
+    }
+    
+    public String formatToShortProgramme(String name){
+        String programme = null;
+        if(name.equals("SE")){
+            programme = "Software Engineer";
+        }else if(name.equals("DS")){
+            programme = "Data Science";
+        }else if(name.equals("AI")){
+            programme = "Artificial Intelligence";
+        }else if(name.equals("CSN")){
+            programme = "Computer System and Networking";
+        }else if(name.equals("IS")){
+            programme = "Information System";
+        }else if(name.equals("MM")){
+            programme = "Multimedia";
+        }else if(name.equals("ALL")){
+            programme = "ALL";
+        }
+        
+        return programme;
+    }
 }

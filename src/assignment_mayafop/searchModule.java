@@ -732,32 +732,43 @@ public class searchModule implements Initializable, ControlledScreen {
         
     }
     
-    //lazy do le
+    //not yet done
     public void editCourse(ActionEvent event){
         if (!showing) {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
             showing = myController.getShowing(); 
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleController.fxml"));
-                loader.load();
-                ModuleController module = loader.getController();
-                
-                module.setCourseIDTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCourseID());
-                module.setCourseNameTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCourseName());
-                module.setCreditHourTextField("" + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
-            } catch (IOException e) {
-            }
         }
-    }
-    
-    public void clearMemory(){
-        occurenceIDcheck.clear();
-        courseIDcheck.clear();
-        courseIDarray.clear();
-        courseNames.clear();
-        vCourseNames.getChildren().clear();
-        creditHour.clear();
+//        try {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
+//            loader.load();
+//            ModuleController module = loader.getController();
+//            
+//            String courseCategory = null;
+//            String courseYear = null;
+//            String courseSem = null;
+//            String courseMuet = null;
+//            String courseNationality = null;
+//            String courseProgramme = null;
+//            
+//            String additionalCourseDetails = "";
+//            ResultSet queryForAdditionalCourseDetails = connectDB.createStatement().executeQuery(additionalCourseDetails);
+//            while(queryForAdditionalCourseDetails.next()) {
+//                studentBand = queryForAdditionalCourseDetails.getInt("student_muet_band");
+//            }
+//
+//            module.setCourseIDTextField(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+//            module.setCourseNameTextField(courseTableView.getSelectionModel().getSelectedItem().getCourseName());
+//            module.setCreditHourTextField(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
+//            module.setCourseCategoryComboBox("");
+//            module.setCourseYearComboBox(matric_num);
+//            module.setCourseSemComboBox();
+//            module.setMuetBandComboBox(matric_num);
+//            module.setNationalityComboBox(matric_num);
+//            module.setProgrammeComboBox(matric_num);
+//            
+//        } catch (IOException e) {
+//        }
     }
     
     public void removeModule(ActionEvent event){
@@ -775,6 +786,15 @@ public class searchModule implements Initializable, ControlledScreen {
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
             showing = myController.getShowing();   
         }
+    }
+        
+    public void clearMemory(){
+        occurenceIDcheck.clear();
+        courseIDcheck.clear();
+        courseIDarray.clear();
+        courseNames.clear();
+        vCourseNames.getChildren().clear();
+        creditHour.clear();
     }
     
     public String getCourseIDcheck(int i) {

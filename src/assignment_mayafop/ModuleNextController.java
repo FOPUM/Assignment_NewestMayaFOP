@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -218,8 +220,21 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/ModuleDetails.fxml"));
             nodes[selectedNode] = loader.load();
             ModuleDetailsController moduleController = loader.getController();
+
+            String currentCapacity = "SELECT staff_name FROM staff where staff_id='"+ staffID.get(selectedNode) + "'";
+            String staffname = null;
+        try {
+            ResultSet staffNameQuery = connectDB.createStatement().executeQuery(currentCapacity);
+            while(staffNameQuery.next()) {
+                staffname = staffNameQuery.getString("course_id");
+            }
             
-            moduleController.staffNameLabel.setText("No such teacher");
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+            
+            moduleController.staffNameLabel.setText(staffname);
             moduleController.occLabel.setText(occ.get(selectedNode));
             moduleController.staffIDLabel.setText(staffID.get(selectedNode));
             
