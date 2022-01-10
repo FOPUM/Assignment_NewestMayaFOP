@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="925.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.staffListTextController">
+   <children>
+      <Label fx:id="staffIdLabel" layoutY="5.0" text="U2102856">
+         <font>
+            <Font name="Futura Light BT" size="12.0" />
+         </font></Label>
+      <Label fx:id="staffNameLabel" layoutX="169.0" layoutY="4.0" prefHeight="17.0" prefWidth="172.0" text="Ng Gih Ming" />
+      <Label fx:id="umMailLabel" layoutX="520.0" layoutY="4.0" prefHeight="17.0" prefWidth="172.0" text="laji" />
+   </children>
+</Pane>

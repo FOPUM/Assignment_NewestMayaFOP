@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.studentListPopUpController">
+   <children>
+      <Label layoutX="430.0" layoutY="14.0" prefHeight="65.0" prefWidth="141.0" text="Student" textAlignment="CENTER">
+         <font>
+            <Font name="Futura Heavy BT" size="38.0" />
+         </font>
+      </Label>
+      <Button fx:id="exit_button" layoutX="953.0" layoutY="13.0" mnemonicParsing="false" onAction="#exitButton" style="-fx-background-color: transparent;" textFill="TRANSPARENT">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Exit.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ScrollPane fx:id="studentPane" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" stylesheets="@styling.css">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1500.0" prefWidth="2050.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label layoutX="10.0" layoutY="5.0" text="Matric ID">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="84.0" layoutY="5.0" text="Name">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="294.0" layoutY="5.0" text="Siswamail">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="459.0" layoutY="5.0" text="Batch">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="529.0" layoutY="4.0" text="Faculty">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="780.0" layoutY="5.0" text="Muet Band">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="860.0" layoutY="5.0" text="Programme">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1000.0" layoutY="5.0" text="Gender">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1060.0" layoutY="5.0" text="Race">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1150.0" layoutY="5.0" text="Date of Birth">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1270.0" layoutY="5.0" text="Study Year">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1370.0" layoutY="5.0" text="Study Sem">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1470.0" layoutY="5.0" text="Nationality">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1570.0" layoutY="5.0" text="Specilisation">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1720.0" layoutY="5.0" text="IC/Passport">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1830.0" layoutY="5.0" text="Credit Hours">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1950.0" layoutY="5.0" text="Enrolled Status">
+                     <font>
+                        <Font name="Futura Medium BT" size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="vContainerStudent" layoutY="34.0" prefHeight="626.0" prefWidth="925.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -53,8 +53,6 @@ public class homePage implements Initializable, ControlledScreen{
     private Button exit_button;
     ScreenController myController;
 
-    
-    
     @FXML
     private BorderPane homeScreen;
     boolean showing;
@@ -65,37 +63,15 @@ public class homePage implements Initializable, ControlledScreen{
     private Pane image3;
     @FXML
     private Pane image4;
-    
-      
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slider_animation(image2, image3, image4);
         myController = new ScreenController();
         showing = myController.getShowing();
-        
-        
-       
-        
+   
     }
-    
-//    public void translateAnimation (double duration, Node node, double width) {
-//        TranslateTransition translateTransition = new TranslateTransition (Duration.seconds(duration), node);
-//        translateTransition.setByX(width);
-//        translateTransition.play();
-//    }
-//    
-//    public void slideshow(){
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
-//            translateAnimation(0.5, pane2, 829);
-//            translateAnimation(0.5, pane3, 829);
-//            translateAnimation(0.5, pane1, 829);
-//        }));
-//        timeline.setCycleCount(timeline.INDEFINITE);
-//        timeline.play();
-//    }
-  
+
     public void slider_animation(Pane pane2, Pane pane3, Pane pane4) {
         int duration = 5;
         FadeTransition fade_transition = new FadeTransition(Duration.seconds(duration),pane4);

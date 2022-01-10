@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="2050.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.studentListPopUpTextController">
+   <children>
+      <Label fx:id="matricLabel" layoutX="10.0" layoutY="5.0" text="U2102856">
+         <font>
+            <Font name="Futura Light BT" size="12.0" />
+         </font></Label>
+      <Label fx:id="nameLabel" layoutX="84.0" layoutY="4.0" prefHeight="17.0" prefWidth="172.0" text="Ng Gih Ming" />
+      <Label fx:id="siswamailLabel" layoutX="294.0" layoutY="4.0" prefHeight="17.0" prefWidth="172.0" text="u2102856@siswa.um.edu.my" />
+      <Label fx:id="batchLabel" layoutX="459.0" layoutY="4.0" prefHeight="17.0" prefWidth="90.0" text="2020/2021" />
+      <Label fx:id="facultyLabel" layoutX="529.0" layoutY="4.0" prefHeight="17.0" prefWidth="245.0" text="Faculty of Computer Science and Information Technology" />
+      <Label fx:id="muetLabel" layoutX="780.0" layoutY="4.0" prefHeight="17.0" prefWidth="40.0" text="muet" />
+      <Label fx:id="programmeLabel" layoutX="860.0" layoutY="4.0" prefHeight="17.0" prefWidth="134.0" text="programme" />
+      <Label fx:id="genderLabel" layoutX="1000.0" layoutY="4.0" prefHeight="17.0" prefWidth="40.0" text="M" />
+      <Label fx:id="raceLabel" layoutX="1060.0" layoutY="4.0" prefHeight="17.0" prefWidth="73.0" text="Chinese" />
+      <Label fx:id="birthDateLabel" layoutX="1150.0" layoutY="4.0" prefHeight="17.0" prefWidth="110.0" text="18/05/2002" />
+      <Label fx:id="yearLabel" layoutX="1270.0" layoutY="4.0" prefHeight="17.0" prefWidth="57.0" text="1" />
+      <Label fx:id="semLabel" layoutX="1370.0" layoutY="4.0" prefHeight="17.0" prefWidth="57.0" text="1" />
+      <Label fx:id="nationalityLabel" layoutX="1470.0" layoutY="4.0" prefHeight="17.0" prefWidth="90.0" text="Malaysian" />
+      <Label fx:id="specialisationLabel" layoutX="1570.0" layoutY="4.0" prefHeight="17.0" prefWidth="146.0" text="specialisation" />
+      <Label fx:id="icLabel" layoutX="1720.0" layoutY="4.0" prefHeight="17.0" prefWidth="101.0" text="ic" />
+      <Label fx:id="creditLabel" layoutX="1830.0" layoutY="4.0" prefHeight="17.0" prefWidth="110.0" text="credit" />
+      <Label fx:id="statusLabel" layoutX="1950.0" layoutY="4.0" prefHeight="17.0" prefWidth="146.0" text="enrollment Status" />
+   </children>
+</Pane>

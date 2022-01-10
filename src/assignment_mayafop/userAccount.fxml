@@ -219,7 +219,39 @@
                   </VBox>
                </children>
             </HBox>
-            <Button layoutX="41.0" layoutY="38.0" mnemonicParsing="false" onAction="#goToRegisteredModule" prefHeight="287.0" prefWidth="563.0" styleClass="transparentbutton" textFill="WHITE" />
+            <Button layoutX="41.0" layoutY="39.0" mnemonicParsing="false" onAction="#goToRegisteredModule" prefHeight="287.0" prefWidth="563.0" styleClass="transparentbutton" textFill="WHITE" />
+            <Rectangle fx:id="staffRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="287.0" layoutX="544.0" layoutY="374.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="470.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0" spread="0.32">
+                     <color>
+                        <Color red="0.46052631735801697" green="0.46052631735801697" blue="0.46052631735801697" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Label fx:id="staffTitleLabel" alignment="TOP_LEFT" layoutX="568.0" layoutY="392.0" prefHeight="39.0" prefWidth="407.0" text="Staffs">
+               <font>
+                  <Font name="Futura Heavy BT" size="34.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vContainerStaff" layoutX="568.0" layoutY="440.0" prefHeight="200.0" prefWidth="442.0" />
+            <Rectangle fx:id="studentRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="287.0" layoutX="41.0" layoutY="374.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="rect" width="470.0">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0" spread="0.32">
+                     <color>
+                        <Color red="0.46052631735801697" green="0.46052631735801697" blue="0.46052631735801697" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Label fx:id="studentTitleLabel" alignment="TOP_LEFT" layoutX="66.0" layoutY="392.0" prefHeight="39.0" prefWidth="407.0" text="Students">
+               <font>
+                  <Font name="Futura Heavy BT" size="34.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vContainerStudent" layoutX="66.0" layoutY="440.0" prefHeight="200.0" prefWidth="442.0" />
+            <Button fx:id="studentButton" layoutX="41.0" layoutY="374.0" mnemonicParsing="false" onAction="#goToStudent" prefHeight="289.0" prefWidth="473.0" styleClass="transparentbutton" textFill="WHITE" />
+            <Button fx:id="staffButton" layoutX="543.0" layoutY="373.0" mnemonicParsing="false" onAction="#goToStaff" prefHeight="289.0" prefWidth="473.0" styleClass="transparentbutton" textFill="WHITE" />
          </children>
       </AnchorPane>
    </center>

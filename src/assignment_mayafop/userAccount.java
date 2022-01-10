@@ -46,6 +46,10 @@ public class userAccount implements Initializable, ControlledScreen{
     @FXML
     private Button exit_button;
     @FXML
+    private Button studentButton;
+    @FXML
+    private Button staffButton;
+    @FXML
     private BorderPane userScreen;
     @FXML
     private VBox vContainerRegisteredModule;
@@ -79,30 +83,28 @@ public class userAccount implements Initializable, ControlledScreen{
     private HBox staffHBox;
     @FXML
     private Rectangle studentRect;
-    
+    @FXML
+    private Label staffTitleLabel;
+    @FXML
+    private Rectangle staffRectangle;
+    @FXML
+    private VBox vContainerStaff;
+    @FXML
+    private Label studentTitleLabel;
+    @FXML
+    private Rectangle studentRectangle;
+    @FXML
+    private VBox vContainerStudent;
    
     
     boolean showing;
     
-    
-    
-    databaseConnection connectNow = new databaseConnection();
-    Connection connectDB = connectNow.getConnection();
-    
-
-    private static ArrayList<String> courseID = new ArrayList<String>();
-    private static ArrayList<String> courseName = new ArrayList<String>();
-    List<registeredModuleDetailsTextModel> moduleDetails = new ArrayList<>();
-    
-    private static ArrayList<String> courseIDStaff = new ArrayList<String>();
-    private static ArrayList<String> courseNameStaff = new ArrayList<String>();
-    private static ArrayList<String> courseOccStaff = new ArrayList<String>();
-    private static ArrayList<String> courseCapacity = new ArrayList<String>();
-    List<registeredStudentDetailsTextModel> registeredStudentDetails = new ArrayList<>();
-    
     String matric_num = loginControl.getUsername();
     char accStatus = loginControl.getAccStatus();
     
+    databaseConnection connectNow = new databaseConnection();
+    Connection connectDB = connectNow.getConnection();
+ 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(accStatus == 'S'){
@@ -112,37 +114,79 @@ public class userAccount implements Initializable, ControlledScreen{
             registeredCourseLabel.setText("Registered Courses");
             staffHBox.setVisible(false);
             staffRect.setVisible(false);
-        }else{
+            line.setVisible(true);
+            
+            staffTitleLabel.setVisible(false);
+            studentRectangle.setVisible(false);
+            vContainerStaff.setVisible(false);
+            staffButton.setVisible(false);
+            
+            studentTitleLabel.setVisible(false);
+            staffRectangle.setVisible(false);
+            vContainerStudent.setVisible(false);
+            studentButton.setVisible(false);
+            
+        }else if(accStatus == 'T'){
             getUserDetailsStaff();
             getRegisteredStudentDetailsStaff();
             insertCourseDetailsStaff();
             registeredCourseLabel.setText("Registered Students");
             studentHBox.setVisible(false);
             studentRect.setVisible(false);
-            line.setVisible(false);
+            line.setVisible(false); 
             
+            staffTitleLabel.setVisible(false);
+            staffRectangle.setVisible(false);
+            vContainerStaff.setVisible(false);
+            staffButton.setVisible(false);
+            
+            studentTitleLabel.setVisible(false);
+            studentRectangle.setVisible(false);
+            vContainerStudent.setVisible(false);
+            studentButton.setVisible(false);
+            
+        }else if(accStatus == 'A'){
+            getUserDetailsStaff();
+            getRegisteredStudentDetailsStaff();
+            insertCourseDetailsStaff();
+            registeredCourseLabel.setText("Registered Students");
+            getStudents();
+            insertStudents();
+            String staffQueryText="SELECT staff_id AS staffID, staff_email AS umMail, staff_name AS staffName FROM staff LIMIT 7";
+            getStaffs(staffQueryText);
+            insertStaffs("/Assignment_MayaFOP/staffListText.fxml");
+            studentHBox.setVisible(false);
+            studentRect.setVisible(false);
+            line.setVisible(false); 
+            
+            staffTitleLabel.setVisible(true);
+            staffRectangle.setVisible(true);
+            vContainerStaff.setVisible(true);
+            staffButton.setVisible(true);
+            
+            studentTitleLabel.setVisible(true);
+            studentRectangle.setVisible(true);
+            vContainerStudent.setVisible(true);
+            studentButton.setVisible(true);
         }
-
+        
+        myController = new ScreenController();
+        showing = myController.getShowing();
     }
 
     @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
-    
-//    public void goToRegisteredModule(ActionEvent event)throws IOException{
-//        Parent root = FXMLLoader.load(getClass().getResource("registeredModule.fxml"));
-//        Stage stage = new Stage();
-//        stage.initStyle(StageStyle.UNDECORATED);
-//        stage.setScene(new Scene(root));
-//        stage.show();
-//    }
-    
+
     public void goToRegisteredModule(ActionEvent event){
         myController = new ScreenController();
         
         if(accStatus == 'S'){
-            myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredModule.fxml");
+            if (!showing) {
+                myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredModule.fxml");
+                showing = myController.getShowing();
+            }  
         }else{
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -153,12 +197,23 @@ public class userAccount implements Initializable, ControlledScreen{
                 SDPController.resetMemory();
             } catch (Exception e) {
                 System.out.println(e);
-            }
-            
+            }   
         }
-        
-    } 
-
+    }  
+    
+    public void goToStudent(){
+        if (!showing) {
+            myController.showPopupStage(userScreen, "/assignment_MayaFOP/studentListPopUp.fxml");
+            showing = myController.getShowing();
+        }
+    }
+    
+    public void goToStaff(){
+        if (!showing) {
+            myController.showPopupStage(userScreen, "/assignment_MayaFOP/staffListPopUp.fxml");
+            showing = myController.getShowing();
+        }
+    }
     
     public void exitButton(ActionEvent event) {
         //Click on exit button to exit       
@@ -166,6 +221,12 @@ public class userAccount implements Initializable, ControlledScreen{
         stage.close();
     } 
 
+    
+    //Students part
+    private static ArrayList<String> courseID = new ArrayList<String>();
+    private static ArrayList<String> courseName = new ArrayList<String>();
+    List<registeredModuleDetailsTextModel> moduleDetails = new ArrayList<>();
+    
     public void getUserDetailsStudent(){
         try {
             String UserDetails="SELECT student_name, matric_num, student_programme, student_specialisation, student_studyyear, enrolled_status\n" +
@@ -214,24 +275,6 @@ public class userAccount implements Initializable, ControlledScreen{
         }
     }
 
-    void getUserDetailsStaff(){
-        try {
-            String UserDetails="SELECT staff_id, staff_email, staff_name\n" +
-                            "FROM staff\n" +
-                            "WHERE staff_id='"+matric_num+"'";
-            ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(UserDetails);
-            while(queryResultForCheck.next()) {
-
-                staffNameLabel.setText(misc.upperLetter(queryResultForCheck.getString("staff_name")));
-                staffIDLabel.setText(queryResultForCheck.getString("staff_id").toUpperCase());              
-                UMMailLabel.setText(queryResultForCheck.getString("staff_email"));
-            }    
-        } catch (SQLException e) {
-            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
-            e.printStackTrace();
-        }
-    }
-    
     public void getCourseDetailsStudent(){
         courseID.clear();
         courseName.clear();
@@ -255,6 +298,64 @@ public class userAccount implements Initializable, ControlledScreen{
                     String coursename = courseNameQuery.getString("course_name");
                     courseName.add(coursename);
                 }
+            }    
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+    }
+    
+        public void insertModuleDetailsStudent(){
+        try {
+            moduleDetails.clear();
+            for (int j = 0; j < courseID.size(); j++) {
+                moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),misc.upperLetter(courseName.get(j))));
+            }
+            Node[] nodes = new Node[moduleDetails.size()];
+            
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredModuleDetailsText.fxml"));
+                nodes[j] = loader.load();
+                
+//                final int h = j;
+                
+                registeredModuleDetailsTextController detailsController = loader.getController();
+                //customise content
+                detailsController.setContentInfo(moduleDetails.get(j).getCourseCodeDetailsLabel(),moduleDetails.get(j).getCourseNameDetailsLabel());               
+                
+                vContainerRegisteredModule.getChildren().add(nodes[j]);
+            }
+
+
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+       
+        
+    //Staff part
+    private static ArrayList<String> courseIDStaff = new ArrayList<String>();
+    private static ArrayList<String> courseNameStaff = new ArrayList<String>();
+    private static ArrayList<String> courseOccStaff = new ArrayList<String>();
+    private static ArrayList<String> courseCapacity = new ArrayList<String>();
+    List<registeredStudentDetailsTextModel> registeredStudentDetails = new ArrayList<>();
+    
+    void getUserDetailsStaff(){
+        try {
+            String UserDetails="SELECT staff_id, staff_email, staff_name\n" +
+                            "FROM staff\n" +
+                            "WHERE staff_id='"+matric_num+"'";
+            ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(UserDetails);
+            while(queryResultForCheck.next()) {
+
+                staffNameLabel.setText(misc.upperLetter(queryResultForCheck.getString("staff_name")));
+                staffIDLabel.setText(queryResultForCheck.getString("staff_id").toUpperCase());              
+                UMMailLabel.setText(queryResultForCheck.getString("staff_email"));
             }    
         } catch (SQLException e) {
             Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
@@ -303,39 +404,7 @@ public class userAccount implements Initializable, ControlledScreen{
             e.printStackTrace();
         }
     }
-    
-    public void insertModuleDetailsStudent(){
-        try {
-            moduleDetails.clear();
-            for (int j = 0; j < courseID.size(); j++) {
-                moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),misc.upperLetter(courseName.get(j))));
-            }
-            Node[] nodes = new Node[moduleDetails.size()];
-            
-            for (int j = 0; j < nodes.length; j++) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredModuleDetailsText.fxml"));
-                nodes[j] = loader.load();
-                
-//                final int h = j;
-                
-                registeredModuleDetailsTextController detailsController = loader.getController();
-                //customise content
-                detailsController.setContentInfo(moduleDetails.get(j).getCourseCodeDetailsLabel(),moduleDetails.get(j).getCourseNameDetailsLabel());               
-                
-                vContainerRegisteredModule.getChildren().add(nodes[j]);
-            }
-
-
-        } catch (Exception e) {
-            try {
-                throw e;
-            } catch (Exception ex) {
-                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
+       
     public void insertCourseDetailsStaff(){
         try {
             registeredStudentDetails.clear();
@@ -368,5 +437,116 @@ public class userAccount implements Initializable, ControlledScreen{
         }
     }
     
+    
+    //Admin part
+    private static ArrayList<String> matric = new ArrayList<String>();
+    private static ArrayList<String> name = new ArrayList<String>();
+    private static ArrayList<String> faculty = new ArrayList<String>();
+    List<studentListTextModel> studentDetails = new ArrayList<>();
+    
+    public void getStudents(){
+        matric.clear();
+        name.clear();
+        faculty.clear();
+        String studentQueryText="SELECT matric_num AS matricNo, student_name AS studentName, student_faculty AS studentFaculty FROM student LIMIT 7";
+        try {
+            ResultSet staffQuery = connectDB.createStatement().executeQuery(studentQueryText);
+            while(staffQuery.next()) {
+                matric.add(staffQuery.getString("matricNo"));
+                name.add(staffQuery.getString("studentName"));
+                faculty.add(staffQuery.getString("studentFaculty"));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
 
+    }
+    
+    public void insertStudents(){
+        try {
+            studentDetails.clear();
+            for (int j = 0; j < matric.size(); j++) {
+                studentDetails.add(new studentListTextModel(matric.get(j),name.get(j), faculty.get(j)));
+            }
+            Node[] nodes = new Node[studentDetails.size()];
+            
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/studentListText.fxml"));
+                nodes[j] = loader.load();
+                
+                final int h = j;
+                
+                studentListTextController student = loader.getController();
+                //customise content
+                student.setContentInfo(studentDetails.get(j).getMatricLabel(), studentDetails.get(j).getStudentLabel(), studentDetails.get(j).getFacultyLabel());               
+                
+                vContainerStudent.getChildren().add(nodes[j]);
+            }
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    //Admin part
+    private static ArrayList<String> staffid = new ArrayList<String>();
+    private static ArrayList<String> staffname = new ArrayList<String>();
+    private static ArrayList<String> ummail = new ArrayList<String>();
+    List<staffListTextModel> staffDetails = new ArrayList<>();
+    
+    public void getStaffs(String query){
+        staffid.clear();
+        ummail.clear();
+        staffname.clear();
+        try {
+            ResultSet staffQuery = connectDB.createStatement().executeQuery(query);
+            while(staffQuery.next()) {
+                if(staffid.equals("NONE")){
+                    
+                }else{
+                    staffid.add(staffQuery.getString("staffID"));
+                    ummail.add(staffQuery.getString("umMail"));
+                    staffname.add(staffQuery.getString("staffName"));
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+    }
+    
+    public void insertStaffs(String a){
+        try {
+            staffDetails.clear();
+            for (int j = 0; j < staffid.size(); j++) {
+                staffDetails.add(new staffListTextModel(staffid.get(j),staffname.get(j), ummail.get(j)));
+            }
+            Node[] nodes = new Node[staffDetails.size()];
+            
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(a));
+                nodes[j] = loader.load();
+                
+                final int h = j;
+                
+                staffListTextController staff = loader.getController();
+                //customise content
+                staff.setContentInfo(staffDetails.get(j).getStaffIdLabel(), staffDetails.get(j).getStaffNameLabel(), staffDetails.get(j).getUmMailLabel());               
+                
+                vContainerStaff.getChildren().add(nodes[j]);
+            }
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }    
 }

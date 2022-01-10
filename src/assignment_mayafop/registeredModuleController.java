@@ -31,6 +31,7 @@ public class registeredModuleController implements Initializable, ControlledScre
     ScreenController myController;
     animation Animation;
     login_controller loginControl = new login_controller();
+    MiscFunc misc = new MiscFunc();
     
     @FXML
     private Button exit_button;
@@ -109,7 +110,7 @@ public class registeredModuleController implements Initializable, ControlledScre
                 
                 courseCode.add(queryCourseDetail.getString("course_id"));
                 
-                courseName.add(upperLetter(queryCourseDetail.getString("course_name")));
+                courseName.add(misc.upperLetter(queryCourseDetail.getString("course_name")));
                 creditHour.add(queryCourseDetail.getString("credit_hour"));
                 
                 String occ = queryCourseDetail.getString("occ_name");
@@ -121,9 +122,6 @@ public class registeredModuleController implements Initializable, ControlledScre
                 }else{
                     enrollmentStatus.add("Not enrolled");
                 }
-                
-            
-                
             }
             
         } catch (SQLException e) {
@@ -182,26 +180,5 @@ public class registeredModuleController implements Initializable, ControlledScre
                 Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    public String upperLetter(String name){
-        String[] stringTemp = name.split(" ");
-        String modifiedString=" ";
-        for (int i = 0; i < stringTemp.length; i++) {
-            
-            String firstLetStr = stringTemp[i].substring(0, 1);
-            String remLetStr = stringTemp[i].substring(1);
-            if(!stringTemp[i].equals("and")){
-                firstLetStr = firstLetStr.toUpperCase();
-            }
-            remLetStr = remLetStr.toLowerCase();
-            if(modifiedString.equals(" ")){
-                modifiedString = firstLetStr + remLetStr + " ";
-            }else{
-                modifiedString += firstLetStr + remLetStr + " ";
-            }
-        }
-
-        return modifiedString;
     }
 }
