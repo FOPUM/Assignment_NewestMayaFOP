@@ -794,6 +794,16 @@ public class searchModule implements Initializable, ControlledScreen {
     
     public void addNewModule(ActionEvent event){
         if (!showing) {
+            try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
+            loader.load();
+            
+            ModuleController moduleController = loader.getController();
+            moduleController.setCourseIdSetter("");
+        } catch (Exception e) {
+                
+        }
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
             showing = myController.getShowing();   
         }
