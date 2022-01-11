@@ -131,6 +131,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     boolean showing = myController.getShowing();
     
     public void addNewOcc(ActionEvent event){
+        getPreviousPageValues();
         selectedNode = -1;
         System.out.println("selectedNode has been reset to: " +selectedNode);
         openNewOccPage();
@@ -585,7 +586,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     //Add new course
     public void confirmAddCourse(ActionEvent event){
-        getPreviousPageValues();
+        
         try {
             PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
             statement.setString(1,courseID);

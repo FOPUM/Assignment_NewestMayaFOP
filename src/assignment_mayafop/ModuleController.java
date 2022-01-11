@@ -96,6 +96,17 @@ public class ModuleController implements Initializable, ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        courseIDTextField.setText(courseIdSetter);
+        courseNameTextField.setText(courseNameSetter);
+        creditHourTextField.setText(creditHourSetter);
+        courseCategoryComboBox.setValue(courseCategorySetter);
+        courseYearComboBox.setValue(CourseYearSetter);
+        courseSemComboBox.setValue(courseSemSetter);
+        MuetBandComboBox.setValue(muetBandSetter);
+        nationalityComboBox.setValue(nationalitySetter);
+        ProgrammeComboBox.setValue(programmeSetter);
+        
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(modulePane);
@@ -252,7 +263,8 @@ public class ModuleController implements Initializable, ControlledScreen{
     
     
     public String getCourseIdSetter() {
-        return ModuleController.courseIdSetter;
+        System.out.println("This is the course: " + courseIdSetter );
+        return courseIdSetter;
     }
 
     public void setCourseIdSetter(String courseIdSetter) {
