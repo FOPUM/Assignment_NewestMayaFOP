@@ -99,7 +99,7 @@ public class registeredStudentController implements Initializable, ControlledScr
         
         matricID.clear();
         studentName.clear();
-
+        
         try {
             //<editor-fold defaultstate="collapsed" desc="String for staff and admin">
             String courseDetailss="SELECT * FROM \n" +
@@ -174,7 +174,12 @@ public class registeredStudentController implements Initializable, ControlledScr
                 courseNameStaff.add(courseIDQuery.getString("course_name"));
                 courseOccStaff.add(courseIDQuery.getString("occ_name"));
                 
-                String capacity = courseIDQuery.getString("currentCapacity") +"/" + courseIDQuery.getString("occCapacity");
+                String currentcapacity = courseIDQuery.getString("currentCapacity");
+                if(courseIDQuery.getString("currentCapacity") == null){
+                    currentcapacity = "0";
+                }
+                
+                String capacity = currentcapacity +"/" + courseIDQuery.getString("occCapacity");
                 courseCapacity.add(capacity);
                 courseModeStaff.add(courseIDQuery.getString("courseMode"));
                 courseDayStaff.add(courseIDQuery.getString("courseDay"));

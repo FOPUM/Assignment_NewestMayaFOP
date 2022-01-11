@@ -95,40 +95,47 @@ public class registeredStudentDetailsPopupController implements Initializable{
     public void getCourseDetailsStudent(){
         
 //        System.out.println(occID.size());
-        try {
-            for (int i = 0; i < occID.size(); i++) {
-                for (int j = 0; j < occID.size(); j++) {
-                    if (occID.get(i).equals(occID.get(j))) {
-                        occID.remove(j);
+        if(occID.size() != 0){
+            try {
+                for (int i = 0; i < occID.size(); i++) {
+                    for (int j = 0; j < occID.size(); j++) {
+                        if (occID.get(i).equals(occID.get(j))) {
+                            occID.remove(j);
+                        }
                     }
                 }
+                for (int i = 0; i < occID.size(); i++) {
+                    System.out.println(i);
+                    System.out.println(occID.get(i));
+                    String courseDetailss="SELECT student_take_course.matric_num AS matricID, student.student_name AS studentName\n" +
+                                    "FROM student_take_course\n" +
+                                    "INNER JOIN student ON student.matric_num=student_take_course.matric_num\n" +
+                                    "WHERE student_take_course.course_status='y' AND student_take_course.occ_id='"+occID.get(i)+"'";
+                    ResultSet courseIDQuery = connectDB.createStatement().executeQuery(courseDetailss);
+                    while(courseIDQuery.next()) {
+                        matricID.add(courseIDQuery.getString("matricID"));
+                        studentName.add(courseIDQuery.getString("studentName"));
+                        if (matricID.isEmpty() && studentName.isEmpty()) {
+                            matricID.add("");
+                            studentName.add("");
+                        }
+                    } 
+                    System.out.println(matricID.get(i));
+                    System.out.println(studentName.get(i));
+
+                }
+
+
+
+            } catch (SQLException e) {
+                Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+                e.printStackTrace();
             }
-            for (int i = 0; i < occID.size(); i++) {
-                System.out.println(i);
-                System.out.println(occID.get(i));
-                String courseDetailss="SELECT student_take_course.matric_num AS matricID, student.student_name AS studentName\n" +
-                                "FROM student_take_course\n" +
-                                "INNER JOIN student ON student.matric_num=student_take_course.matric_num\n" +
-                                "WHERE student_take_course.course_status='y' AND student_take_course.occ_id='"+occID.get(i)+"'";
-                ResultSet courseIDQuery = connectDB.createStatement().executeQuery(courseDetailss);
-                while(courseIDQuery.next()) {
-                    matricID.add(courseIDQuery.getString("matricID"));
-                    studentName.add(courseIDQuery.getString("studentName"));
-                } 
-                System.out.println(matricID.get(i));
-                System.out.println(studentName.get(i));
-                
-            }
-            
-            
-                       
-        } catch (SQLException e) {
-            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
-            e.printStackTrace();
         }
     }
 
     public void insertCourseDetails(){
+        
         try {
             studentDetails.clear();
             for (int j = 0; j < matricID.size(); j++) {
@@ -170,6 +177,7 @@ public class registeredStudentDetailsPopupController implements Initializable{
                 Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
     }
     
     public void resetMemory(){

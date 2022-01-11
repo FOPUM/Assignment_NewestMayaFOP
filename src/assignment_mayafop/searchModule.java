@@ -85,8 +85,6 @@ public class searchModule implements Initializable, ControlledScreen {
     @FXML
     private Label courseNameLabel;
     @FXML
-    private Label courseDetailsLabel;
-    @FXML
     private Label creditsLabel;
     @FXML
     private Label occurenceLabel;
@@ -118,6 +116,8 @@ public class searchModule implements Initializable, ControlledScreen {
     private Rectangle rightRect;
     @FXML 
     private Button addButton;
+    @FXML
+    private Label courseWarningLabel;
 
 
     @FXML 
@@ -735,47 +735,70 @@ public class searchModule implements Initializable, ControlledScreen {
     }
     
     //not yet done
+    private static ArrayList<String> occIDStaff = new ArrayList<String>();
+    
     public void editCourse(ActionEvent event){
-        if (!showing) {
-            try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
-            loader.load();
-            
-            String courseCategory = null;
-            String courseYear = null;
-            String courseSem = null;
-            String courseMuet = null;
-            String courseNationality = null;
-            String courseProgramme = null;
-            
-            String additionalCourseDetails = "SELECT course_category, course_year, course_sem, muet_band, nationality, programme FROM course WHERE course_id='"+courseTableView.getSelectionModel().getSelectedItem().getCourseID()+"'";
-            ResultSet queryForAdditionalCourseDetails = connectDB.createStatement().executeQuery(additionalCourseDetails);
+        
+        try {
+            String queryForStaffOcc = "SELECT occ.occ_id\n" +
+                                        "FROM occ \n" +
+                                        "LEFT JOIN staff_teach_lecture ON staff_teach_lecture.lecture_id=occ.lecture_id\n" +
+                                        "LEFT JOIN staff_teach_tutorial ON staff_teach_tutorial.tutorial_id=occ.tutorial_id\n" +
+                                        "LEFT JOIN staff_teach_lab ON staff_teach_lab.lab_id=occ.lab_id\n" +
+                                        "WHERE staff_teach_lecture.staff_id='"+matric_num+"' OR staff_teach_tutorial.staff_id='"+matric_num+"' OR staff_teach_lab.staff_id-'"+matric_num+"'";
+            ResultSet queryForAdditionalCourseDetails = connectDB.createStatement().executeQuery(queryForStaffOcc);
             while(queryForAdditionalCourseDetails.next()) {
-                courseCategory = queryForAdditionalCourseDetails.getString("course_category");
-                courseYear = queryForAdditionalCourseDetails.getString("course_year");
-                courseSem = queryForAdditionalCourseDetails.getString("course_sem");
-                courseMuet = queryForAdditionalCourseDetails.getString("muet_band");
-                courseNationality = queryForAdditionalCourseDetails.getString("nationality");
-                courseProgramme = queryForAdditionalCourseDetails.getString("programme");
+                occIDStaff.add(queryForAdditionalCourseDetails.getString("occ_id"));
             }
-            
-            ModuleController moduleController = loader.getController();
-            moduleController.setCourseIdSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
-            moduleController.setCourseNameSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseName());
-            moduleController.setCreditHourSetter(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
-            moduleController.setCourseCategorySetter(courseCategory);
-            moduleController.setCourseYearSetter(courseYear);
-            moduleController.setCourseSemSetter(courseSem);
-            moduleController.setMuetBandSetter(courseMuet);
-            moduleController.setNationalitySetter(courseNationality);
-            moduleController.setProgrammeSetter(courseProgramme);
-            
-            
-            } catch (Exception e) {
+        } catch (SQLException ex) {
+            Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                     
+        if(occIDStaff.contains(courseTableView.getSelectionModel().getSelectedItem().getOccID())){
+            courseWarningLabel.setText("");
+            if (!showing) {
+                try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
+                loader.load();
+
+                String courseCategory = null;
+                String courseYear = null;
+                String courseSem = null;
+                String courseMuet = null;
+                String courseNationality = null;
+                String courseProgramme = null;
+
+                String additionalCourseDetails = "SELECT course_category, course_year, course_sem, muet_band, nationality, programme FROM course WHERE course_id='"+courseTableView.getSelectionModel().getSelectedItem().getCourseID()+"'";
+                ResultSet queryForAdditionalCourseDetails = connectDB.createStatement().executeQuery(additionalCourseDetails);
+                while(queryForAdditionalCourseDetails.next()) {
+                    courseCategory = queryForAdditionalCourseDetails.getString("course_category");
+                    courseYear = queryForAdditionalCourseDetails.getString("course_year");
+                    courseSem = queryForAdditionalCourseDetails.getString("course_sem");
+                    courseMuet = queryForAdditionalCourseDetails.getString("muet_band");
+                    courseNationality = queryForAdditionalCourseDetails.getString("nationality");
+                    courseProgramme = queryForAdditionalCourseDetails.getString("programme");
+                }
+
+                ModuleController moduleController = loader.getController();
+                moduleController.setCourseIdSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+                moduleController.setCourseNameSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseName());
+                moduleController.setCreditHourSetter(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
+                moduleController.setCourseCategorySetter(courseCategory);
+                moduleController.setCourseYearSetter(courseYear);
+                moduleController.setCourseSemSetter(courseSem);
+                moduleController.setMuetBandSetter(courseMuet);
+                moduleController.setNationalitySetter(courseNationality);
+                moduleController.setProgrammeSetter(courseProgramme);
+
+
+                } catch (Exception e) {
+                }
+                myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
+                showing = myController.getShowing(); 
             }
-            myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
-            showing = myController.getShowing(); 
+        }else{
+            courseWarningLabel.setText("Please edit your course only!");
         }
 //        try {
 //            FXMLLoader loader = new FXMLLoader();

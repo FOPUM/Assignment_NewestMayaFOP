@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredStuentDetailsPopupTextController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.registeredStuentDetailsPopupTextController">
    <children>
       <Label fx:id="matricIDLabel" layoutX="16.0" layoutY="4.0" text="U2102856" />
       <Label fx:id="studentNameLabel" layoutX="121.0" layoutY="4.0" text="Ng Gih Ming" />
