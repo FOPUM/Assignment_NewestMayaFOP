@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  *
  * @author Ming
  */
-public class staffListPopUpController extends userAccount implements Initializable, ControlledScreen{
+public class staffListPopUpController implements Initializable, ControlledScreen{
     ScreenController myController;
     animation Animation;
     login_controller loginControl = new login_controller();
@@ -52,9 +52,8 @@ public class staffListPopUpController extends userAccount implements Initializab
         if(!upScreenStatus){
             Animation.fading(staffPane);
         }
-        String staffQueryText="SELECT staff_id AS staffID, staff_email AS umMail, staff_name AS staffName FROM staff LIMIT 7";
-        super.getStaffs(staffQueryText);
-        super.insertStaffs("/Assignment_MayaFOP/staffListPopUpText.fxml");
+        getStaffs();
+        insertStaffs();
     }
     
     @Override
@@ -67,5 +66,72 @@ public class staffListPopUpController extends userAccount implements Initializab
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
     } 
+    
+    private static ArrayList<String> id = new ArrayList<String>();
+    private static ArrayList<String> name = new ArrayList<String>();
+    private static ArrayList<String> mail = new ArrayList<String>();
+    private static ArrayList<String> cid = new ArrayList<String>();
+    private static ArrayList<String> cname = new ArrayList<String>();
+    private static ArrayList<String> admin = new ArrayList<String>();
+    List<staffListTextModel> fullStaffDetails = new ArrayList<>();
+    
+    public void getStaffs(){
+        id.clear();
+        name.clear();
+        mail.clear();
+        cid.clear();
+        cname.clear();
+        admin.clear();
 
+        String staffQueryText="SELECT staff.staff_id,staff.staff_email,staff.staff_name,GROUP_CONCAT(staff_teach_course.course_id) AS course_id,GROUP_CONCAT(course.course_name) AS course_name,admin.admin_id FROM staff\n" +
+                                "LEFT JOIN staff_teach_course ON staff.staff_id=staff_teach_course.staff_id\n" +
+                                "LEFT JOIN admin ON admin.staff_id=staff.staff_id\n" +
+                                "LEFT JOIN course ON course.course_id=staff_teach_course.course_id\n" +
+                                "WHERE staff.staff_id!='NONE'\n" +
+                                "GROUP BY staff.staff_id";
+        try {
+            ResultSet staffQuery = connectDB.createStatement().executeQuery(staffQueryText);
+            while(staffQuery.next()) {
+                id.add(staffQuery.getString("staff_id"));
+                name.add(staffQuery.getString("staff_name"));
+                mail.add(staffQuery.getString("staff_email"));
+                cid.add(staffQuery.getString("course_id"));
+                cname.add(staffQuery.getString("course_name"));
+                admin.add(staffQuery.getString("admin_id"));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+
+    }
+    
+    public void insertStaffs(){
+        try {
+            fullStaffDetails.clear();
+            for (int j = 0; j < id.size(); j++) {
+                fullStaffDetails.add(new staffListTextModel(id.get(j),name.get(j), mail.get(j), cid.get(j),cname.get(j), admin.get(j)));
+            }
+            Node[] nodes = new Node[fullStaffDetails.size()];
+
+            for (int j = 0; j < nodes.length; j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/staffListPopUpText.fxml"));
+                nodes[j] = loader.load();
+                
+                staffListTextController staff = loader.getController();
+                //customise content
+                staff.setContentInfo( fullStaffDetails.get(j).getStaffIdLabel(), fullStaffDetails.get(j).getStaffNameLabel(), fullStaffDetails.get(j).getUmMailLabel(),
+                                        fullStaffDetails.get(j).getCourseIdLabel(), fullStaffDetails.get(j).getCourseNameIdLabel(), fullStaffDetails.get(j).getAdminLabel());               
+                
+                vContainerStaff.getChildren().add(nodes[j]);
+            }
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(moduleConfirmationMessageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

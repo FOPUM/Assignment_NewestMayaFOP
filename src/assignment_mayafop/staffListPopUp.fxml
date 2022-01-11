@@ -18,17 +18,17 @@
                   <Font name="Futura Heavy BT" size="38.0" />
                </font>
             </Label>
-            <Label layoutX="40.0" layoutY="121.0" text="Staff ID">
+            <Label layoutX="15.0" layoutY="121.0" text="Staff ID">
                <font>
                   <Font name="Futura Medium BT" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="209.0" layoutY="121.0" text="Staff Name">
+            <Label layoutX="90.0" layoutY="121.0" text="Staff Name">
                <font>
                   <Font name="Futura Medium BT" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="558.0" layoutY="121.0" text="UM Mail">
+            <Label layoutX="250.0" layoutY="121.0" text="UM Mail">
                <font>
                   <Font name="Futura Medium BT" size="14.0" />
                </font>
@@ -42,7 +42,22 @@
                   </ImageView>
                </graphic>
             </Button>
-            <VBox fx:id="vContainerStaff" layoutX="40.0" layoutY="157.0" prefHeight="626.0" prefWidth="925.0" />
+            <VBox fx:id="vContainerStaff" layoutY="152.0" prefHeight="631.0" prefWidth="978.0" />
+            <Label layoutX="370.0" layoutY="121.0" text="Course ID">
+               <font>
+                  <Font name="Futura Medium BT" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="121.0" text="Course Name">
+               <font>
+                  <Font name="Futura Medium BT" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="910.0" layoutY="121.0" text="Admin">
+               <font>
+                  <Font name="Futura Medium BT" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </content>

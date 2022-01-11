@@ -4,13 +4,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="925.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.staffListTextController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment_mayafop.staffListTextController">
    <children>
-      <Label fx:id="staffIdLabel" layoutY="5.0" text="U2102856">
+      <Label fx:id="staffIdLabel" layoutX="15.0" layoutY="5.0" text="U2102856">
          <font>
             <Font name="Futura Light BT" size="12.0" />
          </font></Label>
-      <Label fx:id="staffNameLabel" layoutX="169.0" layoutY="4.0" prefHeight="17.0" prefWidth="172.0" text="Ng Gih Ming" />
-      <Label fx:id="umMailLabel" layoutX="520.0" layoutY="4.0" prefHeight="17.0" prefWidth="172.0" text="laji" />
+      <Label fx:id="staffNameLabel" layoutX="90.0" layoutY="4.0" prefHeight="17.0" prefWidth="153.0" text="Ng Gih Ming" />
+      <Label fx:id="umMailLabel" layoutX="250.0" layoutY="4.0" prefHeight="17.0" prefWidth="111.0" text="a6666@um.my" />
+      <Label fx:id="courseIdLabel" layoutX="370.0" layoutY="4.0" prefHeight="17.0" prefWidth="122.0" text="WIA2010" />
+      <Label fx:id="adminLabel" layoutX="910.0" layoutY="4.0" prefHeight="17.0" prefWidth="57.0" text="C4444" />
+      <Label fx:id="courseNameLabel" layoutX="500.0" layoutY="4.0" prefHeight="17.0" prefWidth="397.0" text="course_name" />
    </children>
 </Pane>
