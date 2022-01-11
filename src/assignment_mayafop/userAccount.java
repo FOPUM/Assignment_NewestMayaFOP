@@ -152,7 +152,7 @@ public class userAccount implements Initializable, ControlledScreen{
             registeredCourseLabel.setText("Registered Students");
             getStudents();
             insertStudents();
-            String staffQueryText="SELECT staff_id AS staffID, staff_email AS umMail, staff_name AS staffName FROM staff LIMIT 7";
+            String staffQueryText="SELECT staff_id AS staffID, staff_email AS umMail, staff_name AS staffName FROM staff WHERE staff_id!='NONE' LIMIT 7";
             getStaffs(staffQueryText);
             insertStaffs("/Assignment_MayaFOP/staffListText.fxml");
             studentHBox.setVisible(false);
