@@ -476,7 +476,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
-            int actOcc = i + 1;
+            String actOcc = occ.get(i);
             
             moduleController.occLabel.setText(occ.get(i));
             moduleController.capacityLabel.setText(occCapacity.get(i));
