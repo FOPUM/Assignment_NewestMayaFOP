@@ -754,7 +754,7 @@ public class searchModule implements Initializable, ControlledScreen {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
         }
                      
-        if(occIDStaff.contains(courseTableView.getSelectionModel().getSelectedItem().getOccID())){
+        if(occIDStaff.contains(courseTableView.getSelectionModel().getSelectedItem().getOccID()) || accStatus == 'A'){
             courseWarningLabel.setText("");
             if (!showing) {
                 try {

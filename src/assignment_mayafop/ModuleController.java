@@ -188,7 +188,12 @@ public class ModuleController implements Initializable, ControlledScreen{
         
     }
     
-public String getCourseID() {
+    public void getOccDetails(){
+        
+    }
+    
+    
+    public String getCourseID() {
         return courseID;
     }
 

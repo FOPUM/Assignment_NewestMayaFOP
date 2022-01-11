@@ -103,6 +103,23 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         if(!upScreenStatus){
             Animation.fading(moduleNextPane);
         }
+        getPreviousPageValues();
+        try {
+            ResultSet checkForEditOrNewModule = connectDB.createStatement().executeQuery("SELECT COUNT(course_id) AS courseIDPresentOrNot FROM course WHERE course_id='"+courseID+"'");
+            while(checkForEditOrNewModule.next()) {
+                String presentOfCourseID = checkForEditOrNewModule.getString("courseIDPresentOrNot");
+                System.out.println(presentOfCourseID + " is rhis");
+                if(presentOfCourseID.equals("1")){
+                    getValuesFromDatabaseOnOcc();
+                    System.out.println(occ.size() + " occ");
+                    for (int j = 0; j < occ.size(); j++) {
+                        insertHbox();
+                    }
+                }
+            }
+        } catch (SQLException ex) { 
+            Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -132,7 +149,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     boolean showing = myController.getShowing();
     
     public void addNewOcc(ActionEvent event){
-        getPreviousPageValues();
+//        getPreviousPageValues();
+        clearMemory();
         selectedNode = -1;
         System.out.println("selectedNode has been reset to: " +selectedNode);
         openNewOccPage();
@@ -196,7 +214,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
                     showing = myController.getShowing();   
                     if (occControl.isShouldAddOcc()) {
-                        getValues();
+                        getValuesfromAddOccController();
                         insertHbox();
                     }
             }
@@ -340,31 +358,97 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
     }
     
-    public void getValues(){
-        
-            occ.add(occController.getOcc());
-            occCapacity.add(occController.getCapacity());
-            
-            lectday.add(occController.getLectday());
-            lectstart.add(occController.getLectstart());
-            lectend.add(occController.getLectend());
-            lectlocation.add(occController.getLectlocation());
-            lectstaffid.add(occController.getLectstaffid());
-            
-            tutoday.add(occController.getTutoday());
-            tutostart.add(occController.getTutostart());
-            tutoend.add(occController.getTutoend()); 
-            tutolocation.add(occController.getTutolocation());
-            tutostaffid.add(occController.getTutostaffid());
-            
-            labday.add(occController.getLabday());
-            labstart.add(occController.getLabstart());
-            labend.add(occController.getLabend()); 
-            lablocation.add(occController.getLablocation());
-            labstaffid.add(occController.getLabstaffid());
-            
-            
+    public void getValuesfromAddOccController(){
+        occ.add(occController.getOcc());
+        occCapacity.add(occController.getCapacity());
 
+        lectday.add(occController.getLectday());
+        lectstart.add(occController.getLectstart());
+        lectend.add(occController.getLectend());
+        lectlocation.add(occController.getLectlocation());
+        lectstaffid.add(occController.getLectstaffid());
+
+        tutoday.add(occController.getTutoday());
+        tutostart.add(occController.getTutostart());
+        tutoend.add(occController.getTutoend()); 
+        tutolocation.add(occController.getTutolocation());
+        tutostaffid.add(occController.getTutostaffid());
+
+        labday.add(occController.getLabday());
+        labstart.add(occController.getLabstart());
+        labend.add(occController.getLabend()); 
+        lablocation.add(occController.getLablocation());
+        labstaffid.add(occController.getLabstaffid());
+    }
+    
+    public void clearMemory(){
+        occ.clear();
+        occCapacity.clear();
+
+        lectday.clear();
+        lectstart.clear();
+        lectend.clear();
+        lectlocation.clear();
+        lectstaffid.clear();
+
+        tutoday.clear();
+        tutostart.clear();
+        tutoend.clear();
+        tutolocation.clear();
+        tutostaffid.clear();
+
+        labday.clear();
+        labstart.clear();
+        labend.clear();
+        lablocation.clear();
+        labstaffid.clear();        
+    }
+    
+    public void getValuesFromDatabaseOnOcc(){
+        String databaseOccQueryText = "SELECT occ.occ_name, occ.occ_capacity,\n" +
+                                        "lecture.lecture_id, lecture.lecture_day, lecture.lecture_start_time, lecture.lecture_end_time, lecture.lecture_location, staff_teach_lecture.staff_id AS lectstaff,\n" +
+                                        "tutorial.tutorial_id, tutorial.tutorial_day, tutorial.tutorial_start_time, tutorial.tutorial_end_time, tutorial.tutorial_location, staff_teach_tutorial.staff_id AS tutostaff,\n" +
+                                        "lab.lab_id, lab.lab_day, lab.lab_start_time, lab.lab_start_time, lab.lab_end_time, lab.lab_location, staff_teach_lab.staff_id as labstaff\n" +
+                                        "FROM course\n" +
+                                        "INNER JOIN course_occ ON course.course_id=course_occ.course_id\n" +
+                                        "RIGHT JOIN occ ON course_occ.occ_id=occ.occ_id\n" +
+                                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                                        "INNER JOIN tutorial ON tutorial.tutorial_id=occ.tutorial_id\n" +
+                                        "INNER JOIN staff_teach_tutorial ON staff_teach_tutorial.tutorial_id=tutorial.tutorial_id\n" +
+                                        "INNER JOIN lab ON lab.lab_id=occ.lab_id\n" +
+                                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=occ.lab_id\n" +
+                                        "WHERE course.course_id='"+courseID+"'";
+        
+        try {
+            ResultSet DatabaseOccQuery = connectDB.createStatement().executeQuery(databaseOccQueryText);
+            while(DatabaseOccQuery.next()) {
+                occ.add(DatabaseOccQuery.getString("occ_name"));
+                occCapacity.add(DatabaseOccQuery.getString("occ_capacity"));
+
+                lectday.add(DatabaseOccQuery.getString("lecture_day"));
+                lectstart.add(DatabaseOccQuery.getString("lecture_start_time"));
+                lectend.add(DatabaseOccQuery.getString("lecture_end_time"));
+                lectlocation.add(DatabaseOccQuery.getString("lecture_location"));
+                lectstaffid.add(DatabaseOccQuery.getString("lectstaff"));
+
+                tutoday.add(DatabaseOccQuery.getString("tutorial_day"));
+                tutostart.add(DatabaseOccQuery.getString("tutorial_start_time"));
+                tutoend.add(DatabaseOccQuery.getString("tutorial_end_time")); 
+                tutolocation.add(DatabaseOccQuery.getString("tutorial_location"));
+                tutostaffid.add(DatabaseOccQuery.getString("tutostaff"));
+
+                labday.add(DatabaseOccQuery.getString("lab_day"));
+                labstart.add(DatabaseOccQuery.getString("lab_start_time"));
+                labend.add(DatabaseOccQuery.getString("lab_end_time")); 
+                lablocation.add(DatabaseOccQuery.getString("lab_location"));
+                labstaffid.add(DatabaseOccQuery.getString("labstaff"));
+            }     
+            
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
     }
 
     public void insertHbox(){
