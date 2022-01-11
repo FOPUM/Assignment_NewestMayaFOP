@@ -134,6 +134,9 @@ public class searchModule implements Initializable, ControlledScreen {
     private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
     private static ArrayList<String> courseIDcheck = new ArrayList<String>();
         
+    
+    
+    
     Node[] nodes = new Node[10];
     public int totalCreditHours;
     public int credithourcheck;
@@ -864,6 +867,19 @@ public class searchModule implements Initializable, ControlledScreen {
         courseNames.clear();
         vCourseNames.getChildren().clear();
         creditHour.clear();
+    }
+    
+    public void clearMemoryWhenLogout(){
+        courseIDarray.clear();
+        occurenceID.clear();
+        courseNames.clear();
+        occurenceIDcheck.clear();
+        courseIDcheck.clear();
+        creditHour.clear();
+        totalCreditHours = 0;
+        credithourcheck = 0;
+        i = 0;
+        occIDStaff.clear();
     }
     
     public String getCourseIDcheck(int i) {

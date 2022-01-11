@@ -141,11 +141,6 @@ public class controlCenter implements Initializable, ControlledScreen{
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-    public void logOut(ActionEvent event){
-        myController.setScreen(Assignment_MayaFOP.dashboardScreen); 
-    }
-    
     public void exitButton(ActionEvent event) {
         //Click on exit button to exit       
         Stage stage = (Stage) exit_button.getScene().getWindow();
@@ -189,6 +184,11 @@ public class controlCenter implements Initializable, ControlledScreen{
         register_stage.showAndWait();
         
         if (vLcontroller.pp) {
+            FXMLLoader searchloader = new FXMLLoader();
+            searchloader.setLocation(getClass().getResource("/Assignment_MayaFOP/searchModule.fxml"));
+            searchloader.load();
+            searchModule controller = searchloader.getController();
+            controller.clearMemoryWhenLogout();
             myController.setScreen(Assignment_MayaFOP.loginScreen);
             vLcontroller.setBoolean(false);
         }
