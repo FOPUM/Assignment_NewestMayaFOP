@@ -742,8 +742,36 @@ public class searchModule implements Initializable, ControlledScreen {
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
             loader.load();
             
+            String courseCategory = null;
+            String courseYear = null;
+            String courseSem = null;
+            String courseMuet = null;
+            String courseNationality = null;
+            String courseProgramme = null;
+            
+            String additionalCourseDetails = "SELECT course_category, course_year, course_sem, muet_band, nationality, programme FROM course WHERE course_id='"+courseTableView.getSelectionModel().getSelectedItem().getCourseID()+"'";
+            ResultSet queryForAdditionalCourseDetails = connectDB.createStatement().executeQuery(additionalCourseDetails);
+            while(queryForAdditionalCourseDetails.next()) {
+                courseCategory = queryForAdditionalCourseDetails.getString("course_category");
+                courseYear = queryForAdditionalCourseDetails.getString("course_year");
+                courseSem = queryForAdditionalCourseDetails.getString("course_sem");
+                courseMuet = queryForAdditionalCourseDetails.getString("muet_band");
+                courseNationality = queryForAdditionalCourseDetails.getString("nationality");
+                courseProgramme = queryForAdditionalCourseDetails.getString("programme");
+            }
+            
             ModuleController moduleController = loader.getController();
             moduleController.setCourseIdSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+            moduleController.setCourseNameSetter(courseTableView.getSelectionModel().getSelectedItem().getCourseName());
+            moduleController.setCreditHourSetter(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
+            moduleController.setCourseCategorySetter(courseCategory);
+            moduleController.setCourseYearSetter(courseYear);
+            moduleController.setCourseSemSetter(courseSem);
+            moduleController.setMuetBandSetter(courseMuet);
+            moduleController.setNationalitySetter(courseNationality);
+            moduleController.setProgrammeSetter(courseProgramme);
+            
+            
             } catch (Exception e) {
             }
             myController.showPopupStage(searchScreen, "/assignment_MayaFOP/Module.fxml");
@@ -755,18 +783,7 @@ public class searchModule implements Initializable, ControlledScreen {
 //            loader.load();
 //            ModuleController module = loader.getController();
 //            
-//            String courseCategory = null;
-//            String courseYear = null;
-//            String courseSem = null;
-//            String courseMuet = null;
-//            String courseNationality = null;
-//            String courseProgramme = null;
-//            
-//            String additionalCourseDetails = "";
-//            ResultSet queryForAdditionalCourseDetails = connectDB.createStatement().executeQuery(additionalCourseDetails);
-//            while(queryForAdditionalCourseDetails.next()) {
-//                studentBand = queryForAdditionalCourseDetails.getInt("student_muet_band");
-//            }
+            
 //
 //            module.setCourseIDTextField(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
 //            module.setCourseNameTextField(courseTableView.getSelectionModel().getSelectedItem().getCourseName());

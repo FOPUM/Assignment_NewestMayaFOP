@@ -21,175 +21,214 @@
             </DropShadow>
          </effect>
       </Rectangle>
-      <VBox layoutX="48.0" layoutY="39.0" prefHeight="70.0" prefWidth="350.0" spacing="10.0">
+      <HBox layoutX="18.0" layoutY="52.0" prefHeight="200.0" prefWidth="410.0" spacing="5.0">
          <children>
-            <HBox prefHeight="25.0" prefWidth="350.0">
+            <Pane prefHeight="170.0" prefWidth="130.0">
                <children>
-                  <Label fx:id="staffNameLabel" alignment="CENTER" prefHeight="25.0" prefWidth="381.0" styleClass="bluetext" text="Staff Name: Ang Tang Fong&#10;" textFill="WHITE">
-                     <font>
-                        <Font name="Futura Medium BT" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox prefHeight="28.0" prefWidth="350.0">
-               <children>
-                  <Label fx:id="occLabel" alignment="CENTER" prefHeight="24.0" prefWidth="172.0" styleClass="whitetextfield" text="Occurence: 1&#10;">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="staffIDLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="177.0" styleClass="whitetextfield" text="StaffID: A2222&#10;" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <Pane layoutX="22.0" layoutY="110.0" prefHeight="135.0" prefWidth="132.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="126.0" stroke="WHITE" strokeType="INSIDE" style="-fx-opacity: 0.8;" styleClass="rect" width="130.0">
-               <effect>
-                  <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
-                     <color>
-                        <Color red="0.75" green="0.7395833134651184" blue="0.7395833134651184" opacity="0.30000001192092896" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Rectangle>
-            <VBox layoutX="18.0" layoutY="16.0" prefHeight="97.0" prefWidth="96.0" spacing="6.0">
-               <children>
-                  <Label fx:id="lectIDLabel" alignment="CENTER" prefHeight="35.0" prefWidth="115.0" styleClass="bluetext" text="Lecture ID:&#10;WIX1002_L1&#10;" textFill="WHITE">
-                     <font>
-                        <Font name="Futura Medium BT" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lectDayLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="115.0" styleClass="subwhitetext" text="Thursday">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="24.0" prefWidth="175.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="185.0" stroke="WHITE" strokeType="INSIDE" style="-fx-opacity: 0.8;" styleClass="rect" width="130.0">
+                     <effect>
+                        <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.75" green="0.7395833134651184" blue="0.7395833134651184" opacity="0.30000001192092896" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Rectangle>
+                  <VBox layoutX="18.0" layoutY="16.0" prefHeight="160.0" prefWidth="96.0" spacing="6.0">
                      <children>
-                        <Label fx:id="lectStartTimeLabel" alignment="CENTER" prefHeight="24.0" prefWidth="91.0" styleClass="subwhitetext" text="9am">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
+                        <Label fx:id="lectIDLabel" alignment="CENTER" prefHeight="35.0" prefWidth="115.0" styleClass="bluetext" text="Lecture ID:&#10;WIX1002_L1&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lectDayLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="115.0" styleClass="subwhitetext" text="Thursday">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lectEndTimeLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="91.0" styleClass="subwhitetext" text="11am">
+                        <HBox prefHeight="24.0" prefWidth="175.0">
+                           <children>
+                              <Label fx:id="lectStartTimeLabel" alignment="CENTER" prefHeight="24.0" prefWidth="91.0" styleClass="subwhitetext" text="9am">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lectEndTimeLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="91.0" styleClass="subwhitetext" text="11am">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Label fx:id="lectLocationLabel" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="24.0" prefWidth="115.0" styleClass="subwhitetext" text="Thursday">
                            <font>
                               <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lectStaffNameLabel" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="24.0" prefWidth="115.0" styleClass="bluetext" text="Staff Name: Ang Tang Fong&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lectStaffIDLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" prefHeight="24.0" prefWidth="115.0" styleClass="subwhitetext" text="Staff ID: A6666">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
                            </font>
                         </Label>
                      </children>
-                  </HBox>
-                  <Label fx:id="lectLocationLabel" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="24.0" prefWidth="115.0" styleClass="subwhitetext" text="Thursday">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
+                  </VBox>
                </children>
-            </VBox>
-         </children>
-      </Pane>
-      <Pane layoutX="156.0" layoutY="110.0" prefHeight="126.0" prefWidth="130.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="126.0" stroke="WHITE" strokeType="INSIDE" style="-fx-opacity: 0.8;" styleClass="rect" width="130.0">
-               <effect>
-                  <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
-                     <color>
-                        <Color red="0.75" green="0.7395833134651184" blue="0.7395833134651184" opacity="0.30000001192092896" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Rectangle>
-            <VBox layoutX="18.0" layoutY="16.0" prefHeight="97.0" prefWidth="96.0" spacing="6.0">
+            </Pane>
+            <Pane prefHeight="170.0" prefWidth="130.0">
                <children>
-                  <Label fx:id="tutoIDLabel" alignment="CENTER" prefHeight="35.0" prefWidth="115.0" styleClass="bluetext" text="Tutorial ID:&#10;WIX1002_T1&#10;" textFill="WHITE">
-                     <font>
-                        <Font name="Futura Medium BT" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="tutoDayLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="24.0" prefWidth="140.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="185.0" stroke="WHITE" strokeType="INSIDE" style="-fx-opacity: 0.8;" styleClass="rect" width="130.0">
+                     <effect>
+                        <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.75" green="0.7395833134651184" blue="0.7395833134651184" opacity="0.30000001192092896" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Rectangle>
+                  <VBox layoutX="18.0" layoutY="16.0" prefHeight="160.0" prefWidth="96.0" spacing="6.0">
                      <children>
-                        <Label fx:id="tutoStartTimeLabel" alignment="CENTER" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="9am">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
+                        <Label fx:id="tutoIDLabel" alignment="CENTER" prefHeight="35.0" prefWidth="115.0" styleClass="bluetext" text="Tutorial ID:&#10;WIX1002_T1&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="tutoDayLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Label fx:id="tutoEndTimeLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="11am">
+                        <HBox prefHeight="24.0" prefWidth="140.0">
+                           <children>
+                              <Label fx:id="tutoStartTimeLabel" alignment="CENTER" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="9am">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="tutoEndTimeLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="11am">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Label fx:id="tutoLocationLabel" alignment="CENTER" layoutX="10.0" layoutY="51.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
                            <font>
                               <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="tutoStaffNameLabel" alignment="CENTER" prefHeight="24.0" prefWidth="115.0" styleClass="bluetext" text="Staff Name: Ang Tang Fong&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="tutoStaffIDLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" prefHeight="24.0" prefWidth="115.0" styleClass="subwhitetext" text="Staff ID: A6666">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
                            </font>
                         </Label>
                      </children>
-                  </HBox>
-                  <Label fx:id="tutoLocationLabel" alignment="CENTER" layoutX="10.0" layoutY="51.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
+                  </VBox>
                </children>
-            </VBox>
-         </children>
-      </Pane>
-      <Pane layoutX="291.0" layoutY="110.0" prefHeight="126.0" prefWidth="130.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="126.0" stroke="WHITE" strokeType="INSIDE" style="-fx-opacity: 0.8;" styleClass="rect" width="130.0">
-               <effect>
-                  <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
-                     <color>
-                        <Color red="0.75" green="0.7395833134651184" blue="0.7395833134651184" opacity="0.30000001192092896" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Rectangle>
-            <VBox layoutX="18.0" layoutY="16.0" prefHeight="97.0" prefWidth="96.0" spacing="6.0">
+            </Pane>
+            <Pane prefHeight="170.0" prefWidth="130.0">
                <children>
-                  <Label fx:id="labIDLabel" alignment="CENTER" prefHeight="35.0" prefWidth="115.0" styleClass="bluetext" text="Lab ID:&#10;WIX1002_T1&#10;" textFill="WHITE">
-                     <font>
-                        <Font name="Futura Medium BT" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labDayLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="24.0" prefWidth="140.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="185.0" stroke="WHITE" strokeType="INSIDE" style="-fx-opacity: 0.8;" styleClass="rect" width="130.0">
+                     <effect>
+                        <DropShadow height="10.0" offsetX="5.0" offsetY="5.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.75" green="0.7395833134651184" blue="0.7395833134651184" opacity="0.30000001192092896" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Rectangle>
+                  <VBox layoutX="18.0" layoutY="16.0" prefHeight="160.0" prefWidth="96.0" spacing="6.0">
                      <children>
-                        <Label fx:id="labStartTimeLabel" alignment="CENTER" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="9am">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
+                        <Label fx:id="labIDLabel" alignment="CENTER" prefHeight="35.0" prefWidth="115.0" styleClass="bluetext" text="Lab ID:&#10;WIX1002_T1&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labDayLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labEndTimeLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="11am">
+                        <HBox prefHeight="24.0" prefWidth="140.0">
+                           <children>
+                              <Label fx:id="labStartTimeLabel" alignment="CENTER" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="9am">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labEndTimeLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="11am">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Label fx:id="labLocationLabel" alignment="CENTER" layoutX="10.0" layoutY="51.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
                            <font>
                               <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labStaffNameLabel" alignment="CENTER" prefHeight="24.0" prefWidth="115.0" styleClass="bluetext" text="Staff Name: Ang Tang Fong&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labStaffIDLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" prefHeight="24.0" prefWidth="189.0" styleClass="subwhitetext" text="Staff ID: A6666">
+                           <font>
+                              <Font name="Futura Medium BT" size="9.0" />
                            </font>
                         </Label>
                      </children>
-                  </HBox>
-                  <Label fx:id="labLocationLabel" alignment="CENTER" layoutX="10.0" layoutY="51.0" prefHeight="24.0" prefWidth="172.0" styleClass="subwhitetext" text="Thursday">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
+                  </VBox>
                </children>
-            </VBox>
+            </Pane>
          </children>
-      </Pane>
+         <padding>
+            <Insets left="3.0" />
+         </padding>
+      </HBox>
+      <HBox layoutX="48.0" layoutY="24.0" prefHeight="28.0" prefWidth="350.0">
+         <children>
+            <Label fx:id="occLabel" alignment="CENTER" prefHeight="24.0" prefWidth="172.0" styleClass="whitetextfield" text="Occurence: 1&#10;">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.6315789222717285" green="0.6315789222717285" blue="0.6315789222717285" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+            <Label fx:id="capacityLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="172.0" styleClass="whitetextfield" text="Capacity : 40&#10;">
+               <effect>
+                  <DropShadow offsetX="10.0" offsetY="10.0">
+                     <color>
+                        <Color red="0.5394737124443054" green="0.5394737124443054" blue="0.5394737124443054" opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </Pane>

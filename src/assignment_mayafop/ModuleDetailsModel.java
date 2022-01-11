@@ -20,8 +20,7 @@ public class ModuleDetailsModel {
     private SimpleStringProperty lectIDLabel;
     private SimpleStringProperty lectStartTimeLabel;
     private SimpleStringProperty occLabel;
-    private SimpleStringProperty staffIDLabel;
-    private SimpleStringProperty staffNameLabel;
+    private SimpleStringProperty capacityLabel;
     private SimpleStringProperty tutoDayLabel;
     private SimpleStringProperty tutoEndTimeLabel;
     private SimpleStringProperty tutoIDLabel;
@@ -30,15 +29,26 @@ public class ModuleDetailsModel {
     private SimpleStringProperty labEndTimeLabel;
     private SimpleStringProperty labIDLabel;
     private SimpleStringProperty labStartTimeLabel;
+    private SimpleStringProperty tutoLocationLabel;
+    private SimpleStringProperty lectLocationLabel;
+    private SimpleStringProperty labLocationLabel;
+    private SimpleStringProperty lectStaffIDLabel;
+    private SimpleStringProperty lectStaffNameLabel;
+    private SimpleStringProperty tutoStaffIDLabel;
+    private SimpleStringProperty tutoStaffNameLabel;
+    private SimpleStringProperty labStaffIDLabel;
+    private SimpleStringProperty labStaffNameLabel;
+    
 
-    public ModuleDetailsModel(String lectDayLabel, String lectEndTimeLabel, String lectIDLabel, String lectStartTimeLabel, String occLabel, String staffIDLabel, String staffNameLabel, String tutoDayLabel, String tutoEndTimeLabel, String tutoIDLabel, String tutoStartTimeLabel, String labDayLabel, String labEndTimeLabel, String labIDLabel, String labStartTimeLabel) {
+    public ModuleDetailsModel(String occLabel, String capacityLabel, 
+                                String lectIDLabel, String lectDayLabel, String lectStartTimeLabel, String lectEndTimeLabel, String lectLocationLabel, String lectStaffIDLabel, String lectStaffNameLabel,
+                                String tutoIDLabel, String tutoDayLabel, String tutoStartTimeLabel, String tutoEndTimeLabel, String tutoLocationLabel, String tutoStaffIDLabel, String tutoStaffNameLabel,
+                                String labIDLabel, String labDayLabel, String labStartTimeLabel, String labEndTimeLabel, String labLocationLabel, String labStaffIDLabel, String labStaffNameLabel) {
         this.lectDayLabel = new SimpleStringProperty(lectDayLabel);
         this.lectEndTimeLabel = new SimpleStringProperty(lectEndTimeLabel);
         this.lectIDLabel = new SimpleStringProperty(lectIDLabel);
         this.lectStartTimeLabel = new SimpleStringProperty(lectStartTimeLabel);
         this.occLabel = new SimpleStringProperty(occLabel);
-        this.staffIDLabel = new SimpleStringProperty(staffIDLabel);
-        this.staffNameLabel = new SimpleStringProperty(staffNameLabel);
         this.tutoDayLabel = new SimpleStringProperty(tutoDayLabel);
         this.tutoEndTimeLabel = new SimpleStringProperty(tutoEndTimeLabel);
         this.tutoIDLabel = new SimpleStringProperty(tutoIDLabel);
@@ -47,6 +57,16 @@ public class ModuleDetailsModel {
         this.labEndTimeLabel = new SimpleStringProperty(tutoEndTimeLabel);
         this.labIDLabel = new SimpleStringProperty(tutoIDLabel);
         this.labStartTimeLabel = new SimpleStringProperty(tutoStartTimeLabel);
+        this.capacityLabel = new SimpleStringProperty(capacityLabel);
+        this.lectLocationLabel = new SimpleStringProperty(lectLocationLabel);
+        this.tutoLocationLabel = new SimpleStringProperty(tutoLocationLabel);
+        this.labLocationLabel = new SimpleStringProperty(labLocationLabel);
+        this.lectStaffIDLabel = new SimpleStringProperty(lectStaffIDLabel);
+        this.lectStaffNameLabel = new SimpleStringProperty(lectStaffNameLabel);
+        this.tutoStaffIDLabel = new SimpleStringProperty(tutoStaffIDLabel);
+        this.tutoStaffNameLabel = new SimpleStringProperty(tutoStaffNameLabel);
+        this.labStaffIDLabel = new SimpleStringProperty(labStaffIDLabel);
+        this.labStaffNameLabel = new SimpleStringProperty(labStaffNameLabel);
         
     }
 
@@ -68,14 +88,6 @@ public class ModuleDetailsModel {
 
     public String getOccLabel() {
         return occLabel.get();
-    }
-
-    public String getStaffIDLabel() {
-        return staffIDLabel.get();
-    }
-
-    public String getStaffNameLabel() {
-        return staffNameLabel.get();
     }
 
     public String getTutoDayLabel() {
@@ -108,6 +120,46 @@ public class ModuleDetailsModel {
 
     public String getLabStartTimeLabel() {
         return labStartTimeLabel.get();
+    }
+
+    public String getCapacityLabel() {
+        return capacityLabel.get();
+    }
+
+    public String getTutoLocationLabel() {
+        return tutoLocationLabel.get();
+    }
+
+    public String getLectLocationLabel() {
+        return lectLocationLabel.get();
+    }
+
+    public String getLabLocationLabel() {
+        return labLocationLabel.get();
+    }
+
+    public String getLectStaffIDLabel() {
+        return lectStaffIDLabel.get();
+    }
+
+    public String getLectStaffNameLabel() {
+        return lectStaffNameLabel.get();
+    }
+
+    public String getTutoStaffIDLabel() {
+        return tutoStaffIDLabel.get();
+    }
+
+    public String getTutoStaffNameLabel() {
+        return tutoStaffNameLabel.get();
+    }
+
+    public String getLabStaffIDLabel() {
+        return labStaffIDLabel.get();
+    }
+
+    public String getLabStaffNameLabel() {
+        return labStaffNameLabel.get();
     }
     
     

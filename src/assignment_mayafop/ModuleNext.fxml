@@ -25,7 +25,7 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <Button fx:id="confirmButton" layoutX="161.0" layoutY="558.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="181.0" text="Confirm" textFill="WHITE">
+      <Button fx:id="confirmButton" layoutX="161.0" layoutY="558.0" mnemonicParsing="false" onAction="#confirmAddCourse" prefHeight="25.0" prefWidth="181.0" text="Confirm" textFill="WHITE">
          <font>
             <Font name="Futura Medium BT" size="14.0" />
          </font>

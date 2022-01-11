@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 
 
 public class ModuleNextController implements Initializable, ControlledScreen{
-    
+    MiscFunc misc = new MiscFunc();
     int selectedNode = -1;
     
     @FXML
@@ -63,7 +63,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private String nationality;
     
     private ArrayList<String> occ = new ArrayList<String>();
-    private ArrayList<String> staffID = new ArrayList<String>();
+    private ArrayList<String> occCapacity = new ArrayList<String>();
     private ArrayList<String> lectday = new ArrayList<String>();
     private ArrayList<String> lectstart = new ArrayList<String>();
     private ArrayList<String> lectend = new ArrayList<String>();
@@ -76,6 +76,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private ArrayList<String> labstart = new ArrayList<String>();
     private ArrayList<String> labend = new ArrayList<String>();
     private ArrayList<String> lablocation = new ArrayList<String>();
+    private ArrayList<String> lectstaffid = new ArrayList<String>();
+    private ArrayList<String> tutostaffid = new ArrayList<String>();
+    private ArrayList<String> labstaffid = new ArrayList<String>();
 
     
     ScreenController myController = new ScreenController();
@@ -143,7 +146,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     System.out.println("This node is selected: " +selectedNode);
             if (selectedNode != -1) {
                     occControl.setOccTextField(occ.get(selectedNode));
-                    occControl.setStaffIDTextField(staffID.get(selectedNode));
+                    occControl.setCapacityTextField(occCapacity.get(selectedNode));
                     occControl.setLectStartTimeComboBox(lectstart.get(selectedNode));
                     occControl.setLectEndTimeComboBox(lectend.get(selectedNode));
                     occControl.setLectureDayComboBox(lectday.get(selectedNode));
@@ -156,6 +159,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occControl.setLabStartTimeComboBox(labstart.get(selectedNode));
                     occControl.setLabEndTimeComboBox(labend.get(selectedNode));
                     occControl.setLabLocationTextField(lablocation.get(selectedNode));
+                    occControl.setLectStaffIDTextField(lectstaffid.get(selectedNode));
+                    occControl.setTutoStaffIDTextField(tutostaffid.get(selectedNode));
+                    occControl.setLabStaffIDTextField(labstaffid.get(selectedNode));
                     myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
                     showing = myController.getShowing();   
                     if (occControl.isShouldAddOcc()) {
@@ -169,7 +175,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     
             }else{
                     occControl.setOccTextField("");
-                    occControl.setStaffIDTextField("");
+                    occControl.setCapacityTextField("");
                     occControl.setLectStartTimeComboBox("");
                     occControl.setLectEndTimeComboBox("");
                     occControl.setLectureDayComboBox("");
@@ -182,6 +188,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     occControl.setLabStartTimeComboBox("");
                     occControl.setLabEndTimeComboBox("");
                     occControl.setLabLocationTextField("");
+                    occControl.setLectStaffIDTextField("");
+                    occControl.setTutoStaffIDTextField("");
+                    occControl.setLabStaffIDTextField("");
                     myController.showPopupStage(moduleNextPane, "/assignment_MayaFOP/addOcc.fxml");
                     showing = myController.getShowing();   
                     if (occControl.isShouldAddOcc()) {
@@ -200,21 +209,27 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     public void editValues(int selectedNode){
             occ.set(selectedNode, occController.getOcc());
-            staffID.set(selectedNode, occController.getStaffID());
+            occCapacity.set(selectedNode, occController.getCapacity());
+            
             lectday.set(selectedNode,occController.getLectday());
             lectstart.set(selectedNode,occController.getLectstart());
             lectend.set(selectedNode,occController.getLectend());
             lectlocation.set(selectedNode,occController.getLectlocation());
+            lectstaffid.set(selectedNode, occController.getLectstaffid());
             
             tutoday.set(selectedNode,occController.getTutoday());
             tutostart.set(selectedNode,occController.getTutostart());
             tutoend.set(selectedNode,occController.getTutoend()); 
             tutolocation.set(selectedNode,occController.getTutolocation());
+            tutostaffid.set(selectedNode, occController.getTutostaffid());
             
             labday.set(selectedNode,occController.getLabday());
             labstart.set(selectedNode,occController.getLabstart());
             labend.set(selectedNode,occController.getLabend()); 
             lablocation.set(selectedNode,occController.getLablocation());
+            labstaffid.set(selectedNode, occController.getLabstaffid());
+            
+            
             nodes[selectedNode] = null;
             
             try {
@@ -223,40 +238,48 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             nodes[selectedNode] = loader.load();
             ModuleDetailsController moduleController = loader.getController();
 
-            String currentCapacity = "SELECT staff_name FROM staff where staff_id='"+ staffID.get(selectedNode) + "'";
-            String staffname = null;
         try {
-            ResultSet staffNameQuery = connectDB.createStatement().executeQuery(currentCapacity);
-            while(staffNameQuery.next()) {
-                staffname = staffNameQuery.getString("course_id");
-            }
-            
+            ResultSet lectStaffQuery = connectDB.createStatement().executeQuery("SELECT staff_name FROM staff where staff_id='"+ lectstaffid.get(selectedNode) + "'");
+            while(lectStaffQuery.next()) {
+                moduleController.lectStaffNameLabel.setText(misc.upperLetter(lectStaffQuery.getString("staff_name")));
+            }     
+            ResultSet tutoStaffQuery = connectDB.createStatement().executeQuery("SELECT staff_name FROM staff where staff_id='"+ tutostaffid.get(selectedNode) + "'");
+            while(tutoStaffQuery.next()) {
+                moduleController.tutoStaffNameLabel.setText(misc.upperLetter(tutoStaffQuery.getString("staff_name")));
+            }   
+            ResultSet labStaffQuery = connectDB.createStatement().executeQuery("SELECT staff_name FROM staff where staff_id='"+ labstaffid.get(selectedNode) + "'");
+            while(labStaffQuery.next()) {
+                moduleController.labStaffNameLabel.setText(misc.upperLetter(labStaffQuery.getString("staff_name")));
+            }   
         } catch (SQLException e) {
             Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
             
-            moduleController.staffNameLabel.setText(staffname);
+            int actOcc = selectedNode + 1;
             moduleController.occLabel.setText(occ.get(selectedNode));
-            moduleController.staffIDLabel.setText(staffID.get(selectedNode));
+            moduleController.capacityLabel.setText(occCapacity.get(selectedNode));
             
-            moduleController.lectIDLabel.setText(courseID + "_L" + selectedNode);
+            moduleController.lectIDLabel.setText(courseID + "_L" + actOcc);
             moduleController.lectDayLabel.setText(lectday.get(selectedNode));
             moduleController.lectStartTimeLabel.setText(lectstart.get(selectedNode));
             moduleController.lectEndTimeLabel.setText(lectend.get(selectedNode));
             moduleController.lectLocationLabel.setText(lectlocation.get(selectedNode));
+            moduleController.lectStaffIDLabel.setText(lectstaffid.get(selectedNode));
             
-            moduleController.tutoIDLabel.setText(courseID + "_T" + selectedNode);
+            moduleController.tutoIDLabel.setText(courseID + "_T" + actOcc);
             moduleController.tutoDayLabel.setText(tutoday.get(selectedNode));
             moduleController.tutoStartTimeLabel.setText(tutostart.get(selectedNode));
             moduleController.tutoEndTimeLabel.setText(tutoend.get(selectedNode));
             moduleController.tutoLocationLabel.setText(tutolocation.get(selectedNode));
+            moduleController.tutoStaffIDLabel.setText(tutostaffid.get(selectedNode));
             
-            moduleController.labIDLabel.setText(courseID + "_A" + selectedNode);
+            moduleController.labIDLabel.setText(courseID + "_A" + actOcc);
             moduleController.labDayLabel.setText(labday.get(selectedNode));
             moduleController.labStartTimeLabel.setText(labstart.get(selectedNode));
             moduleController.labEndTimeLabel.setText(labend.get(selectedNode));
             moduleController.labLocationLabel.setText(lablocation.get(selectedNode));
+            moduleController.labStaffIDLabel.setText(labstaffid.get(selectedNode));
             
             final int h = selectedNode;
             
@@ -318,21 +341,27 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     public void getValues(){
         
             occ.add(occController.getOcc());
-            staffID.add(occController.getStaffID());
+            occCapacity.add(occController.getCapacity());
+            
             lectday.add(occController.getLectday());
             lectstart.add(occController.getLectstart());
             lectend.add(occController.getLectend());
             lectlocation.add(occController.getLectlocation());
+            lectstaffid.add(occController.getLectstaffid());
             
             tutoday.add(occController.getTutoday());
             tutostart.add(occController.getTutostart());
             tutoend.add(occController.getTutoend()); 
             tutolocation.add(occController.getTutolocation());
+            tutostaffid.add(occController.getTutostaffid());
             
             labday.add(occController.getLabday());
             labstart.add(occController.getLabstart());
             labend.add(occController.getLabend()); 
             lablocation.add(occController.getLablocation());
+            labstaffid.add(occController.getLabstaffid());
+            
+            
 
     }
 
@@ -343,27 +372,51 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             nodes[i] = loader.load();
             ModuleDetailsController moduleController = loader.getController();
             
-            moduleController.staffNameLabel.setText("No such teacher");
-            moduleController.occLabel.setText(occ.get(i));
-            moduleController.staffIDLabel.setText(staffID.get(i));
+//            String staffNameQueryText = "SELECT staff_name FROM staff where staff_id='"+ staffID.get(i) + "'";
+        try {
+            ResultSet lectStaffQuery = connectDB.createStatement().executeQuery("SELECT staff_name FROM staff where staff_id='"+ lectstaffid.get(i) + "'");
+            while(lectStaffQuery.next()) {
+                moduleController.lectStaffNameLabel.setText(misc.upperLetter(lectStaffQuery.getString("staff_name")));
+            }     
+            ResultSet tutoStaffQuery = connectDB.createStatement().executeQuery("SELECT staff_name FROM staff where staff_id='"+ tutostaffid.get(i) + "'");
+            while(tutoStaffQuery.next()) {
+                moduleController.tutoStaffNameLabel.setText(misc.upperLetter(tutoStaffQuery.getString("staff_name")));
+            }   
+            ResultSet labStaffQuery = connectDB.createStatement().executeQuery("SELECT staff_name FROM staff where staff_id='"+ labstaffid.get(i) + "'");
+            while(labStaffQuery.next()) {
+                moduleController.labStaffNameLabel.setText(misc.upperLetter(labStaffQuery.getString("staff_name")));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+        }
+            int actOcc = i + 1;
             
-            moduleController.lectIDLabel.setText(courseID + "_L" + i);
+            moduleController.occLabel.setText(occ.get(i));
+            moduleController.capacityLabel.setText(occCapacity.get(i));
+            
+            moduleController.lectIDLabel.setText(courseID + "_L" + actOcc);
             moduleController.lectDayLabel.setText(lectday.get(i));
             moduleController.lectStartTimeLabel.setText(lectstart.get(i));
             moduleController.lectEndTimeLabel.setText(lectend.get(i));
             moduleController.lectLocationLabel.setText(lectlocation.get(i));
+            moduleController.lectStaffIDLabel.setText(lectstaffid.get(i));
             
-            moduleController.tutoIDLabel.setText(courseID + "_T" + i);
+            moduleController.tutoIDLabel.setText(courseID + "_T" + actOcc);
             moduleController.tutoDayLabel.setText(tutoday.get(i));
             moduleController.tutoStartTimeLabel.setText(tutostart.get(i));
             moduleController.tutoEndTimeLabel.setText(tutoend.get(i));
             moduleController.tutoLocationLabel.setText(tutolocation.get(i));
+            moduleController.tutoStaffIDLabel.setText(lectstaffid.get(i));
             
-            moduleController.labIDLabel.setText(courseID + "_A" + i);
+            moduleController.labIDLabel.setText(courseID + "_A" + actOcc);
             moduleController.labDayLabel.setText(labday.get(i));
             moduleController.labStartTimeLabel.setText(labstart.get(i));
             moduleController.labEndTimeLabel.setText(labend.get(i));
             moduleController.labLocationLabel.setText(lablocation.get(i));
+            moduleController.labStaffIDLabel.setText(lectstaffid.get(i));
+            
+            
             
             final int h = i;
             
@@ -410,22 +463,25 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     public void deleteOcc(){
         occ.remove(selectedNode);
-        staffID.remove(selectedNode);
+        occCapacity.remove(selectedNode);
         
         lectday.remove(selectedNode);
         lectstart.remove(selectedNode);
         lectend.remove(selectedNode);
         lectlocation.remove(selectedNode);
+        lectstaffid.remove(selectedNode);
         
         tutoday.remove(selectedNode);
         tutostart.remove(selectedNode);
         tutoend.remove(selectedNode);
         tutolocation.remove(selectedNode);
+        tutostaffid.remove(selectedNode);
         
         labday.remove(selectedNode);
         labstart.remove(selectedNode);
         labend.remove(selectedNode);
         lablocation.remove(selectedNode);
+        labstaffid.remove(selectedNode);
         
         vModuleContainer.getChildren().remove(selectedNode);
         System.out.println("Delete success bruh");
@@ -477,54 +533,61 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     }
     
     public void getPreviousPageValues(){
-        ModuleController previousController = new ModuleController();
-        courseID = previousController.getCourseID().toUpperCase();
-        coursename = previousController.getCoursename().toUpperCase();
-        credithour = Integer.parseInt(previousController.getCredithour());
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/Module.fxml"));
+            loader.load();
+            ModuleController previousController = loader.getController();
+            
+            courseID = previousController.getCourseIdSetter().toUpperCase();
+            coursename = previousController.getCourseNameSetter().toUpperCase();
+            credithour = Integer.parseInt(previousController.getCreditHourSetter());
+
+            if(previousController.getCourseCategorySetter().equals("University Course")){
+                coursecategory = "UC";
+            }else if(previousController.getCourseCategorySetter().equals("KELF")){
+                coursecategory = "KELF";
+            }else if(previousController.getCourseCategorySetter().equals("Programme Core Course")){
+                coursecategory = "PCC";
+            }else if(previousController.getCourseCategorySetter().equals("Faculty Core Course")){
+                coursecategory = "FCC";
+            }else if(previousController.getCourseCategorySetter().equals("Faculty Elective Course")){
+                coursecategory = "FEC";
+            }else if(previousController.getCourseCategorySetter().equals("Specialisation Elective Course")){
+                coursecategory = "SEC";
+            }
+
+            courseyear = previousController.getCourseYearSetter();
+            coursesem = previousController.getCourseSemSetter();    
+            muetband = previousController.getMuetBandSetter();
+            nationality = previousController.getNationalitySetter().toUpperCase();
+
+            if(previousController.getProgrammeSetter().equals("Software Engineer")){
+                programme = "SE";
+            }else if(previousController.getProgrammeSetter().equals("Data Science")){
+                programme = "DS";
+            }else if(previousController.getProgrammeSetter().equals("Artificial Intelligence")){
+                programme = "AI";
+            }else if(previousController.getProgrammeSetter().equals("Computer System and Networking")){
+                programme = "CSN";
+            }else if(previousController.getProgrammeSetter().equals("Information System")){
+                programme = "IS";
+            }else if(previousController.getProgrammeSetter().equals("Multimedia")){
+                programme = "MM";
+            }else if(previousController.getProgrammeSetter().equals("ALL")){
+                programme = "ALL";
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+        }   
         
-        if(previousController.getCoursecategory().equals("University Course")){
-            coursecategory = "UC";
-        }else if(previousController.getCoursecategory().equals("KELF")){
-            coursecategory = "KELF";
-        }else if(previousController.getCoursecategory().equals("Programme Core Course")){
-            coursecategory = "PCC";
-        }else if(previousController.getCoursecategory().equals("Faculty Core Course")){
-            coursecategory = "FCC";
-        }else if(previousController.getCoursecategory().equals("Faculty Elective Course")){
-            coursecategory = "FEC";
-        }else if(previousController.getCoursecategory().equals("Specialisation Elective Course")){
-            coursecategory = "SEC";
-        }
-
-        courseyear = previousController.getCourseyear();
-        coursesem = previousController.getCoursesem();    
-        muetband = previousController.getMuetband();
-        nationality = previousController.getNationality().toUpperCase();
-
-        if(previousController.getProgramme().equals("Software Engineer")){
-            programme = "SE";
-        }else if(previousController.getProgramme().equals("Data Science")){
-            programme = "DS";
-        }else if(previousController.getProgramme().equals("Artificial Intelligence")){
-            programme = "AI";
-        }else if(previousController.getProgramme().equals("Computer System and Networking")){
-            programme = "CSN";
-        }else if(previousController.getProgramme().equals("Information System")){
-            programme = "IS";
-        }else if(previousController.getProgramme().equals("Multimedia")){
-            programme = "MM";
-        }else if(previousController.getProgramme().equals("ALL")){
-            programme = "ALL";
-        }
     }
     
-        
-    //Not finish yet
+    //Add new course
     public void confirmAddCourse(ActionEvent event){
         getPreviousPageValues();
         try {
             PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
-            
             statement.setString(1,courseID);
             statement.setString(2,coursename);
             statement.setInt(3,credithour);
@@ -536,7 +599,98 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             statement.setString(9,programme);
             statement.executeUpdate();
             
+            for (int j = 0; j < occ.size(); j++) {
+                int actOcc = Integer.parseInt(occ.get(j)) + 1;
+                String lectID = courseID + "_L" + actOcc;
+                String tutoID = courseID + "_T" + actOcc;
+                String labID = courseID + "_A" + actOcc;
+                   
+                if(lectday.size()>0){
+                    PreparedStatement lectstatement = connectDB.prepareStatement("INSERT INTO lecture VALUES (?,?,?,?,?,?)");
+                    lectstatement.setString(1,lectID);
+                    lectstatement.setString(2,lectday.get(j).toUpperCase());
+                    lectstatement.setString(3,lectstart.get(j));
+                    lectstatement.setString(4,lectend.get(j));
+                    lectstatement.setString(5,coursename.toUpperCase() + " LECTURE");
+                    lectstatement.setString(6,lectlocation.get(j));
+                    lectstatement.executeUpdate();
+                }
+                
+                if(tutoday.size() > 0){
+                    PreparedStatement tutostatement = connectDB.prepareStatement("INSERT INTO tutorial VALUES (?,?,?,?,?,?)");
+                    tutostatement.setString(1,tutoID);
+                    tutostatement.setString(2,tutoday.get(j).toUpperCase());
+                    tutostatement.setString(3,tutostart.get(j));
+                    tutostatement.setString(4,tutoend.get(j));
+                    tutostatement.setString(5,coursename.toUpperCase() + " TUTORIAL");
+                    tutostatement.setString(6,tutolocation.get(j));
+                    tutostatement.executeUpdate();
+                }
+                
+                if(labday.size() > 0){
+                    PreparedStatement labstatement = connectDB.prepareStatement("INSERT INTO lab VALUES (?,?,?,?,?,?)");
+                    labstatement.setString(1,labID);
+                    labstatement.setString(2,labday.get(j).toUpperCase());
+                    labstatement.setString(3,labstart.get(j));
+                    labstatement.setString(4,labend.get(j));
+                    labstatement.setString(5,coursename.toUpperCase() + " LAB");
+                    labstatement.setString(6,lablocation.get(j));
+                    labstatement.executeUpdate();
+                }
+                
+                
+                PreparedStatement occStatement = connectDB.prepareStatement("INSERT INTO occ VALUES (?,?,?,?,?,?)");
+                occStatement.setString(1,courseID + "_OCC" + actOcc);
+                occStatement.setString(2,"OCC" + actOcc);
+                if(lectID != null){
+                    occStatement.setString(3,lectID);
+                }else{
+                    occStatement.setString(3,"NONE");
+                }
+                if(tutoID != null){
+                    occStatement.setString(4,tutoID);
+                }else{
+                    occStatement.setString(4,"NONE");
+                }
+                if(labID != null){
+                    occStatement.setString(5,labID);
+                }else{
+                    occStatement.setString(5,"NONE");
+                }
+                occStatement.setString(6,occCapacity.get(j));
+                occStatement.executeUpdate();
+                
+                if(lectID != null){
+                    PreparedStatement staffTeachLectureStatement = connectDB.prepareStatement("INSERT INTO staff_teach_lecture VALUES (?,?)");
+                    staffTeachLectureStatement.setString(1, lectstaffid.get(j));
+                    staffTeachLectureStatement.setString(2, lectID);
+                    staffTeachLectureStatement.executeUpdate();
+                }
+                
+                if(tutoID != null){
+                    PreparedStatement staffTeachTutorialStatement = connectDB.prepareStatement("INSERT INTO staff_teach_tutorial VALUES (?,?)");
+                    staffTeachTutorialStatement.setString(1, tutostaffid.get(j));
+                    staffTeachTutorialStatement.setString(2, tutoID);
+                    staffTeachTutorialStatement.executeUpdate();
+                }
+                
+                if(labID != null){
+                    PreparedStatement staffTeachLabStatement = connectDB.prepareStatement("INSERT INTO staff_teach_lab VALUES (?,?)");
+                    staffTeachLabStatement.setString(1, labstaffid.get(j));
+                    staffTeachLabStatement.setString(2, labID);
+                    staffTeachLabStatement.executeUpdate();
+                }
+                
+                PreparedStatement courseOccStatement = connectDB.prepareStatement("INSERT INTO course_occ VALUES (?,?)");
+                courseOccStatement.setString(1, courseID);
+                courseOccStatement.setString(2, courseID + "_OCC" + actOcc);
+                courseOccStatement.executeUpdate();
+
+            }
             
+            System.out.println("Successfully added!");
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            stage.close();
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -546,10 +700,6 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     public ArrayList<String> getOcc() {
         return occ;
-    }
-
-    public ArrayList<String> getStaffID() {
-        return staffID;
     }
 
     public ArrayList<String> getLectday() {

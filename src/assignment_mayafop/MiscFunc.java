@@ -84,7 +84,7 @@ public class MiscFunc {
         return b;
     }
     
-    public String formatToFullProgramme(String name){
+    public String formatToShortProgramme(String name){
         String programme = null;
         if(name.equals("Software Engineer")){
             programme = "SE";
@@ -105,7 +105,7 @@ public class MiscFunc {
         return programme;
     }
     
-    public String formatToShortProgramme(String name){
+    public String formatToFullProgramme(String name){
         String programme = null;
         if(name.equals("SE")){
             programme = "Software Engineer";
@@ -121,8 +121,31 @@ public class MiscFunc {
             programme = "Multimedia";
         }else if(name.equals("ALL")){
             programme = "ALL";
+        }else{
+            programme = "Error";
         }
-        
         return programme;
+    }
+
+    public String formatToFullCategory(String name){
+        String category = null;
+        if(name.equals("UC")){
+            category = "University Course";
+        }else if(name.equals("KELF")){
+            category = "KELF";
+        }else if(name.equals("PCC")){
+            category = "Programme Core Course";
+        }else if(name.equals("FCC")){
+            category = "Faculty Core Course";
+        }else if(name.equals("FEC")){
+            category = "Faculty Elective Course";
+        }else if(name.equals("SEC")){
+            category = "Specialisation Elective Course";
+        }else if(name.equals("ALL")){
+            category = "ALL";
+        }else{
+            category = "Error";
+        }
+        return category;
     }
 }

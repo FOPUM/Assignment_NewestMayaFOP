@@ -30,17 +30,8 @@ import javafx.stage.Stage;
 public class ModuleController implements Initializable, ControlledScreen{
     ScreenController myController = new ScreenController();
     animation Animation;
-    
-    private static String courseIdSetter;
+    MiscFunc misc = new MiscFunc();
 
-    public  String getCourseIdSetter() {
-        return courseIdSetter;
-    }
-
-    public void setCourseIdSetter(String courseIdSetter) {
-        ModuleController.courseIdSetter = courseIdSetter;
-    }
-    
     @FXML
     private ComboBox<String> MuetBandComboBox;
 
@@ -92,11 +83,19 @@ public class ModuleController implements Initializable, ControlledScreen{
     private String courseyear;
     private String nationality;
 
+    private static String courseIdSetter;
+    private static String courseNameSetter;
+    private static String creditHourSetter;
+    private static String courseCategorySetter;
+    private static String CourseYearSetter;
+    private static String courseSemSetter;
+    private static String muetBandSetter;
+    private static String nationalitySetter;
+    private static String programmeSetter;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        courseIDTextField.setText(courseIdSetter);
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(modulePane);
@@ -107,22 +106,35 @@ public class ModuleController implements Initializable, ControlledScreen{
         ObservableList<String> year = FXCollections.observableArrayList("ALL", "1","2");
         ObservableList<String> sem = FXCollections.observableArrayList("ALL", "1", "2");
         ObservableList<String> muet = FXCollections.observableArrayList("ALL", "1", "2", "3", "4", "5", "6");
-        ObservableList<String> nationality = FXCollections.observableArrayList("ALL", "Malaysian", "Foreigner");
-        ObservableList<String> programme = FXCollections.observableArrayList("ALL", "Software Engineer", "Artificial Intelligence", "Data Science", "Computer System and Networking", "Information System", "Multimedia");
+        ObservableList<String> nationalityList = FXCollections.observableArrayList("ALL", "Malaysian", "Foreigner");
+        ObservableList<String> programmeList = FXCollections.observableArrayList("ALL", "Software Engineer", "Artificial Intelligence", "Data Science", "Computer System and Networking", "Information System", "Multimedia");
         
         MuetBandComboBox.setItems(muet);
-        ProgrammeComboBox.setItems(programme);
+        ProgrammeComboBox.setItems(programmeList);
         courseCategoryComboBox.setItems(category);
         courseSemComboBox.setItems(sem);
         courseYearComboBox.setItems(year);
-        nationalityComboBox.setItems(nationality);
+        nationalityComboBox.setItems(nationalityList);
         
-        MuetBandComboBox.getSelectionModel().selectFirst();
-        ProgrammeComboBox.getSelectionModel().selectFirst();
-        courseCategoryComboBox.getSelectionModel().selectFirst();
-        courseSemComboBox.getSelectionModel().selectFirst();
-        courseYearComboBox.getSelectionModel().selectFirst();
-        nationalityComboBox.getSelectionModel().selectFirst();
+//        MuetBandComboBox.getSelectionModel().selectFirst();
+//        ProgrammeComboBox.getSelectionModel().selectFirst();
+//        courseCategoryComboBox.getSelectionModel().selectFirst();
+//        courseSemComboBox.getSelectionModel().selectFirst();
+//        courseYearComboBox.getSelectionModel().selectFirst();
+//        nationalityComboBox.getSelectionModel().selectFirst();
+        
+//        int num = formatToFullCategory(courseCategorySetter);
+//        System.out.println(num);
+        
+        //whats wrong with combobox
+//        courseIDTextField.setText(courseIdSetter);
+//        courseNameTextField.setText(courseNameSetter);
+//        creditHourTextField.setText(creditHourSetter);
+//        courseYearComboBox.setValue(CourseYearSetter);
+//        courseSemComboBox.setValue(courseSemSetter);
+//        MuetBandComboBox.setValue(muetBandSetter);
+//        nationalityComboBox.setValue(nationalitySetter);
+//        ProgrammeComboBox.setValue(programmeSetter);
     }
 
     @Override
@@ -160,7 +172,7 @@ public class ModuleController implements Initializable, ControlledScreen{
             stage.setScene(scene);
             stage.show();
         }else{
-            errorLabel.setText("Please fill in all the information");
+//            errorLabel.setText("Please fill in all the information");
         }
         
     }
@@ -236,6 +248,95 @@ public class ModuleController implements Initializable, ControlledScreen{
 
     public void setNationalityComboBox(String a) {
         nationalityComboBox.setId(a);
+    }
+    
+    
+    public String getCourseIdSetter() {
+        return ModuleController.courseIdSetter;
+    }
+
+    public void setCourseIdSetter(String courseIdSetter) {
+        ModuleController.courseIdSetter = courseIdSetter;
+    }
+
+    public String getCourseNameSetter() {
+        return ModuleController.courseNameSetter;
+    }
+
+    public void setCourseNameSetter(String courseNameSetter) {
+        ModuleController.courseNameSetter = courseNameSetter;
+    }
+
+    public String getCreditHourSetter() {
+        return ModuleController.creditHourSetter;
+    }
+
+    public void setCreditHourSetter(String creditHourSetter) {
+        ModuleController.creditHourSetter = creditHourSetter;
+    }
+
+    public String getCourseCategorySetter() {
+        return ModuleController.courseCategorySetter;
+    }
+
+    public void setCourseCategorySetter(String courseCategorySetter) {
+        ModuleController.courseCategorySetter = courseCategorySetter;
+    }
+
+    public String getCourseYearSetter() {
+        return ModuleController.CourseYearSetter;
+    }
+
+    public void setCourseYearSetter(String CourseYearSetter) {
+        ModuleController.CourseYearSetter = CourseYearSetter;
+    }
+
+    public String getCourseSemSetter() {
+        return ModuleController.courseSemSetter;
+    }
+
+    public void setCourseSemSetter(String courseSemSetter) {
+        ModuleController.courseSemSetter = courseSemSetter;
+    }
+
+    public String getMuetBandSetter() {
+        return ModuleController.muetBandSetter;
+    }
+
+    public void setMuetBandSetter(String muetBandSetter) {
+        ModuleController.muetBandSetter = muetBandSetter;
+    }
+
+    public String getNationalitySetter() {
+        return ModuleController.nationalitySetter;
+    }
+
+    public void setNationalitySetter(String nationalitySetter) {
+        ModuleController.nationalitySetter = nationalitySetter;
+    }
+
+    public String getProgrammeSetter() {
+        return ModuleController.programmeSetter;
+    }
+
+    public void setProgrammeSetter(String programmeSetter) {
+        ModuleController.programmeSetter = programmeSetter;
+    }
+    
+    public int formatToFullCategory(String name){
+        if(name.equals("UC")){
+            return 0;
+        }else if(name.equals("KELF")){
+            return 1;
+        }else if(name.equals("PCC")){
+            return 2;
+        }else if(name.equals("FCC")){
+            return 3;
+        }else if(name.equals("FEC")){
+            return 4;
+        }else if(name.equals("SEC")){
+            return 5;
+        }return 0;
     }
     
 }

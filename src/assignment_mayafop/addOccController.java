@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 public class addOccController implements Initializable, ControlledScreen {
     
     private static String occSetter;
-    private static String staffIdSetter;
+    private static String capacitySetter;
     private static String LectStartTimeSetter;
     private static String LectEndTimeSetter;
     private static String LectDaySetter;
@@ -42,6 +42,9 @@ public class addOccController implements Initializable, ControlledScreen {
     private static String LectLocationSetter;
     private static String tutorLocationSetter;
     private static String labLocationSetter;
+    private static String LectStaffIDSetter;
+    private static String TutoStaffIDSetter;
+    private static String LabStaffIDSetter;
     
     @FXML
     private Button back_button;
@@ -62,7 +65,7 @@ public class addOccController implements Initializable, ControlledScreen {
     @FXML
     private TextField occTextField;
     @FXML
-    private TextField staffIDTextField;
+    private TextField capacityTextField;
     @FXML
     private ComboBox<String> tutoDayComboBox;
     @FXML
@@ -81,6 +84,12 @@ public class addOccController implements Initializable, ControlledScreen {
     private TextField tutoLocationTextField;
     @FXML
     private TextField labLocationTextField;
+    @FXML
+    private TextField lectStaffIDTextField;
+    @FXML
+    private TextField tutoStaffIDTextField;
+    @FXML
+    private TextField labStaffIDTextField;
     
     @FXML
     private AnchorPane occPane;
@@ -121,10 +130,14 @@ public class addOccController implements Initializable, ControlledScreen {
         lectEndTimeComboBox.setValue(LectEndTimeSetter);
         lectureDayComboBox.setValue(LectDaySetter);
         occTextField.setText(occSetter);
-        staffIDTextField.setText(staffIdSetter);
         tutoDayComboBox.setValue(TutorDaySetter);
         tutoStartTimeComboBox.setValue(TutorStartTimeSetter);
         tutoEndTimeComboBox.setValue(TutorEndTimeSetter);
+        capacityTextField.setText(capacitySetter);
+        lectStaffIDTextField.setText(LectStaffIDSetter);
+        tutoStaffIDTextField.setText(TutoStaffIDSetter);
+        labStaffIDTextField.setText(LabStaffIDSetter);
+        
         
         
         Animation = new animation();
@@ -183,7 +196,7 @@ public class addOccController implements Initializable, ControlledScreen {
     }
     
     private static String occ;
-    private static String staffID;
+    private static String capacity;
     private static String lectday;
     private static String lectstart;
     private static String lectend;
@@ -196,34 +209,40 @@ public class addOccController implements Initializable, ControlledScreen {
     private static String labstart;
     private static String labend;
     private static String lablocation;
+    private static String lectstaffid;
+    private static String tutostaffid;
+    private static String labstaffid;
     
     
     public void getValues(){
         occ = occTextField.getText();
-        staffID = staffIDTextField.getText();
+        capacity = capacityTextField.getText();
         
         lectday = lectureDayComboBox.getValue();
         lectstart = lectStartTimeComboBox.getValue();
         lectend = lectEndTimeComboBox.getValue();
         lectlocation = lectLocationTextField.getText();
+        lectstaffid = lectStaffIDTextField.getText();
         
         tutoday = tutoDayComboBox.getValue();
         tutostart = tutoStartTimeComboBox.getValue();
         tutoend = tutoEndTimeComboBox.getValue();
         tutolocation = tutoLocationTextField.getText();
+        tutostaffid = tutoStaffIDTextField.getText();
         
         labday = labDayComboBox.getValue();
         labstart = labStartTimeComboBox.getValue();
         labend = labEndTimeComboBox.getValue();
         lablocation = labLocationTextField.getText();
+        labstaffid = labStaffIDTextField.getText();
     }
 
     public String getOcc() {
         return occ;
     }
 
-    public String getStaffID() {
-        return staffID;
+    public String getCapacity() {
+        return capacity;
     }
 
     public String getLectday() {
@@ -273,6 +292,19 @@ public class addOccController implements Initializable, ControlledScreen {
     public static String getLablocation() {
         return lablocation;
     }
+
+    public static String getLectstaffid() {
+        return lectstaffid;
+    }
+
+    public static String getTutostaffid() {
+        return tutostaffid;
+    }
+
+    public static String getLabstaffid() {
+        return labstaffid;
+    }
+    
     
     public void setLectStartTimeComboBox(String a) {
         LectStartTimeSetter = a;
@@ -282,17 +314,12 @@ public class addOccController implements Initializable, ControlledScreen {
         LectEndTimeSetter = a;
     }
 
-
     public void setLectureDayComboBox(String a) {
         LectDaySetter = a;
     }
 
     public void setOccTextField(String a) {
         occSetter = a;
-    }
-
-    public void setStaffIDTextField(String a) {
-        staffIdSetter = a;
     }
 
     public void setTutoDayComboBox(String a) {
@@ -309,12 +336,10 @@ public class addOccController implements Initializable, ControlledScreen {
 
     public void setLabDayComboBox(String a) {
         LabDaySetter = a;
-        
     }
 
     public void setLabEndTimeComboBox(String a) {
-        LabEndTimeSetter = a;
-        
+        LabEndTimeSetter = a; 
     }
 
     public void setLabStartTimeComboBox(String a) {
@@ -332,7 +357,23 @@ public class addOccController implements Initializable, ControlledScreen {
     public void setLabLocationTextField(String a) {
         labLocationSetter = a;
     }
-    
+
+    public void setCapacityTextField(String a) {
+        capacitySetter = a;
+    }
+
+    public void setLectStaffIDTextField(String a) {
+        LectStaffIDSetter = a;
+    }
+
+    public void setTutoStaffIDTextField(String a) {
+        TutoStaffIDSetter = a;
+    }
+
+    public void setLabStaffIDTextField(String a) {
+        LabStaffIDSetter = a;
+    }
+
     public boolean isShouldAddOcc() {
         return shouldAddOcc;
     }

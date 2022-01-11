@@ -48,10 +48,7 @@ public class ModuleDetailsController implements Initializable{
 
     @FXML
     Label occLabel;
-
-    @FXML
-    Label staffIDLabel;
-
+    
     @FXML
     Label staffNameLabel;
 
@@ -70,6 +67,26 @@ public class ModuleDetailsController implements Initializable{
     @FXML
     Label tutoStartTimeLabel;
     
+    @FXML
+    Label capacityLabel;
+    
+    @FXML
+    Label lectStaffNameLabel;
+
+    @FXML
+    Label lectStaffIDLabel;
+    
+    @FXML
+    Label tutoStaffNameLabel;
+
+    @FXML
+    Label tutoStaffIDLabel;
+
+    @FXML
+    Label labStaffNameLabel;
+    
+    @FXML
+    Label labStaffIDLabel;
     
     
     @Override
