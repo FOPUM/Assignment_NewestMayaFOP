@@ -73,7 +73,7 @@ public class staffListPopUpController implements Initializable, ControlledScreen
     private static ArrayList<String> cid = new ArrayList<String>();
     private static ArrayList<String> cname = new ArrayList<String>();
     private static ArrayList<String> admin = new ArrayList<String>();
-    List<staffListTextModel> fullStaffDetails = new ArrayList<>();
+    List<staffListPopUpTextModel> fullStaffDetails = new ArrayList<>();
     
     public void getStaffs(){
         id.clear();
@@ -110,7 +110,7 @@ public class staffListPopUpController implements Initializable, ControlledScreen
         try {
             fullStaffDetails.clear();
             for (int j = 0; j < id.size(); j++) {
-                fullStaffDetails.add(new staffListTextModel(id.get(j),name.get(j), mail.get(j), cid.get(j),cname.get(j), admin.get(j)));
+                fullStaffDetails.add(new staffListPopUpTextModel(id.get(j),name.get(j), mail.get(j), cid.get(j),cname.get(j), admin.get(j)));
             }
             Node[] nodes = new Node[fullStaffDetails.size()];
 
@@ -119,7 +119,7 @@ public class staffListPopUpController implements Initializable, ControlledScreen
                 loader.setLocation(getClass().getResource("/Assignment_MayaFOP/staffListPopUpText.fxml"));
                 nodes[j] = loader.load();
                 
-                staffListTextController staff = loader.getController();
+                staffListPopUpTextController staff = loader.getController();
                 //customise content
                 staff.setContentInfo( fullStaffDetails.get(j).getStaffIdLabel(), fullStaffDetails.get(j).getStaffNameLabel(), fullStaffDetails.get(j).getUmMailLabel(),
                                         fullStaffDetails.get(j).getCourseIdLabel(), fullStaffDetails.get(j).getCourseNameIdLabel(), fullStaffDetails.get(j).getAdminLabel());               

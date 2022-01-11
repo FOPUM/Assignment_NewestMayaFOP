@@ -25,15 +25,6 @@ public class staffListTextController implements Initializable{
     @FXML
     private Label umMailLabel;
     
-    @FXML
-    private Label courseIdLabel;
-
-    @FXML
-    private Label courseNameLabel;
-
-    @FXML
-    private Label adminLabel;
-    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         
@@ -45,18 +36,5 @@ public class staffListTextController implements Initializable{
         umMailLabel.setText(ummail);
     }
     
-    public void setContentInfo(String id, String staffname, String ummail, String courseid, String coursename, String admin){
-        staffIdLabel.setText(id);
-        staffNameLabel.setText(misc.upperLetter(staffname));
-        umMailLabel.setText(ummail);
-        courseIdLabel.setText(courseid);
-        courseNameLabel.setText(misc.upperLetter(coursename));
-        if(admin != null){
-            adminLabel.setText(admin);
-        }else{
-            adminLabel.setText("-");
-        }
-        
-        
-    }
+    
 }
