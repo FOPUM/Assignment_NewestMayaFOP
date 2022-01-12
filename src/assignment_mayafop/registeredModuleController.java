@@ -4,8 +4,11 @@
  */
 package assignment_mayafop;
 
+import static assignment_mayafop.searchModule.coursesModel;
+import static assignment_mayafop.searchModule.creditHour;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ import javafx.stage.Stage;
  * @author Ming
  */
 public class registeredModuleController implements Initializable, ControlledScreen{
-    ScreenController myController;
+    ScreenController myController = new ScreenController();
     animation Animation;
     login_controller loginControl = new login_controller();
     MiscFunc misc = new MiscFunc();
@@ -130,6 +133,8 @@ public class registeredModuleController implements Initializable, ControlledScre
         }
     }
     
+    static boolean confirmedDrop = false;
+    boolean showing;
     public void insertModuleDetails(){
         try {
             moduleDetails.clear();
@@ -156,18 +161,28 @@ public class registeredModuleController implements Initializable, ControlledScre
                         moduleDetails.get(j).getOccLabel(),
                         moduleDetails.get(j).getStatusLabel());               
                     
-//                nodes[h].setOnMouseEntered(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: #b4baca");
-//                });
-//                nodes[h].setOnMouseExited(evt -> {
-//                    //add effect
-//                    nodes[h].setStyle("-fx-background-color: transparent");
-//                });
-//                nodes[h].setOnMousePressed(evt -> {
-//                    //add effect
-//                });
+                nodes[h].setOnMouseEntered(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #b4baca");
+                });
+                nodes[h].setOnMouseExited(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: transparent");
+                });
+                nodes[h].setOnMousePressed(evt -> {
+                    //add effect
+                    if (!showing) {
+                        myController.showPopupStage(registeredModuleScreen, "/assignment_MayaFOP/dropModule.fxml");
+                        showing = myController.getShowing();   
+                    }
+                    System.out.println(confirmedDrop);
+                    if(confirmedDrop){
+                        vContainersPopUpRegisteredModule.getChildren().remove(nodes[h]);
+                        dropModule(h);
+                        
+                    }
 
+                });
                 vContainersPopUpRegisteredModule.getChildren().add(nodes[j]);
             }
           
@@ -181,4 +196,26 @@ public class registeredModuleController implements Initializable, ControlledScre
             }
         }
     }
+    
+    public void dropModule(int i){
+        
+        try {
+            PreparedStatement statement = connectDB.prepareStatement("DELETE FROM student_take_course WHERE course_id=? AND matric_num=?");
+            statement.setString(1,courseCode.get(i));
+            statement.setString(2,matric_num);
+            statement.executeUpdate();
+            System.out.println("Successfully drop " + courseCode.get(i));
+        } catch (SQLException ex) {
+            Logger.getLogger(registeredModuleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    }
+
+    public void setConfirmedDrop(boolean confirmedDrop) {
+        this.confirmedDrop = confirmedDrop;
+    }
+    
+    
+    
+    
 }
