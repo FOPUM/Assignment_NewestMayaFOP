@@ -73,15 +73,15 @@ public class ModuleController implements Initializable, ControlledScreen{
     
     boolean upScreenStatus = false;
     
-    private String courseID;
-    private String coursename;
-    private String credithour;
-    private String muetband;
-    private String programme;
-    private String coursecategory;
-    private String coursesem;
-    private String courseyear;
-    private String nationality;
+    private static String courseID;
+    private static String coursename;
+    private static String credithour;
+    private static String muetband;
+    private static String programme;
+    private static String coursecategory;
+    private static String coursesem;
+    private static String courseyear;
+    private static String nationality;
 
     private static String courseIdSetter;
     private static String courseNameSetter;
@@ -188,7 +188,7 @@ public class ModuleController implements Initializable, ControlledScreen{
         
     }
     
-    public String getCourseID() {
+public String getCourseID() {
         return courseID;
     }
 

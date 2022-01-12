@@ -121,6 +121,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     private Scene scene;
     private Parent root;
     public void backButton(ActionEvent event) throws IOException{
+        
         root = FXMLLoader.load(getClass().getResource("Module.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -540,9 +541,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             loader.load();
             ModuleController previousController = loader.getController();
             
-            courseID = previousController.getCourseIdSetter().toUpperCase();
-            coursename = previousController.getCourseNameSetter().toUpperCase();
-            credithour = Integer.parseInt(previousController.getCreditHourSetter());
+            courseID = previousController.getCourseID().toUpperCase();
+            coursename = previousController.getCoursename().toUpperCase();
+            credithour = Integer.parseInt(previousController.getCredithour());
 
             if(previousController.getCourseCategorySetter().equals("University Course")){
                 coursecategory = "UC";
@@ -756,7 +757,6 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     }
 
 
-    
     
     
     

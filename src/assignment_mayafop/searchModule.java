@@ -818,6 +818,14 @@ public class searchModule implements Initializable, ControlledScreen {
             
             ModuleController moduleController = loader.getController();
             moduleController.setCourseIdSetter("");
+            moduleController.setCourseNameSetter("");
+            moduleController.setCreditHourSetter("");
+            moduleController.setCourseCategorySetter("University Course");
+            moduleController.setCourseYearSetter("All");
+            moduleController.setCourseSemSetter("All");
+            moduleController.setMuetBandSetter("All");
+            moduleController.setNationalitySetter("All");
+            moduleController.setProgrammeSetter("All");
         } catch (Exception e) {
                 
         }
