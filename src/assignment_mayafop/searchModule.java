@@ -525,22 +525,17 @@ public class searchModule implements Initializable, ControlledScreen {
         }else{
             warningLabel.setText("");
             if (totalCreditHours + Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour()) <= 22 ) {
-                boolean check = true;
+                
                 try{
                     pickedModuleModel addingCourse = new pickedModuleModel(courseID);
                     if (courseIDcheck.contains(courseID)) {
-                        check=false;
+                        System.out.println("The coursed already picked");
                     }else{
                         courseIDarray.add(courseID);
-                    }
-                    if (check) {
                         coursesModel.add(addingCourse);
                         occurenceID.add(occID);
                         courseNames.add(courseName);
                         System.out.println(addingCourse + " Has been add");
-                    }
-                    else{
-                        System.out.println("The coursed already picked");
                     }
                 
                     FXMLLoader loader = new FXMLLoader();
@@ -610,9 +605,26 @@ public class searchModule implements Initializable, ControlledScreen {
                     return true;
                 }
 
+                double unsimilarity = 0;
                 String searchKeyword = newValue.toLowerCase();
-
-                if (courseSearchModel.getCourseName().toLowerCase().indexOf(searchKeyword) > -1) {
+                System.out.println("Seach keyword is: " + searchKeyword);
+                System.out.println("The coursename is: " +courseSearchModel.getCourseName().toLowerCase());
+                char[] courseNameCheckerArray = courseSearchModel.getCourseName().toLowerCase().toCharArray();
+                if (searchKeyword.length() <= courseSearchModel.getCourseName().toLowerCase().length() ) {
+                    for (int k = 0; k < searchKeyword.length(); k++) {
+                        if (searchKeyword.charAt(k) != courseNameCheckerArray[k]) {
+                            System.out.println(searchKeyword.charAt(k)+ " is different with " + courseNameCheckerArray[k]);
+                            unsimilarity++;
+                        }
+                    }
+                }
+                else{
+                    unsimilarity = searchKeyword.length();
+                }
+                
+                unsimilarity = (unsimilarity / searchKeyword.length())*100.00;
+                System.out.println("Unsimilarity%: " + unsimilarity);
+                if (courseSearchModel.getCourseName().toLowerCase().indexOf(searchKeyword) > -1 || unsimilarity <=40) {
                     return true; // Found a match in course name
                 } else if (courseSearchModel.getCourseID().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true; // Found a match in course name

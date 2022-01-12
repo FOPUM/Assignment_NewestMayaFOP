@@ -276,7 +276,15 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             e.printStackTrace();
         }
             
-            int actOcc = selectedNode + 1;
+            String actOcc = "";
+                if (selectedNode != -1) {
+                    if (Character.isDigit(occ.get(selectedNode).charAt(occ.get(selectedNode).length()-2))) {
+                         actOcc = occ.get(selectedNode).substring(occ.get(selectedNode).length()-2);
+                    }
+                    else if (Character.isDigit(occ.get(selectedNode).charAt(occ.get(selectedNode).length()-1))) {
+                         actOcc = occ.get(selectedNode).substring(occ.get(selectedNode).length()-1);
+                    }
+                }
             moduleController.occLabel.setText(occ.get(selectedNode));
             moduleController.capacityLabel.setText(occCapacity.get(selectedNode));
             
@@ -476,7 +484,16 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
-            String actOcc = occ.get(i);
+            
+            String actOcc = "";
+            
+                    if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-2))) {
+                         actOcc = occ.get(i).substring(occ.get(i).length()-2);
+                    }
+                    else if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-1))) {
+                         actOcc = occ.get(i).substring(occ.get(i).length()-1);
+                    }
+                
             
             moduleController.occLabel.setText(occ.get(i));
             moduleController.capacityLabel.setText(occCapacity.get(i));
