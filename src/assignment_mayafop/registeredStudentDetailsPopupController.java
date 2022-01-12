@@ -115,13 +115,15 @@ public class registeredStudentDetailsPopupController implements Initializable{
                     while(courseIDQuery.next()) {
                         matricID.add(courseIDQuery.getString("matricID"));
                         studentName.add(courseIDQuery.getString("studentName"));
-                        if (matricID.isEmpty() && studentName.isEmpty()) {
-                            matricID.add("");
-                            studentName.add("");
-                        }
+
                     } 
-                    System.out.println(matricID.get(i));
-                    System.out.println(studentName.get(i));
+                    if (matricID.isEmpty() && studentName.isEmpty()) {
+                            matricID.add("No student arh");
+                            studentName.add("");
+                            System.out.println("Matric Id and Student Name is empty");
+                        }
+                    System.out.println("Matric id = " + matricID.get(i));
+                    System.out.println("StudentName id = " + studentName.get(i));
 
                 }
 
@@ -139,6 +141,8 @@ public class registeredStudentDetailsPopupController implements Initializable{
         try {
             studentDetails.clear();
             for (int j = 0; j < matricID.size(); j++) {
+                System.out.println("Matric id here= " + matricID.get(j));
+                System.out.println("StudentName id here= " + studentName.get(j));
                 studentDetails.add(new registeredStuentDetailsPopupTextModel(matricID.get(j),studentName.get(j)));
             }
             

@@ -28,8 +28,15 @@ public class registeredStuentDetailsPopupTextController implements Initializable
     }
     
     public void setContentInfo(String matricid, String studname){
-        matricIDLabel.setText(matricid);
-        studentNameLabel.setText(misc.upperLetter(studname));
+        if (matricid.equals("No student arh")) {
+             matricIDLabel.setText("");
+             studentNameLabel.setText("NO STUDENT");
+        }
+        else{
+            matricIDLabel.setText(matricid);
+            studentNameLabel.setText(misc.upperLetter(studname));
+        }
+
     }
 
     public void setMatricIDLabel(String a) {
@@ -37,6 +44,6 @@ public class registeredStuentDetailsPopupTextController implements Initializable
     }
     
     public void setStudentNameLabel(String a) {
-        studentNameLabel.setText(a); 
+        studentNameLabel.setText("Sohai"); 
     }
 }
