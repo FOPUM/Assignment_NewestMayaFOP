@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -178,6 +179,8 @@ public class searchModule implements Initializable, ControlledScreen {
             addCourseButton.setVisible(false);
             removeCourseButton.setVisible(false);
         }else if (accStatus == 'T'){
+            addCourseButton.setVisible(false);
+            removeCourseButton.setVisible(false);
             creditHourLabel.setVisible(false);
             rightRect.setVisible(false);
             nextButton.setVisible(false);
@@ -892,6 +895,10 @@ public class searchModule implements Initializable, ControlledScreen {
         credithourcheck = 0;
         i = 0;
         occIDStaff.clear();
+    }
+    
+    public static boolean isOverlapping(Date start1, Date end1, Date start2, Date end2) {
+        return !start1.after(end2) && !start2.after(end1);
     }
     
     public String getCourseIDcheck(int i) {
