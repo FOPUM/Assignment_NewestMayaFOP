@@ -151,7 +151,6 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     public void addNewOcc(ActionEvent event){
 //        getPreviousPageValues();
-        clearMemory();
         selectedNode = -1;
         System.out.println("selectedNode has been reset to: " + selectedNode);
         openNewOccPage();

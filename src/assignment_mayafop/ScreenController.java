@@ -122,12 +122,10 @@ public class ScreenController extends StackPane{
     
     public void showPopupStage(BorderPane screen, String resource){
         if (showing) {
-            System.out.println("Already showing");
             return;
         }
         else if (!showing){
             try {
-                System.out.println("not showing");
                 BoxBlur boxBlur = new BoxBlur();
                 boxBlur.setWidth(10);
                 boxBlur.setHeight(10);
@@ -157,12 +155,10 @@ public class ScreenController extends StackPane{
     
     public void showPopupStage(AnchorPane screen, String resource){
         if (showing) {
-            System.out.println("Already showing");
             return;
         }
         else if (!showing){
             try {
-                System.out.println("not showing");
                 BoxBlur boxBlur = new BoxBlur();
                 boxBlur.setWidth(10);
                 boxBlur.setHeight(10);
@@ -192,12 +188,10 @@ public class ScreenController extends StackPane{
     
     public void showPopupStage(ScrollPane screen, String resource){
         if (showing) {
-            System.out.println("Already showing");
             return;
         }
         else if (!showing){
             try {
-                System.out.println("not showing");
                 BoxBlur boxBlur = new BoxBlur();
                 boxBlur.setWidth(10);
                 boxBlur.setHeight(10);
