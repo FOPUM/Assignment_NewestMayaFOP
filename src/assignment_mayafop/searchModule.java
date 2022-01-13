@@ -398,8 +398,11 @@ public class searchModule implements Initializable, ControlledScreen {
 
             //PropertyValueFactory corresponds to the new ProductSearchModel fields
             courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("courseID"));
+            courseCodeColumn.setResizable(false);
             courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+            courseNameColumn.setResizable(false);
             courseOccurenceColumn.setCellValueFactory(new PropertyValueFactory<>("occName"));
+            courseOccurenceColumn.setResizable(false);
             courseTableView.setItems(courseSearchModelObservableList);
             search();
 
