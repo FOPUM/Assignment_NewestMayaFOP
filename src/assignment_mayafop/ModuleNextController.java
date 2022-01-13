@@ -92,11 +92,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     Node[] nodes = new Node[20];
     private int i = 0;
     
-    
     boolean upScreenStatus = false;
-    
-
-    
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Animation = new animation();
@@ -278,15 +275,15 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             
             String actOcc = "";
             if (selectedNode != -1) {
-                if(occ.get(i).startsWith("o") || occ.get(i).startsWith("O")){
-                    if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-2))) {
-                         actOcc = occ.get(i).substring(occ.get(i).length()-2);
+                if(occ.get(selectedNode).startsWith("o") || occ.get(selectedNode).startsWith("O")){
+                    if (Character.isDigit(occ.get(selectedNode).charAt(occ.get(selectedNode).length()-2))) {
+                         actOcc = occ.get(selectedNode).substring(occ.get(selectedNode).length()-2);
                     }
-                    else if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-1))) {
-                         actOcc = occ.get(i).substring(occ.get(i).length()-1);
+                    else if (Character.isDigit(occ.get(selectedNode).charAt(occ.get(selectedNode).length()-1))) {
+                         actOcc = occ.get(selectedNode).substring(occ.get(selectedNode).length()-1);
                     }
                 }else{
-                    actOcc = occ.get(i);
+                    actOcc = occ.get(selectedNode);
                 } 
             }
             moduleController.occLabel.setText(occ.get(selectedNode));
@@ -436,6 +433,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             ResultSet DatabaseOccQuery = connectDB.createStatement().executeQuery(databaseOccQueryText);
             while(DatabaseOccQuery.next()) {
                 occ.add(DatabaseOccQuery.getString("occ_name").substring(3));
+                System.out.println("occ size is "+occ.size());
                 occCapacity.add(DatabaseOccQuery.getString("occ_capacity"));
 
                 lectday.add(misc.formatDay(DatabaseOccQuery.getString("lecture_day")));
@@ -652,7 +650,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             courseID = previousController.getCourseID().toUpperCase();
             coursename = previousController.getCoursename().toUpperCase();
             credithour = Integer.parseInt(previousController.getCredithour());
-
+            
             if(previousController.getCourseCategorySetter().equals("University Course")){
                 coursecategory = "UC";
             }else if(previousController.getCourseCategorySetter().equals("KELF")){
@@ -665,6 +663,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                 coursecategory = "FEC";
             }else if(previousController.getCourseCategorySetter().equals("Specialisation Elective Course")){
                 coursecategory = "SEC";
+            }else{
+                coursecategory = previousController.getCourseCategorySetter();
             }
 
             courseyear = previousController.getCourseYearSetter().toUpperCase();
@@ -696,8 +696,14 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     //Add new course
     public void confirmAddCourse(ActionEvent event){
         try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/searchModule.fxml"));
+            loader.load();
+            searchModule search = loader.getController();
+            System.out.println(search.isEditingMode());
+
             //add new course
-            if(selectedNode == -1){
+            if(!search.isEditingMode()){
                 PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
                 statement.setString(1,courseID);
                 statement.setString(2,coursename);
@@ -830,7 +836,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                 stage.close();
             
             //edit course so need to update
-            }else if(selectedNode > -1){
+            }else{
                 System.out.println(selectedNode);
                 PreparedStatement statement = connectDB.prepareStatement("UPDATE course SET course_name=?, credit_hour=?, course_category=?, course_year=?, course_sem=?, muet_band=?, nationality=?, programme=? WHERE course_id=?");
                 statement.setString(1,coursename);
@@ -847,7 +853,6 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                 
                 for (int j = 0; j < occ.size(); j++) {
                     String actOcc = occ.get(j);
-                    System.out.println(actOcc);
 
                     String lectID = courseID + "_L" + actOcc;
                     String tutoID = courseID + "_T" + actOcc;
@@ -876,7 +881,8 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                         System.out.println(tutostatement);
                         tutostatement.executeUpdate();
                     }
-
+                    
+                    if(labday.get(j) != null){
                     if(!labday.get(j).isEmpty()){
                         PreparedStatement labstatement = connectDB.prepareStatement("UPDATE lab SET lab_day=?, lab_start_time=?, lab_end_time=?, lab_name=?, lab_location=? WHERE lab_id=?");
                         labstatement.setString(1,labID);
@@ -888,7 +894,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                         System.out.println(labstatement);
                         labstatement.executeUpdate();
                     }
-
+                    }
 
                     PreparedStatement occStatement = connectDB.prepareStatement("UPDATE occ SET occ_name=?, lecture_id=?, tutorial_id=?, lab_id=?, occ_capacity=? WHERE occ_id=?");
                     occStatement.setString(1,"OCC" + actOcc);
@@ -951,17 +957,18 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                         staffTeachCourseLabStatement.executeUpdate();
                     }
 
-                    PreparedStatement courseOccStatement = connectDB.prepareStatement("UPDATE course_occ SET occ_id=? WHERE course_id=?");
-                    courseOccStatement.setString(1, courseID + "_OCC" + actOcc);
-                    courseOccStatement.setString(2, courseID);
-                    courseOccStatement.executeUpdate();
+                    PreparedStatement courseOccStatement = connectDB.prepareStatement("UPDATE course_occ SET course_id=? WHERE occ_id=?");
+                    courseOccStatement.setString(1, courseID);
+                    courseOccStatement.setString(2, courseID + "_OCC" + actOcc);
                     System.out.println(courseOccStatement);
+                    courseOccStatement.executeUpdate();
 
                 }
 
                 System.out.println("Successfully edited!");
                 Stage stage = (Stage) confirmButton.getScene().getWindow();
-                stage.close();               
+                stage.close();         
+                search.setEditingMode(false);
                 
             }
             
@@ -1029,13 +1036,6 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     public int getSelectedNode() {
         return selectedNode;
     }
-
-
-    
-    
-    
     
 
-    
-    
 }

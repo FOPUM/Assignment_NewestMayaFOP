@@ -150,7 +150,7 @@ public class searchModule implements Initializable, ControlledScreen {
     char accStatus = loginControl.getAccStatus();
     
     String occIDCheck = new String();
-
+    
     
     
     private String confirmedcourses = "SELECT occ_id, course_id\n" +
@@ -162,9 +162,9 @@ public class searchModule implements Initializable, ControlledScreen {
                                         "FROM student\n" +
                                         "WHERE matric_num='"+matric_num+"'";
     
+    static boolean editingMode = false;
     
     
-
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
 
@@ -221,6 +221,7 @@ public class searchModule implements Initializable, ControlledScreen {
             }
             
             totalCreditHours = credithourcheck;
+            creditHour.forEach((hour)-> totalCreditHours+=hour);
             creditHourLabel.setText("Credits Hours: " + totalCreditHours);
             
             //Query for items in search table
@@ -246,26 +247,26 @@ public class searchModule implements Initializable, ControlledScreen {
                         "\n" +
                         "FROM occ \n" +
                         "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                        "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
-                        "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
-                        "INNER JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                        "LEFT JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                        "LEFT JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                        "LEFT JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
                         "\n" +
-                        "INNER JOIN \n" +
+                        "LEFT JOIN \n" +
                         "\n" +
                         "(SELECT occ.occ_id AS occ2,\n" +
                         "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
                         "lecture.lecture_location AS lectLocation, staff.staff_name AS lectStaff\n" +
                         "FROM occ \n" +
                         "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
-                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
-                        "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                        "LEFT JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                        "LEFT JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                        "LEFT JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
                         "\n" +
                         "ON tuto.occID=lec.occ2) AS lectuto\n" +
                         "\n" +
-                        "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
-                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
-                        "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id";
+                        "LEFT JOIN lab ON lab.lab_id=lectuto.labID\n" +
+                        "LEFT JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
+                        "LEFT JOIN staff ON staff_teach_lab.staff_id=staff.staff_id";
                 //</editor-fold>
             if(accStatus == 'S'){
                 //<editor-fold defaultstate="collapsed" desc="String for student">
@@ -291,26 +292,26 @@ public class searchModule implements Initializable, ControlledScreen {
                         "\n" +
                         "FROM occ \n" +
                         "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                        "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
-                        "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
-                        "INNER JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                        "LEFT JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                        "LEFT JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                        "LEFT JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
                         "\n" +
-                        "INNER JOIN \n" +
+                        "LEFT JOIN \n" +
                         "\n" +
                         "(SELECT occ.occ_id AS occ2,\n" +
                         "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
                         "lecture.lecture_location AS lectLocation, staff.staff_name AS lectStaff\n" +
                         "FROM occ \n" +
                         "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
-                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
-                        "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                        "LEFT JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                        "LEFT JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                        "LEFT JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
                         "\n" +
                         "ON tuto.occID=lec.occ2) AS lectuto\n" +
                         "\n" +
-                        "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
-                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
-                        "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
+                        "LEFT JOIN lab ON lab.lab_id=lectuto.labID\n" +
+                        "LEFT JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
+                        "LEFT JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
                         "\n" +
                         "WHERE \n" +
                         "(courseCategory='FCC' OR courseCategory ='UC' OR courseCategory ='PCC' OR courseCategory ='KELF' OR courseCategory ='FEC' OR courseCategory ='SEC') AND\n" +
@@ -343,26 +344,26 @@ public class searchModule implements Initializable, ControlledScreen {
                         "\n" +
                         "FROM occ \n" +
                         "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                        "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
-                        "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
-                        "INNER JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
+                        "LEFT JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                        "LEFT JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                        "LEFT JOIN staff ON staff.staff_id=staff_teach_tutorial.staff_id) AS tuto\n" +
                         "\n" +
-                        "INNER JOIN \n" +
+                        "LEFT JOIN \n" +
                         "\n" +
                         "(SELECT occ.occ_id AS occ2,\n" +
                         "lecture.lecture_day AS lectureDay, lecture.lecture_start_time AS lectureStartTime,lecture.lecture_end_time AS lectureEndTime,\n" +
                         "lecture.lecture_location AS lectLocation, staff.staff_name AS lectStaff\n" +
                         "FROM occ \n" +
                         "JOIN course ON course.course_id=SUBSTR(occ.occ_id, 1, 7)\n" +
-                        "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
-                        "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
-                        "INNER JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
+                        "LEFT JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                        "LEFT JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                        "LEFT JOIN staff on staff.staff_id=staff_teach_lecture.staff_id) AS lec\n" +
                         "\n" +
                         "ON tuto.occID=lec.occ2) AS lectuto\n" +
                         "\n" +
-                        "INNER JOIN lab ON lab.lab_id=lectuto.labID\n" +
-                        "INNER JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
-                        "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id";
+                        "LEFT JOIN lab ON lab.lab_id=lectuto.labID\n" +
+                        "LEFT JOIN staff_teach_lab ON staff_teach_lab.lab_id=lectuto.labID\n" +
+                        "LEFT JOIN staff ON staff_teach_lab.staff_id=staff.staff_id";
                 //</editor-fold>
             }
             ResultSet courseQueryOutput = connectDB.createStatement().executeQuery(course);
@@ -406,36 +407,37 @@ public class searchModule implements Initializable, ControlledScreen {
                 
                 @Override
                 public void handle(MouseEvent event) {
-                    MiscFunc misc = new MiscFunc();
-                    selectedTableView_index = courseTableView.getSelectionModel().getFocusedIndex();
-                    occIDCheck =courseTableView.getSelectionModel().getSelectedItem().getOccID();
-                    
-                    courseCodeLabel.setText(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
-                    courseNameLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getCourseName()));
-                    creditsLabel.setText("Credits: " + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
-                    occurenceLabel.setText("Occurence: " + courseTableView.getSelectionModel().getSelectedItem().getOccName().substring(3));
-                    
-                    String lectureTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLectDay()) + "  "
-                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()) + "-" 
-                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectEndTime());
-                    lectureTimeLabel.setText(lectureTime);
-                    lectureLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLectStaff()));
-                    
-                    String tutorialTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getTutoDay()) + "  "
-                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()) + "-" 
-                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime());
-                    tutorialTimeLabel.setText(tutorialTime);
-                    tutorialLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getTutoStaff()));
-                    
-                    if(courseTableView.getSelectionModel().getSelectedItem().getLabDay() != null){
-                        String labTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLabDay()) + "  "
-                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()) + "-" 
-                            + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabEndTime());
-                    labTimeLabel.setText(labTime);
-                    labLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLabStaff()));
-                    }else{
-                        labTimeLabel.setText("");
-                        labLecturerLabel.setText("");
+                    if (!courseTableView.getSelectionModel().equals(null)) {
+                        MiscFunc misc = new MiscFunc();
+                        occIDCheck =courseTableView.getSelectionModel().getSelectedItem().getOccID();
+
+                        courseCodeLabel.setText(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
+                        courseNameLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getCourseName()));
+                        creditsLabel.setText("Credits: " + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
+                        occurenceLabel.setText("Occurence: " + courseTableView.getSelectionModel().getSelectedItem().getOccName().substring(3));
+
+                        String lectureTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLectDay()) + "  "
+                                + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()) + "-" 
+                                + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectEndTime());
+                        lectureTimeLabel.setText(lectureTime);
+                        lectureLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLectStaff()));
+
+                        String tutorialTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getTutoDay()) + "  "
+                                + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()) + "-" 
+                                + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime());
+                        tutorialTimeLabel.setText(tutorialTime);
+                        tutorialLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getTutoStaff()));
+
+                        if(courseTableView.getSelectionModel().getSelectedItem().getLabDay() != null){
+                            String labTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLabDay()) + "  "
+                                + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()) + "-" 
+                                + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabEndTime());
+                        labTimeLabel.setText(labTime);
+                        labLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLabStaff()));
+                        }else{
+                            labTimeLabel.setText("");
+                            labLecturerLabel.setText("");
+                        }
                     }
                     
 
@@ -809,6 +811,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 moduleController.setNationalitySetter(courseNationality);
                 moduleController.setProgrammeSetter(courseProgramme);
 
+                editingMode = true;
 
                 } catch (Exception e) {
                 }
@@ -953,6 +956,15 @@ public class searchModule implements Initializable, ControlledScreen {
     public String getOccIDCheck() {
         return occIDCheck;
     }
+
+    public boolean isEditingMode() {
+        return editingMode;
+    }
+
+    public void setEditingMode(boolean editingMode) {
+        this.editingMode = editingMode;
+    }
+    
     
     
 }
