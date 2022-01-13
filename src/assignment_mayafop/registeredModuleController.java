@@ -204,7 +204,27 @@ public class registeredModuleController implements Initializable, ControlledScre
             statement.setString(1,courseCode.get(i));
             statement.setString(2,matric_num);
             statement.executeUpdate();
+            
+            //Get the current credit hour of student
+            int creditHour = 0;
+            ResultSet creditHourGetter = connectDB.createStatement().executeQuery("SELECT credit_hour FROM student WHERE matric_num='"+matric_num+"'");
+            while (creditHourGetter.next()) {
+                creditHour = creditHourGetter.getInt("credit_hour");
+            }
+            
+            //Get the credit hour of course
+            ResultSet creditHourSubtractGetter = connectDB.createStatement().executeQuery("SELECT credit_hour FROM course WHERE course_id='"+courseCode.get(i)+"'");
+            while (creditHourSubtractGetter.next()) {
+                creditHour -= creditHourSubtractGetter.getInt("credit_hour");
+            }
+            
+            //Minus the credit hour
+            PreparedStatement creditstatement = connectDB.prepareStatement("UPDATE student SET credit_hour=? WHERE matric_num=?");
+            creditstatement.setInt(1,creditHour);
+            creditstatement.setString(2,matric_num);
+            creditstatement.executeUpdate();
             System.out.println("Successfully drop " + courseCode.get(i));
+            
         } catch (SQLException ex) {
             Logger.getLogger(registeredModuleController.class.getName()).log(Level.SEVERE, null, ex);
         }

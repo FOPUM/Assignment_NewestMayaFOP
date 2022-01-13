@@ -877,6 +877,7 @@ public class searchModule implements Initializable, ControlledScreen {
         
     public void clearMemory(){
         occurenceIDcheck.clear();
+        occurenceID.clear();
         courseIDcheck.clear();
         courseIDarray.clear();
         courseNames.clear();

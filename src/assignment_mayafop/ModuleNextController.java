@@ -104,6 +104,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             Animation.fading(moduleNextPane);
         }
         getPreviousPageValues();
+        System.out.println(coursecategory);
         try {
             ResultSet checkForEditOrNewModule = connectDB.createStatement().executeQuery("SELECT COUNT(course_id) AS courseIDPresentOrNot FROM course WHERE course_id='"+courseID+"'");
             while(checkForEditOrNewModule.next()) {
@@ -152,7 +153,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
 //        getPreviousPageValues();
         clearMemory();
         selectedNode = -1;
-        System.out.println("selectedNode has been reset to: " +selectedNode);
+        System.out.println("selectedNode has been reset to: " + selectedNode);
         openNewOccPage();
     }
     
@@ -277,14 +278,18 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
             
             String actOcc = "";
-                if (selectedNode != -1) {
-                    if (Character.isDigit(occ.get(selectedNode).charAt(occ.get(selectedNode).length()-2))) {
-                         actOcc = occ.get(selectedNode).substring(occ.get(selectedNode).length()-2);
+            if (selectedNode != -1) {
+                if(occ.get(i).startsWith("o") || occ.get(i).startsWith("O")){
+                    if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-2))) {
+                         actOcc = occ.get(i).substring(occ.get(i).length()-2);
                     }
-                    else if (Character.isDigit(occ.get(selectedNode).charAt(occ.get(selectedNode).length()-1))) {
-                         actOcc = occ.get(selectedNode).substring(occ.get(selectedNode).length()-1);
+                    else if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-1))) {
+                         actOcc = occ.get(i).substring(occ.get(i).length()-1);
                     }
-                }
+                }else{
+                    actOcc = occ.get(i);
+                } 
+            }
             moduleController.occLabel.setText(occ.get(selectedNode));
             moduleController.capacityLabel.setText(occCapacity.get(selectedNode));
             
@@ -431,25 +436,25 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         try {
             ResultSet DatabaseOccQuery = connectDB.createStatement().executeQuery(databaseOccQueryText);
             while(DatabaseOccQuery.next()) {
-                occ.add(DatabaseOccQuery.getString("occ_name"));
+                occ.add(DatabaseOccQuery.getString("occ_name").substring(3));
                 occCapacity.add(DatabaseOccQuery.getString("occ_capacity"));
 
-                lectday.add(DatabaseOccQuery.getString("lecture_day"));
-                lectstart.add(DatabaseOccQuery.getString("lecture_start_time"));
-                lectend.add(DatabaseOccQuery.getString("lecture_end_time"));
+                lectday.add(misc.formatDay(DatabaseOccQuery.getString("lecture_day")));
+                lectstart.add(misc.formatTime(DatabaseOccQuery.getString("lecture_start_time")));
+                lectend.add(misc.formatTime(DatabaseOccQuery.getString("lecture_end_time")));
                 lectlocation.add(DatabaseOccQuery.getString("lecture_location"));
                 lectstaffid.add(DatabaseOccQuery.getString("lectstaff"));
 
-                tutoday.add(DatabaseOccQuery.getString("tutorial_day"));
-                tutostart.add(DatabaseOccQuery.getString("tutorial_start_time"));
-                tutoend.add(DatabaseOccQuery.getString("tutorial_end_time")); 
+                tutoday.add(misc.formatDay(DatabaseOccQuery.getString("tutorial_day")));
+                tutostart.add(misc.formatTime(DatabaseOccQuery.getString("tutorial_start_time")));
+                tutoend.add(misc.formatTime(DatabaseOccQuery.getString("tutorial_end_time"))); 
                 tutolocation.add(DatabaseOccQuery.getString("tutorial_location"));
                 tutostaffid.add(DatabaseOccQuery.getString("tutostaff"));
 
-                labday.add(DatabaseOccQuery.getString("lab_day"));
-                labstart.add(DatabaseOccQuery.getString("lab_start_time"));
-                labend.add(DatabaseOccQuery.getString("lab_end_time")); 
-                lablocation.add(DatabaseOccQuery.getString("lab_location"));
+                labday.add(misc.formatDay(DatabaseOccQuery.getString("lab_day")));
+                labstart.add(misc.formatTime(DatabaseOccQuery.getString("lab_start_time")));
+                labend.add(misc.formatTime(DatabaseOccQuery.getString("lab_end_time"))); 
+                lablocation.add(misc.upperLetter(DatabaseOccQuery.getString("lab_location")));
                 labstaffid.add(DatabaseOccQuery.getString("labstaff"));
             }     
             
@@ -486,17 +491,20 @@ public class ModuleNextController implements Initializable, ControlledScreen{
         }
             
             String actOcc = "";
+                    
+            if(occ.get(i).startsWith("o") || occ.get(i).startsWith("O")){
+                if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-2))) {
+                     actOcc = occ.get(i).substring(occ.get(i).length()-2);
+                }
+                else if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-1))) {
+                     actOcc = occ.get(i).substring(occ.get(i).length()-1);
+                }
+            }else{
+                actOcc = occ.get(i);
+            } 
             
-                    if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-2))) {
-                         actOcc = occ.get(i).substring(occ.get(i).length()-2);
-                    }
-                    else if (Character.isDigit(occ.get(i).charAt(occ.get(i).length()-1))) {
-                         actOcc = occ.get(i).substring(occ.get(i).length()-1);
-                    }
-                
-            
-            moduleController.occLabel.setText(occ.get(i));
-            moduleController.capacityLabel.setText(occCapacity.get(i));
+            moduleController.occLabel.setText("Occurence: " + occ.get(i));
+            moduleController.capacityLabel.setText("Capacity: " + occCapacity.get(i));
             
             moduleController.lectIDLabel.setText(courseID + "_L" + actOcc);
             moduleController.lectDayLabel.setText(lectday.get(i));
@@ -510,14 +518,14 @@ public class ModuleNextController implements Initializable, ControlledScreen{
             moduleController.tutoStartTimeLabel.setText(tutostart.get(i));
             moduleController.tutoEndTimeLabel.setText(tutoend.get(i));
             moduleController.tutoLocationLabel.setText(tutolocation.get(i));
-            moduleController.tutoStaffIDLabel.setText(lectstaffid.get(i));
+            moduleController.tutoStaffIDLabel.setText(tutostaffid.get(i));
             
             moduleController.labIDLabel.setText(courseID + "_A" + actOcc);
             moduleController.labDayLabel.setText(labday.get(i));
             moduleController.labStartTimeLabel.setText(labstart.get(i));
             moduleController.labEndTimeLabel.setText(labend.get(i));
             moduleController.labLocationLabel.setText(lablocation.get(i));
-            moduleController.labStaffIDLabel.setText(lectstaffid.get(i));
+            moduleController.labStaffIDLabel.setText(labstaffid.get(i));
             
             
             
@@ -627,11 +635,11 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                     openNewOccPage();
             });
                     
-                } catch (IOException ex) {
-                    Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        
-                    }
+            } catch (IOException ex) {
+                Logger.getLogger(ModuleNextController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
         
     }
     
@@ -660,9 +668,9 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                 coursecategory = "SEC";
             }
 
-            courseyear = previousController.getCourseYearSetter();
-            coursesem = previousController.getCourseSemSetter();    
-            muetband = previousController.getMuetBandSetter();
+            courseyear = previousController.getCourseYearSetter().toUpperCase();
+            coursesem = previousController.getCourseSemSetter().toUpperCase();    
+            muetband = previousController.getMuetBandSetter().toUpperCase();
             nationality = previousController.getNationalitySetter().toUpperCase();
 
             if(previousController.getProgrammeSetter().equals("Software Engineer")){
@@ -677,7 +685,7 @@ public class ModuleNextController implements Initializable, ControlledScreen{
                 programme = "IS";
             }else if(previousController.getProgrammeSetter().equals("Multimedia")){
                 programme = "MM";
-            }else if(previousController.getProgrammeSetter().equals("ALL")){
+            }else{
                 programme = "ALL";
             }
         } catch (IOException ex) {
@@ -688,118 +696,284 @@ public class ModuleNextController implements Initializable, ControlledScreen{
     
     //Add new course
     public void confirmAddCourse(ActionEvent event){
-        
         try {
-            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
-            statement.setString(1,courseID);
-            statement.setString(2,coursename);
-            statement.setInt(3,credithour);
-            statement.setString(4,coursecategory);
-            statement.setString(5,courseyear);
-            statement.setString(6,coursesem);
-            statement.setString(7,muetband);
-            statement.setString(8,nationality);
-            statement.setString(9,programme);
-            statement.executeUpdate();
-            
-            for (int j = 0; j < occ.size(); j++) {
-                int actOcc = Integer.parseInt(occ.get(j)) + 1;
-                String lectID = courseID + "_L" + actOcc;
-                String tutoID = courseID + "_T" + actOcc;
-                String labID = courseID + "_A" + actOcc;
-                   
-                if(lectday.size()>0){
-                    PreparedStatement lectstatement = connectDB.prepareStatement("INSERT INTO lecture VALUES (?,?,?,?,?,?)");
-                    lectstatement.setString(1,lectID);
-                    lectstatement.setString(2,lectday.get(j).toUpperCase());
-                    lectstatement.setString(3,lectstart.get(j));
-                    lectstatement.setString(4,lectend.get(j));
-                    lectstatement.setString(5,coursename.toUpperCase() + " LECTURE");
-                    lectstatement.setString(6,lectlocation.get(j));
-                    lectstatement.executeUpdate();
-                }
-                
-                if(tutoday.size() > 0){
-                    PreparedStatement tutostatement = connectDB.prepareStatement("INSERT INTO tutorial VALUES (?,?,?,?,?,?)");
-                    tutostatement.setString(1,tutoID);
-                    tutostatement.setString(2,tutoday.get(j).toUpperCase());
-                    tutostatement.setString(3,tutostart.get(j));
-                    tutostatement.setString(4,tutoend.get(j));
-                    tutostatement.setString(5,coursename.toUpperCase() + " TUTORIAL");
-                    tutostatement.setString(6,tutolocation.get(j));
-                    tutostatement.executeUpdate();
-                }
-                
-                if(labday.size() > 0){
-                    PreparedStatement labstatement = connectDB.prepareStatement("INSERT INTO lab VALUES (?,?,?,?,?,?)");
-                    labstatement.setString(1,labID);
-                    labstatement.setString(2,labday.get(j).toUpperCase());
-                    labstatement.setString(3,labstart.get(j));
-                    labstatement.setString(4,labend.get(j));
-                    labstatement.setString(5,coursename.toUpperCase() + " LAB");
-                    labstatement.setString(6,lablocation.get(j));
-                    labstatement.executeUpdate();
-                }
-                
-                
-                PreparedStatement occStatement = connectDB.prepareStatement("INSERT INTO occ VALUES (?,?,?,?,?,?)");
-                occStatement.setString(1,courseID + "_OCC" + actOcc);
-                occStatement.setString(2,"OCC" + actOcc);
-                if(lectID != null){
-                    occStatement.setString(3,lectID);
-                }else{
-                    occStatement.setString(3,"NONE");
-                }
-                if(tutoID != null){
-                    occStatement.setString(4,tutoID);
-                }else{
-                    occStatement.setString(4,"NONE");
-                }
-                if(labID != null){
-                    occStatement.setString(5,labID);
-                }else{
-                    occStatement.setString(5,"NONE");
-                }
-                occStatement.setString(6,occCapacity.get(j));
-                occStatement.executeUpdate();
-                
-                if(lectID != null){
-                    PreparedStatement staffTeachLectureStatement = connectDB.prepareStatement("INSERT INTO staff_teach_lecture VALUES (?,?)");
-                    staffTeachLectureStatement.setString(1, lectstaffid.get(j));
-                    staffTeachLectureStatement.setString(2, lectID);
-                    staffTeachLectureStatement.executeUpdate();
-                }
-                
-                if(tutoID != null){
-                    PreparedStatement staffTeachTutorialStatement = connectDB.prepareStatement("INSERT INTO staff_teach_tutorial VALUES (?,?)");
-                    staffTeachTutorialStatement.setString(1, tutostaffid.get(j));
-                    staffTeachTutorialStatement.setString(2, tutoID);
-                    staffTeachTutorialStatement.executeUpdate();
-                }
-                
-                if(labID != null){
-                    PreparedStatement staffTeachLabStatement = connectDB.prepareStatement("INSERT INTO staff_teach_lab VALUES (?,?)");
-                    staffTeachLabStatement.setString(1, labstaffid.get(j));
-                    staffTeachLabStatement.setString(2, labID);
-                    staffTeachLabStatement.executeUpdate();
-                }
-                
-                PreparedStatement courseOccStatement = connectDB.prepareStatement("INSERT INTO course_occ VALUES (?,?)");
-                courseOccStatement.setString(1, courseID);
-                courseOccStatement.setString(2, courseID + "_OCC" + actOcc);
-                courseOccStatement.executeUpdate();
+            //add new course
+            if(selectedNode == -1){
+                PreparedStatement statement = connectDB.prepareStatement("INSERT INTO course VALUES (?,?,?,?,?,?,?,?,?)");
+                statement.setString(1,courseID);
+                statement.setString(2,coursename);
+                statement.setInt(3,credithour);
+                statement.setString(4,coursecategory);
+                statement.setString(5,courseyear);
+                statement.setString(6,coursesem);
+                statement.setString(7,muetband);
+                statement.setString(8,nationality);
+                statement.setString(9,programme);
+                System.out.println(statement);
+                statement.executeUpdate();
 
+                for (int j = 0; j < occ.size(); j++) {
+                    String actOcc = occ.get(j);
+                    System.out.println(actOcc);
+
+                    String lectID = courseID + "_L" + actOcc;
+                    String tutoID = courseID + "_T" + actOcc;
+                    String labID = courseID + "_A" + actOcc;
+
+                    if(!lectday.get(j).isEmpty()){
+                        PreparedStatement lectstatement = connectDB.prepareStatement("INSERT INTO lecture VALUES (?,?,?,?,?,?)");
+                        lectstatement.setString(1,lectID);
+                        lectstatement.setString(2,misc.formatFullDay(lectday.get(j)));
+                        lectstatement.setString(3,misc.formatFullTime(lectstart.get(j)));
+                        lectstatement.setString(4,misc.formatFullTime(lectend.get(j)));
+                        lectstatement.setString(5,coursename.toUpperCase() + " LECTURE");
+                        lectstatement.setString(6,lectlocation.get(j).toUpperCase());
+                        System.out.println(lectstatement);
+                        lectstatement.executeUpdate();
+                    }
+
+                    if(!tutoday.get(j).isEmpty()){
+                        PreparedStatement tutostatement = connectDB.prepareStatement("INSERT INTO tutorial VALUES (?,?,?,?,?,?)");
+                        tutostatement.setString(1,tutoID);
+                        tutostatement.setString(2,misc.formatFullDay(tutoday.get(j)));
+                        tutostatement.setString(3,misc.formatFullTime(tutostart.get(j)));
+                        tutostatement.setString(4,misc.formatFullTime(tutoend.get(j)));
+                        tutostatement.setString(5,coursename.toUpperCase() + " TUTORIAL");
+                        tutostatement.setString(6,tutolocation.get(j).toUpperCase());
+                        System.out.println(tutostatement);
+                        tutostatement.executeUpdate();
+                    }
+
+                    if(!labday.get(j).isEmpty()){
+                        PreparedStatement labstatement = connectDB.prepareStatement("INSERT INTO lab VALUES (?,?,?,?,?,?)");
+                        labstatement.setString(1,labID);
+                        labstatement.setString(2,misc.formatFullDay(labday.get(j)));
+                        labstatement.setString(3,misc.formatFullTime(labstart.get(j)));
+                        labstatement.setString(4,misc.formatFullTime(labend.get(j)));
+                        labstatement.setString(5,coursename.toUpperCase() + " LAB");
+                        labstatement.setString(6,lablocation.get(j).toUpperCase());
+                        System.out.println(labstatement);
+                        labstatement.executeUpdate();
+                    }
+
+
+                    PreparedStatement occStatement = connectDB.prepareStatement("INSERT INTO occ VALUES (?,?,?,?,?,?)");
+                    occStatement.setString(1,courseID + "_OCC" + actOcc);
+                    occStatement.setString(2,"OCC" + actOcc);
+                    if(lectday.get(j) != null){
+                        occStatement.setString(3,lectID);
+                    }else{
+                        occStatement.setString(3,"NONE");
+                    }
+                    if(tutoday.get(j) != null){
+                        occStatement.setString(4,tutoID);
+                    }else{
+                        occStatement.setString(4,"NONE");
+                    }
+                    if(labday.get(j) != null){
+                        occStatement.setString(5,labID);
+                    }else{
+                        occStatement.setString(5,"NONE");
+                    }
+                    occStatement.setString(6,occCapacity.get(j));
+                    System.out.println(occStatement);
+                    occStatement.executeUpdate();
+
+                    if(!lectstaffid.get(j).isEmpty()){
+                        PreparedStatement staffTeachLectureStatement = connectDB.prepareStatement("INSERT INTO staff_teach_lecture VALUES (?,?)");
+                        staffTeachLectureStatement.setString(1, lectstaffid.get(j).toUpperCase());
+                        staffTeachLectureStatement.setString(2, lectID);
+                        staffTeachLectureStatement.executeUpdate();
+                        System.out.println(staffTeachLectureStatement);
+                        
+                        PreparedStatement staffTeachCourseLectStatement = connectDB.prepareStatement("INSERT INTO staff_teach_course VALUES (?,?)");
+                        staffTeachCourseLectStatement.setString(1, lectstaffid.get(j).toUpperCase());
+                        staffTeachCourseLectStatement.setString(2, courseID);
+                        staffTeachCourseLectStatement.executeUpdate();
+                    }
+
+                    if(!tutostaffid.get(j).isEmpty()){
+                        PreparedStatement staffTeachTutorialStatement = connectDB.prepareStatement("INSERT INTO staff_teach_tutorial VALUES (?,?)");
+                        staffTeachTutorialStatement.setString(1, tutostaffid.get(j).toUpperCase());
+                        staffTeachTutorialStatement.setString(2, tutoID);
+                        staffTeachTutorialStatement.executeUpdate();
+                        System.out.println(staffTeachTutorialStatement);
+                        
+                        PreparedStatement staffTeachCourseTutoStatement = connectDB.prepareStatement("INSERT INTO staff_teach_course VALUES (?,?)");
+                        staffTeachCourseTutoStatement.setString(1, tutostaffid.get(j).toUpperCase());
+                        staffTeachCourseTutoStatement.setString(2, courseID);
+                        staffTeachCourseTutoStatement.executeUpdate();
+                    }
+
+                    if(!labstaffid.get(j).isEmpty()){
+                        PreparedStatement staffTeachLabStatement = connectDB.prepareStatement("INSERT INTO staff_teach_lab VALUES (?,?)");
+                        staffTeachLabStatement.setString(1, labstaffid.get(j).toUpperCase());
+                        staffTeachLabStatement.setString(2, labID);
+                        staffTeachLabStatement.executeUpdate();
+                        System.out.println(staffTeachLabStatement);
+                        
+                        PreparedStatement staffTeachCourseLabStatement = connectDB.prepareStatement("INSERT INTO staff_teach_course VALUES (?,?)");
+                        staffTeachCourseLabStatement.setString(1, labstaffid.get(j).toUpperCase());
+                        staffTeachCourseLabStatement.setString(2, courseID);
+                        staffTeachCourseLabStatement.executeUpdate();
+                    }
+
+                    PreparedStatement courseOccStatement = connectDB.prepareStatement("INSERT INTO course_occ VALUES (?,?)");
+                    courseOccStatement.setString(1, courseID);
+                    courseOccStatement.setString(2, courseID + "_OCC" + actOcc);
+                    courseOccStatement.executeUpdate();
+                    System.out.println(courseOccStatement);
+
+                }
+
+                System.out.println("Successfully added!");
+                Stage stage = (Stage) confirmButton.getScene().getWindow();
+                stage.close();
+            
+            //edit course so need to update
+            }else if(selectedNode > -1){
+                System.out.println(selectedNode);
+                PreparedStatement statement = connectDB.prepareStatement("UPDATE course SET course_name=?, credit_hour=?, course_category=?, course_year=?, course_sem=?, muet_band=?, nationality=?, programme=? WHERE course_id=?");
+                statement.setString(1,coursename);
+                statement.setInt(2,credithour);
+                statement.setString(3,coursecategory);
+                statement.setString(4,courseyear);
+                statement.setString(5,coursesem);
+                statement.setString(6,muetband);
+                statement.setString(7,nationality);
+                statement.setString(8,programme);
+                statement.setString(9,courseID);
+                System.out.println(statement);
+                statement.executeUpdate();
+                
+                for (int j = 0; j < occ.size(); j++) {
+                    String actOcc = occ.get(j);
+                    System.out.println(actOcc);
+
+                    String lectID = courseID + "_L" + actOcc;
+                    String tutoID = courseID + "_T" + actOcc;
+                    String labID = courseID + "_A" + actOcc;
+
+                    if(!lectday.get(j).isEmpty()){
+                        PreparedStatement lectstatement = connectDB.prepareStatement("UPDATE lecture SET lecture_day=?, lecture_start_time=?, lecture_end_time=?, lecture_name=?, lecture_location=? WHERE lecture_id=?");
+                        lectstatement.setString(1,misc.formatFullDay(lectday.get(j)));
+                        lectstatement.setString(2,misc.formatFullTime(lectstart.get(j)));
+                        lectstatement.setString(3,misc.formatFullTime(lectend.get(j)));
+                        lectstatement.setString(4,coursename.toUpperCase() + " LECTURE");
+                        lectstatement.setString(5,lectlocation.get(j).toUpperCase());
+                        lectstatement.setString(6,lectID);
+                        System.out.println(lectstatement);
+                        lectstatement.executeUpdate();
+                    }
+
+                    if(!tutoday.get(j).isEmpty()){
+                        PreparedStatement tutostatement = connectDB.prepareStatement("UPDATE tutorial SET tutorial_day=?, tutorial_start_time=?, tutorial_end_time=?, tutorial_name=?, tutorial_location=? WHERE tutorial_id=?");
+                        tutostatement.setString(1,misc.formatFullDay(tutoday.get(j)));
+                        tutostatement.setString(2,misc.formatFullTime(tutostart.get(j)));
+                        tutostatement.setString(3,misc.formatFullTime(tutoend.get(j)));
+                        tutostatement.setString(4,coursename.toUpperCase() + " TUTORIAL");
+                        tutostatement.setString(5,tutolocation.get(j).toUpperCase());
+                        tutostatement.setString(6,tutoID);
+                        System.out.println(tutostatement);
+                        tutostatement.executeUpdate();
+                    }
+
+                    if(!labday.get(j).isEmpty()){
+                        PreparedStatement labstatement = connectDB.prepareStatement("UPDATE lab SET lab_day=?, lab_start_time=?, lab_end_time=?, lab_name=?, lab_location=? WHERE lab_id=?");
+                        labstatement.setString(1,labID);
+                        labstatement.setString(2,misc.formatFullDay(labday.get(j)));
+                        labstatement.setString(3,misc.formatFullTime(labstart.get(j)));
+                        labstatement.setString(4,misc.formatFullTime(labend.get(j)));
+                        labstatement.setString(5,coursename.toUpperCase() + " LAB");
+                        labstatement.setString(6,lablocation.get(j).toUpperCase());
+                        System.out.println(labstatement);
+                        labstatement.executeUpdate();
+                    }
+
+
+                    PreparedStatement occStatement = connectDB.prepareStatement("UPDATE occ SET occ_name=?, lecture_id=?, tutorial_id=?, lab_id=?, occ_capacity=? WHERE occ_id=?");
+                    occStatement.setString(1,"OCC" + actOcc);
+                    if(lectday.get(j) != null){
+                        occStatement.setString(2,lectID);
+                    }else{
+                        occStatement.setString(2,"NONE");
+                    }
+                    if(tutoday.get(j) != null){
+                        occStatement.setString(3,tutoID);
+                    }else{
+                        occStatement.setString(3,"NONE");
+                    }
+                    if(labday.get(j) != null){
+                        occStatement.setString(4,labID);
+                    }else{
+                        occStatement.setString(4,"NONE");
+                    }
+                    occStatement.setString(5,occCapacity.get(j));
+                    occStatement.setString(6,courseID + "_OCC" + actOcc);
+                    System.out.println(occStatement);
+                    occStatement.executeUpdate();
+
+                    if(!lectstaffid.get(j).isEmpty()){
+                        PreparedStatement staffTeachLectureStatement = connectDB.prepareStatement("UPDATE staff_teach_lecture SET staff_id=? WHERE lecture_id=?");
+                        staffTeachLectureStatement.setString(1, lectstaffid.get(j).toUpperCase());
+                        staffTeachLectureStatement.setString(2, lectID);
+                        System.out.println(staffTeachLectureStatement);
+                        staffTeachLectureStatement.executeUpdate();
+                        
+                        PreparedStatement staffTeachCourseLectStatement = connectDB.prepareStatement("UPDATE staff_teach_course SET staff_id=? WHERE course_id=?");
+                        staffTeachCourseLectStatement.setString(1, lectstaffid.get(j).toUpperCase());
+                        staffTeachCourseLectStatement.setString(2, courseID);
+                        staffTeachCourseLectStatement.executeUpdate();
+                    }
+
+                    if(!tutostaffid.get(j).isEmpty()){
+                        PreparedStatement staffTeachTutorialStatement = connectDB.prepareStatement("UPDATE staff_teach_tutorial SET staff_id=? WHERE tutorial_id=?");
+                        staffTeachTutorialStatement.setString(1, tutostaffid.get(j).toUpperCase());
+                        staffTeachTutorialStatement.setString(2, tutoID);
+                        System.out.println(staffTeachTutorialStatement);
+                        staffTeachTutorialStatement.executeUpdate();
+                        
+                        PreparedStatement staffTeachCourseTutoStatement = connectDB.prepareStatement("UPDATE staff_teach_course SET staff_id=? WHERE course_id=?");
+                        staffTeachCourseTutoStatement.setString(1, tutostaffid.get(j).toUpperCase());
+                        staffTeachCourseTutoStatement.setString(2, courseID);
+                        staffTeachCourseTutoStatement.executeUpdate();
+                    }
+
+                    if(!labstaffid.get(j).isEmpty()){
+                        PreparedStatement staffTeachLabStatement = connectDB.prepareStatement("UPDATE staff_teach_lab SET staff_id=? WHERE lab_id=?");
+                        staffTeachLabStatement.setString(1, labstaffid.get(j).toUpperCase());
+                        staffTeachLabStatement.setString(2, labID);
+                        System.out.println(staffTeachLabStatement);
+                        staffTeachLabStatement.executeUpdate();
+                        
+                        PreparedStatement staffTeachCourseLabStatement = connectDB.prepareStatement("UPDATE staff_teach_course SET staff_id=? WHERE course_id=?");
+                        staffTeachCourseLabStatement.setString(1, labstaffid.get(j).toUpperCase());
+                        staffTeachCourseLabStatement.setString(2, courseID);
+                        staffTeachCourseLabStatement.executeUpdate();
+                    }
+
+                    PreparedStatement courseOccStatement = connectDB.prepareStatement("UPDATE course_occ SET occ_id=? WHERE course_id=?");
+                    courseOccStatement.setString(1, courseID + "_OCC" + actOcc);
+                    courseOccStatement.setString(2, courseID);
+                    courseOccStatement.executeUpdate();
+                    System.out.println(courseOccStatement);
+
+                }
+
+                System.out.println("Successfully edited!");
+                Stage stage = (Stage) confirmButton.getScene().getWindow();
+                stage.close();               
+                
             }
             
-            System.out.println("Successfully added!");
-            Stage stage = (Stage) confirmButton.getScene().getWindow();
-            stage.close();
             
         } catch(Exception e) {
             e.printStackTrace();
             e.getCause();
         }
     }
+    
+    
     
     public ArrayList<String> getOcc() {
         return occ;
