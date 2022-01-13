@@ -16,11 +16,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +65,7 @@ public class searchModule implements Initializable, ControlledScreen {
 
     ScreenController myController = new ScreenController();
     login_controller loginControl = new login_controller();
+    MiscFunc misc = new MiscFunc();
     
     private static int selectedTableView_index;
     
@@ -134,10 +138,11 @@ public class searchModule implements Initializable, ControlledScreen {
 
     private static ArrayList<String> occurenceIDcheck = new ArrayList<String>();
     private static ArrayList<String> courseIDcheck = new ArrayList<String>();
+    
+    private static ArrayList<String> dayCheck = new ArrayList<String>();
+    private static ArrayList<String> startTimeCheck = new ArrayList<String>();
+    private static ArrayList<String> endTimeCheck = new ArrayList<String>();
         
-    
-    
-    
     Node[] nodes = new Node[10];
     public int totalCreditHours;
     public int credithourcheck;
@@ -196,7 +201,8 @@ public class searchModule implements Initializable, ControlledScreen {
         showing = myController.getShowing();
         //Code below query all the things needed
         try {
-            //Query for current registed course in an array
+            
+            //Query for current registered course in an array
             ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
             while(queryResultForCheck.next()) {
                 occurenceIDcheck.add(queryResultForCheck.getString("occ_id"));
@@ -218,6 +224,37 @@ public class searchModule implements Initializable, ControlledScreen {
                 studentYear = queryForStudentQualification.getInt("student_studyyear");
                 studentProgramme = queryForStudentQualification.getString("student_programme");
                 credithourcheck = queryForStudentQualification.getInt("credit_hour");
+            }
+            
+            //Check for register course punya time to avoid crashing
+            String timeQuery = "SELECT * FROM \n" +
+                            "(SELECT \n" +
+                            "lecture.lecture_day AS dayy, lecture.lecture_start_time AS start_time, lecture.lecture_end_time AS end_time\n" +
+                            "FROM student_take_course\n" +
+                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
+                            "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                            "WHERE student_take_course.matric_num='"+matric_num+"' AND lecture.lecture_start_time!='NULL') AS lect\n" +
+                            "UNION  \n" +
+                            "SELECT * FROM \n" +
+                            "(SELECT \n" +
+                            "tutorial.tutorial_day, tutorial.tutorial_start_time, tutorial.tutorial_end_time\n" +
+                            "FROM student_take_course\n" +
+                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
+                            "INNER JOIN tutorial ON tutorial.tutorial_id=occ.tutorial_id\n" +
+                            "WHERE student_take_course.matric_num='"+matric_num+"' AND tutorial.tutorial_start_time!='NULL') AS tuto\n" +
+                            "UNION \n" +
+                            "SELECT * FROM \n" +
+                            "(SELECT \n" +
+                            "lab.lab_day, lab.lab_start_time, lab.lab_end_time\n" +
+                            "FROM student_take_course\n" +
+                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
+                            "INNER JOIN lab ON lab.lab_id=occ.lab_id\n" +
+                            "WHERE student_take_course.matric_num='"+matric_num+"' AND lab.lab_start_time!='NULL') AS labi";
+            ResultSet queryForTime = connectDB.createStatement().executeQuery(timeQuery);
+            while(queryForTime.next()) {
+                dayCheck.add(queryForTime.getString("dayy"));
+                startTimeCheck.add(queryForTime.getString("start_time"));
+                endTimeCheck.add(queryForTime.getString("end_time"));
             }
             
             totalCreditHours = credithourcheck;
@@ -411,7 +448,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 @Override
                 public void handle(MouseEvent event) {
                     if (!courseTableView.getSelectionModel().equals(null)) {
-                        MiscFunc misc = new MiscFunc();
+                        
                         occIDCheck =courseTableView.getSelectionModel().getSelectedItem().getOccID();
 
                         courseCodeLabel.setText(courseTableView.getSelectionModel().getSelectedItem().getCourseID());
@@ -519,6 +556,105 @@ public class searchModule implements Initializable, ControlledScreen {
             clearMemory();
         }
     }
+    
+    public int checkTime(String startTimeString, String endTimeString, ArrayList<String> startlist, ArrayList<String> endlist){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        System.out.println("start time " + startTimeString);
+        System.out.println("end time " + endTimeString);
+//        if(startTimeString != null || endTimeString != null || startTimeString.length() == 0 || endTimeString.length() == 0){
+            try {
+                Date startTime = sdf.parse(startTimeString);
+                Date endTime = sdf.parse(endTimeString);
+                for (int j = 0; j < startlist.size(); j++) {
+                    Date startTimeForCheck = sdf.parse(startlist.get(j));
+                    Date endTimeForCheck = sdf.parse(endlist.get(j));
+                    if(isOverlapping(startTime, endTime, startTimeForCheck, endTimeForCheck)){
+                        System.out.println("array start " + startlist.get(j));
+                        System.out.println("array end " + endlist.get(j));
+                        System.out.println("Crash Time!");
+                        return 1;
+                    }
+                }
+            } catch (ParseException | NullPointerException ex) {
+//                Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("No crash time!");
+                return 0;
+            }
+            
+//        }
+        System.out.println("No crash time!");
+        return 0;
+    }
+    
+    public int checkDay(String studyDay, ArrayList<String> studyDayArray) {
+        System.out.println("ori " + studyDay);
+        if(studyDay != null){
+            for (int j = 0; j < studyDayArray.size(); j++) {
+                if(studyDay.equals(studyDayArray.get(j))){
+                    System.out.println(studyDayArray.get(j) + " in array");
+                    System.out.println("Crash Day");
+                    return 1;
+                }
+            }
+        }
+        System.out.println("No crash day!");
+        return 0;
+    }
+    
+    public boolean isDayCrashingInDatabase(){       
+        int checkDayInt = 0; // if larger than 0, measn crash
+ 
+        String lectday = "" + courseTableView.getSelectionModel().getSelectedItem().getLectDay();
+        checkDayInt += checkDay(lectday, dayCheck);
+        if(checkDayInt > 0){
+            if(isTimeCrashingInDatabase()){
+                return true;
+            }
+        }
+        String tutoday = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoDay();
+        checkDayInt += checkDay(tutoday, dayCheck);
+        if(checkDayInt > 0){
+            if(isTimeCrashingInDatabase()){
+                return true;
+            }
+        }
+        String labday = "" + courseTableView.getSelectionModel().getSelectedItem().getLabDay();
+        checkDayInt += checkDay(labday, dayCheck);
+        if(checkDayInt > 0){
+            if(isTimeCrashingInDatabase()){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean isTimeCrashingInDatabase(){
+        int checkTimeInt = 0; //if larger then 0, means crash
+
+        String lectStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLectStartTime();
+        String lectEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLectEndTime();
+        checkTimeInt += checkTime(lectStartTime, lectEndTime, startTimeCheck, endTimeCheck);
+        if(checkTimeInt > 0){
+            return true;
+        }
+        String tutoStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime();
+        String tutoEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime();
+        checkTimeInt += checkTime(tutoStartTime, tutoEndTime, startTimeCheck, endTimeCheck);
+        if(checkTimeInt > 0){
+            return true;
+        }
+
+        String labStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime();
+        String labEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
+        checkTimeInt += checkTime(labStartTime, labEndTime, startTimeCheck, endTimeCheck);
+        if(checkTimeInt > 0){
+            return true;
+        }
+        
+        
+        return false;
+    }
 
     //add course to the right panel
     public void addModule(ActionEvent event) throws Exception { 
@@ -528,67 +664,98 @@ public class searchModule implements Initializable, ControlledScreen {
         String occID = "" + courseTableView.getSelectionModel().getSelectedItem().getOccID();
         String courseName = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseName();
         
-        if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID) || courseIDarray.contains(courseID)){
+        String lectday = "" + courseTableView.getSelectionModel().getSelectedItem().getLectDay();
+        String tutoday = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoDay();
+        String labday = "" + courseTableView.getSelectionModel().getSelectedItem().getLabDay();
+        
+        String lectStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLectStartTime();
+        String lectEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLectEndTime();
+        String tutoStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime();
+        String tutoEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime();
+        String labStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime();
+        String labEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
+        
+        
+
+        if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID) || courseIDarray.contains(courseID) ){
             warningLabel.setText("Already picked!");
         }else{
             warningLabel.setText("");
-            if (totalCreditHours + Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour()) <= 22 ) {
-                
-                try{
-                    pickedModuleModel addingCourse = new pickedModuleModel(courseID);
-                    if (courseIDcheck.contains(courseID)) {
-                        System.out.println("The coursed already picked");
-                    }else{
-                        courseIDarray.add(courseID);
-                        coursesModel.add(addingCourse);
-                        occurenceID.add(occID);
-                        courseNames.add(courseName);
-                        System.out.println(addingCourse + " Has been add");
-                    }
-                
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
-                    nodes[i] = loader.load();
-                    final int h = i;
+            if(isDayCrashingInDatabase()){
+                warningLabel.setText("Time crashing!");
+            }else{
+                warningLabel.setText("");
+                if (totalCreditHours + Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour()) <= 22 ) {
+                    warningLabel.setText("");
+                    try{
+                        pickedModuleModel addingCourse = new pickedModuleModel(courseID);
+                        if (courseIDcheck.contains(courseID)) {
+                            System.out.println("The coursed already picked");
+                        }else{
+                            courseIDarray.add(courseID);
+                            coursesModel.add(addingCourse);
+                            occurenceID.add(occID);
+                            courseNames.add(courseName);
+                                                        
+                            dayCheck.add(lectday);
+                            startTimeCheck.add(lectStartTime);
+                            endTimeCheck.add(lectEndTime);
+                            
+                            dayCheck.add(tutoday);
+                            startTimeCheck.add(tutoStartTime);
+                            endTimeCheck.add(tutoEndTime);
+                            
+                            dayCheck.add(labday);
+                            startTimeCheck.add(labStartTime);
+                            endTimeCheck.add(labEndTime);
+        
+                            System.out.println(addingCourse + " Has been add");
+                        }
 
-                    pickedModuleController controller = loader.getController();
-                    controller.setCourseName(coursesModel.get(i).getCourseIDLabel());
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
+                        nodes[i] = loader.load();
+                        final int h = i;
 
-
-                    vCourseNames.getChildren().add(nodes[i]);
-                    i++;
-
-                    nodes[h].setOnMouseEntered(evt -> {
-                        //add effect
-                        nodes[h].setStyle("-fx-background-color: #084654");
-                    });
-                    nodes[h].setOnMouseExited(evt -> {
-                        //add effect
-                        nodes[h].setStyle("-fx-background-color: #FFFFFF");
-                    });
-                    nodes[h].setOnMousePressed(evt -> {
-                        //add effect
-                        nodes[h].setStyle("-fx-background-color: #000000");
-                        deleteModule(h);
-                        i--;
-                        creditHour.remove(h);
-                        totalCreditHours = credithourcheck;
-                        creditHour.forEach((hour)-> totalCreditHours+=hour);
-                        creditHourLabel.setText("Credits Hours: " + totalCreditHours);
-                    });
-
-                    }catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                creditHour.add(credithours);
-                totalCreditHours += creditHour.get(creditHour.size()-1); 
-//                creditHour.forEach((hour)-> totalCreditHours+=hour);
-                creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+                        pickedModuleController controller = loader.getController();
+                        controller.setCourseName(coursesModel.get(i).getCourseIDLabel());
 
 
-            } else {
-                warningLabel.setText("Total credit hours exceed 22 hours!");
+                        vCourseNames.getChildren().add(nodes[i]);
+                        i++;
+
+                        nodes[h].setOnMouseEntered(evt -> {
+                            //add effect
+                            nodes[h].setStyle("-fx-background-color: #084654");
+                        });
+                        nodes[h].setOnMouseExited(evt -> {
+                            //add effect
+                            nodes[h].setStyle("-fx-background-color: #FFFFFF");
+                        });
+                        nodes[h].setOnMousePressed(evt -> {
+                            //add effect
+                            nodes[h].setStyle("-fx-background-color: #000000");
+                            deleteModule(h);
+                            i--;
+                            creditHour.remove(h);
+                            totalCreditHours = credithourcheck;
+                            creditHour.forEach((hour)-> totalCreditHours+=hour);
+                            creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+                        });
+
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    creditHour.add(credithours);
+                    totalCreditHours += creditHour.get(creditHour.size()-1); 
+    //                creditHour.forEach((hour)-> totalCreditHours+=hour);
+                    creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+
+
+                } else {
+                    warningLabel.setText("Total credit hours exceed 22 hours!");
+                }
             }
         }    
     }
@@ -599,6 +766,15 @@ public class searchModule implements Initializable, ControlledScreen {
         occurenceID.remove(i);
         courseNames.remove(i);
         vCourseNames.getChildren().remove(nodes[i]);
+        dayCheck.remove(i*3);
+        dayCheck.remove(i*3+1);
+        dayCheck.remove(i*3+2);
+        startTimeCheck.remove(i*3);
+        startTimeCheck.remove(i*3+1);
+        startTimeCheck.remove(i*3+2);
+        endTimeCheck.remove(i*3);
+        endTimeCheck.remove(i*3+1);
+        endTimeCheck.remove(i*3+2);
     }
 
     public void search() {
@@ -882,22 +1058,20 @@ public class searchModule implements Initializable, ControlledScreen {
     }
         
     public void clearMemory(){
-        occurenceIDcheck.clear();
-        occurenceID.clear();
-        courseIDcheck.clear();
         courseIDarray.clear();
+        occurenceID.clear();
         courseNames.clear();
-        vCourseNames.getChildren().clear();
+        occurenceIDcheck.clear();
+        courseIDcheck.clear();
         creditHour.clear();
+        dayCheck.clear();
+        startTimeCheck.clear();
+        endTimeCheck.clear();
+        vCourseNames.getChildren().clear();
     }
     
     public void clearMemoryWhenLogout(){
-        courseIDarray.clear();
-        occurenceID.clear();
-        courseNames.clear();
-        occurenceIDcheck.clear();
-        courseIDcheck.clear();
-        creditHour.clear();
+        clearMemory();
         totalCreditHours = 0;
         credithourcheck = 0;
         i = 0;
@@ -905,7 +1079,7 @@ public class searchModule implements Initializable, ControlledScreen {
     }
     
     public static boolean isOverlapping(Date start1, Date end1, Date start2, Date end2) {
-        return !start1.after(end2) && !start2.after(end1);
+        return start1.before(end2) && start2.before(end1);
     }
     
     public String getCourseIDcheck(int i) {
