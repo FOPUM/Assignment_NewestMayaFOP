@@ -24,6 +24,9 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -110,50 +113,81 @@ public class login_controller implements Initializable,ControlledScreen{
 
     public void validate_login(){
         //Verify the information match with database ot not
+        
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
+        Statement statement;
+        String validatePassword = "";
         
         String verify_login_student = "SELECT COUNT(1) FROM student WHERE matric_num='" + username_text_field.getText() + "' AND student_password='" + password_field.getText() + "';";
         
         String verify_login_staff = "SELECT COUNT(1) FROM staff WHERE staff_id='" + username_text_field.getText() + "' AND staff_password='" + password_field.getText() + "';";
+        String verify_login_staffInfo = "SELECT * FROM staff WHERE staff_id='" + username_text_field.getText()+"'";
+        
         
         try {
-            Statement statement = connectDB.createStatement();
-            if(username_text_field.getText().toLowerCase().startsWith("a")){
-                ResultSet query_result_student = statement.executeQuery(verify_login_staff);
-                while(query_result_student.next()) {
-                    if(query_result_student.getInt(1) == 1) {
-                        //login_message_label.setText("Congratulations!");
-                        validated = 1;
-                        username = username_text_field.getText().toLowerCase();
-                        if(username.toUpperCase().equals("A6666")){
-                            accStatus = 'A';
-                        }else{
-                            accStatus = 'T';
-                        }
-                        System.out.println(accStatus);
-                    }else {
-                        login_message_label.setText("Invalid login. Please try again.");
-                    }  
+            statement = connectDB.createStatement();
+            ResultSet query_result_staffInfo = statement.executeQuery(verify_login_staffInfo);
+            while(query_result_staffInfo.next()){
+                validatePassword = query_result_staffInfo.getString("staff_password");
+                validatePassword = caesarCipherEncrypt(validatePassword,5);
+                System.out.println(validatePassword);
+                validatePassword = caesarCipherDecrypt(validatePassword,5);
+                System.out.println(validatePassword);
+            }
+            if (validatePassword.equals(username_text_field.getText()) ) {
+                validated = 1;
+                if (username_text_field.getText().toUpperCase().equals("A6666")) {
+                    accStatus = 'A';
                 }
-            }else{  
-                ResultSet query_result_student = statement.executeQuery(verify_login_student);
-                while(query_result_student.next()) {
-                    
-                    if(query_result_student.getInt(1) == 1) {
-                        //login_message_label.setText("Congratulations!");
-                        validated = 1;
-                        username = username_text_field.getText().toLowerCase();
-                        accStatus = 'S';
-                    }else {
-                        login_message_label.setText("Invalid login. Please try again.");
-                    }  
+                else{
+                    accStatus = 'T';
                 }
-            }   
-        } catch(Exception e) {
-            e.printStackTrace();
-            e.getCause();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        try {
+//            Statement statement = connectDB.createStatement();
+//            if(username_text_field.getText().toLowerCase().startsWith("a")){
+//                ResultSet query_result_student = statement.executeQuery(verify_login_staff);
+//                
+//                while(query_result_student.next()) {
+//                    
+//                    System.out.println("validatePassword");
+//                    
+//                    if(query_result_student.getInt(1) == 1) {
+//                        //login_message_label.setText("Congratulations!");
+//                        validated = 1;
+//                        username = username_text_field.getText().toLowerCase();
+//                        if(username.toUpperCase().equals("A6666")){
+//                            accStatus = 'A';
+//                        }else{
+//                            accStatus = 'T';
+//                        }
+//                        System.out.println(accStatus);
+//                    }else {
+//                        login_message_label.setText("Invalid login. Please try again.");
+//                    }  
+//                }
+//            }else{  
+//                ResultSet query_result_student = statement.executeQuery(verify_login_student);
+//                while(query_result_student.next()) {
+//                    
+//                    if(query_result_student.getInt(1) == 1) {
+//                        //login_message_label.setText("Congratulations!");
+//                        validated = 1;
+//                        username = username_text_field.getText().toLowerCase();
+//                        accStatus = 'S';
+//                    }else {
+//                        login_message_label.setText("Invalid login. Please try again.");
+//                    }  
+//                }
+//            }   
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//            e.getCause();
+//        }
     }
     
     public void sign_up_button_on_action(ActionEvent event) {
@@ -187,5 +221,38 @@ public class login_controller implements Initializable,ControlledScreen{
         login_controller.accStatus = accStatus;
     }
     
+    public static String caesarCipherEncrypt(String text, int shift) {
+        String result = "";
+ 
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isUpperCase(text.charAt(i))) {
+                char ch = (char) (((int) text.charAt(i) +
+                        shift - 65) % 26 + 65);
+                result += ch;
+            } else {
+                char ch = (char) (((int) text.charAt(i) +
+                        shift - 97) % 26 + 97);
+                result += ch;
+            }
+        }
+        return result;
+    }
    
+     public static String caesarCipherDecrypt(String encryptedPassword, int shift) {
+        String result = "";
+        
+        for (int i = 0; i < encryptedPassword.length(); i++) {
+            if (Character.isUpperCase(encryptedPassword.charAt(i))) {
+                char ch = (char) (((int) encryptedPassword.charAt(i) +
+                        shift - 65) % 26 + 65);
+                result += ch;
+            } else {
+                char ch = (char) (((int) encryptedPassword.charAt(i) +
+                        shift - 97) % 26 + 97);
+                result += ch;
+            }
+        }
+        return result;
+    }
+    
 }
