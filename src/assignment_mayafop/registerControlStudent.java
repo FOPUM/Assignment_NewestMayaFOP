@@ -53,6 +53,7 @@ import javafx.util.StringConverter;
 public class registerControlStudent implements Initializable,ControlledScreen {
     ScreenController myController;
     animation Animation;
+    login_controller LoginControl = new login_controller(); 
     @FXML
     private Button back_button;
     @FXML
@@ -162,6 +163,7 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         String matric_id = matricNumberTextField.getText();
         String siswamail = siswamailTextField.getText();
         String password = passwordTextField.getText();
+        password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
         String ic = ICTextField.getText();
         String sex = genderComboBox.getValue();
         String faculty = facultyComboBox.getValue();

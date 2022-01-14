@@ -72,21 +72,25 @@ public class login_controller implements Initializable,ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        username_text_field.setText("U2102856");
-        password_field.setText("u2102856");
+        username_text_field.setText("A6666");
+        password_field.setText("PASSWORD");
         password_field.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
-              checkConditionForLogin();
+                try {
+                    checkConditionForLogin();
+                } catch (SQLException ex) {
+                    Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
     
     int validated = 0; 
-    public void login_button_on_action(ActionEvent event) throws IOException {
+    public void login_button_on_action(ActionEvent event) throws IOException, SQLException {
         checkConditionForLogin();
     }
     
-    public void checkConditionForLogin(){
+    public void checkConditionForLogin() throws SQLException{
         //Click on login button
         if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
             validate_login();
@@ -111,83 +115,32 @@ public class login_controller implements Initializable,ControlledScreen{
     }
     
 
-    public void validate_login(){
-        //Verify the information match with database ot not
-        
+    public void validate_login() throws SQLException{
+        login_message_label.setText("");
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
-        Statement statement;
-        String validatePassword = "";
-        
-        String verify_login_student = "SELECT COUNT(1) FROM student WHERE matric_num='" + username_text_field.getText() + "' AND student_password='" + password_field.getText() + "';";
-        
-        String verify_login_staff = "SELECT COUNT(1) FROM staff WHERE staff_id='" + username_text_field.getText() + "' AND staff_password='" + password_field.getText() + "';";
-        String verify_login_staffInfo = "SELECT * FROM staff WHERE staff_id='" + username_text_field.getText()+"'";
-        
-        
-        try {
-            statement = connectDB.createStatement();
-            ResultSet query_result_staffInfo = statement.executeQuery(verify_login_staffInfo);
-            while(query_result_staffInfo.next()){
-                validatePassword = query_result_staffInfo.getString("staff_password");
-                validatePassword = caesarCipherEncrypt(validatePassword,5);
-                System.out.println(validatePassword);
-                validatePassword = caesarCipherDecrypt(validatePassword,5);
-                System.out.println(validatePassword);
+        Statement statement = connectDB.createStatement();
+        ResultSet query_result;
+        int encryptShift = 9;
+        String verify_login_studentInfo = "SELECT * FROM student WHERE matric_num='" + username_text_field.getText()+"'";;
+        String verify_login_staffInfo = "SELECT * FROM staff WHERE staff_id='" + username_text_field.getText()+"'";;
+        String verify_login_admin = "SELECT * FROM admin WHERE staff_id='" + username_text_field.getText() + "'";
+        if (username_text_field.getText().toLowerCase().startsWith("a")) {//Staff validation
+            query_result = statement.executeQuery(verify_login_admin);
+            if (query_result.next()) {
+                query_result = statement.executeQuery(verify_login_staffInfo);
+                verifyAccountWithDatabase(query_result,encryptShift, 'A');
             }
-            if (validatePassword.equals(username_text_field.getText()) ) {
-                validated = 1;
-                if (username_text_field.getText().toUpperCase().equals("A6666")) {
-                    accStatus = 'A';
-                }
-                else{
-                    accStatus = 'T';
-                }
+            else{
+                query_result = statement.executeQuery(verify_login_staffInfo);
+                verifyAccountWithDatabase(query_result,encryptShift, 'T');
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//        try {
-//            Statement statement = connectDB.createStatement();
-//            if(username_text_field.getText().toLowerCase().startsWith("a")){
-//                ResultSet query_result_student = statement.executeQuery(verify_login_staff);
-//                
-//                while(query_result_student.next()) {
-//                    
-//                    System.out.println("validatePassword");
-//                    
-//                    if(query_result_student.getInt(1) == 1) {
-//                        //login_message_label.setText("Congratulations!");
-//                        validated = 1;
-//                        username = username_text_field.getText().toLowerCase();
-//                        if(username.toUpperCase().equals("A6666")){
-//                            accStatus = 'A';
-//                        }else{
-//                            accStatus = 'T';
-//                        }
-//                        System.out.println(accStatus);
-//                    }else {
-//                        login_message_label.setText("Invalid login. Please try again.");
-//                    }  
-//                }
-//            }else{  
-//                ResultSet query_result_student = statement.executeQuery(verify_login_student);
-//                while(query_result_student.next()) {
-//                    
-//                    if(query_result_student.getInt(1) == 1) {
-//                        //login_message_label.setText("Congratulations!");
-//                        validated = 1;
-//                        username = username_text_field.getText().toLowerCase();
-//                        accStatus = 'S';
-//                    }else {
-//                        login_message_label.setText("Invalid login. Please try again.");
-//                    }  
-//                }
-//            }   
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//            e.getCause();
-//        }
+        }//Staff validation
+        else{//Student Validation
+            query_result = statement.executeQuery(verify_login_studentInfo);
+            verifyAccountWithDatabase(query_result,encryptShift, 'S');
+        }//Student Validation
+
     }
     
     public void sign_up_button_on_action(ActionEvent event) {
@@ -221,16 +174,61 @@ public class login_controller implements Initializable,ControlledScreen{
         login_controller.accStatus = accStatus;
     }
     
-    public static String caesarCipherEncrypt(String text, int shift) {
+    public void verifyAccountWithDatabase(ResultSet queryResult, int encryptShift, char accType) throws SQLException{
+        
+        String validatePassword = "";
+                if(queryResult.next()){
+//Account exits, down here is password validation
+                    if (accType == 'A' || accType == 'T') {
+                        validatePassword = queryResult.getString("staff_password");
+                    }
+                    else if(accType == 'S'){
+                        validatePassword = queryResult.getString("student_password");
+                    }
+                    
+                    validatePassword = caesarCipherDecrypt(validatePassword,encryptShift);
+                    if (validatePassword.equals(password_field.getText()) ) {
+                        validated = 1;
+                        username = username_text_field.getText();
+                        switch (accType) {
+                            case 'A':
+                                accStatus = 'A';
+                                break;
+                            case 'T':
+                                accStatus = 'T';
+                                break;
+                            case 'S':
+                                accStatus = 'S';
+                                break;
+                            default:
+                                break;
+                        }
+                        login_message_label.setText("");
+                    }
+                    else{ // Password is wrong
+                        login_message_label.setText("Wrong Password. Did you forget your password?");
+                    }
+//Password validation                    
+                }
+                else{ //User not Exist
+                    login_message_label.setText("User not exist. Please sign up.");
+                }
+    }
+    
+    public String caesarCipherEncrypt(String plainPassword, int shift) {
         String result = "";
  
-        for (int i = 0; i < text.length(); i++) {
-            if (Character.isUpperCase(text.charAt(i))) {
-                char ch = (char) (((int) text.charAt(i) +
+        for (int i = 0; i < plainPassword.length(); i++) {
+            if (Character.isDigit(plainPassword.charAt(i))) {
+                char ch = (char) (((int) plainPassword.charAt(i) + shift - 48) % 10 +48);
+                result += ch;
+            }
+            else if (Character.isUpperCase(plainPassword.charAt(i))) {
+                char ch = (char) (((int) plainPassword.charAt(i) +
                         shift - 65) % 26 + 65);
                 result += ch;
-            } else {
-                char ch = (char) (((int) text.charAt(i) +
+            } else if(Character.isLowerCase(plainPassword.charAt(i))){
+                char ch = (char) (((int) plainPassword.charAt(i) +
                         shift - 97) % 26 + 97);
                 result += ch;
             }
@@ -238,17 +236,32 @@ public class login_controller implements Initializable,ControlledScreen{
         return result;
     }
    
-     public static String caesarCipherDecrypt(String encryptedPassword, int shift) {
+     public String caesarCipherDecrypt(String encryptedPassword, int shift) {
         String result = "";
-        
+        int encryptShift = shift;
         for (int i = 0; i < encryptedPassword.length(); i++) {
-            if (Character.isUpperCase(encryptedPassword.charAt(i))) {
-                char ch = (char) (((int) encryptedPassword.charAt(i) +
-                        shift - 65) % 26 + 65);
+            shift = encryptShift;
+            if (Character.isDigit(encryptedPassword.charAt(i))) {
+                shift = 10 -shift;
+                if (shift <= 0) {
+                    shift += 10;
+                }
+                char ch = (char) (((int) encryptedPassword.charAt(i) + shift - 48) % 10 +48);
                 result += ch;
-            } else {
-                char ch = (char) (((int) encryptedPassword.charAt(i) +
-                        shift - 97) % 26 + 97);
+            }
+            else if (Character.isUpperCase(encryptedPassword.charAt(i))) {
+                shift = 26 - shift;
+                if (shift<=0) {
+                     shift+=26;
+                }
+                char ch = (char) (((int) encryptedPassword.charAt(i) + shift - 65) % 26 + 65);
+                result += ch;
+            } else if(Character.isLowerCase(encryptedPassword.charAt(i))){
+                shift = 26 - shift;
+                if (shift<=0) {
+                     shift+=26;
+                }
+                char ch = (char) (((int) encryptedPassword.charAt(i) + shift - 97) % 26 + 97);
                 result += ch;
             }
         }

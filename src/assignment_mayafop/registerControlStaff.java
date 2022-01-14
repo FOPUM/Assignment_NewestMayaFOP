@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 public class registerControlStaff implements Initializable,ControlledScreen{
     ScreenController myController;
     animation Animation;
-    
+    login_controller LoginControl = new login_controller(); 
     @FXML
     private Label message_label;
     @FXML
@@ -89,6 +89,7 @@ public class registerControlStaff implements Initializable,ControlledScreen{
         String staff_id = staffIDTextField.getText();
         String siswamail = umMailTextField.getText();
         String password = passwordField.getText();
+        password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
 
         try {
             PreparedStatement statement = connectDB.prepareStatement("INSERT INTO staff (staff_id, staff_email, staff_name, staff_password) VALUES (?,?,?,?)");
