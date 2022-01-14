@@ -79,10 +79,10 @@ public class timetable implements Initializable, ControlledScreen {
                                 "course.course_name AS courseName, lecture.lecture_day AS courseDay, \n" +
                                 "lecture.lecture_start_time AS courseStartTime, lecture.lecture_end_time AS courseEndTime\n" +
                                 "FROM occ\n" +
-                                "INNER JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
-                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                "INNER JOIN course ON course.course_id=course_occ.course_id\n" +
-                                "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                                "LEFT JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
+                                "LEFT JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "LEFT JOIN course ON course.course_id=course_occ.course_id\n" +
+                                "LEFT JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
                                 "WHERE student_take_course.matric_num='"+matric_num+"' AND student_take_course.course_status='Y') AS lect\n" +
                                 "UNION ALL\n" +
                                 "SELECT * FROM \n" +
@@ -90,10 +90,10 @@ public class timetable implements Initializable, ControlledScreen {
                                 "course.course_name AS courseName, tutorial.tutorial_day AS courseDay, \n" +
                                 "tutorial.tutorial_start_time AS courseStartTime, tutorial.tutorial_end_time AS courseEndTime\n" +
                                 "FROM occ\n" +
-                                "INNER JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
-                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                "INNER JOIN course ON course.course_id=course_occ.course_id\n" +
-                                "INNER JOIN tutorial ON tutorial.tutorial_id=occ.tutorial_id\n" +
+                                "LEFT JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
+                                "LEFT JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "LEFT JOIN course ON course.course_id=course_occ.course_id\n" +
+                                "LEFT JOIN tutorial ON tutorial.tutorial_id=occ.tutorial_id\n" +
                                 "WHERE student_take_course.matric_num='"+matric_num+"' AND student_take_course.course_status='Y') AS tuto\n" +
                                 "UNION ALL\n" +
                                 "SELECT * FROM\n" +
@@ -101,10 +101,10 @@ public class timetable implements Initializable, ControlledScreen {
                                 "course.course_name AS courseName, lab.lab_day AS courseDay, \n" +
                                 "lab.lab_start_time AS courseStartTime, lab.lab_end_time AS courseEndTime\n" +
                                 "FROM occ\n" +
-                                "INNER JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
-                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                "INNER JOIN course ON course.course_id=course_occ.course_id\n" +
-                                "INNER JOIN lab ON lab.lab_id=occ.lab_id\n" +
+                                "LEFT JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
+                                "LEFT JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "LEFT JOIN course ON course.course_id=course_occ.course_id\n" +
+                                "LEFT JOIN lab ON lab.lab_id=occ.lab_id\n" +
                                 "WHERE student_take_course.matric_num='"+matric_num+"' AND student_take_course.course_status='Y') AS labb";
             ResultSet queryForCourseDetails = connectDB.createStatement().executeQuery(courseDetails);
             while(queryForCourseDetails.next()) {
@@ -132,31 +132,31 @@ public class timetable implements Initializable, ControlledScreen {
             String courseDetails="SELECT * FROM \n" +
                                 "(SELECT 'Lecture' AS courseMode, occ.occ_id AS occID, course.course_id AS courseID, course.course_name AS courseName, lecture.lecture_day AS courseDay, lecture.lecture_start_time AS courseStartTime, lecture.lecture_end_time AS courseEndTime\n" +
                                 "FROM occ\n" +
-                                "INNER JOIN lecture ON occ.lecture_id=lecture.lecture_id\n" +
-                                "INNER JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
-                                "INNER JOIN staff ON staff_teach_lecture.staff_id=staff.staff_id\n" +
-                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                "INNER JOIN course ON course.course_id=course_occ.course_id\n" +
+                                "LEFT JOIN lecture ON occ.lecture_id=lecture.lecture_id\n" +
+                                "LEFT JOIN staff_teach_lecture ON occ.lecture_id=staff_teach_lecture.lecture_id\n" +
+                                "LEFT JOIN staff ON staff_teach_lecture.staff_id=staff.staff_id\n" +
+                                "LEFT JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "LEFT JOIN course ON course.course_id=course_occ.course_id\n" +
                                 "WHERE staff.staff_id='"+matric_num+"') AS lect\n" +
                                 "UNION ALL \n" +
                                 "SELECT * FROM \n" +
                                 "(SELECT 'Tutorial' AS courseMode, occ.occ_id AS occID, course.course_id AS courseID, course.course_name AS courseName, tutorial.tutorial_day AS courseDay, tutorial.tutorial_start_time AS courseStartTime, tutorial.tutorial_end_time AS courseEndTime\n" +
                                 "FROM occ\n" +
-                                "INNER JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
-                                "INNER JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
-                                "INNER JOIN staff ON staff_teach_tutorial.staff_id=staff.staff_id\n" +
-                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                "INNER JOIN course ON course.course_id=course_occ.course_id\n" +
+                                "LEFT JOIN tutorial ON occ.tutorial_id=tutorial.tutorial_id\n" +
+                                "LEFT JOIN staff_teach_tutorial ON occ.tutorial_id=staff_teach_tutorial.tutorial_id\n" +
+                                "LEFT JOIN staff ON staff_teach_tutorial.staff_id=staff.staff_id\n" +
+                                "LEFT JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "LEFT JOIN course ON course.course_id=course_occ.course_id\n" +
                                 "WHERE staff.staff_id='"+matric_num+"') AS tuto\n" +
                                 "UNION ALL \n" +
                                 "SELECT * FROM \n" +
                                 "(SELECT 'Lab' AS courseMode, occ.occ_id AS occID, course.course_id AS courseID, course.course_name AS courseName, lab.lab_day AS courseDay, lab.lab_start_time AS courseStartTime, lab.lab_end_time AS courseEndTime\n" +
                                 "FROM occ\n" +
-                                "INNER JOIN lab ON occ.lab_id=lab.lab_id\n" +
-                                "INNER JOIN staff_teach_lab ON occ.lab_id=staff_teach_lab.lab_id\n" +
-                                "INNER JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
-                                "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                "INNER JOIN course ON course.course_id=course_occ.course_id\n" +
+                                "LEFT JOIN lab ON occ.lab_id=lab.lab_id\n" +
+                                "LEFT JOIN staff_teach_lab ON occ.lab_id=staff_teach_lab.lab_id\n" +
+                                "LEFT JOIN staff ON staff_teach_lab.staff_id=staff.staff_id\n" +
+                                "LEFT JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
+                                "LEFT JOIN course ON course.course_id=course_occ.course_id\n" +
                                 "WHERE staff.staff_id='"+matric_num+"') AS labb\n";
             ResultSet queryForCourseDetails = connectDB.createStatement().executeQuery(courseDetails);
             while(queryForCourseDetails.next()) {
