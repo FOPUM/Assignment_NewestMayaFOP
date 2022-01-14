@@ -456,18 +456,28 @@ public class searchModule implements Initializable, ControlledScreen {
                         creditsLabel.setText("Credits: " + courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
                         occurenceLabel.setText("Occurence: " + courseTableView.getSelectionModel().getSelectedItem().getOccName().substring(3));
 
+                        if(courseTableView.getSelectionModel().getSelectedItem().getLectDay() != null){
                         String lectureTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLectDay()) + "  "
                                 + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectStartTime()) + "-" 
                                 + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLectEndTime());
                         lectureTimeLabel.setText(lectureTime);
                         lectureLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getLectStaff()));
+                        }else{
+                            lectureTimeLabel.setText("");
+                            lectureLecturerLabel.setText("");
+                        }
 
+                        if(courseTableView.getSelectionModel().getSelectedItem().getTutoDay() != null){
                         String tutorialTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getTutoDay()) + "  "
                                 + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoStartTime()) + "-" 
                                 + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getTutoEndTime());
                         tutorialTimeLabel.setText(tutorialTime);
                         tutorialLecturerLabel.setText(misc.upperLetter(courseTableView.getSelectionModel().getSelectedItem().getTutoStaff()));
-
+                        }else{
+                            tutorialTimeLabel.setText("");
+                            tutorialLecturerLabel.setText("");
+                        }
+                        
                         if(courseTableView.getSelectionModel().getSelectedItem().getLabDay() != null){
                             String labTime = misc.formatDay(courseTableView.getSelectionModel().getSelectedItem().getLabDay()) + "  "
                                 + misc.formatTime(courseTableView.getSelectionModel().getSelectedItem().getLabStartTime()) + "-" 
