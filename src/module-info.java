@@ -13,6 +13,10 @@ module Assignment_MayaFOP {
     requires javafx.swing;
     requires javafx.web;
     requires java.sql;
+    requires java.persistence;
+    requires java.mail;
+    requires java.activation;
+    requires java.rmi;
     
     
     opens assignment_mayafop;

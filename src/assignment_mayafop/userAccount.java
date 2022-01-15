@@ -4,6 +4,10 @@
  */
 package assignment_mayafop;
 
+import javafxModel.registeredModuleDetailsTextModel;
+import javafxModel.studentListTextModel;
+import javafxModel.staffListTextModel;
+import javafxModel.registeredStudentDetailsTextModel;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;

@@ -36,7 +36,7 @@
 
   <name>MySQL Connector/J</name>
   <description>JDBC Type 4 driver for MySQL</description>
-
+	
   <licenses>
     <license>
       <name>The GNU General Public License, v2 with FOSS exception</name>
@@ -56,6 +56,14 @@
     <name>Oracle Corporation</name>
     <url>http://www.oracle.com</url>
   </organization>
+  
+  <modelVersion>4.0.0</modelVersion>
+   <groupId>SendEmail</groupId>
+   <artifactId>SendEmail</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <name>SendEmail</name>
+   <description>This artiface will send emails using Java Mail API</description>
+
 
   <dependencies>
     <dependency>
@@ -70,5 +78,12 @@
       <version>2.3.0</version>
       <optional>true</optional>
     </dependency>
+
+    <dependency>
+       <groupId>com.sun.mail</groupId>
+       <artifactId>javax.mail</artifactId>
+       <version>1.6.2</version>
+    </dependency>
+
   </dependencies>
 </project>

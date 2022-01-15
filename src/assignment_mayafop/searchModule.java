@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import javafxModel.pickedModuleModel;
 import static com.mysql.cj.conf.PropertyKey.logger;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -818,7 +819,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 
                 unsimilarity = (unsimilarity / searchKeyword.length())*100.00;
                 System.out.println("Unsimilarity%: " + unsimilarity);
-                if (courseSearchModel.getCourseName().toLowerCase().indexOf(searchKeyword) > -1 || unsimilarity <=40) {
+                if (courseSearchModel.getCourseName().toLowerCase().indexOf(searchKeyword) > -1 || unsimilarity <=30) {
                     return true; // Found a match in course name
                 } else if (courseSearchModel.getCourseID().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true; // Found a match in course name

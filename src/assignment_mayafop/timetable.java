@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import javafxModel.timetableColumnModel;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;

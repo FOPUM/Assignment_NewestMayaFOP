@@ -4,6 +4,8 @@
  */
 package assignment_mayafop;
 
+import com.sendemail.SendMail;
+import java.io.EOFException;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -17,7 +19,13 @@ import javafx.scene.image.ImageView;
 import javafx.fxml.Initializable;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,9 +33,14 @@ import java.util.ResourceBundle;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -40,14 +53,18 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 /**
  *
  * @author Ming
  */
 public class login_controller implements Initializable,ControlledScreen{
     ScreenController myController;
+    SendMail mailSender = new SendMail();
     @FXML
     private Button exit_button;
+    @FXML
+    private Button login_button;
     @FXML
     private Label login_message_label;
     @FXML
@@ -67,17 +84,57 @@ public class login_controller implements Initializable,ControlledScreen{
     
     private static String username;
     private static char accStatus;
+    private static int loginAttempt;
+    private File loginAttemptFile = new File("loginAttempt.dat");
 
     
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (loginAttemptFile.exists()) {
+            try {
+            
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(loginAttemptFile));
+            while(true){
+                loginAttempt = in.readInt();
+                loginAttempt = 0;
+                System.out.println("Attempts: " + loginAttempt);
+                in.close();
+            }
+        }   catch(EOFException ex){
+            ex.getLocalizedMessage();
+                System.out.println(ex);
+        }
+            catch(FileNotFoundException ex){
+            Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            catch (IOException ex) {
+            Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            try {
+                loginAttemptFile.createNewFile();
+                ObjectOutputStream oFile = new ObjectOutputStream(new FileOutputStream(loginAttemptFile));
+                oFile.writeInt(0);
+                oFile.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        
+        
+//        mailSender.sendMail("kwanyang29@gmail.com", "Hello bruh", "GG", "kwanyang29@gmail.com","qqq222qqq222");
         username_text_field.setText("A6666");
         password_field.setText("PASSWORD");
         password_field.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
                 try {
-                    checkConditionForLogin();
+                    try {
+                        checkConditionForLogin();
+                    } catch (IOException ex) {
+                        Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -90,21 +147,48 @@ public class login_controller implements Initializable,ControlledScreen{
         checkConditionForLogin();
     }
     
-    public void checkConditionForLogin() throws SQLException{
+    public void checkConditionForLogin() throws SQLException, IOException{
         //Click on login button
-        if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
-            validate_login();
-        } else {
-            login_message_label.setText("Please enter username and password.");
-        }
-        //Create home page
-        
-        if(validated == 1){
-            myController.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
-            myController.setScreen(Assignment_MayaFOP.controlCenter);
-            validated =0;
-//            myController.unloadScreen(Assignment_MayaFOP.loginScreen);
-        }
+        if (loginAttempt >= 4) {
+            login_message_label.setText("You have tried too many times.\nPlease wait for 1 minute");
+            new Thread() {
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            login_button.setDisable(true);
+                        }
+                    });
+                    try {
+                        Thread.sleep(3000); //5 seconds, obviously replace with your chosen time
+                    }
+                    catch(InterruptedException ex) {
+                    }
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            login_button.setDisable(false);
+                            login_message_label.setText("");
+                            loginAttempt = 3;
+                        }
+                    });
+                }
+            }.start();
+        }else{
+            if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
+                validate_login();
+            } else {
+                UpdateloginAttemptFile();
+                login_message_label.setText("Please enter username and password.\nYou have " + (5-loginAttempt) +" chances left");
+            }
+            //Create home page
+            if(validated == 1){
+                myController.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
+                myController.setScreen(Assignment_MayaFOP.controlCenter);
+                validated =0;
+                loginAttempt=0;
+                loginAttemptFile.delete();
+    //            myController.unloadScreen(Assignment_MayaFOP.loginScreen);
+            }
+        }   
     }
     
     public void exit_button(ActionEvent event) {
@@ -267,5 +351,48 @@ public class login_controller implements Initializable,ControlledScreen{
         }
         return result;
     }
+     
+     public void UpdateloginAttemptFile() throws IOException{
+         ObjectOutputStream oFile = null;
+         try {
+                    loginAttempt++;
+                    loginAttemptFile.delete();
+                    loginAttemptFile.createNewFile();
+                    oFile = new ObjectOutputStream(new FileOutputStream(loginAttemptFile));
+                    oFile.writeInt(loginAttempt);
+                    oFile.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        oFile.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(login_controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+     }
+     public String otpGenerator () {
+         Random randomNumber = new Random();
+         String oneTimePassword = "";
+         
+         for (int i = 0; i < 10; i++) {
+             int select = randomNumber.nextInt(3);
+             switch (select) {
+                 case 0:
+                     oneTimePassword += (char) (randomNumber.nextInt(123-97)+97);
+                     break;
+                 case 1:
+                     oneTimePassword += (char) (randomNumber.nextInt(91-65)+65);
+                     break;
+                 case 2:
+                     oneTimePassword += randomNumber.nextInt(10);
+                     break;
+                 default:
+                     throw new AssertionError();
+             }
+         }
+        
+        return oneTimePassword;
+     }
     
 }

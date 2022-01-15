@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import javafxModel.registeredStuentDetailsPopupTextModel;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;

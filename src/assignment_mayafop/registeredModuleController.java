@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import javafxModel.registeredModuleDetailsPopupModel;
 import static assignment_mayafop.searchModule.coursesModel;
 import static assignment_mayafop.searchModule.creditHour;
 import java.net.URL;
