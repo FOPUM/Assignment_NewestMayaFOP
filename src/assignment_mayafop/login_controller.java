@@ -75,6 +75,9 @@ public class login_controller implements Initializable,ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+//        mailSender.sendMail("kwanyang29@gmail.com", "Hello bruh", "GG", "kwanyang29@gmail.com","qqq222qqq222");
+        username_text_field.setText("u2102857");
+        password_field.setText("U2102857");
         if (loginAttemptFile.exists()) {
             try {
             
@@ -108,9 +111,6 @@ public class login_controller implements Initializable,ControlledScreen{
         }
         
         
-//        mailSender.sendMail("kwanyang29@gmail.com", "Hello bruh", "GG", "kwanyang29@gmail.com","qqq222qqq222");
-        username_text_field.setText("A6666");
-        password_field.setText("PASSWORD");
         password_field.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
                 try {

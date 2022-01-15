@@ -499,7 +499,7 @@ public class searchModule implements Initializable, ControlledScreen {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
-        
+        System.out.println("Courseidarray size: " + courseIDarray.size());
         try{
             for (int j = 0; j < courseIDarray.size(); j++) {
                 FXMLLoader loader = new FXMLLoader();
@@ -709,14 +709,17 @@ public class searchModule implements Initializable, ControlledScreen {
                             courseNames.add(courseName);
                                                         
                             dayCheck.add(lectday);
+                            System.out.println(dayCheck.get(0)+dayCheck.size());
                             startTimeCheck.add(lectStartTime);
                             endTimeCheck.add(lectEndTime);
                             
                             dayCheck.add(tutoday);
+                            System.out.println(dayCheck.get(1) +dayCheck.size());
                             startTimeCheck.add(tutoStartTime);
                             endTimeCheck.add(tutoEndTime);
                             
                             dayCheck.add(labday);
+                            System.out.println(dayCheck.get(2) +dayCheck.size());
                             startTimeCheck.add(labStartTime);
                             endTimeCheck.add(labEndTime);
         
@@ -726,7 +729,9 @@ public class searchModule implements Initializable, ControlledScreen {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
                         nodes[i] = loader.load();
+                        System.out.println("now de i is: " + i);
                         final int h = i;
+                        creditHour.add(credithours);
 
                         pickedModuleController controller = loader.getController();
                         controller.setCourseName(coursesModel.get(i).getCourseIDLabel());
@@ -758,7 +763,6 @@ public class searchModule implements Initializable, ControlledScreen {
                             e.printStackTrace();
                         }
 
-                    creditHour.add(credithours);
                     totalCreditHours += creditHour.get(creditHour.size()-1); 
     //                creditHour.forEach((hour)-> totalCreditHours+=hour);
                     creditHourLabel.setText("Credits Hours: " + totalCreditHours);
@@ -777,15 +781,15 @@ public class searchModule implements Initializable, ControlledScreen {
         occurenceID.remove(i);
         courseNames.remove(i);
         vCourseNames.getChildren().remove(nodes[i]);
-        dayCheck.remove(i*3);
-        dayCheck.remove(i*3+1);
         dayCheck.remove(i*3+2);
-        startTimeCheck.remove(i*3);
-        startTimeCheck.remove(i*3+1);
+        dayCheck.remove(i*3+1);
+        dayCheck.remove(i*3);
         startTimeCheck.remove(i*3+2);
-        endTimeCheck.remove(i*3);
-        endTimeCheck.remove(i*3+1);
+        startTimeCheck.remove(i*3+1);
+        startTimeCheck.remove(i*3);
         endTimeCheck.remove(i*3+2);
+        endTimeCheck.remove(i*3+1);
+        endTimeCheck.remove(i*3);
     }
 
     public void search() {
