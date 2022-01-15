@@ -4,22 +4,10 @@
  */
 package assignment_mayafop;
 
-import java.lang.ModuleLayer.Controller;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -41,6 +29,8 @@ public class Assignment_MayaFOP extends Application{
     public static String validateLogout = "validateLogout";
     public static String registerStudent = "registerControlStudent";
     public static String registerStaff = "registerControlStaff";
+    public static String Module = "ModuleController";
+    public static String ModuleNext = "ModuleNextController";
     
     public static String loginScreenFile = "/Assignment_MayaFOP/login.fxml";
     public static String homepageScreenFile = "/Assignment_MayaFOP/homePage.fxml";
@@ -53,12 +43,10 @@ public class Assignment_MayaFOP extends Application{
     public static String signupStudentFile = "/Assignment_MayaFOP/signupStudent.fxml";
     public static String signupStaffFile = "/Assignment_MayaFOP/signupStaff.fxml";
     public static String validateLogoutFile = "/Assignment_MayaFOP/logoutConfirmation.fxml";
-    
-    public static String Module = "ModuleController";
-    public static String ModuleNext = "ModuleNextController";
-    
     public static String moduleScreenFile = "/Assignment_MayaFOP/Module.fxml";
     public static String moduleNextScreenFile = "/Assignment_MayaFOP/ModuleNext.fxml";
+    
+    
     
 //    public static String announcementScreenFile = "/Assignment_MayaFOP/announcement.fxml";
 //    public static String moduleConfirmationScreenFile = "/Assignment_MayaFOP/moduleConfirmationMessage.fxml";
@@ -86,7 +74,6 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.userStaffScreen, Assignment_MayaFOP.userStaffScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
         mainContainer.loadScreen(Assignment_MayaFOP.validateLogout, Assignment_MayaFOP.validateLogoutFile);
-        
         mainContainer.loadScreen(Assignment_MayaFOP.Module, Assignment_MayaFOP.moduleScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.ModuleNext, Assignment_MayaFOP.moduleNextScreenFile);
         
