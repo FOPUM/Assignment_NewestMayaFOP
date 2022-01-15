@@ -149,7 +149,8 @@ public class login_controller implements Initializable,ControlledScreen{
     
     public void checkConditionForLogin() throws SQLException, IOException{
         //Click on login button
-        if (loginAttempt >= 4) {
+        loginAttempt++;
+        if (loginAttempt > 4) {
             login_message_label.setText("You have tried too many times.\nPlease wait for 1 minute");
             new Thread() {
                 public void run() {
@@ -159,15 +160,15 @@ public class login_controller implements Initializable,ControlledScreen{
                         }
                     });
                     try {
-                        Thread.sleep(3000); //5 seconds, obviously replace with your chosen time
+                        Thread.sleep(60000); //5 seconds, obviously replace with your chosen time
                     }
                     catch(InterruptedException ex) {
                     }
                     Platform.runLater(new Runnable() {
                         public void run() {
                             login_button.setDisable(false);
-                            login_message_label.setText("");
-                            loginAttempt = 3;
+                            loginAttempt = 4;
+                            login_message_label.setText("You have " + (5-loginAttempt) +" chances left");
                         }
                     });
                 }
@@ -199,7 +200,7 @@ public class login_controller implements Initializable,ControlledScreen{
     }
     
 
-    public void validate_login() throws SQLException{
+    public void validate_login() throws SQLException, IOException{
         login_message_label.setText("");
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -258,7 +259,7 @@ public class login_controller implements Initializable,ControlledScreen{
         login_controller.accStatus = accStatus;
     }
     
-    public void verifyAccountWithDatabase(ResultSet queryResult, int encryptShift, char accType) throws SQLException{
+    public void verifyAccountWithDatabase(ResultSet queryResult, int encryptShift, char accType) throws SQLException, IOException{
         
         String validatePassword = "";
                 if(queryResult.next()){
@@ -290,7 +291,8 @@ public class login_controller implements Initializable,ControlledScreen{
                         login_message_label.setText("");
                     }
                     else{ // Password is wrong
-                        login_message_label.setText("Wrong Password. Did you forget your password?");
+                        login_message_label.setText("Wrong Password.\nDid you forget your password?\nYou have " + (5-loginAttempt) +" chances left");
+                        UpdateloginAttemptFile();
                     }
 //Password validation                    
                 }
@@ -355,7 +357,7 @@ public class login_controller implements Initializable,ControlledScreen{
      public void UpdateloginAttemptFile() throws IOException{
          ObjectOutputStream oFile = null;
          try {
-                    loginAttempt++;
+                    
                     loginAttemptFile.delete();
                     loginAttemptFile.createNewFile();
                     oFile = new ObjectOutputStream(new FileOutputStream(loginAttemptFile));
