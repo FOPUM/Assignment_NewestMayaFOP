@@ -29,10 +29,10 @@
                   </DropShadow>
                </effect>
             </ImageView>
-            <HBox layoutX="14.0" layoutY="277.0" prefHeight="199.0" prefWidth="224.0">
+            <HBox layoutX="14.0" layoutY="277.0" prefHeight="259.0" prefWidth="224.0">
                <children>
                   <Pane prefHeight="122.0" prefWidth="36.0" />
-                  <VBox prefHeight="241.0" prefWidth="145.0" spacing="20.0">
+                  <VBox prefHeight="260.0" prefWidth="145.0" spacing="20.0">
                      <children>
                         <Button fx:id="home_button" alignment="CENTER" graphicTextGap="13.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="35.0" prefWidth="145.0" styleClass="navbutton" text="Home">
                            <font>
@@ -78,6 +78,18 @@
                               <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Images/Dashboard_blue.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="chat_button" alignment="CENTER" graphicTextGap="13.0" layoutX="10.0" layoutY="175.0" mnemonicParsing="false" onAction="#goToChat" prefHeight="35.0" prefWidth="168.0" styleClass="navbutton" text="Chat">
+                           <font>
+                              <Font name="Futura Medium BT" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Images/Asset%20155.png" />
                                  </image>
                               </ImageView>
                            </graphic>
