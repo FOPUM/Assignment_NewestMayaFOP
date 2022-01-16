@@ -190,6 +190,9 @@ public class userAccount implements Initializable, ControlledScreen{
             if (!showing) {
                 myController.showPopupStage(userScreen, "/assignment_MayaFOP/registeredModule.fxml");
                 showing = myController.getShowing();
+                System.out.println("Hello bruh");
+                getCourseDetailsStudent();
+                insertModuleDetailsStudent();
             }  
         }else{
             try {
@@ -312,6 +315,8 @@ public class userAccount implements Initializable, ControlledScreen{
         public void insertModuleDetailsStudent(){
         try {
             moduleDetails.clear();
+            vContainerRegisteredModule.getChildren().clear();
+            System.out.println("Has been cleared");
             for (int j = 0; j < courseID.size(); j++) {
                 moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),misc.upperLetter(courseName.get(j))));
             }

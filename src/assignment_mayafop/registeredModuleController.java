@@ -180,7 +180,7 @@ public class registeredModuleController implements Initializable, ControlledScre
                     System.out.println(confirmedDrop);
                     if(confirmedDrop){
                         dropModuleUpdateUI(nodes,h);
-                        dropModule(h);
+                        dropModuleUpdateDatabase(h);
                         
                     }
 
@@ -235,18 +235,18 @@ public class registeredModuleController implements Initializable, ControlledScre
                     System.out.println(confirmedDrop);
                     if(confirmedDrop){
                         vContainersPopUpRegisteredModule.getChildren().remove(nodes[h]);
-                        dropModule(h);
+                        dropModuleUpdateDatabase(h);
                         
                     }
                 });
-
+                setConfirmedDrop(false);
                 }catch (IOException e) {
                     e.printStackTrace();
                 }
         }
     }
         
-    public void dropModule(int i){
+    public void dropModuleUpdateDatabase(int i){
         
         try {
             PreparedStatement statement = connectDB.prepareStatement("DELETE FROM student_take_course WHERE course_id=? AND matric_num=?");
