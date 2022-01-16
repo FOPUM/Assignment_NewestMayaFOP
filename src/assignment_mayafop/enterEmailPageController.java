@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -56,6 +57,9 @@ public class enterEmailPageController implements Initializable, ControlledScreen
 
     @FXML
     private Button next1Button;
+    
+    @FXML
+    private Label emailErrorLabel;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,7 +101,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
                     siswamail = mailQueryOutput.getString("siswamail");
                     forgotterName = mailQueryOutput.getString("student_name");
                     otpText = otpGenerator();
-//                    sendOtpToForgotter(siswamail,forgotterName, otpText);   OPEN HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    sendOtpToForgotter(siswamail,forgotterName, otpText);  
                     System.out.println("OTPText is " + otpText);
                     accStatus = 'S';
                 }else if (true) {
@@ -107,7 +111,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
                         siswamail = mailQueryOutput.getString("staff_email");
                         forgotterName = mailQueryOutput.getString("staff_name");
                         otpText = otpGenerator();
-//                        sendOtpToForgotter(siswamail,forgotterName, otpText); OPEN HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        sendOtpToForgotter(siswamail,forgotterName, otpText); 
                         System.out.println("OTPText is " + otpText);
                         accStatus = 'T';
                     }else if (true) {
