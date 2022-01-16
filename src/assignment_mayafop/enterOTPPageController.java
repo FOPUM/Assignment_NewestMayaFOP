@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,8 +62,41 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
     @FXML Label OTPLabel;
     
     String otptext;
+    static int otpTimer;
+    static Thread count;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        next2Button.setDisable(false);
+        otpTimer = 5;
+        int otpLimit = otpTimer;
+        count = new Thread() {
+                public void run() {
+                    for(int i = 0 ; i<= otpLimit ; i++){
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                OTPLabel.setText("OTP time left: " + otpTimer);
+                                if (otpTimer == 0) {
+                                    next2Button.setDisable(true);
+                                    OTPLabel.setText("Timeout!\nPlease request for a new OTP.");
+                                }
+                                
+                            }
+                        });
+                        try {
+                            Thread.sleep(1000); //wait 1 second then decrement the timer
+                        }
+                        catch(InterruptedException ex) {
+                        }
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                otpTimer --;
+                            }
+                        });
+                    }
+                }
+            };
+        count.start();
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(enterOTPPage);
@@ -97,6 +131,7 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
     public void next2ButtonClicked(ActionEvent event) {   
         //Verify otp enter is same or not
         otpEntered = OTPTextField.getText();
+        
         if(otpEntered.equals(otptext)){
             try {
                 root = FXMLLoader.load(getClass().getResource("/Assignment_MayaFOP/enterPasswordPage.fxml"));
@@ -108,14 +143,17 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
                 Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
-            OTPLabel.setText("Wrong OTP!");
+            OTPLabel.setText("Wrong OTP!\nTry again!");
         }
     }
     
     @FXML
     void backButton2(ActionEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/Assignment_MayaFOP/enterPasswordPage.fxml"));
+            count.stop();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterEmailPage.fxml"));
+            root = loader.load();
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

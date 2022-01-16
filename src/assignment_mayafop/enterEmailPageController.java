@@ -59,7 +59,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        isStaff = true;
+        setidOrEmailTextField(siswamail);
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(enterEmailPage);
@@ -82,7 +82,6 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     private static String forgotterName;
     private static String otpText;
     private static char accStatus;
-    private static boolean isStaff = true;
     public void next1ButtonClicked(ActionEvent event) {   
 
         siswamail = idOrEmailTextField.getText();
@@ -98,16 +97,17 @@ public class enterEmailPageController implements Initializable, ControlledScreen
                     siswamail = mailQueryOutput.getString("siswamail");
                     forgotterName = mailQueryOutput.getString("student_name");
                     otpText = otpGenerator();
-                    sendOtpToForgotter(siswamail,forgotterName, otpText);
+//                    sendOtpToForgotter(siswamail,forgotterName, otpText);
                     System.out.println("OTPText is " + otpText);
                     accStatus = 'S';
-                }else if (isStaff) {
-                     queryForMail = "SELECT staff_email, staff_name FROM staff WHERE staff_email='"+siswamail+"' OR staff_id = '"+  matricnumOrStaffId + "';";         
+                }else if (true) {
+                     queryForMail = "SELECT staff_email, staff_name FROM staff WHERE staff_email='"+ siswamail +"' OR staff_id = '"+  matricnumOrStaffId + "';";         
                      mailQueryOutput = connectDB.createStatement().executeQuery(queryForMail);
                     if (mailQueryOutput.next()) {
                         siswamail = mailQueryOutput.getString("staff_email");
+                        forgotterName = mailQueryOutput.getString("staff_name");
                         otpText = otpGenerator();
-                        sendOtpToForgotter(siswamail,forgotterName, otpText);
+//                        sendOtpToForgotter(siswamail,forgotterName, otpText);
                         System.out.println("OTPText is " + otpText);
                         accStatus = 'T';
                     }else if (true) {
@@ -197,7 +197,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     public String getOtpText() {
         return otpText;
     }
-
+    
     public String getSiswamail() {
         return siswamail;
     }
@@ -205,5 +205,8 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     public static char getAccStatus() {
         return accStatus;
     }
-
+    
+    public void setidOrEmailTextField(String idOrEmail){
+        idOrEmailTextField.setText(idOrEmail);
+    }
 }
