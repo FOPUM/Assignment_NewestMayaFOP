@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import com.sendemail.SendMail;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -51,13 +52,14 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     private Button exit_button;
 
     @FXML
-    private TextField matricidTextField;
+    private TextField idOrEmailTextField;
 
     @FXML
     private Button next1Button;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        isStaff = true;
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(enterEmailPage);
@@ -76,30 +78,46 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     }
     
     private static String siswamail;
-    private static String otptext;
+    private static String matricnumOrStaffId;
+    private static String forgotterName;
+    private static String otpText;
     private static char accStatus;
-    public void next1ButtonClicked(ActionEvent event) {      
-        siswamail = matricidTextField.getText();
+    private static boolean isStaff = true;
+    public void next1ButtonClicked(ActionEvent event) {   
+
+        siswamail = idOrEmailTextField.getText();
+        matricnumOrStaffId = idOrEmailTextField.getText();;
         
         //If user enter matric_num instead of siswamail
         try {
             //query for student
-            if(siswamail.length() == 8){
-                String queryForMail = "SELECT siswamail FROM student WHERE matric_num='"+siswamail+"'";
+            if(!idOrEmailTextField.getText().isEmpty()){
+                String queryForMail = "SELECT siswamail, student_name FROM student WHERE siswamail='"+siswamail+"' OR matric_num = '"+  matricnumOrStaffId + "';";
                 ResultSet mailQueryOutput = connectDB.createStatement().executeQuery(queryForMail);
-                while (mailQueryOutput.next()) {
+                if (mailQueryOutput.next()) {
                     siswamail = mailQueryOutput.getString("siswamail");
+                    forgotterName = mailQueryOutput.getString("student_name");
+                    otpText = otpGenerator();
+                    sendOtpToForgotter(siswamail,forgotterName, otpText);
+                    System.out.println("OTPText is " + otpText);
+                    accStatus = 'S';
+                }else if (isStaff) {
+                     queryForMail = "SELECT staff_email, staff_name FROM staff WHERE staff_email='"+siswamail+"' OR staff_id = '"+  matricnumOrStaffId + "';";         
+                     mailQueryOutput = connectDB.createStatement().executeQuery(queryForMail);
+                    if (mailQueryOutput.next()) {
+                        siswamail = mailQueryOutput.getString("staff_email");
+                        otpText = otpGenerator();
+                        sendOtpToForgotter(siswamail,forgotterName, otpText);
+                        System.out.println("OTPText is " + otpText);
+                        accStatus = 'T';
+                    }else if (true) {
+                        //set error label *******************************************************************************************************
+                    }
                 }
-                accStatus = 'S';
                 
             //query for staff
-            }else if(siswamail.length() == 5){
-                String queryForMail = "SELECT staff_email FROM staff WHERE staff_id='"+siswamail+"'";           
-                ResultSet mailQueryOutput = connectDB.createStatement().executeQuery(queryForMail);
-                while (mailQueryOutput.next()) {
-                    siswamail = mailQueryOutput.getString("staff_email");
-                }
-                accStatus = 'T';
+            }else{
+                //set error label****************************************************************************************************************
             }
             
         } catch (SQLException ex) {
@@ -107,8 +125,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
         } 
         
         //Send email function here
-        otptext = otpGenerator();
-        System.out.println("OTPText is " + otptext);
+        
         
         
         
@@ -121,7 +138,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
         //update database with temporary OTP
         try {
             PreparedStatement updateOTPIntoDatabase = connectDB.prepareStatement("UPDATE student SET student_password=? WHERE siswamail=?");
-            updateOTPIntoDatabase.setString(1, String.valueOf(otptext));
+            updateOTPIntoDatabase.setString(1, String.valueOf(otpText));
             updateOTPIntoDatabase.setString(2, siswamail);
             System.out.println(updateOTPIntoDatabase);
             updateOTPIntoDatabase.executeUpdate();
@@ -165,9 +182,20 @@ public class enterEmailPageController implements Initializable, ControlledScreen
 
        return oneTimePassword;
     }
+    
+    public void sendOtpToForgotter(String receiver, String name, String otp ){
+         SendMail mailSender = new SendMail();
+         String subject = "OTP for renew password - Maya";
+         String mailMessage = "Dear  " + name + "\n\nYour otp is : " + otp + ".\nPlease kindly use it to renew your password.\nIf you didn't perform this action, please reply to this email immediately so we can take action.";
+         String sender = "mayaFOPUM@gmail.com";
+         final String pass = "U2102857@";
+         
+         mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
+         
+     }
 
-    public String getOtptext() {
-        return otptext;
+    public String getOtpText() {
+        return otpText;
     }
 
     public String getSiswamail() {

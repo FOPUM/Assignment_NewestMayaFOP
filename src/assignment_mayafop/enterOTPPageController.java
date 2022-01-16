@@ -74,7 +74,7 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterEmailPage.fxml"));
             loader.load();
             enterEmailPageController emailController = loader.getController();
-            otptext = emailController.getOtptext();
+            otptext = emailController.getOtpText();
         } catch (IOException ex) {
             Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
