@@ -360,28 +360,15 @@ public class login_controller implements Initializable,ControlledScreen{
                     }
                 }
      }
-     public String otpGenerator () {
-         Random randomNumber = new Random();
-         String oneTimePassword = "";
-         
-         for (int i = 0; i < 10; i++) {
-             int select = randomNumber.nextInt(3);
-             switch (select) {
-                 case 0:
-                     oneTimePassword += (char) (randomNumber.nextInt(123-97)+97);
-                     break;
-                 case 1:
-                     oneTimePassword += (char) (randomNumber.nextInt(91-65)+65);
-                     break;
-                 case 2:
-                     oneTimePassword += randomNumber.nextInt(10);
-                     break;
-                 default:
-                     throw new AssertionError();
-             }
-         }
-        
-        return oneTimePassword;
+     
+     
+     public void forgotPasswordClicked(ActionEvent event){
+        try {
+            myController.showPopupStage(loginScreen, "/assignment_MayaFOP/enterEmailPage.fxml" );
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
      }
      
      public void sendOtpToForgotter(String receiver, String name, String otp ){

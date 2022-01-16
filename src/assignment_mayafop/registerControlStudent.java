@@ -21,6 +21,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -139,11 +141,28 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         if (fullNameTextField.getText() != null && siswamailTextField.getText() != null && matricNumberTextField.getText() != null && matricNumberTextField.getText().length() >= 8) {
             
             if(passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
-            register_user();
-            //message_label.setText("");
-            message_label.setText("User register successfully. Please go back and sign in.");
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterSignUpOTP.fxml"));
+                    loader.load();
+                    enterSignUpOTPController signUpOTPController = loader.getController();
+                    signUpOTPController.setAccStatus('S');
+                } catch (IOException ex) {
+                    Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                try {
+                    root = FXMLLoader.load(getClass().getResource("enterSignUpOTP.fxml"));
+                    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(registerControlStaff.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else {
-            message_label.setText("Password does not match");
+                message_label.setText("Password does not match");
             }
             
         } else {
@@ -155,10 +174,7 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         //Collect the information at signup 
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
-    
-        
 
-        
         String fullname = fullNameTextField.getText();
         String matric_id = matricNumberTextField.getText();
         String siswamail = siswamailTextField.getText();
@@ -183,7 +199,6 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         }else if(sex.equals("female")){
             gender = "F";
         }
-        
 
         try {
             PreparedStatement statement = connectDB.prepareStatement("INSERT INTO student (matric_num, siswamail, password, student_name, student_batch, student_faculty, student_programme, "
@@ -215,15 +230,6 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         }
         
     }
-//    public static boolean is_numeric(String str) { 
-//        try {  
-//            Double.parseDouble(str);  
-//            return true;
-//        } catch(NumberFormatException e){  
-//            return false;  
-//        }  
-//    }
-
     
     //Below handles the switching between staff and student signup page
     private Stage stage;
