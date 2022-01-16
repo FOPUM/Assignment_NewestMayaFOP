@@ -178,7 +178,8 @@ public class searchModule implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+        courseIDcheck.clear();
+        coursesModel.clear();
         
         if(accStatus == 'S'){
             editCourseButton.setVisible(false);
@@ -209,7 +210,9 @@ public class searchModule implements Initializable, ControlledScreen {
                 occurenceIDcheck.add(queryResultForCheck.getString("occ_id"));
                 courseIDcheck.add(queryResultForCheck.getString("course_id"));
             }
-            
+            for (int j = 0; j < courseIDcheck.size(); j++) {
+                System.out.println("Contain : " + courseIDcheck.get(j));
+            }
             int studentBand = 0;
             String studentNationality = null; 
             int studentSem = 0;
@@ -570,8 +573,8 @@ public class searchModule implements Initializable, ControlledScreen {
     
     public int checkTime(String startTimeString, String endTimeString, ArrayList<String> startlist, ArrayList<String> endlist){
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.println("start time " + startTimeString);
-        System.out.println("end time " + endTimeString);
+//        System.out.println("start time " + startTimeString);
+//        System.out.println("end time " + endTimeString);
 //        if(startTimeString != null || endTimeString != null || startTimeString.length() == 0 || endTimeString.length() == 0){
             try {
                 Date startTime = sdf.parse(startTimeString);
@@ -580,35 +583,35 @@ public class searchModule implements Initializable, ControlledScreen {
                     Date startTimeForCheck = sdf.parse(startlist.get(j));
                     Date endTimeForCheck = sdf.parse(endlist.get(j));
                     if(isOverlapping(startTime, endTime, startTimeForCheck, endTimeForCheck)){
-                        System.out.println("array start " + startlist.get(j));
-                        System.out.println("array end " + endlist.get(j));
-                        System.out.println("Crash Time!");
+//                        System.out.println("array start " + startlist.get(j));
+//                        System.out.println("array end " + endlist.get(j));
+//                        System.out.println("Crash Time!");
                         return 1;
                     }
                 }
             } catch (ParseException | NullPointerException ex) {
 //                Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("No crash time!");
+//                System.out.println("No crash time!");
                 return 0;
             }
             
 //        }
-        System.out.println("No crash time!");
+//        System.out.println("No crash time!");
         return 0;
     }
     
     public int checkDay(String studyDay, ArrayList<String> studyDayArray) {
-        System.out.println("ori " + studyDay);
+//        System.out.println("ori " + studyDay);
         if(studyDay != null){
             for (int j = 0; j < studyDayArray.size(); j++) {
                 if(studyDay.equals(studyDayArray.get(j))){
-                    System.out.println(studyDayArray.get(j) + " in array");
-                    System.out.println("Crash Day");
+//                    System.out.println(studyDayArray.get(j) + " in array");
+//                    System.out.println("Crash Day");
                     return 1;
                 }
             }
         }
-        System.out.println("No crash day!");
+//        System.out.println("No crash day!");
         return 0;
     }
     
@@ -669,11 +672,13 @@ public class searchModule implements Initializable, ControlledScreen {
 
     //add course to the right panel
     public void addModule(ActionEvent event) throws Exception { 
+        i= courseIDarray.size();
         
         int credithours = Integer.parseInt(courseTableView.getSelectionModel().getSelectedItem().getCreditHour());
         String courseID = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseID();
         String occID = "" + courseTableView.getSelectionModel().getSelectedItem().getOccID();
         String courseName = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseName();
+        System.out.println("CourseName is: " + courseName);
         
         String lectday = "" + courseTableView.getSelectionModel().getSelectedItem().getLectDay();
         String tutoday = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoDay();
@@ -686,8 +691,19 @@ public class searchModule implements Initializable, ControlledScreen {
         String labStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime();
         String labEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
         
+        for (String var : courseIDcheck) { 
+            System.out.println("This is courseIDcheck element: " + var);
+        }
+        for (String var : occurenceIDcheck) { 
+            System.out.println("This is occurenceIDcheck element: " + var);
+        }
+        for (String var : courseIDarray) { 
+            System.out.println("This is courseIDarray element: " + var);
+        }
+        for (pickedModuleModel var : coursesModel) { 
+            System.out.println("This is courseIDarray element: " + var);
+        }
         
-
         if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID) || courseIDarray.contains(courseID) ){
             warningLabel.setText("Already picked!");
         }else{
@@ -701,8 +717,9 @@ public class searchModule implements Initializable, ControlledScreen {
                     try{
                         pickedModuleModel addingCourse = new pickedModuleModel(courseID);
                         if (courseIDcheck.contains(courseID)) {
-                            System.out.println("The coursed already picked");
+                            System.out.println("The course already picked");
                         }else{
+                            System.out.println("You are picking: " + courseID);
                             courseIDarray.add(courseID);
                             coursesModel.add(addingCourse);
                             occurenceID.add(occID);
@@ -723,17 +740,17 @@ public class searchModule implements Initializable, ControlledScreen {
                             startTimeCheck.add(labStartTime);
                             endTimeCheck.add(labEndTime);
         
-                            System.out.println(addingCourse + " Has been add");
+//                            System.out.println(addingCourse + " Has been add");
                         }
 
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
                         nodes[i] = loader.load();
-                        System.out.println("now de i is: " + i);
                         final int h = i;
                         creditHour.add(credithours);
 
-                        pickedModuleController controller = loader.getController();
+                        pickedModuleController controller = loader.getController();     
+                        System.out.println("This is the i you are choosing: " + i);
                         controller.setCourseName(coursesModel.get(i).getCourseIDLabel());
 
 
