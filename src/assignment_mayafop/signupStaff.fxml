@@ -26,9 +26,6 @@
             <Color opacity="0.30000001192092896" />
          </color></DropShadow>
    </effect>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
    <left>
       <AnchorPane prefHeight="480.0" prefWidth="192.0" styleClass="leftpaneBackground" BorderPane.alignment="CENTER">
          <children>

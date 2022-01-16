@@ -4,8 +4,8 @@
  */
 package assignment_mayafop;
 
-import javafxModel.registeredStudentDetailsPopupModel;
 import javafxModel.registeredStuentDetailsPopupTextModel;
+import javafxModel.registeredStudentDetailsPopupModel;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;

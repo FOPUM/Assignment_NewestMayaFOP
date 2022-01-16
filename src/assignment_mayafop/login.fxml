@@ -50,7 +50,7 @@
                   <Font name="Futura Heavy BT" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="forgot_password_button" layoutX="106.0" layoutY="291.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="110.0" style="-fx-background-color: transparent;" styleClass="login_button" text="Forgot Password?" textAlignment="CENTER">
+            <Button fx:id="forgot_password_button" layoutX="106.0" layoutY="291.0" mnemonicParsing="false" onAction="#forgotPasswordClicked" prefHeight="24.0" prefWidth="110.0" style="-fx-background-color: transparent;" styleClass="login_button" text="Forgot Password?" textAlignment="CENTER">
                <font>
                   <Font name="Futura Book BT" size="10.0" />
                </font>

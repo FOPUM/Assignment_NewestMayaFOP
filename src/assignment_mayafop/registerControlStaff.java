@@ -13,6 +13,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,11 +70,27 @@ public class registerControlStaff implements Initializable,ControlledScreen{
         if (nameTextField.getText() != null && umMailTextField.getText() != null && staffIDTextField.getText() != null && staffIDTextField.getText().length() >= 5) {
             
             if(passwordField.getText().equals(confirmPasswordField.getText())) {
-            register_user();
-            //message_label.setText("");
-            message_label.setText("User register successfully. Please go back and sign in.");
+                
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterSignUpOTP.fxml"));
+                    loader.load();
+                    enterSignUpOTPController signUpOTPController = loader.getController();
+                    signUpOTPController.setAccStatus('T');
+                } catch (IOException ex) {
+                    Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    root = FXMLLoader.load(getClass().getResource("enterSignUpOTP.fxml"));
+                    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(registerControlStaff.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else {
-            message_label.setText("Password does not match");
+                message_label.setText("Password does not match");
             }
             
         } else {
@@ -99,7 +117,6 @@ public class registerControlStaff implements Initializable,ControlledScreen{
             statement.setString(3,fullname);
             statement.setString(4,password);
             statement.executeUpdate();
-            message_label.setText("User Register Successfully! Please go back and sign in.");
             
         } catch(Exception e) {
             e.printStackTrace();

@@ -4,10 +4,10 @@
  */
 package assignment_mayafop;
 
+import javafxModel.registeredModuleDetailsPopupModel;
 import static assignment_mayafop.searchModule.coursesModel;
 import static assignment_mayafop.searchModule.creditHour;
 import java.io.IOException;
-import javafxModel.registeredModuleDetailsPopupModel;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
