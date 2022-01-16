@@ -137,27 +137,29 @@ public class login_controller implements Initializable,ControlledScreen{
         loginAttempt++;
         if (loginAttempt > 4) {
             login_message_label.setText("You have tried too many times.\nPlease wait for 1 minute");
+            //Set disable timer
             new Thread() {
                 public void run() {
                     Platform.runLater(new Runnable() {
                         public void run() {
-                            login_button.setDisable(true);
+                            login_button.setDisable(true); // disable the button
                         }
                     });
                     try {
-                        Thread.sleep(60000); //5 seconds, obviously replace with your chosen time
+                        Thread.sleep(60000); //wait 1 minute
                     }
                     catch(InterruptedException ex) {
                     }
                     Platform.runLater(new Runnable() {
                         public void run() {
-                            login_button.setDisable(false);
+                            login_button.setDisable(false); //enable the button
                             loginAttempt = 4;
                             login_message_label.setText("You have " + (5-loginAttempt) +" chances left");
                         }
                     });
                 }
             }.start();
+            //
         }else{
             if(username_text_field.getText().isEmpty() == false && password_field.getText().isEmpty() == false) {
                 validate_login();
