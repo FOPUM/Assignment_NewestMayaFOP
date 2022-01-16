@@ -4,9 +4,10 @@
  */
 package assignment_mayafop;
 
-import javafxModel.registeredModuleDetailsPopupModel;
 import static assignment_mayafop.searchModule.coursesModel;
 import static assignment_mayafop.searchModule.creditHour;
+import java.io.IOException;
+import javafxModel.registeredModuleDetailsPopupModel;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,7 +179,7 @@ public class registeredModuleController implements Initializable, ControlledScre
                     }
                     System.out.println(confirmedDrop);
                     if(confirmedDrop){
-                        vContainersPopUpRegisteredModule.getChildren().remove(nodes[h]);
+                        dropModuleUpdateUI(nodes,h);
                         dropModule(h);
                         
                     }
@@ -197,7 +198,54 @@ public class registeredModuleController implements Initializable, ControlledScre
             }
         }
     }
-    
+    public void dropModuleUpdateUI(Node[] nodes, int i) {
+        vContainersPopUpRegisteredModule.getChildren().remove(nodes[i]);
+        for (int j = i; j < vContainersPopUpRegisteredModule.getChildren().size(); j++) {
+            try {
+                final int h = j;
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredModuleDetailsPopup.fxml"));
+
+                nodes[h] = loader.load();
+                registeredModuleDetailsPopupController detailsController = loader.getController();
+                nodes[j] = nodes[j+1];
+                
+                detailsController.setContentInfo(moduleDetails.get(j).getAcademicYearLabel(),
+                        moduleDetails.get(j).getPeriodSlotLabel(),
+                        moduleDetails.get(j).getCourseCodeLabel(),
+                        moduleDetails.get(j).getCourseNameLabel(),
+                        moduleDetails.get(j).getCreditHourLabel(),
+                        moduleDetails.get(j).getOccLabel(),
+                        moduleDetails.get(j).getStatusLabel());         
+                
+                nodes[h].setOnMouseEntered(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #b4baca");
+                });
+                nodes[h].setOnMouseExited(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: transparent");
+                });
+                nodes[h].setOnMousePressed(evt -> {
+                    //add effect
+                    if (!showing) {
+                        myController.showPopupStage(registeredModuleScreen, "/assignment_MayaFOP/dropModule.fxml");
+                        showing = myController.getShowing();   
+                    }
+                    System.out.println(confirmedDrop);
+                    if(confirmedDrop){
+                        vContainersPopUpRegisteredModule.getChildren().remove(nodes[h]);
+                        dropModule(h);
+                        
+                    }
+                });
+
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+        
     public void dropModule(int i){
         
         try {

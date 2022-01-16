@@ -827,7 +827,6 @@ public class searchModule implements Initializable, ControlledScreen {
                         }
 
                     totalCreditHours += creditHour.get(creditHour.size()-1); 
-    //                creditHour.forEach((hour)-> totalCreditHours+=hour);
                     creditHourLabel.setText("Credits Hours: " + totalCreditHours);
 
 
