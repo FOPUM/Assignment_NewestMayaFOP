@@ -75,7 +75,8 @@ public class login_controller implements Initializable,ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        mailSender.sendMail("kwanyang29@gmail.com", "Hello bruh", "GG", "kwanyang29@gmail.com","qqq222qqq222");
+//        String otp = otpGenerator();  //testing ******************************************************************************************************
+//        sendOtpToForgotter("kwanyang29@gmail.com","Kwan Yang", otp); // testing **********************************************************************
         username_text_field.setText("u2102857");
         password_field.setText("U2102857");
         if (loginAttemptFile.exists()) {
@@ -381,10 +382,10 @@ public class login_controller implements Initializable,ControlledScreen{
         return oneTimePassword;
      }
      
-     public void sendOtpToForgotter(String receiver, String otp){
+     public void sendOtpToForgotter(String receiver, String name, String otp ){
          SendMail mailSender = new SendMail();
          String subject = "OTP for renew password - Maya";
-         String mailMessage = "Your otp is : " + otp + ".\nPlease kindly use it to renew your password.\nIf you didn't perform this action, please reply to this email immediately so we can take action.";
+         String mailMessage = "Dear  " + name + "\n\nYour otp is : " + otp + ".\nPlease kindly use it to renew your password.\nIf you didn't perform this action, please reply to this email immediately so we can take action.";
          String sender = "mayaFOPUM@gmail.com";
          final String pass = "U2102857@";
          
