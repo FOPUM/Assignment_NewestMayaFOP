@@ -97,7 +97,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
                     siswamail = mailQueryOutput.getString("siswamail");
                     forgotterName = mailQueryOutput.getString("student_name");
                     otpText = otpGenerator();
-//                    sendOtpToForgotter(siswamail,forgotterName, otpText);
+//                    sendOtpToForgotter(siswamail,forgotterName, otpText);   OPEN HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     System.out.println("OTPText is " + otpText);
                     accStatus = 'S';
                 }else if (true) {
@@ -107,7 +107,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
                         siswamail = mailQueryOutput.getString("staff_email");
                         forgotterName = mailQueryOutput.getString("staff_name");
                         otpText = otpGenerator();
-//                        sendOtpToForgotter(siswamail,forgotterName, otpText);
+//                        sendOtpToForgotter(siswamail,forgotterName, otpText); OPEN HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         System.out.println("OTPText is " + otpText);
                         accStatus = 'T';
                     }else if (true) {
@@ -136,15 +136,15 @@ public class enterEmailPageController implements Initializable, ControlledScreen
         
         
         //update database with temporary OTP
-        try {
-            PreparedStatement updateOTPIntoDatabase = connectDB.prepareStatement("UPDATE student SET student_password=? WHERE siswamail=?");
-            updateOTPIntoDatabase.setString(1, String.valueOf(otpText));
-            updateOTPIntoDatabase.setString(2, siswamail);
-            System.out.println(updateOTPIntoDatabase);
-            updateOTPIntoDatabase.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(enterEmailPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            PreparedStatement updateOTPIntoDatabase = connectDB.prepareStatement("UPDATE student SET student_password=? WHERE siswamail=?");
+//            updateOTPIntoDatabase.setString(1, String.valueOf(otpText));
+//            updateOTPIntoDatabase.setString(2, siswamail);
+//            System.out.println(updateOTPIntoDatabase);
+//            updateOTPIntoDatabase.executeUpdate();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(enterEmailPageController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         //Go to next page
         try {
@@ -158,6 +158,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
         }
         
     }
+
     
     public String otpGenerator () {
         Random randomNumber = new Random();
@@ -208,5 +209,9 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     
     public void setidOrEmailTextField(String idOrEmail){
         idOrEmailTextField.setText(idOrEmail);
+    }
+    
+    public void setSiswamail(String siswamail) {
+        enterEmailPageController.siswamail = siswamail;
     }
 }

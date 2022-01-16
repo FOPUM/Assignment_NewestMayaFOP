@@ -49,6 +49,8 @@ public class enterPasswordPageController implements Initializable, ControlledScr
     private AnchorPane enterPasswordPage;
     
     @FXML
+    private Button confirmButton;
+    @FXML
     private Button PasswordConfirmationField;
 
     @FXML
@@ -66,7 +68,7 @@ public class enterPasswordPageController implements Initializable, ControlledScr
     @FXML
     private PasswordField passwordTextField;
 
-    String siswa;
+    String idOrEmail;
     char accStats;
     
     @Override
@@ -81,7 +83,7 @@ public class enterPasswordPageController implements Initializable, ControlledScr
             loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterEmailPage.fxml"));
             loader.load();
             enterEmailPageController emailController = loader.getController();
-            siswa = emailController.getSiswamail();
+            idOrEmail = emailController.getSiswamail();
             accStats = emailController.getAccStatus();
         } catch (IOException ex) {
             Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,15 +115,21 @@ public class enterPasswordPageController implements Initializable, ControlledScr
         if(passwordTextField.getText().equals(confirmPaswordTextField.getText())){
             try {
                 if(accStats == 'S'){
-                    PreparedStatement updateNewPasswordIntoDatabase = connectDB.prepareStatement("UPDATE student SET student_password=? WHERE siswamail=?");
-                    updateNewPasswordIntoDatabase.setString(1, passwordTextField.getText());
-                    updateNewPasswordIntoDatabase.setString(2, siswa);
+                    login_controller lcController = new login_controller();
+                    String encryptedPassword = lcController.caesarCipherEncrypt(passwordTextField.getText(), 9);
+                    PreparedStatement updateNewPasswordIntoDatabase = connectDB.prepareStatement("UPDATE student SET student_password=? WHERE siswamail=? OR matric_num=?");
+                    updateNewPasswordIntoDatabase.setString(1, encryptedPassword);
+                    updateNewPasswordIntoDatabase.setString(2, idOrEmail);
+                    updateNewPasswordIntoDatabase.setString(3, idOrEmail);
                     System.out.println(updateNewPasswordIntoDatabase);
                     updateNewPasswordIntoDatabase.executeUpdate();
                 }else if(accStats == 'T'){
-                    PreparedStatement updateNewPasswordIntoDatabase = connectDB.prepareStatement("UPDATE staff SET staff_password=? WHERE siswamail=?");
-                    updateNewPasswordIntoDatabase.setString(1, passwordTextField.getText());
-                    updateNewPasswordIntoDatabase.setString(2, siswa);
+                    login_controller lcController = new login_controller();
+                    String encryptedPassword = lcController.caesarCipherEncrypt(passwordTextField.getText(), 9);
+                    PreparedStatement updateNewPasswordIntoDatabase = connectDB.prepareStatement("UPDATE staff SET staff_password=? WHERE staff_email=? OR staff_id=?");
+                    updateNewPasswordIntoDatabase.setString(1, encryptedPassword);
+                    updateNewPasswordIntoDatabase.setString(2, idOrEmail);
+                    updateNewPasswordIntoDatabase.setString(3, idOrEmail);
                     System.out.println(updateNewPasswordIntoDatabase);
                     updateNewPasswordIntoDatabase.executeUpdate();
                 } 
@@ -130,6 +138,9 @@ public class enterPasswordPageController implements Initializable, ControlledScr
                 Logger.getLogger(enterEmailPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
             passwordSuccessLabel.setText("Password change sucessfully! Please go back and sign in.");
+            confirmButton.setDisable(true);
+        }else{
+            passwordSuccessLabel.setText("The password does not match.\nPlease make sure your password field match with the confirmation.");
         }
     }
 }

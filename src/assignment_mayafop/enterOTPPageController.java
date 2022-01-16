@@ -68,7 +68,7 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         next2Button.setDisable(false);
-        otpTimer = 5;
+        otpTimer = 30;
         int otpLimit = otpTimer;
         count = new Thread() {
                 public void run() {

@@ -364,6 +364,8 @@ public class login_controller implements Initializable,ControlledScreen{
      
      public void forgotPasswordClicked(ActionEvent event){
         try {
+            enterEmailPageController eepcController = new enterEmailPageController();
+            eepcController.setSiswamail("");
             myController.showPopupStage(loginScreen, "/assignment_MayaFOP/enterEmailPage.fxml" );
         } catch(Exception e) {
             e.printStackTrace();
