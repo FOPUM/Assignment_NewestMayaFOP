@@ -790,6 +790,48 @@ public class searchModule implements Initializable, ControlledScreen {
         endTimeCheck.remove(i*3+2);
         endTimeCheck.remove(i*3+1);
         endTimeCheck.remove(i*3);
+        
+        for (int j = i; j < vCourseNames.getChildren().size(); j++) {
+        try {
+            System.out.println("Now i is: " + this.i);
+            final int h = j;
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
+            
+            nodes[h] = loader.load();
+            pickedModuleController controller = loader.getController();
+            nodes[j] = nodes[j+1];
+            controller.setCourseName(coursesModel.get(j).getCourseIDLabel());
+
+                        nodes[h].setOnMouseEntered(evt -> {
+                            //add effect
+                            nodes[h].setStyle("-fx-background-color: #084654");
+                        });
+                        nodes[h].setOnMouseExited(evt -> {
+                            //add effect
+                            nodes[h].setStyle("-fx-background-color: #FFFFFF");
+                        });
+                        nodes[h].setOnMousePressed(evt -> {
+                            //add effect
+                            nodes[h].setStyle("-fx-background-color: #000000");
+                            deleteModule(h);
+                            this.i--;
+                            creditHour.remove(h);
+                            totalCreditHours = credithourcheck;
+                            creditHour.forEach((hour)-> totalCreditHours+=hour);
+                            creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+                        });
+
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    totalCreditHours += creditHour.get(creditHour.size()-1); 
+    //                creditHour.forEach((hour)-> totalCreditHours+=hour);
+                    creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+
+
+        }
     }
 
     public void search() {
