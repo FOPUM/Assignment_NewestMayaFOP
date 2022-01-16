@@ -380,5 +380,16 @@ public class login_controller implements Initializable,ControlledScreen{
         
         return oneTimePassword;
      }
+     
+     public void sendOtpToForgotter(String receiver, String otp){
+         SendMail mailSender = new SendMail();
+         String subject = "OTP for renew password - Maya";
+         String mailMessage = "Your otp is : " + otp + ".\nPlease kindly use it to renew your password.\nIf you didn't perform this action, please reply to this email immediately so we can take action.";
+         String sender = "mayaFOPUM@gmail.com";
+         final String pass = "U2102857@";
+         
+         mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
+         
+     }
     
 }
