@@ -123,7 +123,7 @@ public class dashboard implements Initializable, ControlledScreen{
                                     "FROM occ\n" +
                                     "LEFT JOIN student_take_course ON occ.occ_id=student_take_course.occ_id\n" +
                                     "INNER JOIN course_occ ON course_occ.occ_id=occ.occ_id\n" +
-                                    "WHERE course_occ.course_id='"+courseCode+"'";
+                                    "WHERE course_occ.course_id='"+courseCode+"' GROUP BY occ.occ_name";
             ResultSet queryForMostFamousOcc = connectDB.createStatement().executeQuery(MostFamousOcc);
             while(queryForMostFamousOcc.next()) {
                 occName.add(queryForMostFamousOcc.getString("occ_name"));
@@ -207,10 +207,12 @@ public class dashboard implements Initializable, ControlledScreen{
     String famousTutorStudentNo = null;
     public void getFamousTutor(){
         try {
-            String famousTutor = "SELECT staff.staff_name, COUNT(student_take_course.matric_num) AS noOfStud\n" +
+            String famousTutor = "SELECT staff.staff_name, count(student_take_course.matric_num) AS noOfStud\n" +
                                 "FROM student_take_course\n" +
                                 "INNER JOIN staff_teach_course ON staff_teach_course.course_id=student_take_course.course_id\n" +
-                                "INNER JOIN staff ON staff.staff_id=staff_teach_course.staff_id";
+                                "INNER JOIN staff ON staff.staff_id=staff_teach_course.staff_id\n" +
+                                "GROUP BY staff.staff_name\n" +
+                                "ORDER BY count(student_take_course.matric_num) DESC LIMIT 1";
             ResultSet queryForFamousTutor = connectDB.createStatement().executeQuery(famousTutor);
             while(queryForFamousTutor.next()) {
                 famousTutorName = queryForFamousTutor.getString("staff_name");

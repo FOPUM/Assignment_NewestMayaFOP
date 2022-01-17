@@ -106,9 +106,9 @@
                </font>
             </TextField>
             <Button layoutX="506.0" layoutY="450.0" mnemonicParsing="false" onAction="#searchButton" prefHeight="25.0" prefWidth="34.0" text="Button" />
-            <Label fx:id="mostFamousTutoLabel" alignment="CENTER" layoutX="643.0" layoutY="79.0" prefHeight="99.0" prefWidth="115.0" text="EM" wrapText="true">
+            <Label fx:id="mostFamousTutoLabel" alignment="CENTER" layoutX="644.0" layoutY="90.0" prefHeight="99.0" prefWidth="115.0" text="EM" wrapText="true">
                <font>
-                  <Font name="Bauhaus 93" size="21.0" />
+                  <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
             <HBox layoutX="642.0" layoutY="192.0" prefHeight="26.0" prefWidth="121.0">
@@ -149,6 +149,11 @@
             <Label layoutX="701.0" layoutY="286.0" text="Most Famous Module" textAlignment="CENTER">
                <font>
                   <Font name="Futura Medium BT" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="632.0" layoutY="63.0" text="Most Famous Lecturer">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
