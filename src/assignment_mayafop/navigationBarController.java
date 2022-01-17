@@ -50,7 +50,7 @@ import javafx.util.Duration;
  * @author Ming
  */
 public class navigationBarController implements Initializable, ControlledScreen{
-
+    MiscFunc misc = new MiscFunc();
     
     @FXML
     private Button exit_button;
@@ -68,6 +68,8 @@ public class navigationBarController implements Initializable, ControlledScreen{
     private Button dashboard_button;
     @FXML
     private Button logout_button;
+    @FXML
+    private Button chat_button;
     @FXML
     Button userAccountButton;
     
@@ -116,7 +118,7 @@ public class navigationBarController implements Initializable, ControlledScreen{
                 ResultSet queryCourseDetail = connectDB.createStatement().executeQuery(name);
                 while(queryCourseDetail.next()) {
 
-                    userAccountButton.setText(upperLetter(queryCourseDetail.getString("student_name")));
+                    userAccountButton.setText(misc.upperLetter(queryCourseDetail.getString("student_name")));
                 }            
             } catch (SQLException e) {
                 Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
@@ -127,7 +129,7 @@ public class navigationBarController implements Initializable, ControlledScreen{
                 String name = "SELECT staff_name FROM staff WHERE staff_id='"+matric_num+"'";
                 ResultSet queryCourseDetail = connectDB.createStatement().executeQuery(name);
                 while(queryCourseDetail.next()) {
-                    userAccountButton.setText(upperLetter(queryCourseDetail.getString("staff_name")));
+                    userAccountButton.setText(misc.upperLetter(queryCourseDetail.getString("staff_name")));
                 }  
             } catch (SQLException e) {
                 Logger.getLogger(userAccount.class.getName()).log(Level.SEVERE, null, e);
@@ -172,6 +174,10 @@ public class navigationBarController implements Initializable, ControlledScreen{
         swapScreen("userAccount.fxml");
     }
     
+    public void goToChat(ActionEvent event)throws IOException{
+        swapScreen("chat.fxml");
+    }
+    
     public void goToLogout(ActionEvent event)throws IOException{   
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Assignment_MayaFOP/logoutConfirmation.fxml"));
@@ -200,30 +206,6 @@ public class navigationBarController implements Initializable, ControlledScreen{
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
     }
-
-    public String upperLetter(String name){
-        String[] stringTemp = name.split(" ");
-        String modifiedString=" ";
-        for (int i = 0; i < stringTemp.length; i++) {
-            
-            String firstLetStr = stringTemp[i].substring(0, 1);
-            String remLetStr = stringTemp[i].substring(1);
-            if(!stringTemp[i].equals("and")){
-                firstLetStr = firstLetStr.toUpperCase();
-            }
-            remLetStr = remLetStr.toLowerCase();
-            if(modifiedString.equals(" ")){
-                modifiedString = firstLetStr + remLetStr + " ";
-            }else{
-                modifiedString += firstLetStr + remLetStr + " ";
-            }
-        }
-
-        return modifiedString;
-    }
-    
-    
-    
-    
+  
 }
 

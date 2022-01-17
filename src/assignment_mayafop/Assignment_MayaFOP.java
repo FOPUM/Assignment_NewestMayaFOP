@@ -23,6 +23,7 @@ public class Assignment_MayaFOP extends Application{
     public static String searchScreen = "searchModule";
     public static String timetableScreen = "timetable";
     public static String dashboardScreen = "dashboard";
+    public static String chatScreen = "chat";
     public static String userStudentScreen = "userAccount";
     public static String userStaffScreen = "userAccount";
     public static String controlCenter = "controlCenter";
@@ -37,6 +38,7 @@ public class Assignment_MayaFOP extends Application{
     public static String searchScreenFile = "/Assignment_MayaFOP/searchModule.fxml";
     public static String timetableScreenFile = "/Assignment_MayaFOP/timetable.fxml";
     public static String dashboardScreenFile = "/Assignment_MayaFOP/dashboard.fxml";
+    public static String chatScreenFile = "/Assignment_MayaFOP/chat.fxml";
     public static String userStudentScreenFile = "/Assignment_MayaFOP/userAccount.fxml";
     public static String userStaffScreenFile = "/Assignment_MayaFOP/userAccountStaff.fxml";
     public static String navigationFile = "/Assignment_MayaFOP/navigationBar.fxml";
@@ -70,6 +72,7 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.searchScreen, Assignment_MayaFOP.searchScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.timetableScreen, Assignment_MayaFOP.timetableScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.dashboardScreen, Assignment_MayaFOP.dashboardScreenFile);
+        mainContainer.loadScreen(Assignment_MayaFOP.chatScreen, Assignment_MayaFOP.chatScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.userStudentScreen, Assignment_MayaFOP.userStudentScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.userStaffScreen, Assignment_MayaFOP.userStaffScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.controlCenter, Assignment_MayaFOP.navigationFile);
