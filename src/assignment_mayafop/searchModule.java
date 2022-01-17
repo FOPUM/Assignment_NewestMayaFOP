@@ -179,7 +179,7 @@ public class searchModule implements Initializable, ControlledScreen {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         courseIDcheck.clear();
-        coursesModel.clear();
+//        coursesModel.clear();
         
         if(accStatus == 'S'){
             editCourseButton.setVisible(false);
@@ -511,6 +511,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 pickedModuleController controller = loader.getController();
                 controller.setCourseName(courseIDarray.get(j));
                 vCourseNames.getChildren().add(nodes[j]);
+                
 //                for (int k = 0; k < courseIDarray.size(); k++) {
 //                    try {
 //                        String queryForCreditHour = "SELECT credit_hour FROM course WHERE course_id='"+courseIDarray.get(k)+"'";
@@ -578,10 +579,14 @@ public class searchModule implements Initializable, ControlledScreen {
 //        if(startTimeString != null || endTimeString != null || startTimeString.length() == 0 || endTimeString.length() == 0){
             try {
                 Date startTime = sdf.parse(startTimeString);
+                System.out.println("Start Time of this picking lecture is: " + startTime);
                 Date endTime = sdf.parse(endTimeString);
+                System.out.println("End Time of this picking lecture is: " + endTime);
                 for (int j = 0; j < startlist.size(); j++) {
                     Date startTimeForCheck = sdf.parse(startlist.get(j));
+                    System.out.println(startTime+ " Checking with: " + startTimeForCheck);
                     Date endTimeForCheck = sdf.parse(endlist.get(j));
+                    System.out.println(endTime+ " Checking with: " + endTimeForCheck);
                     if(isOverlapping(startTime, endTime, startTimeForCheck, endTimeForCheck)){
 //                        System.out.println("array start " + startlist.get(j));
 //                        System.out.println("array end " + endlist.get(j));
@@ -590,6 +595,8 @@ public class searchModule implements Initializable, ControlledScreen {
                     }
                 }
             } catch (ParseException | NullPointerException ex) {
+                System.out.println("Some bug occured");
+                System.out.println(ex.getLocalizedMessage());
 //                Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, ex);
 //                System.out.println("No crash time!");
                 return 0;
@@ -605,7 +612,7 @@ public class searchModule implements Initializable, ControlledScreen {
         if(studyDay != null){
             for (int j = 0; j < studyDayArray.size(); j++) {
                 if(studyDay.equals(studyDayArray.get(j))){
-//                    System.out.println(studyDayArray.get(j) + " in array");
+                    System.out.println("Study day: " + studyDay + " is equal to " + studyDayArray.get(j) + " in array");
 //                    System.out.println("Crash Day");
                     return 1;
                 }
@@ -621,6 +628,7 @@ public class searchModule implements Initializable, ControlledScreen {
         String lectday = "" + courseTableView.getSelectionModel().getSelectedItem().getLectDay();
         checkDayInt += checkDay(lectday, dayCheck);
         if(checkDayInt > 0){
+            System.out.println("They are on the same day, let's check time");
             if(isTimeCrashingInDatabase()){
                 return true;
             }
@@ -678,7 +686,6 @@ public class searchModule implements Initializable, ControlledScreen {
         String courseID = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseID();
         String occID = "" + courseTableView.getSelectionModel().getSelectedItem().getOccID();
         String courseName = "" + courseTableView.getSelectionModel().getSelectedItem().getCourseName();
-        System.out.println("CourseName is: " + courseName);
         
         String lectday = "" + courseTableView.getSelectionModel().getSelectedItem().getLectDay();
         String tutoday = "" + courseTableView.getSelectionModel().getSelectedItem().getTutoDay();
@@ -691,18 +698,6 @@ public class searchModule implements Initializable, ControlledScreen {
         String labStartTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabStartTime();
         String labEndTime = "" + courseTableView.getSelectionModel().getSelectedItem().getLabEndTime();
         
-        for (String var : courseIDcheck) { 
-            System.out.println("This is courseIDcheck element: " + var);
-        }
-        for (String var : occurenceIDcheck) { 
-            System.out.println("This is occurenceIDcheck element: " + var);
-        }
-        for (String var : courseIDarray) { 
-            System.out.println("This is courseIDarray element: " + var);
-        }
-        for (pickedModuleModel var : coursesModel) { 
-            System.out.println("This is courseIDarray element: " + var);
-        }
         
         if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID) || courseIDarray.contains(courseID) ){
             warningLabel.setText("Already picked!");
@@ -717,9 +712,7 @@ public class searchModule implements Initializable, ControlledScreen {
                     try{
                         pickedModuleModel addingCourse = new pickedModuleModel(courseID);
                         if (courseIDcheck.contains(courseID)) {
-                            System.out.println("The course already picked");
                         }else{
-                            System.out.println("You are picking: " + courseID);
                             courseIDarray.add(courseID);
                             coursesModel.add(addingCourse);
                             occurenceID.add(occID);
@@ -750,7 +743,6 @@ public class searchModule implements Initializable, ControlledScreen {
                         creditHour.add(credithours);
 
                         pickedModuleController controller = loader.getController();     
-                        System.out.println("This is the i you are choosing: " + i);
                         controller.setCourseName(coursesModel.get(i).getCourseIDLabel());
 
 
@@ -801,11 +793,17 @@ public class searchModule implements Initializable, ControlledScreen {
         dayCheck.remove(i*3+2);
         dayCheck.remove(i*3+1);
         dayCheck.remove(i*3);
+        System.out.println("Start time check for lab has been removed: " + startTimeCheck.get(i*3+2));
         startTimeCheck.remove(i*3+2);
+        System.out.println("Start time check for tutorial has been removed: " + startTimeCheck.get(i*3+1));
         startTimeCheck.remove(i*3+1);
+        System.out.println("Start time check for lecture has been removed: " + startTimeCheck.get(i*3+0));
         startTimeCheck.remove(i*3);
+        System.out.println("End time check for lab has been removed: " + endTimeCheck.get(i*3+2));
         endTimeCheck.remove(i*3+2);
+        System.out.println("End time check for tutorial has been removed: " + endTimeCheck.get(i*3+1));
         endTimeCheck.remove(i*3+1);
+        System.out.println("End time check for lecture has been removed: " + endTimeCheck.get(i*3+0));
         endTimeCheck.remove(i*3);
         
         for (int j = i; j < vCourseNames.getChildren().size(); j++) {
