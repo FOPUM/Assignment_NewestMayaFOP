@@ -68,7 +68,6 @@ public class searchModule implements Initializable, ControlledScreen {
     login_controller loginControl = new login_controller();
     MiscFunc misc = new MiscFunc();
     
-    private static int selectedTableView_index;
     
 
     @FXML
@@ -169,6 +168,7 @@ public class searchModule implements Initializable, ControlledScreen {
                                         "WHERE matric_num='"+matric_num+"'";
     
     static boolean editingMode = false;
+    
     
     
     databaseConnection connectNow = new databaseConnection();
@@ -501,13 +501,14 @@ public class searchModule implements Initializable, ControlledScreen {
 //        System.out.println("start time " + startTimeString);
 //        System.out.println("end time " + endTimeString);
 //        if(startTimeString != null || endTimeString != null || startTimeString.length() == 0 || endTimeString.length() == 0){
-            try {
+            if (!startTimeString.equals("null") && !endTimeString.equals("null")) {
+                try {
                 Date startTime = sdf.parse(startTimeString);
                 System.out.println("Start Time of this picking lecture is: " + startTime);
                 Date endTime = sdf.parse(endTimeString);
                 System.out.println("End Time of this picking lecture is: " + endTime);
                 for (int j = 0; j < startlist.size(); j++) {
-                    if (startlist.get(j) != null) {
+                    if (!startlist.get(j).equals("null")) {
                         Date startTimeForCheck = sdf.parse(startlist.get(j));
                         System.out.println(startTime+ " Checking with: " + startTimeForCheck);
                         Date endTimeForCheck = sdf.parse(endlist.get(j));
@@ -528,7 +529,7 @@ public class searchModule implements Initializable, ControlledScreen {
 //                System.out.println("No crash time!");
                 return 0;
             }
-            
+        }   
 //        }
 //        System.out.println("No crash time!");
         return 0;
@@ -536,7 +537,7 @@ public class searchModule implements Initializable, ControlledScreen {
     
     public int checkDay(String studyDay, ArrayList<String> studyDayArray) {
 //        System.out.println("ori " + studyDay);
-        if(studyDay != null){
+        if(studyDay.equals("null")){
             for (int j = 0; j < studyDayArray.size(); j++) {
                 if(studyDay.equals(studyDayArray.get(j))){
                     System.out.println("Study day: " + studyDay + " is equal to " + studyDayArray.get(j) + " in array");
