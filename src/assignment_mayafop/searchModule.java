@@ -493,6 +493,7 @@ public class searchModule implements Initializable, ControlledScreen {
             confirmedtaken();
             System.out.println("Memory cleared");
             clearMemory();
+            confirmedtake = false;
         }
     }
     
