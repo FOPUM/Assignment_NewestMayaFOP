@@ -49,5 +49,10 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="resendOTPButton" layoutX="222.0" layoutY="334.0" mnemonicParsing="false" onAction="#resendOTP" prefHeight="28.0" prefWidth="259.0" text="Resend OTP" textFill="WHITE">
+         <font>
+            <Font name="Futura Medium BT" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
