@@ -234,7 +234,7 @@ public class registeredModuleController implements Initializable, ControlledScre
                     }
                     System.out.println(confirmedDrop);
                     if(confirmedDrop){
-                        vContainersPopUpRegisteredModule.getChildren().remove(nodes[h]);
+                        dropModuleUpdateUI(nodes,h);
                         dropModuleUpdateDatabase(h);
                         
                     }
