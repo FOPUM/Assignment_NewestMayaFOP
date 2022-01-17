@@ -317,7 +317,14 @@ public class userAccount implements Initializable, ControlledScreen{
             moduleDetails.clear();
             vContainerRegisteredModule.getChildren().clear();
             System.out.println("Has been cleared");
-            for (int j = 0; j < courseID.size(); j++) {
+            int size = 0;
+            if(courseID.size() > 6){
+                size = 6;
+            }else{
+                size = courseID.size();
+            }
+            
+            for (int j = 0; j < size; j++) {
                 moduleDetails.add(new registeredModuleDetailsTextModel(courseID.get(j),misc.upperLetter(courseName.get(j))));
             }
             Node[] nodes = new Node[moduleDetails.size()];
@@ -422,7 +429,13 @@ public class userAccount implements Initializable, ControlledScreen{
             }
             Node[] nodes = new Node[registeredStudentDetails.size()];
             
-            for (int j = 0; j < nodes.length; j++) {
+            int size = 0;
+            if(nodes.length > 6){
+                size = 6;
+            }else{
+                size = nodes.length;
+            }
+            for (int j = 0; j < size; j++) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/Assignment_MayaFOP/registeredStudentDetailsText.fxml"));
                 nodes[j] = loader.load();
@@ -479,8 +492,14 @@ public class userAccount implements Initializable, ControlledScreen{
                 studentDetails.add(new studentListTextModel(matric.get(j),name.get(j), faculty.get(j)));
             }
             Node[] nodes = new Node[studentDetails.size()];
-            
-            for (int j = 0; j < nodes.length; j++) {
+            //chg here
+            int size = 0;
+            if(nodes.length > 7){
+                size = 7;
+            }else{
+                size = nodes.length;
+            }
+            for (int j = 0; j < size; j++) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/Assignment_MayaFOP/studentListText.fxml"));
                 nodes[j] = loader.load();
@@ -532,12 +551,19 @@ public class userAccount implements Initializable, ControlledScreen{
     public void insertStaffs(String a){
         try {
             staffDetails.clear();
+            
             for (int j = 0; j < staffid.size(); j++) {
                 staffDetails.add(new staffListTextModel(staffid.get(j),staffname.get(j), ummail.get(j)));
             }
             Node[] nodes = new Node[staffDetails.size()];
             
-            for (int j = 0; j < nodes.length; j++) {
+            int size = 0;
+            if(nodes.length > 7){
+                size = 7;
+            }else{
+                size = nodes.length;
+            }
+            for (int j = 0; j < size; j++) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(a));
                 nodes[j] = loader.load();
