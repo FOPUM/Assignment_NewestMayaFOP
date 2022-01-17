@@ -224,6 +224,7 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
                             }
                         };
                     count.start();
+                    OTPButton.setDisable(false);
                     resendOTPButton.setDisable(true);
                     break;
                 }

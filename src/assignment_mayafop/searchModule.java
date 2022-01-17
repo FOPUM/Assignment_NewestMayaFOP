@@ -179,6 +179,9 @@ public class searchModule implements Initializable, ControlledScreen {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         courseIDcheck.clear();
+        dayCheck.clear();
+        startTimeCheck.clear();
+        endTimeCheck.clear();
 //        coursesModel.clear();
         
         if(accStatus == 'S'){
