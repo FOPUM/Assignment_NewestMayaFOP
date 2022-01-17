@@ -4,7 +4,9 @@
  */
 package assignment_mayafop;
 
+import static assignment_mayafop.registerControlStudent.fullname;
 import static assignment_mayafop.registerControlStudent.matric_id;
+import static assignment_mayafop.registerControlStudent.siswamail;
 import com.sendemail.SendMail;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -94,7 +96,7 @@ public class registerControlStaff implements Initializable,ControlledScreen{
             }
         //Check the validity of information
         if (nameTextField.getText() != null && umMailTextField.getText() != null && staffIDTextField.getText() != null && staffIDTextField.getText().length() >= 5) {
-            if (!checkStaffIdExist.equalsIgnoreCase(matric_id)) {
+            if (!checkStaffIdExist.equalsIgnoreCase(staff_id)) {
                 if(passwordField.getText().equals(confirmPasswordField.getText())) {
                 fullname = nameTextField.getText();
                 staff_id = staffIDTextField.getText();
@@ -204,6 +206,11 @@ public class registerControlStaff implements Initializable,ControlledScreen{
          mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
          
      }
+    
+    public void resendOTP(){
+        otp = otpGenerator();
+        sendOtpToSignUpUser(siswamail, fullname, otp);
+    }
     
     public String getOtp() {
         return otp;

@@ -169,7 +169,6 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
     }
     
     public void resendOTP(ActionEvent event) throws IOException{
-//        myController.loadScreen("EnterOTP", "/Assignment_MayaFOP/enterOTPPage.fxml");
         count.stop();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterEmailPage.fxml"));

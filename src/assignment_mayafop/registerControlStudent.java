@@ -116,7 +116,6 @@ public class registerControlStudent implements Initializable,ControlledScreen {
        static String matric_id;
        static  String siswamail;
        static  String password;
-
        static  String ic;
        static  String sex ;
        static  String faculty;
@@ -326,8 +325,9 @@ public class registerControlStudent implements Initializable,ControlledScreen {
          
      }
     
-    public String getOtp() {
-        return otp;
+    public void resendOTP(){
+        otp = otpGenerator();
+        sendOtpToSignUpUser(siswamail, fullname, otp);
     }
     
     @Override
@@ -335,7 +335,11 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
     }
     
+     public String getSiswamail() {
+        return siswamail;
+    }
     
-    
-    
+    public String getOtp() {
+        return otp;
+    }
 }

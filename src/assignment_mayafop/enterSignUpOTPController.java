@@ -50,7 +50,10 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
 
     @FXML
     private Button back_button;
-
+    
+    @FXML
+    private Button resendOTPButton;
+    
     @FXML
     private Label emailVerifiedLabel;
 
@@ -67,6 +70,7 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
     static int otpTimer =45;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        resendOTPButton.setDisable(true);
         int otpLimit = otpTimer;
         count = new Thread() {
                 public void run() {
@@ -77,6 +81,7 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
                                 if (otpTimer == 0) {
                                     OTPButton.setDisable(true);
                                     emailVerifiedLabel.setText("Timeout! Please request for a new OTP.");
+                                    resendOTPButton.setDisable(false);
                                 }
                                 
                             }
@@ -169,30 +174,6 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
                 break;
         }
     }
-    
-    public String otpGenerator () {
-        Random randomNumber = new Random();
-        String oneTimePassword = "";
-
-        for (int i = 0; i < 10; i++) {
-            int select = randomNumber.nextInt(3);
-            switch (select) {
-                case 0:
-                    oneTimePassword += (char) (randomNumber.nextInt(123-97)+97);
-                    break;
-                case 1:
-                    oneTimePassword += (char) (randomNumber.nextInt(91-65)+65);
-                    break;
-                case 2:
-                    oneTimePassword += randomNumber.nextInt(10);
-                    break;
-                default:
-                    throw new AssertionError();
-            }
-        }
-
-       return oneTimePassword;
-    }
 
     public void setAccStatus(char accStatus) {
         enterSignUpOTPController.accStatus = accStatus;
@@ -202,5 +183,96 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
         count.stop();
     }
     
+    public void resendOTP(ActionEvent event) throws IOException{
+        count.stop();
+        switch (accStatus) {
+            case 'S':
+                {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/signupStudent.fxml"));
+                    loader.load();
+                    registerControlStudent studentController = loader.getController();
+                    studentController.resendOTP();
+                    otpGenerated = studentController.getOtp();
+                    otpTimer = 45;
+                    int otpLimit = otpTimer;
+                    count = new Thread() {
+                            public void run() {
+                                for(int i = 0 ; i<= otpLimit ; i++){
+                                    Platform.runLater(new Runnable() {
+                                        public void run() {
+                                            emailVerifiedLabel.setText("OTP time left: " + otpTimer);
+                                            if (otpTimer == 0) {
+                                                OTPButton.setDisable(true);
+                                                emailVerifiedLabel.setText("Timeout! Please request for a new OTP.");
+                                                resendOTPButton.setDisable(false);
+                                            }
+
+                                        }
+                                    });
+                                    try {
+                                        Thread.sleep(1000); //wait 1 second then decrement the timer
+                                    }
+                                    catch(InterruptedException ex) {
+                                    }
+                                    Platform.runLater(new Runnable() {
+                                        public void run() {
+                                            otpTimer --;
+                                        }
+                                    });
+                                }
+                            }
+                        };
+                    count.start();
+                    resendOTPButton.setDisable(true);
+                    break;
+                }
+            case 'T':
+                {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/signupStaff.fxml"));
+                    loader.load();
+                    registerControlStaff staffController = loader.getController();
+                    staffController.resendOTP();
+                    otpGenerated = staffController.getOtp();
+                    otpTimer = 45;
+                    int otpLimit = otpTimer;
+                    count = new Thread() {
+                            public void run() {
+                                for(int i = 0 ; i<= otpLimit ; i++){
+                                    Platform.runLater(new Runnable() {
+                                        public void run() {
+                                            emailVerifiedLabel.setText("OTP time left: " + otpTimer);
+                                            if (otpTimer == 0) {
+                                                OTPButton.setDisable(true);
+                                                emailVerifiedLabel.setText("Timeout! Please request for a new OTP.");
+                                                resendOTPButton.setDisable(false);
+                                            }
+
+                                        }
+                                    });
+                                    try {
+                                        Thread.sleep(1000); //wait 1 second then decrement the timer
+                                    }
+                                    catch(InterruptedException ex) {
+                                    }
+                                    Platform.runLater(new Runnable() {
+                                        public void run() {
+                                            otpTimer --;
+                                        }
+                                    });
+                                }
+                            }
+                        };
+                    count.start();
+                    resendOTPButton.setDisable(true);
+                    OTPButton.setDisable(false);
+                    break;
+                }
+            default:
+                emailVerifiedLabel.setText("Something wrong, please try again.");
+                break;
+        }
+    }
     
 }
