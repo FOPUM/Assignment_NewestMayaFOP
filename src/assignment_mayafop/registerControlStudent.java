@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import com.sendemail.SendMail;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,6 +22,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
@@ -105,6 +107,24 @@ public class registerControlStudent implements Initializable,ControlledScreen {
     
     Date date = new Date();
     StringConverter converter;  
+    private static String otp;
+
+    
+       static String fullname;
+       static String matric_id;
+       static  String siswamail;
+       static  String password;
+
+       static  String ic;
+       static  String sex ;
+       static  String faculty;
+       static  String batch;
+       static  String programme;
+       static  String race;
+       static  String nationality;
+        
+       static java.sql.Date sqlDate;
+    
     
     
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -141,17 +161,34 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         if (fullNameTextField.getText() != null && siswamailTextField.getText() != null && matricNumberTextField.getText() != null && matricNumberTextField.getText().length() >= 8) {
             
             if(passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
+                fullname = fullNameTextField.getText();
+                matric_id = matricNumberTextField.getText();
+                siswamail = siswamailTextField.getText();
+                password = passwordTextField.getText();
+                password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
+                ic = ICTextField.getText();
+                sex = genderComboBox.getValue();
+                faculty = facultyComboBox.getValue();
+                batch = batchComboBox.getValue();
+                programme = programmeComboBox.getValue();
+                race = raceComboBox.getValue();
+                nationality = nationalityComboBox.getValue();
+                date = java.util.Date.from(dateOfBirthPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                sqlDate = new java.sql.Date(date.getTime());
                 try {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterSignUpOTP.fxml"));
                     loader.load();
                     enterSignUpOTPController signUpOTPController = loader.getController();
+                    signUpOTPController.stopCountThread();
                     signUpOTPController.setAccStatus('S');
                 } catch (IOException ex) {
                     Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
                 try {
+                    otp = otpGenerator();
+                    sendOtpToSignUpUser(siswamailTextField.getText(), fullNameTextField.getText(), otp);
                     root = FXMLLoader.load(getClass().getResource("enterSignUpOTP.fxml"));
                     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
@@ -160,6 +197,8 @@ public class registerControlStudent implements Initializable,ControlledScreen {
                     
                 } catch (IOException ex) {
                     Logger.getLogger(registerControlStaff.class.getName()).log(Level.SEVERE, null, ex);
+                }catch(Exception ex){
+                    System.out.println("This is the bug: " + ex);
                 }
             }else {
                 message_label.setText("Password does not match");
@@ -175,21 +214,6 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
 
-        String fullname = fullNameTextField.getText();
-        String matric_id = matricNumberTextField.getText();
-        String siswamail = siswamailTextField.getText();
-        String password = passwordTextField.getText();
-        password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
-        String ic = ICTextField.getText();
-        String sex = genderComboBox.getValue();
-        String faculty = facultyComboBox.getValue();
-        String batch = batchComboBox.getValue();
-        String programme = programmeComboBox.getValue();
-        String race = raceComboBox.getValue();
-        String nationality = nationalityComboBox.getValue();
-        
-        java.util.Date date = java.util.Date.from(dateOfBirthPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
         
         int number = 1;
@@ -244,7 +268,46 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         stage.show();
 //        myController.setScreen(Assignment_MayaFOP.userStaffScreen);
     }
+    
+    public String otpGenerator () {
+        Random randomNumber = new Random();
+        String oneTimePassword = "";
 
+        for (int i = 0; i < 10; i++) {
+            int select = randomNumber.nextInt(3);
+            switch (select) {
+                case 0:
+                    oneTimePassword += (char) (randomNumber.nextInt(123-97)+97);
+                    break;
+                case 1:
+                    oneTimePassword += (char) (randomNumber.nextInt(91-65)+65);
+                    break;
+                case 2:
+                    oneTimePassword += randomNumber.nextInt(10);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
+
+       return oneTimePassword;
+    }
+    
+    public void sendOtpToSignUpUser(String receiver, String name, String otp ){
+         SendMail mailSender = new SendMail();
+         String subject = "OTP for renew password - Maya";
+         String mailMessage = "Dear  " + name + "\n\nYour otp is : " + otp + ".\nPlease kindly use it to renew your password.\nIf you didn't perform this action, please reply to this email immediately so we can take action.";
+         String sender = "mayaFOPUM@gmail.com";
+         final String pass = "U2102857@";
+         
+         mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
+         
+     }
+    
+    public String getOtp() {
+        return otp;
+    }
+    
     @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.

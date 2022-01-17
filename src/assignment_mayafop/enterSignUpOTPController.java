@@ -4,12 +4,15 @@
  */
 package assignment_mayafop;
 
+import static assignment_mayafop.enterOTPPageController.count;
+import static assignment_mayafop.enterOTPPageController.otpTimer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,14 +62,44 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
     
     String otpGenerated;
     private static char accStatus;
+    registerControlStudent rcsController = new registerControlStudent();
+    static Thread count;
+    static int otpTimer =45;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        int otpLimit = otpTimer;
+        count = new Thread() {
+                public void run() {
+                    for(int i = 0 ; i<= otpLimit ; i++){
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                emailVerifiedLabel.setText("OTP time left: " + otpTimer);
+                                if (otpTimer == 0) {
+                                    OTPButton.setDisable(true);
+                                    emailVerifiedLabel.setText("Timeout! Please request for a new OTP.");
+                                }
+                                
+                            }
+                        });
+                        try {
+                            Thread.sleep(1000); //wait 1 second then decrement the timer
+                        }
+                        catch(InterruptedException ex) {
+                        }
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                otpTimer --;
+                            }
+                        });
+                    }
+                }
+            };
+        count.start();
         Animation = new animation();
         if(!upScreenStatus){
             Animation.fading(enterOTPPage);
         }
         
-        otpGenerated = otpGenerator();
         //send email function here
         
     }
@@ -77,6 +110,7 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
     }
     
     public void exitButton(ActionEvent event) {
+        count.stop();
         //Click on exit button to exit       
         Stage stage = (Stage) exit_button.getScene().getWindow();
         stage.close();
@@ -84,6 +118,7 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
  
     @FXML
     void backButton(ActionEvent event) throws IOException{
+        count.stop();
         root = FXMLLoader.load(getClass().getResource("/Assignment_MayaFOP/signupStudent.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -92,29 +127,46 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
     }
     
     @FXML
-    void OTPButtonClicked(ActionEvent event) {
+    void OTPButtonClicked(ActionEvent event) throws IOException {
         String otpEntered = OTPTextField.getText();
-        if(otpEntered.equals(otpGenerated)){
-            try {
-                if(accStatus == 'S'){
+        
+        switch (accStatus) {
+            case 'S':
+                {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/Assignment_MayaFOP/signupStudent.fxml"));
                     loader.load();
                     registerControlStudent studentController = loader.getController();
-                    studentController.register_user();
-
-                }else if(accStatus == 'T'){
+                    otpGenerated = studentController.getOtp();
+                    if(otpEntered.equals(otpGenerated)){
+                        studentController.register_user();
+                        count.stop();
+                        emailVerifiedLabel.setText("Signup successfully! Please exit and sign in.");
+                        
+                    }else{
+                        emailVerifiedLabel.setText("Wrong OTP");
+                    }
+                    break;
+                }
+            case 'T':
+                {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/Assignment_MayaFOP/signupStaff.fxml"));
                     loader.load();
                     registerControlStaff staffController = loader.getController();
-                    staffController.register_user();
-                    
+                    otpGenerated = staffController.getOtp();
+                    if(otpEntered.equals(otpGenerated)){
+                        staffController.register_user();
+                        count.stop();
+                        emailVerifiedLabel.setText("Signup successfully! Please exit and sign in.");
+                    }else{
+                        emailVerifiedLabel.setText("Wrong OTP");
+                    }
+                    break;
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            emailVerifiedLabel.setText("Signup successfully! Please exit and sign in.");
+            default:
+                emailVerifiedLabel.setText("Something wrong, please try again.");
+                break;
         }
     }
     
@@ -146,6 +198,9 @@ public class enterSignUpOTPController implements Initializable, ControlledScreen
         enterSignUpOTPController.accStatus = accStatus;
     }
     
+    public void stopCountThread(){
+        count.stop();
+    }
     
     
 }

@@ -81,17 +81,16 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.ModuleNext, Assignment_MayaFOP.moduleNextScreenFile);
         
         haa haha = new haa();
-        haha.query();
-//        mainContainer.setScreen(Assignment_MayaFOP.loginScreen);
-//        
-//        Group root = new Group();
-//        root.getChildren().addAll(mainContainer);
-//        Scene scene = new Scene(root);
-//        Image icon = new Image("/Assignment_MayaFOP/Images/icon.png");
-//        primaryStage.initStyle(StageStyle.UNDECORATED);
-//        primaryStage.getIcons().add(icon);
-//        primaryStage.setScene(scene);
-//        primaryStage.show(); 
+        mainContainer.setScreen(Assignment_MayaFOP.loginScreen);
+        
+        Group root = new Group();
+        root.getChildren().addAll(mainContainer);
+        Scene scene = new Scene(root);
+        Image icon = new Image("/Assignment_MayaFOP/Images/icon.png");
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.getIcons().add(icon);
+        primaryStage.setScene(scene);
+        primaryStage.show(); 
 
     }
     

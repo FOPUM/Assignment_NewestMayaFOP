@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import com.sendemail.SendMail;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +53,14 @@ public class registerControlStaff implements Initializable,ControlledScreen{
     private PasswordField passwordField;
     
     boolean upScreenStatus = false;
+    private static String otp;
+    
+    
+       static String fullname;
+       static String staff_id;
+       static String siswamail;
+       static String password;
+
     
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Animation = new animation();
@@ -70,17 +80,23 @@ public class registerControlStaff implements Initializable,ControlledScreen{
         if (nameTextField.getText() != null && umMailTextField.getText() != null && staffIDTextField.getText() != null && staffIDTextField.getText().length() >= 5) {
             
             if(passwordField.getText().equals(confirmPasswordField.getText())) {
-                
+                fullname = nameTextField.getText();
+                staff_id = staffIDTextField.getText();
+                siswamail = umMailTextField.getText();
+                password = passwordField.getText();
                 try {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterSignUpOTP.fxml"));
                     loader.load();
                     enterSignUpOTPController signUpOTPController = loader.getController();
+                    signUpOTPController.stopCountThread();
                     signUpOTPController.setAccStatus('T');
                 } catch (IOException ex) {
                     Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
+                    otp = otpGenerator();
+                    sendOtpToSignUpUser(umMailTextField.getText(), nameTextField.getText(), otp);
                     root = FXMLLoader.load(getClass().getResource("enterSignUpOTP.fxml"));
                     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
@@ -103,10 +119,6 @@ public class registerControlStaff implements Initializable,ControlledScreen{
         databaseConnection connectNow = new databaseConnection();
         Connection connectDB = connectNow.getConnection();
      
-        String fullname = nameTextField.getText();
-        String staff_id = staffIDTextField.getText();
-        String siswamail = umMailTextField.getText();
-        String password = passwordField.getText();
         password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
 
         try {
@@ -137,7 +149,45 @@ public class registerControlStaff implements Initializable,ControlledScreen{
         stage.show();
 //        myController.setScreen(Assignment_MayaFOP.userStaffScreen);
     }
+    
+    public String otpGenerator () {
+        Random randomNumber = new Random();
+        String oneTimePassword = "";
 
+        for (int i = 0; i < 10; i++) {
+            int select = randomNumber.nextInt(3);
+            switch (select) {
+                case 0:
+                    oneTimePassword += (char) (randomNumber.nextInt(123-97)+97);
+                    break;
+                case 1:
+                    oneTimePassword += (char) (randomNumber.nextInt(91-65)+65);
+                    break;
+                case 2:
+                    oneTimePassword += randomNumber.nextInt(10);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
+
+       return oneTimePassword;
+    }
+    
+    public void sendOtpToSignUpUser(String receiver, String name, String otp ){
+         SendMail mailSender = new SendMail();
+         String subject = "OTP for renew password - Maya";
+         String mailMessage = "Dear  " + name + "\n\nYour otp is : " + otp + ".\nPlease kindly use it to renew your password.\nIf you didn't perform this action, please reply to this email immediately so we can take action.";
+         String sender = "mayaFOPUM@gmail.com";
+         final String pass = "U2102857@";
+         
+         mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
+         
+     }
+    
+    public String getOtp() {
+        return otp;
+    }
     @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent; //To change body of generated methods, choose Tools | Templates.
