@@ -38,12 +38,21 @@ public class chatController implements Initializable, ControlledScreen {
     
     @FXML
     private TextField contentTextField;
+    
+    @FXML
+    private TextField emailPassword_Textfield;
+    
+    @FXML
+    private TextField confirmEmailPassword_TextField;
 
     @FXML
     private TableColumn<chatStudentModel, String> idColumn;
 
     @FXML
     private Label messageLabel;
+    
+    @FXML
+    private Label sendEmailPageErrorLabel;
 
     @FXML
     private TableColumn<chatStudentModel, String> nameColumn;
@@ -67,20 +76,31 @@ public class chatController implements Initializable, ControlledScreen {
     
     databaseConnection connectNow = new databaseConnection();
     Connection connectDB = connectNow.getConnection();
+    login_controller loginControl = new login_controller();
     
-    private String email;
-    private String name;
+    private String receiver_email;
+    private String receiver_name;
+    String user_matric_num = loginControl.getUsername();
+    String user_email;
+    String user_name;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        sendButton.setDisable(true);
         try{
-            String course = "SELECT matric_num, student_name, siswamail FROM student UNION ALL SELECT staff_id, staff_name, staff_email FROM staff";
-            ResultSet courseQueryOutput = connectDB.createStatement().executeQuery(course);
+            String query_StaffAndStudent = "SELECT matric_num, student_name, siswamail FROM student UNION ALL SELECT staff_id, staff_name, staff_email FROM staff";
+            ResultSet courseQueryOutput = connectDB.createStatement().executeQuery(query_StaffAndStudent);
             while (courseQueryOutput.next()) {
-                String id = courseQueryOutput.getString("matric_num");
-                String name = courseQueryOutput.getString("student_name");
-                String email = courseQueryOutput.getString("siswamail");
-                studentStaffObservableList.add(new chatStudentModel(id, name, email));   
+                if (courseQueryOutput.getString("matric_num").equals(user_matric_num)) {
+                    user_name = courseQueryOutput.getString("student_name");
+                    user_email = courseQueryOutput.getString("siswamail");
+                }
+                if (!courseQueryOutput.getString("matric_num").equals("NONE") && !courseQueryOutput.getString("matric_num").equals(user_matric_num)) {
+                    String id = courseQueryOutput.getString("matric_num");
+                    String name = courseQueryOutput.getString("student_name");
+                    String email = courseQueryOutput.getString("siswamail");
+                    studentStaffObservableList.add(new chatStudentModel(id, name, email));
+                }
             }
 
             //PropertyValueFactory corresponds to the new ProductSearchModel fields
@@ -96,10 +116,10 @@ public class chatController implements Initializable, ControlledScreen {
                 @Override
                 public void handle(MouseEvent event) {
                     if (!studentTableView.getSelectionModel().equals(null)) {
-                        email = "" + studentTableView.getSelectionModel().getSelectedItem().getEmail();
-                        emailTargetLabel.setText("To: " + email);
-                        name = "" + studentTableView.getSelectionModel().getSelectedItem().getName();
-                        
+                        receiver_email = "" + studentTableView.getSelectionModel().getSelectedItem().getEmail();
+                        emailTargetLabel.setText(receiver_email);
+                        receiver_name = "" + studentTableView.getSelectionModel().getSelectedItem().getName();
+                        sendButton.setDisable(false);
                     }
                     
                 }
@@ -150,21 +170,29 @@ public class chatController implements Initializable, ControlledScreen {
     SendMail mailSender = new SendMail();
     @FXML
     void sendEmail(ActionEvent event) {
-        String content = contentTextField.getText();
         //send email
-        sendOtpToForgotter(email,name, content);
-        messageLabel.setText("Send successfully");
+        if (!emailPassword_Textfield.getText().equals(confirmEmailPassword_TextField.getText())) {
+            sendEmailPageErrorLabel.setText("Password does not match.");
+        }else if(emailTargetLabel.getText().isEmpty()){
+            sendEmailPageErrorLabel.setText("Please select a receiver.");
+        }
+        else{
+            SendMail mailSender = new SendMail();
+            String receiver = receiver_email;
+            String content = contentTextField.getText();
+            String subject = subjectTextField.getText();
+            String mailMessage = content;
+            String sender = user_email;
+            final String pass = emailPassword_Textfield.getText();
+            mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
+            sendEmailPageErrorLabel.setText("");
+            messageLabel.setText("Email has been sent successfully");
+            sendButton.setDisable(true);
+        }
+         
+         
     }
     
-    public void sendOtpToForgotter(String receiver, String name, String content ){
-         SendMail mailSender = new SendMail();
-         String subject = subjectTextField.getText();
-         String mailMessage = content;
-         String sender = "mayaFOPUM@gmail.com";
-         final String pass = "U2102857@";
-         
-         mailSender.sendMail(receiver, subject, mailMessage, sender, pass);
-         
-     }
+ 
 
 }

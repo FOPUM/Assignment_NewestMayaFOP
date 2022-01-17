@@ -38,7 +38,7 @@ public class SendMail {
         // Get the Session object and set username and password
         try {
             Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-
+                
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
 
@@ -47,7 +47,7 @@ public class SendMail {
                 }
 
             });
-            session.setDebug(true);
+//            session.setDebug(true);
                 try {
                 // Create a default MimeMessage object.
                 Message message = new MimeMessage(session);
@@ -71,6 +71,7 @@ public class SendMail {
                 mex.printStackTrace();
             } 
         } catch (Exception ex) {
+            System.out.println("You have connection problem, please try again");
             //Show "You have connection problem, please try again"
         } 
 
