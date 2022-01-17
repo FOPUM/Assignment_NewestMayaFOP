@@ -30,7 +30,7 @@
             <TableView fx:id="studentTableView" layoutX="66.0" layoutY="141.0" prefHeight="538.0" prefWidth="340.0" styleClass="table">
                <columns>
                   <TableColumn fx:id="idColumn" prefWidth="101.0" style="-fx-background-radius: 20 0 0 0;" text="ID" />
-                  <TableColumn fx:id="nameColumn" prefWidth="238.0" text="Name" />
+                  <TableColumn fx:id="nameColumn" prefWidth="225.0" text="Name" />
                </columns>
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">

@@ -126,7 +126,7 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         
        static java.sql.Date sqlDate;
     
-    
+    MiscFunc misc = new MiscFunc();
     
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Animation = new animation();
@@ -256,7 +256,7 @@ public class registerControlStudent implements Initializable,ControlledScreen {
             statement.setString(4,fullname);
             statement.setString(5,batch);
             statement.setString(6,faculty);
-            statement.setString(7,programme);
+            statement.setString(7,misc.formatToShortProgramme(programme));
             statement.setString(8,gender);
             statement.setString(9,race);
             statement.setDate(10,sqlDate);

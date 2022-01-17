@@ -96,8 +96,8 @@
             <TableView fx:id="courseTableView" layoutX="76.0" layoutY="127.0" prefHeight="502.0" prefWidth="331.0" styleClass="table">
               <columns>
                 <TableColumn fx:id="courseCodeColumn" prefWidth="71.0" style="-fx-background-radius: 20 0 0 0;" text="Code" />
-                <TableColumn fx:id="courseNameColumn" prefWidth="212.0" text="Name" />
-                  <TableColumn fx:id="courseOccurenceColumn" prefWidth="46.0" text="Occ" />
+                <TableColumn fx:id="courseNameColumn" prefWidth="202.0" text="Name" />
+                  <TableColumn fx:id="courseOccurenceColumn" prefWidth="44.0" text="Occ" />
               </columns>
                <effect>
                   <DropShadow offsetX="10.0" offsetY="10.0">
