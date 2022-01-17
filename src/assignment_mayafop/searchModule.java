@@ -507,16 +507,19 @@ public class searchModule implements Initializable, ControlledScreen {
                 Date endTime = sdf.parse(endTimeString);
                 System.out.println("End Time of this picking lecture is: " + endTime);
                 for (int j = 0; j < startlist.size(); j++) {
-                    Date startTimeForCheck = sdf.parse(startlist.get(j));
-                    System.out.println(startTime+ " Checking with: " + startTimeForCheck);
-                    Date endTimeForCheck = sdf.parse(endlist.get(j));
-                    System.out.println(endTime+ " Checking with: " + endTimeForCheck);
-                    if(isOverlapping(startTime, endTime, startTimeForCheck, endTimeForCheck)){
+                    if (startlist.get(j) != null) {
+                        Date startTimeForCheck = sdf.parse(startlist.get(j));
+                        System.out.println(startTime+ " Checking with: " + startTimeForCheck);
+                        Date endTimeForCheck = sdf.parse(endlist.get(j));
+                        System.out.println(endTime+ " Checking with: " + endTimeForCheck);
+                        if(isOverlapping(startTime, endTime, startTimeForCheck, endTimeForCheck)){
 //                        System.out.println("array start " + startlist.get(j));
 //                        System.out.println("array end " + endlist.get(j));
 //                        System.out.println("Crash Time!");
                         return 1;
                     }
+                    }
+                    
                 }
             } catch (ParseException | NullPointerException ex) {
                 System.out.println("Some bug occured");
@@ -624,6 +627,15 @@ public class searchModule implements Initializable, ControlledScreen {
         
         
         if(courseIDcheck.contains(courseID) || occurenceIDcheck.contains(occID) || courseIDarray.contains(courseID) ){
+            if (courseIDcheck.contains(courseID)) {
+                System.out.println("courseIDcheck");
+            }
+            if (occurenceIDcheck.contains(courseID)) {
+                System.out.println("courseIDcheck");
+            }
+            if (courseIDarray.contains(courseID)) {
+                System.out.println("courseIDcheck");
+            }
             warningLabel.setText("Already picked!");
         }else{
             warningLabel.setText("");
@@ -773,11 +785,7 @@ public class searchModule implements Initializable, ControlledScreen {
     }
     
     
-    public void timeMemoryClear(){
-        dayCheck.clear();
-        startTimeCheck.clear();
-        endTimeCheck.clear();
-    }
+    
     
     public void search() {
         // Initialise filtered list
@@ -1235,4 +1243,9 @@ public class searchModule implements Initializable, ControlledScreen {
         }
     }
     
+    public void timeMemoryClear(){
+        dayCheck.clear();
+        startTimeCheck.clear();
+        endTimeCheck.clear();
+    }
 }
