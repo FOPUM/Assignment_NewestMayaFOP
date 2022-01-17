@@ -52,7 +52,10 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
     
     @FXML
     private Button exit_button;
-
+    
+    @FXML
+    private Button resendOTPButton;
+    
     @FXML
     private AnchorPane enterOTPPage;
 
@@ -67,8 +70,9 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        resendOTPButton.setDisable(true);
         next2Button.setDisable(false);
-        otpTimer = 30;
+        otpTimer = 45;
         int otpLimit = otpTimer;
         count = new Thread() {
                 public void run() {
@@ -78,7 +82,8 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
                                 OTPLabel.setText("OTP time left: " + otpTimer);
                                 if (otpTimer == 0) {
                                     next2Button.setDisable(true);
-                                    OTPLabel.setText("Timeout!\nPlease request for a new OTP.");
+                                    OTPLabel.setText("Timeout! Please request for a new OTP.");
+                                    resendOTPButton.setDisable(false);
                                 }
                                 
                             }
@@ -163,4 +168,17 @@ public class enterOTPPageController implements Initializable, ControlledScreen{
         }
     }
     
+    public void resendOTP(ActionEvent event) throws IOException{
+//        myController.loadScreen("EnterOTP", "/Assignment_MayaFOP/enterOTPPage.fxml");
+        count.stop();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterEmailPage.fxml"));
+        loader.load();
+        enterEmailPageController eepcController = loader.getController();
+        String receiverMail = eepcController.getSiswamail();
+        eepcController.setidOrEmailTextField(receiverMail);
+        eepcController.next1ButtonClicked(event);
+        resendOTPButton.setDisable(true);
+        
+    }
 }

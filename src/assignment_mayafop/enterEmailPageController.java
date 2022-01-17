@@ -87,7 +87,7 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     private static String otpText;
     private static char accStatus;
     public void next1ButtonClicked(ActionEvent event) {   
-
+        
         siswamail = idOrEmailTextField.getText();
         matricnumOrStaffId = idOrEmailTextField.getText();;
         
@@ -115,12 +115,14 @@ public class enterEmailPageController implements Initializable, ControlledScreen
                         System.out.println("OTPText is " + otpText);
                         accStatus = 'T';
                     }else if (true) {
+                        emailErrorLabel.setText("Account does not exist.Consider sign up?");
                         //set error label *******************************************************************************************************
                     }
                 }
                 
             //query for staff
             }else{
+                emailErrorLabel.setText("Text field is blank.Please enter your email or id(staff_id/matric_num)");
                 //set error label****************************************************************************************************************
             }
             
@@ -206,7 +208,12 @@ public class enterEmailPageController implements Initializable, ControlledScreen
     public String getSiswamail() {
         return siswamail;
     }
-
+    
+    
+    public  String getForgotterName() {
+        return forgotterName;
+    }
+    
     public static char getAccStatus() {
         return accStatus;
     }
