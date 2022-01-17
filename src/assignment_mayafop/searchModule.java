@@ -179,9 +179,6 @@ public class searchModule implements Initializable, ControlledScreen {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         courseIDcheck.clear();
-        dayCheck.clear();
-        startTimeCheck.clear();
-        endTimeCheck.clear();
 //        coursesModel.clear();
         
         if(accStatus == 'S'){
@@ -208,14 +205,8 @@ public class searchModule implements Initializable, ControlledScreen {
         try {
             
             //Query for current registered course in an array
-            ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
-            while(queryResultForCheck.next()) {
-                occurenceIDcheck.add(queryResultForCheck.getString("occ_id"));
-                courseIDcheck.add(queryResultForCheck.getString("course_id"));
-            }
-            for (int j = 0; j < courseIDcheck.size(); j++) {
-                System.out.println("Contain : " + courseIDcheck.get(j));
-            }
+            fetchTakenCourseFromDatabase();
+            
             int studentBand = 0;
             String studentNationality = null; 
             int studentSem = 0;
@@ -233,36 +224,7 @@ public class searchModule implements Initializable, ControlledScreen {
                 credithourcheck = queryForStudentQualification.getInt("credit_hour");
             }
             
-            //Check for register course punya time to avoid crashing
-            String timeQuery = "SELECT * FROM \n" +
-                            "(SELECT \n" +
-                            "lecture.lecture_day AS dayy, lecture.lecture_start_time AS start_time, lecture.lecture_end_time AS end_time\n" +
-                            "FROM student_take_course\n" +
-                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
-                            "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
-                            "WHERE student_take_course.matric_num='"+matric_num+"' AND lecture.lecture_start_time!='NULL') AS lect\n" +
-                            "UNION  \n" +
-                            "SELECT * FROM \n" +
-                            "(SELECT \n" +
-                            "tutorial.tutorial_day, tutorial.tutorial_start_time, tutorial.tutorial_end_time\n" +
-                            "FROM student_take_course\n" +
-                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
-                            "INNER JOIN tutorial ON tutorial.tutorial_id=occ.tutorial_id\n" +
-                            "WHERE student_take_course.matric_num='"+matric_num+"' AND tutorial.tutorial_start_time!='NULL') AS tuto\n" +
-                            "UNION \n" +
-                            "SELECT * FROM \n" +
-                            "(SELECT \n" +
-                            "lab.lab_day, lab.lab_start_time, lab.lab_end_time\n" +
-                            "FROM student_take_course\n" +
-                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
-                            "INNER JOIN lab ON lab.lab_id=occ.lab_id\n" +
-                            "WHERE student_take_course.matric_num='"+matric_num+"' AND lab.lab_start_time!='NULL') AS labi";
-            ResultSet queryForTime = connectDB.createStatement().executeQuery(timeQuery);
-            while(queryForTime.next()) {
-                dayCheck.add(queryForTime.getString("dayy"));
-                startTimeCheck.add(queryForTime.getString("start_time"));
-                endTimeCheck.add(queryForTime.getString("end_time"));
-            }
+            fetchCourseTimeFromDatabase();
             
             totalCreditHours = credithourcheck;
             creditHour.forEach((hour)-> totalCreditHours+=hour);
@@ -505,53 +467,11 @@ public class searchModule implements Initializable, ControlledScreen {
             Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
         }
+        
         System.out.println("Courseidarray size: " + courseIDarray.size());
-        try{
-            for (int j = 0; j < courseIDarray.size(); j++) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
-                nodes[j] = loader.load();
-                pickedModuleController controller = loader.getController();
-                controller.setCourseName(courseIDarray.get(j));
-                vCourseNames.getChildren().add(nodes[j]);
-                
-//                for (int k = 0; k < courseIDarray.size(); k++) {
-//                    try {
-//                        String queryForCreditHour = "SELECT credit_hour FROM course WHERE course_id='"+courseIDarray.get(k)+"'";
-//                        ResultSet creditQueryOutput = connectDB.createStatement().executeQuery(queryForCreditHour);
-//                        while (creditQueryOutput.next()) {
-//                            totalCreditHours +=creditQueryOutput.getInt("credit_hour");
-//                        }
-//                    } catch (SQLException e) {
-//                        Logger.getLogger(searchModule.class.getName()).log(Level.SEVERE, null, e);
-//                        e.printStackTrace();
-//                    }
-//                }
-//                creditHourLabel.setText("Credits Hours: " + totalCreditHours);
-
-                final int h = j;
-                nodes[h].setOnMouseEntered(evt -> {
-                    //add effect
-                    nodes[h].setStyle("-fx-background-color: #084654");
-                });
-                nodes[h].setOnMouseExited(evt -> {
-                    //add effect
-                    nodes[h].setStyle("-fx-background-color: #FFFFFF");
-                });
-                nodes[h].setOnMousePressed(evt -> {
-                    //add effect
-                    nodes[h].setStyle("-fx-background-color: #000000");
-                    deleteModule(h);
-
-                    creditHour.remove(h);
-                    totalCreditHours = credithourcheck;
-                    creditHour.forEach((hour)-> totalCreditHours+=hour);
-                    creditHourLabel.setText("Credits Hours: " + totalCreditHours);
-                });
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        //reinsert the recent added modules
+        reinsertRecentAddedModules();
+        
     }
 
     @Override
@@ -571,6 +491,7 @@ public class searchModule implements Initializable, ControlledScreen {
         }
         if(confirmedtake){
             confirmedtaken();
+            System.out.println("Memory cleared");
             clearMemory();
         }
     }
@@ -850,7 +771,14 @@ public class searchModule implements Initializable, ControlledScreen {
 
         }
     }
-
+    
+    
+    public void timeMemoryClear(){
+        dayCheck.clear();
+        startTimeCheck.clear();
+        endTimeCheck.clear();
+    }
+    
     public void search() {
         // Initialise filtered list
         FilteredList<modelCourse> filteredData = new FilteredList<>(courseSearchModelObservableList, b -> true);
@@ -1216,6 +1144,95 @@ public class searchModule implements Initializable, ControlledScreen {
         this.editingMode = editingMode;
     }
     
+    public void fetchTakenCourseFromDatabase() throws SQLException{
+         ResultSet queryResultForCheck = connectDB.createStatement().executeQuery(confirmedcourses);
+            while(queryResultForCheck.next()) {
+                occurenceIDcheck.add(queryResultForCheck.getString("occ_id"));
+                courseIDcheck.add(queryResultForCheck.getString("course_id"));
+            }
+            for (int j = 0; j < courseIDcheck.size(); j++) {
+                System.out.println("Contain : " + courseIDcheck.get(j));
+            }
+    }
     
+    public void fetchCourseTimeFromDatabase() throws SQLException{
+        //Check for register course punya time to avoid crashing
+            String timeQuery = "SELECT * FROM \n" +
+                            "(SELECT \n" +
+                            "lecture.lecture_day AS dayy, lecture.lecture_start_time AS start_time, lecture.lecture_end_time AS end_time\n" +
+                            "FROM student_take_course\n" +
+                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
+                            "INNER JOIN lecture ON lecture.lecture_id=occ.lecture_id\n" +
+                            "WHERE student_take_course.matric_num='"+matric_num+"' AND lecture.lecture_start_time!='NULL') AS lect\n" +
+                            "UNION  \n" +
+                            "SELECT * FROM \n" +
+                            "(SELECT \n" +
+                            "tutorial.tutorial_day, tutorial.tutorial_start_time, tutorial.tutorial_end_time\n" +
+                            "FROM student_take_course\n" +
+                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
+                            "INNER JOIN tutorial ON tutorial.tutorial_id=occ.tutorial_id\n" +
+                            "WHERE student_take_course.matric_num='"+matric_num+"' AND tutorial.tutorial_start_time!='NULL') AS tuto\n" +
+                            "UNION \n" +
+                            "SELECT * FROM \n" +
+                            "(SELECT \n" +
+                            "lab.lab_day, lab.lab_start_time, lab.lab_end_time\n" +
+                            "FROM student_take_course\n" +
+                            "INNER JOIN occ ON occ.occ_id=student_take_course.occ_id\n" +
+                            "INNER JOIN lab ON lab.lab_id=occ.lab_id\n" +
+                            "WHERE student_take_course.matric_num='"+matric_num+"' AND lab.lab_start_time!='NULL') AS labi";
+            ResultSet queryForTime = connectDB.createStatement().executeQuery(timeQuery);
+            while(queryForTime.next()) {
+                dayCheck.add(queryForTime.getString("dayy"));
+                startTimeCheck.add(queryForTime.getString("start_time"));
+                endTimeCheck.add(queryForTime.getString("end_time"));
+            }
+            
+            //debug
+            for (int j = 0; j < dayCheck.size(); j++) {
+                System.out.println("Day check at j " + j + " is :" + dayCheck.get(j));
+        }
+            for (int j = 0; j < startTimeCheck.size(); j++) {
+                System.out.println("startTimeCheck at j " + j + " is :" + startTimeCheck.get(j));
+        }
+            for (int j = 0; j < endTimeCheck.size(); j++) {
+                System.out.println("endTimeCheck at j " + j + " is :" + endTimeCheck.get(j));
+        }
+    }
+    
+    public void reinsertRecentAddedModules(){
+        try{
+            for (int j = 0; j < courseIDarray.size(); j++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Assignment_MayaFOP/pickedModule.fxml"));
+                nodes[j] = loader.load();
+                pickedModuleController controller = loader.getController();
+//                controller.setCourseName(courseIDarray.get(j));
+                controller.setCourseName(coursesModel.get(j).getCourseIDLabel());
+                vCourseNames.getChildren().add(nodes[j]);
+
+                final int h = j;
+                nodes[h].setOnMouseEntered(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #084654");
+                });
+                nodes[h].setOnMouseExited(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #FFFFFF");
+                });
+                nodes[h].setOnMousePressed(evt -> {
+                    //add effect
+                    nodes[h].setStyle("-fx-background-color: #000000");
+                    deleteModule(h);
+
+                    creditHour.remove(h);
+                    totalCreditHours = credithourcheck;
+                    creditHour.forEach((hour)-> totalCreditHours+=hour);
+                    creditHourLabel.setText("Credits Hours: " + totalCreditHours);
+                });
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

@@ -176,6 +176,9 @@ public class chatController implements Initializable, ControlledScreen {
         }else if(emailTargetLabel.getText().isEmpty()){
             sendEmailPageErrorLabel.setText("Please select a receiver.");
         }
+        else if(emailPassword_Textfield.getText().isEmpty()){
+            sendEmailPageErrorLabel.setText("Please enter password.");
+        }
         else{
             SendMail mailSender = new SendMail();
             String receiver = receiver_email;
