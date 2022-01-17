@@ -18,6 +18,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -157,55 +159,75 @@ public class registerControlStudent implements Initializable,ControlledScreen {
     }
     
     public void register_button_on_action(ActionEvent event) {
-        //Check the validity of information
-        if (fullNameTextField.getText() != null && siswamailTextField.getText() != null && matricNumberTextField.getText() != null && matricNumberTextField.getText().length() >= 8) {
-            
-            if(passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
-                fullname = fullNameTextField.getText();
-                matric_id = matricNumberTextField.getText();
-                siswamail = siswamailTextField.getText();
-                password = passwordTextField.getText();
-                password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
-                ic = ICTextField.getText();
-                sex = genderComboBox.getValue();
-                faculty = facultyComboBox.getValue();
-                batch = batchComboBox.getValue();
-                programme = programmeComboBox.getValue();
-                race = raceComboBox.getValue();
-                nationality = nationalityComboBox.getValue();
-                date = java.util.Date.from(dateOfBirthPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-                sqlDate = new java.sql.Date(date.getTime());
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterSignUpOTP.fxml"));
-                    loader.load();
-                    enterSignUpOTPController signUpOTPController = loader.getController();
-                    signUpOTPController.stopCountThread();
-                    signUpOTPController.setAccStatus('S');
-                } catch (IOException ex) {
-                    Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            matric_id = matricNumberTextField.getText();
+            String checkMatricNumExist = "";
+            databaseConnection connectNow = new databaseConnection();
+            Connection connectDB = connectNow.getConnection();
+            PreparedStatement statement = connectDB.prepareStatement("Select * from student WHERE matric_num = ?");
+            statement.setString(1,matric_id);
+            System.out.println(matric_id);
+            ResultSet query_checkForStudentDuplication = statement.executeQuery();
+            //Check the validity of information
+            if (query_checkForStudentDuplication.next()) {
+                checkMatricNumExist = query_checkForStudentDuplication.getString("matric_num");
+                System.out.println(checkMatricNumExist);
+            }
+            if (fullNameTextField.getText() != null && siswamailTextField.getText() != null && matricNumberTextField.getText() != null && matricNumberTextField.getText().length() >= 8) {
+                if (!checkMatricNumExist.equalsIgnoreCase(matric_id)) {
+                    if(passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
+                    fullname = fullNameTextField.getText();
+                    matric_id = matricNumberTextField.getText();
+                    siswamail = siswamailTextField.getText();
+                    password = passwordTextField.getText();
+                    password = LoginControl.caesarCipherEncrypt(password, 9); // Encrypt the password before storing
+                    ic = ICTextField.getText();
+                    sex = genderComboBox.getValue();
+                    faculty = facultyComboBox.getValue();
+                    batch = batchComboBox.getValue();
+                    programme = programmeComboBox.getValue();
+                    race = raceComboBox.getValue();
+                    nationality = nationalityComboBox.getValue();
+                    date = java.util.Date.from(dateOfBirthPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    sqlDate = new java.sql.Date(date.getTime());
+                    try {
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(getClass().getResource("/Assignment_MayaFOP/enterSignUpOTP.fxml"));
+                        loader.load();
+                        enterSignUpOTPController signUpOTPController = loader.getController();
+                        signUpOTPController.stopCountThread();
+                        signUpOTPController.setAccStatus('S');
+                    } catch (IOException ex) {
+                        Logger.getLogger(enterOTPPageController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    try {
+                        otp = otpGenerator();
+                        sendOtpToSignUpUser(siswamailTextField.getText(), fullNameTextField.getText(), otp);
+                        root = FXMLLoader.load(getClass().getResource("enterSignUpOTP.fxml"));
+                        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                        
+                    } catch (IOException ex) {
+                        Logger.getLogger(registerControlStaff.class.getName()).log(Level.SEVERE, null, ex);
+                    }catch(Exception ex){
+                        System.out.println("This is the bug: " + ex);
+                    }
+                    }else {
+                        message_label.setText("Password does not match");
+                    }
+                }else{
+                    message_label.setText("Account already existed. Consider log in?");
                 }
                 
-                try {
-                    otp = otpGenerator();
-                    sendOtpToSignUpUser(siswamailTextField.getText(), fullNameTextField.getText(), otp);
-                    root = FXMLLoader.load(getClass().getResource("enterSignUpOTP.fxml"));
-                    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(registerControlStaff.class.getName()).log(Level.SEVERE, null, ex);
-                }catch(Exception ex){
-                    System.out.println("This is the bug: " + ex);
-                }
-            }else {
-                message_label.setText("Password does not match");
+                
+            } else {
+                message_label.setText("Please enter correct information!");
             }
-            
-        } else {
-            message_label.setText("Please enter correct information!");
+        } catch (SQLException ex) {
+            Logger.getLogger(registerControlStudent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -225,7 +247,7 @@ public class registerControlStudent implements Initializable,ControlledScreen {
         }
 
         try {
-            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO student (matric_num, siswamail, password, student_name, student_batch, student_faculty, student_programme, "
+            PreparedStatement statement = connectDB.prepareStatement("INSERT INTO student (matric_num, siswamail, student_password, student_name, student_batch, student_faculty, student_programme, "
                 + "student_gender, student_race, student_date_of_birth, student_studyyear, student_studysem, student_nationality, student_ic_passport, "
                 + "credit_hour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         

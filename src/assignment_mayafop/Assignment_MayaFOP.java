@@ -80,7 +80,6 @@ public class Assignment_MayaFOP extends Application{
         mainContainer.loadScreen(Assignment_MayaFOP.Module, Assignment_MayaFOP.moduleScreenFile);
         mainContainer.loadScreen(Assignment_MayaFOP.ModuleNext, Assignment_MayaFOP.moduleNextScreenFile);
         
-        haa haha = new haa();
         mainContainer.setScreen(Assignment_MayaFOP.loginScreen);
         
         Group root = new Group();

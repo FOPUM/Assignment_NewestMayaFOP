@@ -4,6 +4,7 @@
  */
 package assignment_mayafop;
 
+import static assignment_mayafop.registerControlStudent.matric_id;
 import com.sendemail.SendMail;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -75,11 +78,24 @@ public class registerControlStaff implements Initializable,ControlledScreen{
         stage.close();
     }
     
-    public void register_button_on_action(ActionEvent event) {
+    public void register_button_on_action(ActionEvent event) throws SQLException {
+            staff_id = staffIDTextField.getText();
+            String checkStaffIdExist = "";
+            databaseConnection connectNow = new databaseConnection();
+            Connection connectDB = connectNow.getConnection();
+            PreparedStatement statement = connectDB.prepareStatement("Select * from staff WHERE staff_id = ?");
+            statement.setString(1,staff_id);
+            System.out.println(staff_id);
+            ResultSet query_checkForStudentDuplication = statement.executeQuery();
+            //Check the validity of information
+            if (query_checkForStudentDuplication.next()) {
+                checkStaffIdExist = query_checkForStudentDuplication.getString("staff_id");
+                System.out.println(checkStaffIdExist);
+            }
         //Check the validity of information
         if (nameTextField.getText() != null && umMailTextField.getText() != null && staffIDTextField.getText() != null && staffIDTextField.getText().length() >= 5) {
-            
-            if(passwordField.getText().equals(confirmPasswordField.getText())) {
+            if (!checkStaffIdExist.equalsIgnoreCase(matric_id)) {
+                if(passwordField.getText().equals(confirmPasswordField.getText())) {
                 fullname = nameTextField.getText();
                 staff_id = staffIDTextField.getText();
                 siswamail = umMailTextField.getText();
@@ -105,9 +121,13 @@ public class registerControlStaff implements Initializable,ControlledScreen{
                 } catch (IOException ex) {
                     Logger.getLogger(registerControlStaff.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else {
-                message_label.setText("Password does not match");
-            }
+                }else {
+                  message_label.setText("Password does not match");
+                }
+            }else{
+                    message_label.setText("Account already existed. Consider log in?");
+                }
+            
             
         } else {
             message_label.setText("Please enter correct information!");
