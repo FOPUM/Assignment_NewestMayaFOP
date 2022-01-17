@@ -33,7 +33,7 @@ public class timetableColumnController implements Initializable{
     }
     
     public void setBoxSize(String a, String b, String courseMode, int courseDuration){
-        courseCodeLabel.setText(misc.upperLetter(a));
+        courseCodeLabel.setText(a);
         courseNameLabel.setText(misc.upperLetter(b));
         
         if(courseMode.equals("Lecture")){
